@@ -7,7 +7,7 @@
   <!-- Required meta tags --> 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>home</title>
+  <title>대표업무 수정</title>
   <!-- base:css -->
   <link rel="stylesheet" href="vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="vendors/feather/feather.css">
@@ -54,17 +54,16 @@
 <body>
   <div class="container-scroller">
     <!-- partial:partials/_navbar.html 해더 창 -->
-    <jsp:include page="WEB-INF/views/common/navbar.jsp"></jsp:include>
+    <jsp:include page="../projectCommon/navbar.jsp"></jsp:include>
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
       <!-- partial:partials/_sidebar.html 사이드 바  -->
-      <jsp:include page="WEB-INF/views/common/sidebar.jsp"></jsp:include>
+      <jsp:include page="../projectCommon/sidebar.jsp"></jsp:include>
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper" id="contents"></div>
-
         <!-- partial:partials/_footer.html -->
-        <jsp:include page="WEB-INF/views/common/footer.jsp"></jsp:include>
+        <jsp:include page="../projectCommon/footer.jsp"></jsp:include>
         <!-- partial -->
       </div>
       <!-- main-panel ends -->

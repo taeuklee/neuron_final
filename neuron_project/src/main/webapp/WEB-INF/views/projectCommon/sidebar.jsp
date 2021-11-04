@@ -73,13 +73,19 @@
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#menu4" aria-expanded="false" aria-controls="menu4">
               <i class="icon-disc menu-icon"></i>
-              <span class="menu-title">프로젝트</span>
+              <span class="menu-title">프로젝트이름</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="menu4">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="#" onclick="location.href='selectProjectMain.do'">Neuron Project1</a></li>
-                <li class="nav-item"> <a class="nav-link" href="#">Neuron Project2</a></li>
+                <li class="nav-item"><b1>대표업무</b1></li>
+                <li class="nav-item"> <a class="nav-link" href="#" onclick="location.href='selectProjectMainWork.do'">대표업무 조회</a></li>
+                <li class="nav-item"> <a class="nav-link" href="#" onclick="location.href='moveInsertMainWorkForm.do'">대표업무 등록</a></li>
+                <li class="nav-item"><b1>팀원</b1></li>
+                <li class="nav-item"> <a class="nav-link" href="#" onclick="location.href='selectProjectMemberList.do'">팀원목록</a></li>
+                <li class="nav-item"><b1>이동</b1></li>
+                <li class="nav-item"> <a class="nav-link" href="#" onclick="location.href='selectProjectMain.do'">프로젝트메인으로</a></li>
+                <li class="nav-item"> <a class="nav-link" href="#" onclick="location.href='/'">프로젝트나가기</a></li>
               </ul>
             </div>
           </li>
