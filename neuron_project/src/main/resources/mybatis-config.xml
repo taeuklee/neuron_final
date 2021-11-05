@@ -7,15 +7,14 @@
   		<setting name="jdbcTypeForNull" value="NULL"/>
 <!--   		만약에 NULL로 데이러가 전달되었으면 빈칸이 아닌 NULL로 인식하도록 설정 -->
   	</settings>
-<!-- 	<typeAliases> -->
-<!-- 		<typeAlias type="com.neuron.spring.approval.domain.Approval" alias="Approval"/> -->
-<!-- 		<typeAlias type="com.neuron.spring.approval.domain.Document" alias="Document"/> -->
-<!-- 		<typeAlias type="com.neuron.spring.approval.domain.DocumentFile" alias="DocumentFile"/> -->
-<!-- 	</typeAliases> -->
+	<typeAliases>
+		<typeAlias type="com.neuron.spring.approval.domain.Document" alias="Document"/>
+<!-- 		<typeAlias type="com.neuron.spring.employee.domain.Employee" alias="Employee"/> -->
+	</typeAliases>
 	
-<!-- 	<mappers> -->
-<!-- 		<mapper resource="mappsers/approval-mapper.xml"/> -->
-<!-- 		<mapper resource="mappsers/document-mapper.xml"/> -->
-<!-- 		<mapper resource="mappsers/documentFile-mapper.xml"/> -->
-<!-- 	</mappers> -->
+	<mappers>
+		<mapper resource="mappers/approval-mapper.xml" />
+	</mappers>
 </configuration>
+<!-- 		<typeAlias type="com.neuron.spring.approval.domain.DocumentFile" alias="DocumentFile"/> -->
+<!-- 		<typeAlias type="com.neuron.spring.approval.domain.Approval" alias="Approval"/> -->
