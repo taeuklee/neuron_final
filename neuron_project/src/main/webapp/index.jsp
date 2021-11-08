@@ -63,7 +63,7 @@
       <div class="main-panel">
         <div class="content-wrapper" id="contents">
 		<div>
-			<button onclick="location.href='login.jsp';">전자결재 페이지로 이동</button>
+			<button onclick="location.href='login.jsp';">로그인 페이지로 이동</button>
 		</div>
         </div>
         <!-- partial:partials/_footer.html -->

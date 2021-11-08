@@ -9,11 +9,12 @@
   	</settings>
 	<typeAliases>
 		<typeAlias type="com.neuron.spring.approval.domain.Document" alias="Document"/>
-<!-- 		<typeAlias type="com.neuron.spring.employee.domain.Employee" alias="Employee"/> -->
+		<typeAlias type="com.neuron.spring.employee.domain.Employee" alias="Employee"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="mappers/approval-mapper.xml" />
+		<mapper resource="mappers/employee-mapper.xml" />
 	</mappers>
 </configuration>
 <!-- 		<typeAlias type="com.neuron.spring.approval.domain.DocumentFile" alias="DocumentFile"/> -->

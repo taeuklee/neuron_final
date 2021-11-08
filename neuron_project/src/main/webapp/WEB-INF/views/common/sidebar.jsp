@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,17 +9,32 @@
 </head>
 <body>
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
+		<c:if test="${ empty sessionScope.loginEmployee }">
         <div class="user-profile">
           <div class="user-image">
             <img src="images/faces/face28.png">
           </div>
-          <div class="user-name">
-              Edward Spencer
+          <div class="emp-name">
+              edward spenser
           </div>
-          <div class="user-designation">
-              Developer
+          <div class="emp-job">
+              developer
           </div>
         </div>
+        </c:if>
+		<c:if test="${not empty sessionScope.loginEmployee }">
+        <div class="user-profile">
+          <div class="user-image">
+            <a href="#"><img src="images/faces/face28.png"></a>
+          </div>
+          <div class="emp-name">
+              ${loginEmployee.empName}
+          </div>
+          <div class="emp-job">
+              ${loginEmployee.empJob}
+          </div>
+        </div>
+        </c:if>
         <ul class="nav">
         	<li class="nav-item">
             <a class="nav-link" href="index.jsp">
@@ -120,9 +136,9 @@
           </li>
           
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" onclick="location.href='/noticeListView.do'">
               <i class="icon-file menu-icon"></i>
-              <span class="menu-title">공지사항</span>
+              <span class="menu-title">공지사항</span></a>
             </a>
           </li>
         </ul>
