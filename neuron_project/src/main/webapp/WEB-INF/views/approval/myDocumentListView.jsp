@@ -125,7 +125,7 @@
 						<div class="card">
 							<div class="card-body">
 								<h4 class="card-title" style="float:left">내 결재문서 조회 </h4>
-								<button type="button"
+								<button type="button" onclick="location.href='documentWriteView.do';"
 									class="btn btn-outline btn-primary pull-right">
 									<i class="fa fa-edit fa-fw"></i> 결재요청
 								</button>
@@ -239,7 +239,6 @@
 			<!-- page-body-wrapper ends -->
 		</div>
 	</div>
-
 	<!-- container-scroller -->
 	<script>
 	    const items = document.querySelectorAll('.question');

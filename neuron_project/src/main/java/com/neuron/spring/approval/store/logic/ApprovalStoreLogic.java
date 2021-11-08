@@ -1,6 +1,7 @@
 package com.neuron.spring.approval.store.logic;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -20,10 +21,12 @@ public class ApprovalStoreLogic implements ApprovalStore{
 
 
 	@Override
-	public List<Document> selectMyAllDoc(PageInfo pi, int empNo) {
+	public List<Document> selectMyAllDoc(PageInfo pi, Map empNo) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit()); 
-		List<Document> bList = sqlSession.selectList("approvalMapper.selectAllList", pi, rowBounds);
+		List<Document> bList = sqlSession.selectList("approvalMapper.selectAllList", empNo, rowBounds);
+
+		
 		return bList;
 	}
 
@@ -37,6 +40,11 @@ public class ApprovalStoreLogic implements ApprovalStore{
 	public int selectListCount(int docWriterNo) {
 		int count = sqlSession.selectOne("approvalMapper.selectListCount", docWriterNo);
 		return count;
+	}
+	
+	@Override
+	public  List<Map<String, Object>> selectCodeInfo(Map<String,String> param){
+		return sqlSession.selectList("approvalMapper.selectCodeInfoOne", param);
 	}
 
 }
