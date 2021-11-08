@@ -61,8 +61,9 @@
       <jsp:include page="common/sidebar.jsp"></jsp:include>
       <!-- partial -->
       <div class="main-panel">
-        <div class="content-wrapper" id="contents"></div>
-
+        <div class="content-wrapper" id="contents">
+        <button onclick="location.href='login.jsp';">전자결재 페이지로 이동</button>
+        </div>
         <!-- partial:partials/_footer.html -->
         <jsp:include page="common/footer.jsp"></jsp:include>
         <!-- partial -->
