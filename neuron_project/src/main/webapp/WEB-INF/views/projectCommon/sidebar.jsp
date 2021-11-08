@@ -88,15 +88,8 @@
                 <li class="nav-item"> <a class="nav-link" href="#" onclick="location.href='/'">프로젝트나가기</a></li>
               </ul>
             </div>
-          </li>
-          
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="icon-file menu-icon"></i>
-              <span class="menu-title">일정 관리</span>
-            </a>
-          </li>
-          
+          </li>                  
+       		
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#menu5" aria-expanded="false" aria-controls="menu5">
               <i class="icon-disc menu-icon"></i>

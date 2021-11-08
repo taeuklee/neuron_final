@@ -44,4 +44,14 @@ public class ProjectController {
 		return "project/selectProjectMemberList";
 	}
 	
+	@RequestMapping(value="moveInviteMember.do", method=RequestMethod.GET)
+	public String moveInviteMember() {
+		return "project/inviteMember";
+	}
+	
+	@RequestMapping(value="moveTaskMember.do", method=RequestMethod.GET)
+	public String moveTaskMember() {
+		return "project/insertTaskMemberList";
+	}
+	
 }

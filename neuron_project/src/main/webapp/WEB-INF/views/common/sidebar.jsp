@@ -85,7 +85,7 @@
           </li>
           
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="selectMemberCalendar.do">
               <i class="icon-file menu-icon"></i>
               <span class="menu-title">일정 관리</span>
             </a>

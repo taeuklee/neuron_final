@@ -116,12 +116,38 @@
 						<div id='calendar' style="height: 50%; margin-bottom: 10px;"></div>
 					</div>
 					<div class="col-lg-2" style="border: 1px solid black; float: left">
-						<div class="card" style="width: 10rem;">
+						<div class="card" style="width: 10rem; margin-bottom: 10px;">
 							<img src="..." class="card-img-top" alt="...">
 							<div class="card-body">
-								<p class="card-text">Some quick example text to build on the
-									card title and make up the bulk of the card's content.</p>
+								<h4>이순신</h4>
 							</div>
+						</div>
+						<div class="card" style="width: 10rem; margin-bottom: 10px;">
+							<img src="..." class="card-img-top" alt="...">
+							<div class="card-body">
+								<h4>홍길동</h4>
+							</div>
+						</div>
+						<div class="card" style="width: 10rem; margin-bottom: 10px;">
+							<img src="..." class="card-img-top" alt="...">
+							<div class="card-body">
+								<h4>장보고</h4>
+							</div>
+						</div>
+						<div class="card" style="width: 10rem; margin-bottom: 10px;">
+							<img src="..." class="card-img-top" alt="...">
+							<div class="card-body">
+								<h4>이산</h4>
+							</div>
+						</div>
+						<div class="card" style="width: 10rem; margin-bottom: 10px;">
+							<img src="..." class="card-img-top" alt="...">
+							<div class="card-body">
+								<h4>김유신</h4>
+							</div>
+						</div>
+						<div>
+							<button onclick="moveMemberList()">더보기</button>
 						</div>
 					</div>
 				</div>
@@ -134,7 +160,12 @@
 		<!-- page-body-wrapper ends -->
 	</div>
 	<!-- container-scroller -->
+<script>
 
+	function moveMemberList() {
+		location.href="selectProjectMemberList.do";
+	}
+</script>
 </body>
 
 </html>
