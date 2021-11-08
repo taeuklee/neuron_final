@@ -73,24 +73,23 @@
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#menu4" aria-expanded="false" aria-controls="menu4">
               <i class="icon-disc menu-icon"></i>
-              <span class="menu-title">프로젝트</span>
+              <span class="menu-title">프로젝트이름</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="menu4">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="#" onclick="location.href='selectProjectMain.do'">Neuron Project1</a></li>
-                <li class="nav-item"> <a class="nav-link" href="#">Neuron Project2</a></li>
+                <li class="nav-item"><b1>대표업무</b1></li>
+                <li class="nav-item"> <a class="nav-link" href="#" onclick="location.href='selectProjectMainWork.do'">대표업무 조회</a></li>
+                <li class="nav-item"> <a class="nav-link" href="#" onclick="location.href='moveInsertMainWorkForm.do'">대표업무 등록</a></li>
+                <li class="nav-item"><b1>팀원</b1></li>
+                <li class="nav-item"> <a class="nav-link" href="#" onclick="location.href='selectProjectMemberList.do'">팀원목록</a></li>
+                <li class="nav-item"><b1>이동</b1></li>
+                <li class="nav-item"> <a class="nav-link" href="#" onclick="location.href='selectProjectMain.do'">프로젝트메인으로</a></li>
+                <li class="nav-item"> <a class="nav-link" href="#" onclick="location.href='/'">프로젝트나가기</a></li>
               </ul>
             </div>
-          </li>
-          
-          <li class="nav-item">
-            <a class="nav-link" href="selectMemberCalendar.do">
-              <i class="icon-file menu-icon"></i>
-              <span class="menu-title">일정 관리</span>
-            </a>
-          </li>
-          
+          </li>                  
+       		
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#menu5" aria-expanded="false" aria-controls="menu5">
               <i class="icon-disc menu-icon"></i>
@@ -99,22 +98,12 @@
             </a>
             <div class="collapse" id="menu5">
               <ul class="nav flex-column sub-menu">
-	            <li class="nav-item" align="center">
-	            <i class="menu-arrow"></i><span style="font-size:large; color:#F9D955;">기안</span>
-	              	<ul style="list-style:none; cursor:pointer;">
-		                <li class="nav-item"> <a class="nav-link" onclick="location:href='/documentList.do';">결재요청함</a></li>
-		                <li class="nav-item"> <a class="nav-link" href="#">임시저장함</a></li>
-	              	</ul>
-	            </li>
-	            <li class="nav-item" align="center">
-	            <i class="menu-arrow"></i><span style="font-size:large; color:#F9D955;">결재</span>
-	            	<ul style="list-style:none">
-		                <li class="nav-item"> <a class="nav-link" href="#">결재대기함</a></li>
-		                <li class="nav-item"> <a class="nav-link" href="#">결재진행함</a></li>
-		                <li class="nav-item"> <a class="nav-link" href="#">반려문서함</a></li>
-		                <li class="nav-item"> <a class="nav-link" href="#">완료문서함</a></li>
-	            	</ul>
-	            </li>
+                <li class="nav-item"><b1>기안</b1><a class="nav-link" href="#">결재요청함</a></li>
+                <li class="nav-item"> <a class="nav-link" href="#">임시저장함</a></li>
+                <li class="nav-item"><b1>결재</b1><a class="nav-link" href="#">결재대기함</a></li>
+                <li class="nav-item"> <a class="nav-link" href="#">결재진행함</a></li>
+                <li class="nav-item"> <a class="nav-link" href="#">반려문서함</a></li>
+                <li class="nav-item"> <a class="nav-link" href="#">완료문서함</a></li>
               </ul>
             </div>
           </li>

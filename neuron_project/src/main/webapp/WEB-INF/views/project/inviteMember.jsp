@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-  <!-- Required meta tags --> 
+<!-- Required meta tags --> 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>home</title>
+  <title>팀원 초대</title>
   <!-- base:css -->
   <link rel="stylesheet" href="vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="vendors/feather/feather.css">
@@ -49,30 +48,47 @@
   <!-- Custom js for this page-->
   <script src="js/dashboard.js"></script>
   <!-- End custom js for this page-->
+<style>
+body, html {
+	height: 100%;
+	width: 100%;
+}
+
+#invite {
+	background-color: #2C3E50;
+	color: white;
+	border-color: #2C3E50;
+}
+
+#invite:hover{
+
+background-color:#1e2b37;
+border-color:#1e2b37;
+}
+ 
+
+</style>
 </head>
-
 <body>
-  <div class="container-scroller">
-    <!-- partial:partials/_navbar.html 해더 창 -->
-    <jsp:include page="common/navbar.jsp"></jsp:include>
-    <!-- partial -->
-    <div class="container-fluid page-body-wrapper">
-      <!-- partial:partials/_sidebar.html 사이드 바  -->
-      <jsp:include page="common/sidebar.jsp"></jsp:include>
-      <!-- partial -->
-      <div class="main-panel">
-        <div class="content-wrapper" id="contents"></div>
-
-        <!-- partial:partials/_footer.html -->
-        <jsp:include page="common/footer.jsp"></jsp:include>
-        <!-- partial -->
-      </div>
-      <!-- main-panel ends -->
-    </div>
-    <!-- page-body-wrapper ends -->
-  </div>
-  <!-- container-scroller -->
-
+	<div style="height: 100%; width: 100%;">
+		<div style="height: 20%; width: 100%; border-bottom: 1px solid black">
+			<form class="d-flex">
+				<input class="form-control me-2" type="search" placeholder="팀원을 검색해주세요"
+					aria-label="Search">
+				<button class="btn btn-outline-success" type="submit">Search</button>
+			</form>
+		</div>
+		<div style="height: 70%; width: 100%">
+			<div style="float: left; width: 50%; height: 100%; overflow: auto">
+			
+			</div>
+			<div style="float: left; width: 50%; height: 100%;border-left: 1px solid black; overflow: auto">
+			
+			</div>
+		</div>
+		<div style="height: 10%; width: 100%; margin-top: 10px;">
+			<button type="button" class="btn btn-primary" id="invite" style="position: relative; left:470px;">확인</button>
+		</div>
+	</div>
 </body>
-
 </html>
