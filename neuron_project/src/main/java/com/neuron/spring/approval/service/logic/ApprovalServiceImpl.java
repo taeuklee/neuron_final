@@ -10,7 +10,9 @@ import com.neuron.spring.approval.domain.Document;
 import com.neuron.spring.approval.domain.PageInfo;
 import com.neuron.spring.approval.service.ApprovalService;
 import com.neuron.spring.approval.store.ApprovalStore;
+import com.neuron.spring.employee.domain.Dept;
 import com.neuron.spring.employee.domain.Employee;
+import com.neuron.spring.employee.domain.Team;
 
 @Service
 public class ApprovalServiceImpl implements ApprovalService{
@@ -39,6 +41,23 @@ public class ApprovalServiceImpl implements ApprovalService{
 	public List<Map<String, Object>> codeInfo(Map<String,String> param) {
 		return store.selectCodeInfo(param);
 	}
+
+	@Override
+	public List<Employee> printAllEmployeeList() {
+		
+		return store.selectAllEmployee();
+	}
+
+	@Override
+	public List<Team> printAllTeamList() {
+		return store.selectAllTeam();
+	}
+
+	@Override
+	public List<Dept> printAllDeptList() {
+		return store.selectAllDept();
+	}
+	
 	
 	
 }

@@ -20,6 +20,9 @@ import com.neuron.spring.approval.domain.Document;
 import com.neuron.spring.approval.domain.PageInfo;
 import com.neuron.spring.approval.domain.Pagination;
 import com.neuron.spring.approval.service.ApprovalService;
+import com.neuron.spring.employee.domain.Dept;
+import com.neuron.spring.employee.domain.Employee;
+import com.neuron.spring.employee.domain.Team;
 
 @Controller
 public class ApprovalController {
@@ -94,6 +97,13 @@ public class ApprovalController {
 	
 	@RequestMapping(value="approvalEmp.do", method=RequestMethod.GET)
 	public ModelAndView findMemberList(ModelAndView mv) {
+		List<Employee> eList = service.printAllEmployeeList();
+		List<Team> tList = service.printAllTeamList();
+		List<Dept> dList = service.printAllDeptList();
+		
+		mv.addObject("eList", eList);
+		mv.addObject("tList", tList);
+		mv.addObject("dList", dList);
 		mv.setViewName("approval/approvalEmp");
 		return mv;
 	}

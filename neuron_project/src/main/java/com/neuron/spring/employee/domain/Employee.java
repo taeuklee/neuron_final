@@ -4,8 +4,8 @@ import java.io.File;
 
 public class Employee {
 	private int empNo;
-	private int DeptNo;
-	private int TeamNo;
+	private String deptNo;
+	private String teamNo;
 	private String empId;
 	private String empPwd;
 	private String empName;
@@ -36,20 +36,20 @@ public class Employee {
 		this.empNo = empNo;
 	}
 
-	public int getDeptNo() {
-		return DeptNo;
+	public String getDeptNo() {
+		return deptNo;
 	}
 
-	public void setDeptNo(int deptNo) {
-		DeptNo = deptNo;
+	public void setDeptNo(String deptNo) {
+		this.deptNo = deptNo;
 	}
 
-	public int getTeamNo() {
-		return TeamNo;
+	public String getTeamNo() {
+		return teamNo;
 	}
 
-	public void setTeamNo(int teamNo) {
-		TeamNo = teamNo;
+	public void setTeamNo(String teamNo) {
+		this.teamNo = teamNo;
 	}
 
 	public String getEmpId() {
@@ -182,14 +182,13 @@ public class Employee {
 
 	@Override
 	public String toString() {
-		return "Employee [empNo=" + empNo + ", DeptNo=" + DeptNo + ", TeamNo=" + TeamNo + ", empId=" + empId
+		return "Employee [empNo=" + empNo + ", deptNo=" + deptNo + ", teamNo=" + teamNo + ", empId=" + empId
 				+ ", empPwd=" + empPwd + ", empName=" + empName + ", empBirth=" + empBirth + ", empPhone=" + empPhone
-				+ ", empJop=" + empJob + ", empEmail=" + empEmail + ", empSubEmail=" + empSubEmail + ", empExnum="
+				+ ", empJob=" + empJob + ", empEmail=" + empEmail + ", empSubEmail=" + empSubEmail + ", empExnum="
 				+ empExnum + ", empState=" + empState + ", empVac=" + empVac + ", empMed=" + empMed + ", empExVac="
 				+ empExVac + ", empSign=" + empSign + ", empFileName=" + empFileName + ", empFileReName="
 				+ empFileReName + "]";
 	}
-	
-	
+
 
 }

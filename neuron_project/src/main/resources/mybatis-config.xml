@@ -10,6 +10,8 @@
 	<typeAliases>
 		<typeAlias type="com.neuron.spring.approval.domain.Document" alias="Document"/>
 		<typeAlias type="com.neuron.spring.employee.domain.Employee" alias="Employee"/>
+		<typeAlias type="com.neuron.spring.employee.domain.Dept" alias="Dept"/>
+		<typeAlias type="com.neuron.spring.employee.domain.Team" alias="Team"/>
 	</typeAliases>
 	
 	<mappers>

@@ -11,7 +11,9 @@ import org.springframework.stereotype.Repository;
 import com.neuron.spring.approval.domain.Document;
 import com.neuron.spring.approval.domain.PageInfo;
 import com.neuron.spring.approval.store.ApprovalStore;
+import com.neuron.spring.employee.domain.Dept;
 import com.neuron.spring.employee.domain.Employee;
+import com.neuron.spring.employee.domain.Team;
 
 @Repository
 public class ApprovalStoreLogic implements ApprovalStore{
@@ -45,6 +47,21 @@ public class ApprovalStoreLogic implements ApprovalStore{
 	@Override
 	public  List<Map<String, Object>> selectCodeInfo(Map<String,String> param){
 		return sqlSession.selectList("approvalMapper.selectCodeInfoOne", param);
+	}
+
+	@Override
+	public List<Employee> selectAllEmployee() {
+		return sqlSession.selectList("employeeMapper.selectAllEmp");
+	}
+
+	@Override
+	public List<Team> selectAllTeam() {
+		return sqlSession.selectList("employeeMapper.selectAllTeam");
+	}
+
+	@Override
+	public List<Dept> selectAllDept() {
+		return sqlSession.selectList("employeeMapper.selectAllDept");
 	}
 
 }

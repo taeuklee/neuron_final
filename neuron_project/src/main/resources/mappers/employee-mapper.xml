@@ -5,8 +5,8 @@
  <mapper namespace="employeeMapper">
  	<resultMap type="Employee" id="employeeResultMap">
  		<id property="empNo" column="EMP_NO"/>
- 		<result property="deptNo" column="DEPT_NO"></result>
- 		<result property="teamNo" column="TEAM_NO"></result>
+ 		<result property="deptNo" column="DEPT_CODE"></result>
+ 		<result property="teamNo" column="TEAM_CODE"></result>
  		<result property="empId" column="EMP_ID"></result>
  		<result property="empPwd" column="EMP_PWD"></result>
  		<result property="empName" column="EMP_NAME"></result>
@@ -21,13 +21,35 @@
  		<result property="empMed" column="EMP_MED"></result>
  		<result property="empExVac" column="EMP_EXVAC"></result>
  		<result property="empSign" column="EMP_SIGN"></result>
- 		<result property="empFilname" column="EMP_FILENAME"></result>
- 		<result property="empFileRename" column="EMP_FILERENAME"></result>
- 		
+<!--  		<result property="empFilname" column="EMP_FILENAME"></result> -->
+<!--  		<result property="empFileRename" column="EMP_FILERENAME"></result> -->
+ 	</resultMap>
+ 	
+ 	<resultMap type="Team" id="teamResultMap">
+ 		<id property="teamNo" column="TEAM_NO"/>
+ 		<result property="deptNo" column="DEPT_NO"/>
+ 		<result property="teamName" column="TEAM_NAME"/>
+ 	</resultMap>
+ 	
+ 	
+ 	<resultMap type="Dept" id="deptResultMap">
+ 		<id property="deptNo" column="DEPT_NO"/>
+ 		<result property="deptName" column="DEPT_NAME"/>
  	</resultMap>
  	
  	<select id="selectEmp" resultMap="employeeResultMap">
  		SELECT * FROM EMPLOYEE WHERE EMP_ID = #{empId } and EMP_PWD = #{empPwd}
  	 </select>
  	 
+ 	 <select id="selectAllEmp" resultMap="employeeResultMap">
+ 	 	SELECT * FROM EMPLOYEE
+ 	 </select>
+ 	 
+ 	 <select id="selectAllTeam" resultMap="teamResultMap">
+ 	 	SELECT * FROM TEAM
+ 	 </select>
+ 	 
+ 	 <select id="selectAllDept" resultMap="deptResultMap">
+ 	 	SELECT * FROM DEPT
+ 	 </select>
  </mapper>
