@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -69,6 +70,24 @@ body {
                   	<input type="text">
                   	<button>검색</button>
                   </form>
+                  
+                  	<c:forEach items="${dList }" var="dOne">
+                  		${dOne.deptName } ( 
+	                  	<c:forEach items="${tList }" var="tOne">
+	                  		<c:if test="${dOne.deptNo eq tOne.deptNo }">
+	                  			<br>
+		                  		${tOne.teamName }-
+		                  		<c:forEach items="${eList }" var="eOne">
+		                  			<c:if test="${tOne.teamNo eq eOne.teamNo }">
+				                  		${eOne.empName }
+			                  		</c:if>
+		                  		</c:forEach>
+	                  		</c:if>
+	                  	</c:forEach><br>)
+	                  		<hr>
+                  	</c:forEach>
+                  	<hr>
+                  	
                   	<table class="table table-hover">
                   		<tr>
                   			<th>부서명</th>
@@ -76,15 +95,17 @@ body {
                   			<th>직급</th>
                   			<th>선택</th>
                   		</tr>
+                  	<c:forEach items="${eList }" var="eOne">
                   		<tr>
-                  			<td>개발1팀</td>
-                  			<td>이태욱</td>
-                  			<td>대리</td>
+                  			<td>${eOne.teamNo }</td>
+                  			<td>${eOne.empName }</td>
+                  			<td>${eOne.empJob }</td>
                   			<td>
                   				<button onclick="checkOne();">합의</button>
                   				<button>결재</button>
                   			<td>
                   		</tr>
+                  	</c:forEach>
                   	</table>
                   		
                 </div>

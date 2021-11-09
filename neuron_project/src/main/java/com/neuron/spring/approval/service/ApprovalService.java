@@ -5,7 +5,9 @@ import java.util.Map;
 
 import com.neuron.spring.approval.domain.Document;
 import com.neuron.spring.approval.domain.PageInfo;
+import com.neuron.spring.employee.domain.Dept;
 import com.neuron.spring.employee.domain.Employee;
+import com.neuron.spring.employee.domain.Team;
 
 public interface ApprovalService {
 	/**
@@ -25,4 +27,9 @@ public interface ApprovalService {
 
 	public List<Map<String, Object>> codeInfo(Map<String,String> param);
 	
+	public List<Employee> printAllEmployeeList();
+	
+	public List<Team> printAllTeamList();
+	
+	public List<Dept> printAllDeptList();
 }
