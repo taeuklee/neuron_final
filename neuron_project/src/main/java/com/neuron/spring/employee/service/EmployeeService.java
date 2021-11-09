@@ -6,4 +6,6 @@ public interface EmployeeService {
 
 	public Employee loginEmp(Employee empOne);
 
+	public int registerEmp(Employee employee);
+
 }

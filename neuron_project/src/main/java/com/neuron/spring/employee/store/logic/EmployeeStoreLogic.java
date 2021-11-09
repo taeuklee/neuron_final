@@ -19,5 +19,11 @@ public class EmployeeStoreLogic implements EmployeeStore{
 		return eOne;
 	}
 
+	@Override
+	public int insertEmp(Employee employee) {
+		int result = sqlSession.insert("employeeMapper.insertEmp", employee);
+		return result;
+	}
+
 	
 }

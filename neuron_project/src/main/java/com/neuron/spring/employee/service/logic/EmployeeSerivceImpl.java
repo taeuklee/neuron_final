@@ -19,4 +19,10 @@ public class EmployeeSerivceImpl implements EmployeeService{
 		return eOne;
 	}
 
+	@Override
+	public int registerEmp(Employee employee) {
+		int result = store.insertEmp(employee);
+		return result;
+	}
+
 }
