@@ -86,31 +86,31 @@ border-color:#1e2b37;
 			<div class="main-panel">
 				<div class="content-wrapper" id="contents">
 					<div class="col-lg-6" style="float: left">
-						
-						<div id="projectContents" style="height: 30%">
-							<form action="">
-								
+						<form action="insertProjectRegister.do" id="insertProjectForm" method="post">
+							<div id="projectContents" style="height: 30%">
 								<div class="mb-3">
-									<label for="exampleFormControlInput1" class="form-label"><h1>프로젝트 제목</h1>
-										 </label> <input type="text" class="form-control"
+									<label for="exampleFormControlInput1" class="form-label"><h1>프로젝트
+											제목</h1> </label> <input type="text" class="form-control"
 										id="exampleFormControlInput1" placeholder="제목을 입력해주세요">
 								</div>
 								<div class="mb-3">
-									<label for="exampleFormControlTextarea1" class="form-label"><h1>생성 사유</h1>
-										</label>
+									<label for="exampleFormControlTextarea1" class="form-label"><h1>생성
+											사유</h1> </label>
 									<textarea class="form-control" id="exampleFormControlTextarea1"
 										rows="3"></textarea>
 								</div>
-							</form>
-						</div>
-						
-						<div id="projectMember" style="height: 875px; overflow: auto;">
-							<h1>팀원 목록</h1>
-						</div>
-							<div id="btn-area" style="text-align: center;">
-								<button type='button' class='btn btn-primary btn-lg' id="yes" style="margin-right: 20px;" onclick="insertProjectRegister()">확인</button>
-								<button type='button' class='btn btn-primary btn-lg' id="no" onclick="home()">취소</button>
 							</div>
+
+							<div id="projectMember" style="height: 875px; overflow: auto;">
+								<h1>팀원 목록</h1>
+							</div>
+							<div id="btn-area" style="text-align: center;">
+								<input type='submit' class='btn btn-primary btn-lg' id="yes"
+									style="margin-right: 20px;" value="확인">
+								<button type='button' class='btn btn-primary btn-lg' id="no"
+									onclick="home()">취소</button>
+							</div>
+						</form>
 					</div>
 					<div class="col-lg-6"
 						style="height: 100%; border-left: 1px solid black; float: left">
@@ -204,10 +204,14 @@ border-color:#1e2b37;
 		//main.replaceChild(id, button);
 		//console.log(id.parentNode);
 		var parent = id.parentNode;
+		var hidden = id.nextSibling;
+		console.log(hidden);
 		parent.removeChild(id);
 		parent.innerHTML += button;
 		//console.log(id.parentNode.parentNode);
 		var projectMemberList  = document.getElementById('projectMember');
+		var insertProjectForm = document.getElementById('insertProjectForm');
+		//insertProjectForm.appendChild(hidden);
 		projectMemberList.appendChild(main);
 		
 	}
@@ -215,6 +219,9 @@ border-color:#1e2b37;
 	function deleteEmp(id) {
 		var grandParent = id.parentNode.parentNode.parentNode.parentNode.parentNode;
 		var parent = id.parentNode.parentNode.parentNode.parentNode;
+		var insertProjectForm = document.getElementById('insertProjectForm');
+		//var hidden = id.nextSibling;
+		//console.log(hidden);
 		grandParent.removeChild(parent);
 	}
 	
@@ -222,11 +229,11 @@ border-color:#1e2b37;
 		location.href = "home.do";
 	}
 	
-	function insertProjectRegister() {
+// 	function insertProjectRegister() {
 		
-		var empNo = document.getElementById('empNo')
-		location.href = "insertProjectRegister?empNo=" + empNo + ".do";
-	}
+// 		var empNo = document.getElementById('empNo')
+// 		location.href = "insertProjectRegister?empNo=" + empNo + ".do";
+// 	}
 	</script>
 </body>
 
