@@ -70,7 +70,26 @@ body {
                   	<input type="text">
                   	<button>검색</button>
                   </form>
-                  
+                   
+                   
+                   <div>
+                   	<c:forEach items="${dList }" var="dOne">
+                   	<ul>
+                   		<li class="menu">
+                   			<a>${dOne.deptName }</a>
+                   			<c:forEach items="${tList }" var="tOne">
+                   			<ul class="hide">
+	                  		<c:if test="${dOne.deptNo eq tOne.deptNo }">
+								<li>${tOne.teamName }</li>
+	                  		</c:if>
+                   			</ul>
+                   			</c:forEach>
+                   		</li>
+                   	</ul>
+                   	</c:forEach>
+                   </div>
+                   
+                   
                   	<c:forEach items="${dList }" var="dOne">
                   		${dOne.deptName } ( 
 	                  	<c:forEach items="${tList }" var="tOne">
@@ -83,7 +102,7 @@ body {
 			                  		</c:if>
 		                  		</c:forEach>
 	                  		</c:if>
-	                  	</c:forEach><br>)
+	                  	</c:forEach>
 	                  		<hr>
                   	</c:forEach>
                   	<hr>
