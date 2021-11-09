@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="employeeMapper">
+ 	<resultMap type="Employee" id="employeeResultMap">
+ 		<id property="empNo" column="EMP_NO"/>
+ 		<result property="deptNo" column="DEPT_NO"></result>
+ 		<result property="teamNo" column="TEAM_NO"></result>
+ 		<result property="empId" column="EMP_ID"></result>
+ 		<result property="empPwd" column="EMP_PWD"></result>
+ 		<result property="empName" column="EMP_NAME"></result>
+ 		<result property="empBirth" column="EMP_BIRTH"></result>
+ 		<result property="empPhone" column="EMP_PHONE"></result>
+ 		<result property="empJob" column="EMP_JOB"></result>
+ 		<result property="empEmail" column="EMP_EMAIL"></result>
+ 		<result property="empSubEmail" column="EMP_SUBEMAIL"></result>
+ 		<result property="empExnum" column="EMP_EXNUM"></result>
+ 		<result property="empState" column="EMP_STATE"></result>
+ 		<result property="empVac" column="EMP_VAC"></result>
+ 		<result property="empMed" column="EMP_MED"></result>
+ 		<result property="empExVac" column="EMP_EXVAC"></result>
+ 		<result property="empSign" column="EMP_SIGN"></result>
+ 		<result property="empFilname" column="EMP_FILENAME"></result>
+ 		<result property="empFileRename" column="EMP_FILERENAME"></result>
+ 		
+ 	</resultMap>
+ 	
+ 	<select id="selectEmp" resultMap="employeeResultMap">
+ 		SELECT * FROM EMPLOYEE WHERE EMP_ID = #{empId } and EMP_PWD = #{empPwd}
+ 	 </select>
+ 	 
+ </mapper>

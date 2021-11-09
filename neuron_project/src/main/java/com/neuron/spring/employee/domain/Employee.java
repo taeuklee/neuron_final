@@ -4,14 +4,14 @@ import java.io.File;
 
 public class Employee {
 	private int empNo;
-	private String DeptCode;
-	private String TempCode;
+	private int DeptNo;
+	private int TeamNo;
 	private String empId;
 	private String empPwd;
 	private String empName;
 	private String empBirth;
 	private String empPhone;
-	private String empJop;
+	private String empJob;
 	private String empEmail;
 	private String empSubEmail;
 	private int empExnum;
@@ -19,7 +19,9 @@ public class Employee {
 	private int empVac;
 	private int empMed;
 	private int empExVac;
-	private File empSign;
+	private String empSign;
+	private String empFileName;
+	private File empFileReName;
 	
 	public Employee() {
 		super();
@@ -34,20 +36,20 @@ public class Employee {
 		this.empNo = empNo;
 	}
 
-	public String getDeptCode() {
-		return DeptCode;
+	public int getDeptNo() {
+		return DeptNo;
 	}
 
-	public void setDeptCode(String deptCode) {
-		DeptCode = deptCode;
+	public void setDeptNo(int deptNo) {
+		DeptNo = deptNo;
 	}
 
-	public String getTempCode() {
-		return TempCode;
+	public int getTeamNo() {
+		return TeamNo;
 	}
 
-	public void setTempCode(String tempCode) {
-		TempCode = tempCode;
+	public void setTeamNo(int teamNo) {
+		TeamNo = teamNo;
 	}
 
 	public String getEmpId() {
@@ -90,12 +92,12 @@ public class Employee {
 		this.empPhone = empPhone;
 	}
 
-	public String getEmpJop() {
-		return empJop;
+	public String getEmpJob() {
+		return empJob;
 	}
 
-	public void setEmpJop(String empJop) {
-		this.empJop = empJop;
+	public void setEmpJob(String empJob) {
+		this.empJob = empJob;
 	}
 
 	public String getEmpEmail() {
@@ -154,22 +156,40 @@ public class Employee {
 		this.empExVac = empExVac;
 	}
 
-	public File getEmpSign() {
+	public String getEmpSign() {
 		return empSign;
 	}
 
-	public void setEmpSign(File empSign) {
+	public void setEmpSign(String empSign) {
 		this.empSign = empSign;
+	}
+
+	public String getEmpFileName() {
+		return empFileName;
+	}
+
+	public void setEmpFileName(String empFileName) {
+		this.empFileName = empFileName;
+	}
+
+	public File getEmpFileReName() {
+		return empFileReName;
+	}
+
+	public void setEmpFileReName(File empFileReName) {
+		this.empFileReName = empFileReName;
 	}
 
 	@Override
 	public String toString() {
-		return "Employee [empNo=" + empNo + ", DeptCode=" + DeptCode + ", TempCode=" + TempCode + ", empId=" + empId
+		return "Employee [empNo=" + empNo + ", DeptNo=" + DeptNo + ", TeamNo=" + TeamNo + ", empId=" + empId
 				+ ", empPwd=" + empPwd + ", empName=" + empName + ", empBirth=" + empBirth + ", empPhone=" + empPhone
-				+ ", empJop=" + empJop + ", empEmail=" + empEmail + ", empSubEmail=" + empSubEmail + ", empExnum="
+				+ ", empJop=" + empJob + ", empEmail=" + empEmail + ", empSubEmail=" + empSubEmail + ", empExnum="
 				+ empExnum + ", empState=" + empState + ", empVac=" + empVac + ", empMed=" + empMed + ", empExVac="
-				+ empExVac + ", empSign=" + empSign + "]";
+				+ empExVac + ", empSign=" + empSign + ", empFileName=" + empFileName + ", empFileReName="
+				+ empFileReName + "]";
 	}
 	
 	
+
 }

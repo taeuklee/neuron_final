@@ -32,7 +32,7 @@
               </div>
               <h4>안녕하세요, 뉴런입니다.</h4>
               <h6 class="font-weight-light">Welcome to Neuron</h6>
-              <form class="pt-3">
+              <form action="/login.do" method="post">
                 <div class="form-group">
                   <label for="exampleInputEmail">ID</label>
                   <div class="input-group">
@@ -41,7 +41,7 @@
                         <i class="mdi mdi-account-outline text-primary"></i>
                       </span>
                     </div>
-                    <input type="text" class="form-control form-control-lg border-left-0" id="exampleInputEmail" placeholder="ID">
+                    <input type="text" class="form-control form-control-lg border-left-0" name="emp-id" placeholder="ID">
                   </div>
                 </div>
                 <div class="form-group">
@@ -52,14 +52,14 @@
                         <i class="mdi mdi-lock-outline text-primary"></i>
                       </span>
                     </div>
-                    <input type="password" class="form-control form-control-lg border-left-0" id="exampleInputPassword" placeholder="Password">                        
+                    <input type="password" class="form-control form-control-lg border-left-0" name="emp-pwd" placeholder="Password">                        
                   </div>
                 </div>
                 <div class="my-2 d-flex justify-content-between align-items-center">
                   <a href="#" class="auth-link text-black">Find Password</a>
                 </div>
                 <div class="my-3">
-                  <a class="btn btn-block btn-info btn-lg font-weight-medium auth-form-btn" href="../../index.jsp">LOGIN</a>
+                  <input type="submit" class="btn btn-primary mr-2" value="Login">
                 </div>
               </form>
             </div>
