@@ -1,6 +1,7 @@
 package com.neuron.spring.approval.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.neuron.spring.approval.domain.Document;
 import com.neuron.spring.approval.domain.PageInfo;
@@ -18,8 +19,10 @@ public interface ApprovalService {
 	 * @param pi
 	 * @return List
 	 */
-	public List<Document> printMyAllDocList(PageInfo pi,int empNo);
+	public List<Document> printMyAllDocList(PageInfo pi,Map empNo);
 	
 	public Employee printOneByEmp(int empNo);
+
+	public List<Map<String, Object>> codeInfo(Map<String,String> param);
 	
 }

@@ -1,6 +1,7 @@
 package com.neuron.spring.approval.service.logic;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class ApprovalServiceImpl implements ApprovalService{
 	}
 
 	@Override
-	public List<Document> printMyAllDocList(PageInfo pi,int docWriterNo) {
+	public List<Document> printMyAllDocList(PageInfo pi,Map docWriterNo) {
 		List<Document> dList = store.selectMyAllDoc(pi, docWriterNo);
 		return dList;
 	}
@@ -32,6 +33,11 @@ public class ApprovalServiceImpl implements ApprovalService{
 	public int getListCount(int docWriterNo) {
 		int count = store.selectListCount(docWriterNo);
 		return count;
+	}
+	
+	@Override
+	public List<Map<String, Object>> codeInfo(Map<String,String> param) {
+		return store.selectCodeInfo(param);
 	}
 	
 	

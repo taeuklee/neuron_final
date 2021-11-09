@@ -17,13 +17,28 @@
 	   <result property="vEndDate" column="VACATION_END_DATE"/>
   	</resultMap>
   	
+  	<select id="selectCodeInfoOne" resultType="map" parameterType="map">
+  		select * 
+  		from code_info 
+  		<where>
+  			<if test="group_code_id != '' and group_code_id != null">
+  				and group_code_id = #{group_code_id}
+  			</if>
+  			<if test="code_id != '' and code_id != null">
+  				and code_id = #{code_id}
+  			</if>
+  		</where>
+  		ORDER BY SORT_ORDR
+  	</select>
+  	
   	<!-- 내가 작성한 리스트 -->
-  	<select id="selectAllList" resultMap="DocResultMap">
-  		select * from document where DOCUMENT_WRITER_NO = 1 order by DOCUMENT_NO DESC
+  	<select id="selectAllList" parameterType="map" resultMap="DocResultMap">
+  		select * from document where DOCUMENT_WRITER_NO = #{empNo} order by DOCUMENT_NO DESC
   	</select>
   	
 	<!--   	전체 리스트 갯수 -->
   	<select id="selectListCount" parameterType="_int" resultType="_int">
   		select count(*) from document where DOCUMENT_WRITER_NO = #{docWriterNo}
   	</select>
+  	
   </mapper>
