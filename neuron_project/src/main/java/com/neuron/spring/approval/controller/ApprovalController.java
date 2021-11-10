@@ -9,13 +9,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.neuron.spring.approval.domain.ApprovalSearch;
 import com.neuron.spring.approval.domain.Document;
 import com.neuron.spring.approval.domain.PageInfo;
 import com.neuron.spring.approval.domain.Pagination;
@@ -30,32 +37,19 @@ public class ApprovalController {
 	@Autowired
 	private ApprovalService service;
 	
-	@RequestMapping(value="/documentList.do", method=RequestMethod.GET)
+	// 문서 리스트
+	@RequestMapping(value="approval/{path}.do", method=RequestMethod.GET)
 	public ModelAndView ShowDocumentList(
-			ModelAndView mv
-			, @RequestParam(value="page",required=false) Integer page) {
+			@PathVariable String path, ModelAndView mv, @RequestParam(value="page",required=false) Integer page) {
 		
 		int docWriterNo = 2; // 사원번호
 		int currentPage = (page != null) ? page : 1;
 		int totalCount = service.getListCount(docWriterNo);
-//		Employee empOne = service.printOneByEmp(docWriterNo);
-		Map<String, Object> paramMap = new HashMap();
+		//사원 번호를 맵에 담아서 조회
+		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("empNo", docWriterNo);
 		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
 		List<Document> dList = new ArrayList<Document>();
-		
-//		Map<String, Object> code = service.codeInfo();
-//		
-//		StringBuffer output = new StringBuffer();
-//		String str = "";
-//		Clob clob = (Clob)code.get("CODE_CONTENTS");
-//		BufferedReader br = new BufferedReader(clob.getCharacterStream());
-//		
-//		while((str = br.readLine()) != null) {
-//			output.append(str);
-//		}
-//		
-//		mv.addObject("code", output.toString());
 		
 		for(Document d : dList) {
 			d.setDocWriterNo(docWriterNo);
@@ -64,7 +58,7 @@ public class ApprovalController {
 		if(!dList.isEmpty()) {
 			mv.addObject("dList",dList);
 			mv.addObject("pi",pi);
-			mv.setViewName("approval/myDocumentListView");
+			mv.setViewName("approval/"+path);
 		}else {
 			mv.addObject("msg", "게시판 조회실패!");
 			
@@ -72,8 +66,10 @@ public class ApprovalController {
 		return mv;
 	}
 	
+	//결재문 작성
 	@RequestMapping(value="documentWriteView.do", method= RequestMethod.GET)
-	public ModelAndView documentWriteView(ModelAndView mv) throws SQLException, IOException {
+	public ModelAndView documentWriteView(
+			ModelAndView mv, HttpServletRequest request ) throws SQLException, IOException {
 		Map<String,String> param = new HashMap();
 		param.put("group_code_id", "DOC_GUBUN");
 		
@@ -95,6 +91,7 @@ public class ApprovalController {
 		return mv;
 	}
 	
+	//결재선 view
 	@RequestMapping(value="approvalEmp.do", method=RequestMethod.GET)
 	public ModelAndView findMemberList(ModelAndView mv) {
 		List<Employee> eList = service.printAllEmployeeList();
@@ -106,6 +103,29 @@ public class ApprovalController {
 		mv.addObject("dList", dList);
 		mv.setViewName("approval/approvalEmp");
 		return mv;
+	}
+	
+	//결재문 상세 view
+	public ModelAndView documentDetail(ModelAndView mv, HttpServletRequest request) {
+		return mv;
+	}
+	
+	//결재 처리 페이지 
+	public ModelAndView transApproveOne(ModelAndView mv, HttpSession session){
+		return mv;
+	}
+	
+	//문서리스트 검색
+	public String DocumentSearchList(ApprovalSearch search, Model model) {
+		return "";
+	}
+	
+	//파일관리
+	public void deleteFile(String fileName, HttpServletRequest request) {
+		
+	}
+	public String saveFile(MultipartFile file, HttpServletRequest request) {
+		return "";
 	}
 
 }

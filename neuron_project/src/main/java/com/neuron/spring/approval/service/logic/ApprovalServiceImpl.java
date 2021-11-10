@@ -20,13 +20,7 @@ public class ApprovalServiceImpl implements ApprovalService{
 	private ApprovalStore store;
 
 	@Override
-	public Employee printOneByEmp(int docWriterNo) {
-		Employee empOne = store.printOneByEmp(docWriterNo);
-		return empOne;
-	}
-
-	@Override
-	public List<Document> printMyAllDocList(PageInfo pi,Map docWriterNo) {
+	public List<Document> printMyAllDocList(PageInfo pi, Map docWriterNo) {
 		List<Document> dList = store.selectMyAllDoc(pi, docWriterNo);
 		return dList;
 	}
@@ -56,6 +50,30 @@ public class ApprovalServiceImpl implements ApprovalService{
 	@Override
 	public List<Dept> printAllDeptList() {
 		return store.selectAllDept();
+	}
+
+	@Override
+	public Employee printOneByEmp(int empNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int registerDocument() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int registerApprove() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int registerDocumentFile() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	

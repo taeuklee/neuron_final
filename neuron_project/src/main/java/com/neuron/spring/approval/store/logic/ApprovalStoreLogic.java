@@ -33,12 +33,6 @@ public class ApprovalStoreLogic implements ApprovalStore{
 	}
 
 	@Override
-	public Employee printOneByEmp(int WriterNo) {
-		Employee empOne = sqlSession.selectOne("approvalMapper.selectOneEmp",WriterNo);
-		return empOne;
-	}
-
-	@Override
 	public int selectListCount(int docWriterNo) {
 		int count = sqlSession.selectOne("approvalMapper.selectListCount", docWriterNo);
 		return count;

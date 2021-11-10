@@ -12,7 +12,7 @@
 		<c:if test="${ empty sessionScope.loginEmployee }">
         <div class="user-profile">
           <div class="user-image">
-            <img src="images/faces/face28.png">
+            <img src="/images/faces/face28.png">
           </div>
           <div class="emp-name">
               edward spenser
@@ -25,7 +25,7 @@
 		<c:if test="${not empty sessionScope.loginEmployee }">
         <div class="user-profile">
           <div class="user-image">
-            <a href="#"><img src="images/faces/face28.png"></a>
+            <a href="#"><img src="/images/faces/face28.png"></a>
           </div>
           <div class="emp-name">
               ${loginEmployee.empName}
@@ -118,8 +118,8 @@
 	            <li class="nav-item" align="center">
 	            <i class="menu-arrow"></i><span style="font-size:large; color:#F9D955;">기안</span>
 	              	<ul style="list-style:none; cursor:pointer;">
-		                <li class="nav-item"> <a class="nav-link" onclick="location:href='/documentList.do';">결재요청함</a></li>
-		                <li class="nav-item"> <a class="nav-link" href="#">임시저장함</a></li>
+		                <li class="nav-item"> <a class="nav-link" onclick="location:href='/approval/myDocumentListView.do';">결재요청함</a></li>
+		                <li class="nav-item"> <a class="nav-link" onclick="location:href='/approval/list1.do';">임시저장함</a></li>
 	              	</ul>
 	            </li>
 	            <li class="nav-item" align="center">
@@ -138,7 +138,7 @@
           <li class="nav-item">
             <a class="nav-link" onclick="location.href='/noticeListView.do'">
               <i class="icon-file menu-icon"></i>
-              <span class="menu-title">공지사항</span></a>
+              <span class="menu-title">공지사항</span>
             </a>
           </li>
         </ul>
