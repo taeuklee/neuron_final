@@ -5,8 +5,8 @@
  <mapper namespace="employeeMapper">
  	<resultMap type="Employee" id="employeeResultMap">
  		<id property="empNo" column="EMP_NO"/>
- 		<result property="deptNo" column="DEPT_CODE"></result>
- 		<result property="teamNo" column="TEAM_CODE"></result>
+ 		<result property="deptCode" column="DEPT_CODE"></result>
+ 		<result property="teamCode" column="TEAM_CODE"></result>
  		<result property="empId" column="EMP_ID"></result>
  		<result property="empPwd" column="EMP_PWD"></result>
  		<result property="empName" column="EMP_NAME"></result>
@@ -23,6 +23,7 @@
  		<result property="empSign" column="EMP_SIGN"></result>
 <!--  		<result property="empFilname" column="EMP_FILENAME"></result> -->
 <!--  		<result property="empFileRename" column="EMP_FILERENAME"></result> -->
+		<result property="empMaster" column="EMP_MASTER"></result>
  	</resultMap>
  	
  	<resultMap type="Team" id="teamResultMap">
@@ -52,4 +53,10 @@
  	 <select id="selectAllDept" resultMap="deptResultMap">
  	 	SELECT * FROM DEPT
  	 </select>
+ 	 
+ 	 <insert id="insertEmp" parameterType="Employee">
+ 		INSERT INTO EMPLOYEE VALUES (SEQ_EMPNUM.NEXTVAL, #{deptCode}, #{teamCode}, #{empId}, #{empPwd}, 
+ 		#{empName}, #{empBirth}, #{empPhone}, #{empJob}, #{empEmail}, #{empSubEmail}, 
+        #{empExnum}, #{empState},NULL, NULL, NULL, NULL, NULL, NULL, #{empMaster}) 
+ 	 </insert>
  </mapper>

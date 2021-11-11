@@ -6,4 +6,6 @@ public interface EmployeeStore {
 
 	public Employee selectEmp(Employee empOne);
 
+	public int insertEmp(Employee employee);
+
 }

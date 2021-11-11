@@ -25,7 +25,7 @@
 		<c:if test="${not empty sessionScope.loginEmployee }">
         <div class="user-profile">
           <div class="user-image">
-            <a href="#"><img src="images/faces/face28.png"></a>
+            <a href="#" onclick="location.href='empInfo.do'"><img src="images/faces/face28.png"></a>
           </div>
           <div class="emp-name">
               ${loginEmployee.empName}
@@ -141,6 +141,14 @@
               <span class="menu-title">공지사항</span></a>
             </a>
           </li>
+          <c:if test="${not empty sessionScope.loginEmployee }">
+                   <li class="nav-item">
+            <a class="nav-link" onclick="location.href='/enrollView.do'">
+              <i class="icon-file menu-icon"></i>
+              <span class="menu-title">사원 관리</span></a>
+            </a>
+          </li>
+          </c:if>
         </ul>
       </nav>
 </body>

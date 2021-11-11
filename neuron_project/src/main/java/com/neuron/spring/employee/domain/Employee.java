@@ -4,8 +4,8 @@ import java.io.File;
 
 public class Employee {
 	private int empNo;
-	private String deptNo;
-	private String teamNo;
+	private String deptCode;
+	private String teamCode;
 	private String empId;
 	private String empPwd;
 	private String empName;
@@ -21,7 +21,8 @@ public class Employee {
 	private int empExVac;
 	private String empSign;
 	private String empFileName;
-	private File empFileReName;
+	private String empFileReName;
+	private String empMaster;
 	
 	public Employee() {
 		super();
@@ -36,20 +37,20 @@ public class Employee {
 		this.empNo = empNo;
 	}
 
-	public String getDeptNo() {
-		return deptNo;
+	public String getDeptCode() {
+		return deptCode;
 	}
 
-	public void setDeptNo(String deptNo) {
-		this.deptNo = deptNo;
+	public void setDeptCode(String deptCode) {
+		this.deptCode = deptCode;
 	}
 
-	public String getTeamNo() {
-		return teamNo;
+	public String getTeamCode() {
+		return teamCode;
 	}
 
-	public void setTeamNo(String teamNo) {
-		this.teamNo = teamNo;
+	public void setTeamCode(String teamCode) {
+		this.teamCode = teamCode;
 	}
 
 	public String getEmpId() {
@@ -172,23 +173,32 @@ public class Employee {
 		this.empFileName = empFileName;
 	}
 
-	public File getEmpFileReName() {
+	public String getEmpFileReName() {
 		return empFileReName;
 	}
 
-	public void setEmpFileReName(File empFileReName) {
+	public void setEmpFileReName(String empFileReName) {
 		this.empFileReName = empFileReName;
+	}
+
+	public String getEmpMaster() {
+		return empMaster;
+	}
+
+	public void setEmpMaster(String empMaster) {
+		this.empMaster = empMaster;
 	}
 
 	@Override
 	public String toString() {
-		return "Employee [empNo=" + empNo + ", deptNo=" + deptNo + ", teamNo=" + teamNo + ", empId=" + empId
+		return "Employee [empNo=" + empNo + ", deptCode=" + deptCode + ", teamCode=" + teamCode + ", empId=" + empId
 				+ ", empPwd=" + empPwd + ", empName=" + empName + ", empBirth=" + empBirth + ", empPhone=" + empPhone
 				+ ", empJob=" + empJob + ", empEmail=" + empEmail + ", empSubEmail=" + empSubEmail + ", empExnum="
 				+ empExnum + ", empState=" + empState + ", empVac=" + empVac + ", empMed=" + empMed + ", empExVac="
 				+ empExVac + ", empSign=" + empSign + ", empFileName=" + empFileName + ", empFileReName="
-				+ empFileReName + "]";
+				+ empFileReName + ", empMaster=" + empMaster + "]";
 	}
+
 
 
 }

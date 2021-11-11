@@ -53,8 +53,7 @@
                 <li class="nav-item"> <a class="nav-link" href="#">사원관리</a></li>
               </ul>
             </div>
-          </li>
-          
+          </li>          
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#menu3" aria-expanded="false" aria-controls="menu3">
               <i class="icon-disc menu-icon"></i>
@@ -107,7 +106,6 @@
               </ul>
             </div>
           </li>
-          
           <li class="nav-item">
             <a class="nav-link" href="#">
               <i class="icon-file menu-icon"></i>
