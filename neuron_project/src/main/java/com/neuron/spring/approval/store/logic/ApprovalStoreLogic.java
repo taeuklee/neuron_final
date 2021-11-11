@@ -67,8 +67,8 @@ public class ApprovalStoreLogic implements ApprovalStore{
 	}
 
 	@Override
-	public int insertDocument(Document doc) {
-		return sqlSession.insert("approvalMapper.insertDocument",doc);
+	public int insertDocument(Map<String,Object> param) {
+		return sqlSession.insert("approvalMapper.insertDocument",param);
 	}
 
 	@Override
@@ -81,6 +81,16 @@ public class ApprovalStoreLogic implements ApprovalStore{
 	public int issertApproval(Approval appr) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public List<Approval> selectApproval(int documentNo) {
+		return sqlSession.selectList("approvalMapper.selectApproval",documentNo);
+	}
+
+	@Override
+	public Document selectDocumentOne(int documentNo) {
+		return sqlSession.selectOne("approvalMapper.selectDocOne",documentNo);
 	}
 
 }

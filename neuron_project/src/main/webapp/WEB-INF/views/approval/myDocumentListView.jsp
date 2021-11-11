@@ -136,7 +136,10 @@
 										</thead>
 										<tbody>
 										<c:forEach items="${dList }" var="dOne" varStatus="count">
-											<tr align="center">
+											<c:url var="dDetail" value="documentDatail.do">
+												<c:param name="documentNo" value="${dOne.docNo }"></c:param>
+											</c:url>
+											<tr align="center" onclick="location.href='/${dDetail }'" style="cursor:pointer; color:#blue;">
 												<td>${dOne.docNo }</td>
 												<td>${dOne.docKind }</td>
 												<td>${dOne.dCreateDate }</td>
@@ -155,6 +158,7 @@
 											<tr>
 												<td colspan="5" style="padding: 5px">
 													<div class="answer" id="ans-${count.count }">
+														<input type="hidden" id="docNo-${count.count }" value="${dOne.docNo }">
 														<table align="center" border="1">
 															<thead align="center">
 																<tr>
@@ -167,18 +171,7 @@
 																	<th>결재의견</th>
 																</tr>
 															</thead>
-															<tbody>
-																<tr>
-																	<td>1</td>
-																	<td>이태욱대리 개발1팀</td>
-																	<td>합의</td>
-																	<td>승인</td>
-																	<td>2021.10.26 13:14</td>
-																	<td>2021.10.26 16:40</td>
-																	<td>승인완료</td>
-																</tr>
-																
-																
+															<tbody id="tbody-${count.count }">
 															</tbody>
 														</table>
 													</div>
@@ -235,14 +228,67 @@
 	</div>
 	<!-- container-scroller -->
 	<script>
+// 	<tr>
+// 		<th>순번</th>
+// 		<th>합의/결재자</th>
+// 		<th>결재유형</th>
+// 		<th>결재내역</th>
+// 		<th>배정일시</th>
+// 		<th>결재일시</th>
+// 		<th>결재의견</th>
+// 	</tr>
 	    const items = document.querySelectorAll('.question');
 	    function openCloseAnswer() {
 	      const answerId = this.id.replace('que', 'ans');
-	  
+	      var docId = this.id.replace("que","docNo");
+	      var docNo = $('#'+docId).val();
+	      var tbody = this.id.replace("que","tbody");
+		  $.ajax({
+			  url : "apprList.do",
+			  type : "get",
+			  data : {"documentNo":docNo },
+			  dataType : "json",
+			  success : function(data){
+				  var $tableBody = $('#'+tbody);
+				  $tableBody.html("");
+				  var $tr;
+				  var $seq;
+				  var $writer;
+				  var $apprType;
+				  var $apprState;
+				  var $startDate;
+				  var $endDate;
+				  var $apprOp;
+				  if(data.length>0){
+						for(var i in data){
+							$tr= $("<tr>");
+							$seq = $("<td>").text(i+1);
+							$writer = $("<td>").text(data[i].approvalEmpNo);
+							$apprType = $("<td>").text(data[i].approvalType);
+							$apprState = $("<td>").text(data[i].approvalStatus);
+							$startDate = $("<td>").text(data[i].approvalStartDate);
+							$endDate = $("<td>").text(data[i].approvalEndDate);
+							$apprOp = $("<td>").text(data[i].approvalOpinion);
+							$tr.append($seq);
+							$tr.append($writer);
+							$tr.append($apprType);
+							$tr.append($apprState);
+							$tr.append($startDate);
+							$tr.append($endDate);
+							$tr.append($apprOp);
+							$tableBody.append($tr);
+						}
+					}
+			  },
+			  error : function(){
+				  alert("ajax 실패");
+			  }
+		  });	
 	      if(document.getElementById(answerId).style.display === 'block') {
 	        document.getElementById(answerId).style.display = 'none';
 	        document.getElementById(this.id + '-toggle').textContent = '+';
-	      } else {
+	      }
+	      else {
 	        document.getElementById(answerId).style.display = 'block';
 	        document.getElementById(this.id + '-toggle').textContent = '-';
 	      }

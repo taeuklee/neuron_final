@@ -90,12 +90,6 @@ body {
 			html += "<td><button onclick='rmAppr(this);'>삭제</button></td>";
 			html += "</tr>";
 			$("#결재선택").append(html);
-// 			$("#결재선택").append("<td>" + "<input type='hidden' name='emp_id' value='"+selectApvl+":"+appl+"'>" + appl + "</td>");
-// 			$("#결재선택").append("<td>" + selectApvl.split(":")[3] + "</td>");
-// 			$("#결재선택").append("<td>" + selectApvl.split(":")[2] + "</td>");
-// 			$("#결재선택").append("<td>" + selectApvl.split(":")[1] + "</td>");
-// 			$("#결재선택").append("<td><button onclick='rmAppr(this);'>삭제</button></td>");
-// 			$("#결재선택").append("</tr>");
 		}
 	}
 
@@ -193,7 +187,7 @@ body {
 									<li class="sub-menu"><a>${tOne.teamName }</a>
 									<ul class="hide">
 										<c:forEach items="${eList }" var="eOne">
-											<c:if test="${tOne.teamNo eq eOne.teamNo }">
+											<c:if test="${tOne.teamNo eq eOne.teamCode }">
 												<li id="select">
 													<label> 
 													<input type="radio" name="select-apvl" value="${eOne.empNo}:${eOne.empJob }:${eOne.empName }:${tOne.teamName }">

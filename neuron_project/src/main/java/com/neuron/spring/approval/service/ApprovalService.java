@@ -3,6 +3,7 @@ package com.neuron.spring.approval.service;
 import java.util.List;
 import java.util.Map;
 
+import com.neuron.spring.approval.domain.Approval;
 import com.neuron.spring.approval.domain.CodeInfo;
 import com.neuron.spring.approval.domain.Document;
 import com.neuron.spring.approval.domain.PageInfo;
@@ -36,9 +37,13 @@ public interface ApprovalService {
 	
 	public List<Dept> printAllDeptList();
 	
-	public int registerDocument(Document doc);
+	public int registerDocument(Map<String,Object> param);
 	
 	public int registerApprove();
 	
 	public int registerDocumentFile();
+	
+	public List<Approval> printApprovalList(int docNo);
+	
+	public Document printDocumentOne(int docNo);
 }
