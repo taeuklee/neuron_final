@@ -32,4 +32,10 @@ public interface ApprovalService {
 	public List<Team> printAllTeamList();
 	
 	public List<Dept> printAllDeptList();
+	
+	public int registerDocument();
+	
+	public int registerApprove();
+	
+	public int registerDocumentFile();
 }
