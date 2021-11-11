@@ -87,6 +87,7 @@ border-color:#1e2b37;
 				<div class="content-wrapper" id="contents">
 					<div class="col-lg-6" style="float: left">
 						<form action="insertProjectRegister.do" id="insertProjectForm" method="post">
+							<input type="hidden" value="${loginEmployee.empNo }">
 							<div id="projectContents" style="height: 30%">
 								<div class="mb-3">
 									<label for="exampleFormControlInput1" class="form-label"><h1>프로젝트
@@ -140,7 +141,7 @@ border-color:#1e2b37;
 		var searchText = document.getElementById('searchText').value;
 		var memberList = document.getElementById('memberList')
 		$.ajax({
-			url : "insertProjectSearchMemberList.do",
+			url : "insertProjectSearchMemberList.do?empNo=${loginEmployee.empNo}",
 			type : "post",
 			data : {
 				"searchText":searchText

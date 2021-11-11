@@ -27,4 +27,24 @@ public class EmpCalendarServiceImpl implements EmpCalendarService{
 		int result = store.insertEmpCalendarEvent(eCalendar);
 		return result;
 	}
+
+	@Override
+	public EmpCalendar selectEventDetail(int calNo) {
+		EmpCalendar eventDetail = store.selectEventDetail(calNo);
+		return eventDetail;
+	}
+
+	@Override
+	public int updateEmpCalendarEvent(EmpCalendar eCalendar) {
+		int result = store.updateEmpCalendarEvent(eCalendar);
+		return result;
+	}
+
+	@Override
+	public int deleteEmpCalendarEvent(EmpCalendar eCalendar) {
+		int result = store.deleteEmpCalendarEvent(eCalendar);
+		return result;
+	}
+
+
 }

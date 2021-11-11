@@ -57,56 +57,77 @@
 <!-- End custom js for this page-->
 </head>
 <body>
-	<form action="insertEmpCalendar.do" method="get" onsubmit="return false">
-		<input type="hidden" value="${loginEmployee.empNo}" name="empNo" id="empNo">
+	<form action="updateEmpCalendar.do" method="get" onsubmit="return false">
+		<input type="hidden" value="${loginEmployee.empNo}" name="empNo">
+		<input type="hidden" value="${calNo }" name="calNo" id="calNo">
 		<div class="mb-3">
 			<label for="exampleInputEmail1" class="form-label"> 일정제목 </label> <input
 				type="text" class="form-control" id="eventTitle" name="eventTitle"
-				aria-describedby="emailHelp">
+				aria-describedby="emailHelp" value=${eventDetail.empCalendarEventTitle }>
 		</div>
 		<div class="mb-3">
 			<label for="exampleInputPassword1" class="form-label">시작날짜</label> 
-			<input type="date" class="form-control" id="startTime" name="startTime">
-			<input type="time" class="form-control" id="startTimeDetail" name="startTimeDetail">	
+			<input type="date" class="form-control" id="startTime" name="startTime" value=${startDay }>
+			<input type="time" class="form-control" id="startTimeDetail" name="startTimeDetail" value=${startTime }>	
 		</div>
 		<div class="mb-3">
 			<label for="exampleInputPassword1" class="form-label">마감 날짜</label> 
-			<input type="date" class="form-control" id="endTime"  name="endTime">
-			<input type="time" class="form-control" id="endTimeDetail" name="endTimeDetail">	
+			<input type="date" class="form-control" id="endTime"  name="endTime" value=${endDay }>
+			<input type="time" class="form-control" id="endTimeDetail" name="endTimeDetail" value=${endTime }>	
 		</div>
-		<button type="button" class="btn btn-primary" onclick="insertEmpCalendar()">추가</button>
+		<button type="button" class="btn btn-primary" onclick="updateEmpCalendar()">수정</button>
+		<button type="button" class="btn btn-primary" onclick="deleteEmpCalendar()">삭제</button>		
 	</form>
 	<script>
-		function insertEmpCalendar() {
-			var eventTitle = document.getElementById('eventTitle').value;
-			var startTime = document.getElementById('startTime').value;
-			var startTimeDetail = document.getElementById('startTimeDetail').value;
-			var endTime = document.getElementById('endTime').value;
-			var endTimeDetail = document.getElementById('endTimeDetail').value;
-			$.ajax({
-				url:"insertEmpCalendar.do?empNo=${loginEmployee.empNo}",
-				type:"get",
-				data:{
-					"eventTitle":eventTitle,
-					"startTime":startTime,
-					"startTimeDetail":startTimeDetail,
-					"endTime":endTime,
-					"endTimeDetail":endTimeDetail
-				},
-				success: function(data) {
-					console.log(data);
-					if(data=="success"){
-						alert("일정이 등록되었습니다")
-						window.opener.location.reload();
-					}else{
-						alert("등록이 실패했습니다")
-					}
-				},
-				error:function(){
-					alert("오류발생!")
+	function updateEmpCalendar() {
+		var eventTitle = document.getElementById('eventTitle').value;
+		var startTime = document.getElementById('startTime').value;
+		var startTimeDetail = document.getElementById('startTimeDetail').value;
+		var endTime = document.getElementById('endTime').value;
+		var endTimeDetail = document.getElementById('endTimeDetail').value;
+		//var calNo = document.getElementById('calNo').value
+		$.ajax({
+			url:"updateEmpCalendar.do?empNo=${loginEmployee.empNo}&calNo=${calNo}",
+			type:"get",
+			data:{
+				"eventTitle":eventTitle,
+				"startTime":startTime,
+				"startTimeDetail":startTimeDetail,
+				"endTime":endTime,
+				"endTimeDetail":endTimeDetail
+			},
+			success: function(data) {
+				console.log(data);
+				if(data=="success"){
+					alert("일정수정이 완료되었습니다")
+				}else{
+					alert("등록이 실패했습니다")
 				}
-			});
-		}
+			},
+			error:function(){
+				alert("오류발생!")
+			}
+		});
+	}
+	
+	function deleteEmpCalendar(){
+		$.ajax({
+			url:"deleteEmpCalendar.do?empNo=${loginEmployee.empNo}&calNo=${calNo}",
+			type:"get",
+			success:function(data){
+				if(data=="success"){
+					alert("일정이 삭제되었습니다.");
+					window.opener.location.reload();
+					window.close();
+				}else{
+					alert("오류입니다")
+				}
+			},error:function(){
+				alert("오류다~")
+			}
+		});
+	}
+	
 	</script>
 </body>
 </html>

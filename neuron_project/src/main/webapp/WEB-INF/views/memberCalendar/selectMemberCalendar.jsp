@@ -71,6 +71,7 @@
 document.addEventListener('DOMContentLoaded', function() {
   var empNo = ${empNo}
   console.log(empNo)
+  var events;
   var calendarEl = document.getElementById('calendar');
   var calendar = new FullCalendar.Calendar(calendarEl, {	  	  
     headerToolbar: {
@@ -88,6 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     locale : 'ko',
     initialView: 'listWeek',
+    nextDayThreshold:'00:00',
     //initialDate: '2020-09-12',
     navLinks: true, // can click day/week names to navigate views
     editable: true,
@@ -102,21 +104,45 @@ document.addEventListener('DOMContentLoaded', function() {
 				},
 				success: function(data) {
 					console.log(data)
-					var events = [];
+					events = [];
 					for(var i in data){
 						
 					var title = data[i].empCalendarEventTitle;
 					var start = data[i].empCalendarStartTime;
 					var end = data[i].empCalendarEndTime;
+					var calNo = data[i].empCalendarNo
 					events.push({
 						title:title,
 						start:start,
-						end:end
+						end:end,
+						calNo:calNo
 					});
+					console.log(events)
 					}
 					successCallback(events)
 				},error: function () {
 					alert("통신오류 입니다")
+				}
+			});
+		},
+		eventClick:function(info){
+			var calNo = info.event.extendedProps.calNo;
+			//var calNo = events[0].calNo
+			$.ajax({
+				url:'<c:url value="selectEventDetail.do?calNo='+calNo+'&empNo=${empNo}"/>',
+				type:'POST',
+				data:{
+				},
+				success:function(data){
+					if(data == "success"){						
+					alert("성공!")
+					}
+					var url = "openEventDetail.do?calNo="+calNo;
+					var name = "일정 디테일";
+					var option = "width = 800, height = 700, top = 300 , left = 650, location = no, toolbars = no, status = no, scrollbars = no, resizable = no";
+					window.open(url, name, option);
+				},error: function () {
+					alert("통신오류입니다")
 				}
 			});
 		}

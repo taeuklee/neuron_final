@@ -1,6 +1,7 @@
 package com.neuron.spring.project.service.logic;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,10 @@ public class ProjectServiceImpl implements ProjectService{
 	private ProjectStore store;
 
 	@Override
-	public List<Employee> selectInsertProjectSearchList(String searchText) {
-		List<Employee> eList = store.selectInsertProjectSearchList(searchText);
-		return eList;
+	public List<Employee> selectInsertProjectSearchList(Map<String, Object> map) {
+		List<Employee> eList = store.selectInsertProjectSearchList(map);
+		return eList;	
 	}
+
+
 }

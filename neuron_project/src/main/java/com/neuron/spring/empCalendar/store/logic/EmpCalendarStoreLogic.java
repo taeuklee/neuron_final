@@ -26,4 +26,24 @@ public class EmpCalendarStoreLogic implements EmpCalendarStore{
 		int result = sqlSession.insert("empCalendarMapper.insertEvent", eCalendar);
 		return result;
 	}
+
+	@Override
+	public EmpCalendar selectEventDetail(int calNo) {
+		EmpCalendar eventDetail = sqlSession.selectOne("empCalendarMapper.selectDetail", calNo);
+		return eventDetail;
+	}
+
+	@Override
+	public int updateEmpCalendarEvent(EmpCalendar eCalendar) {
+		int result = sqlSession.update("empCalendarMapper.updateEvent", eCalendar);
+		return result;
+	}
+
+	@Override
+	public int deleteEmpCalendarEvent(EmpCalendar eCalendar) {
+		int result = sqlSession.delete("empCalendarMapper.deleteEvent", eCalendar);
+		return result;
+	}
+
+
 }
