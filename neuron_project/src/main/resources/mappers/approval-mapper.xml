@@ -24,6 +24,18 @@
 	   <result property="codeContents" column="CODE_CONTENTS"/>
   	</resultMap>
   	
+  	<resultMap type="Approval" id="ApprResultMap">
+	   <id property="approvalNo" column="APPROVAL_NO"/>
+	   <result property="documentNo" column="DOCUMENT_NO"/>
+	   <result property="approvalEmpNo" column="EMP_NO"/>
+	   <result property="approvalType" column="APPROVAL_TYPE"/>
+	   <result property="approvalStatus" column="APPROVAL_STATUS"/>
+	   <result property="approvalOpinion" column="APPROVAL_OPINION"/>
+	   <result property="approvalStartDate" column="APPROVAL_STARTDATE"/>
+	   <result property="approvalEndDate" column="APPROVAL_ENDDATE"/>
+	   <result property="signFileNo" column="FILE_NO"/>
+  	</resultMap>
+  	
   	<select id="selectCodeInfoOne" resultType="map" parameterType="map">
   		select * 
   		from code_info 
@@ -53,8 +65,16 @@
   		select count(*) from document where DOCUMENT_WRITER_NO = #{docWriterNo}
   	</select>
   	
-  	<insert id="insertDocument">
-  		INSERT INTO DOCUMENT VALUES(SEQ_DOCUMENT.NEXTVAL,#{docWriterNo},#{docKind},#{docContents},'결재대기',null,SYSDATE,SYSDATE,NULL,NULL)
-	</insert>
   	
+  	<insert id="insertDocument" parameterType="map">
+  		INSERT INTO DOCUMENT VALUES(SEQ_DOCUMENT.NEXTVAL,#{WriterEmpNo,jdbcType=BIGINT },#{docGubun,jdbcType=VARCHAR},#{docContents,jdbcType=CLOB},'결재대기',null,SYSDATE,SYSDATE,NULL,NULL)
+	</insert>
+	
+	<select id="selectApproval" parameterType="_int" resultMap="ApprResultMap">
+		SELECT * FROM approval WHERE DOCUMENT_NO = #{documentNo } ORDER BY 1
+	</select>
+  	
+  	<select id="selectDocOne" parameterType="_int" resultMap="DocResultMap">
+  		SELECT * FROM DOCUMENT WHERE DOCUMENT_NO = #{documentNo }
+  	</select>
   </mapper>

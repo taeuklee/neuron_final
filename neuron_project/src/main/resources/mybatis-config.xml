@@ -9,6 +9,7 @@
   	</settings>
 	<typeAliases>
 		<typeAlias type="com.neuron.spring.approval.domain.Document" alias="Document"/>
+		<typeAlias type="com.neuron.spring.approval.domain.Approval" alias="Approval"/>
 		<typeAlias type="com.neuron.spring.approval.domain.CodeInfo" alias="CodeInfo"/>
 		<typeAlias type="com.neuron.spring.employee.domain.Employee" alias="Employee"/>
 		<typeAlias type="com.neuron.spring.employee.domain.Dept" alias="Dept"/>

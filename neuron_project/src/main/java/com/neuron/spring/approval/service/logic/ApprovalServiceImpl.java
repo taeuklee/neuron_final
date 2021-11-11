@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.neuron.spring.approval.domain.Approval;
 import com.neuron.spring.approval.domain.CodeInfo;
 import com.neuron.spring.approval.domain.Document;
 import com.neuron.spring.approval.domain.PageInfo;
@@ -65,8 +66,8 @@ public class ApprovalServiceImpl implements ApprovalService{
 	}
 
 	@Override
-	public int registerDocument(Document doc) {
-		return store.insertDocument(doc);
+	public int registerDocument(Map<String,Object> param) {
+		return store.insertDocument(param);
 	}
 
 	@Override
@@ -79,6 +80,16 @@ public class ApprovalServiceImpl implements ApprovalService{
 	public int registerDocumentFile() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public List<Approval> printApprovalList(int documentNo) {
+		return store.selectApproval(documentNo);
+	}
+
+	@Override
+	public Document printDocumentOne(int documentNo) {
+		return store.selectDocumentOne(documentNo);
 	}
 
 	

@@ -4,12 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
+import com.neuron.spring.approval.domain.Approval;
 import com.neuron.spring.approval.domain.ApprovalSearch;
 import com.neuron.spring.approval.domain.CodeInfo;
 import com.neuron.spring.approval.domain.Document;
@@ -104,53 +110,36 @@ public class ApprovalController {
 			,@RequestParam(value="emp_id_2") String applEmp2 // 결재자
 			,@RequestParam(value="uploadFile", required=false) MultipartFile uploadFile
 			, HttpServletRequest request ) throws SQLException, IOException {
-		Map<String, Object> paramMap = request.getParameterMap();
+
 		
-		for(String key : paramMap.keySet()) {
-			System.out.println(key+","+paramMap.get(key));
-		}
+		//		session = request.getSession();
+		//		Employee emp = new Employee();
+		//		if(session.getAttribute("loginEmployee") != null) {
+		//			emp = (Employee)session.getAttribute("loginEmployee");
+		//		}
+		//		int userNo = emp.getEmpNo();
+
 		
+		Map<String, Object> paramMap = null;
+		paramMap.put("docGubun", docKind);
+		paramMap.put("docContents", boardContents);
+		paramMap.put("emp_id_1", Integer.parseInt(applEmp1.split(":")[0]));
+		paramMap.put("emp_id_2", Integer.parseInt(applEmp2.split(":")[0]));
+		paramMap.put("WriterEmpNo",1);
+	
 		// value값은 jsp의 input태그의 name값이고
 		// required = false, 파일이 필수가 아님을 알려주는 것이고
 		// MultipartFile은 MultipartResolver 객체를 빈으로 등록해서 사용한다는 것이다.
 		//uploadFile이 비어있지 않으면
-//		if(!uploadFile.getOriginalFilename().equals("")) {
-//			String filePath = saveFile(uploadFile, request);
-//			if(filePath!=null) {
-//				// 파일 업로드 
-//			}
-//		}
-		session = request.getSession();
-//		Employee emp = new Employee();
-//		if(session.getAttribute("loginEmployee") != null) {
-//			emp = (Employee)session.getAttribute("loginEmployee");
-//		}
-//		int userNo = emp.getEmpNo();
+		//		if(!uploadFile.getOriginalFilename().equals("")) {
+		//			String filePath = saveFile(uploadFile, request);
+		//			if(filePath!=null) {
+		//				// 파일 업로드 
+		//			}
+		//		}
 		
-		int userNo = 1; // 로그인 유저번호
-		
-	
-		int empId1 = Integer.parseInt(applEmp1.split(":")[0]); // 합의자 회원번호
-		int empId2 = Integer.parseInt(applEmp2.split(":")[0]); // 결재자 회원번호
-		
-		Document doc = new Document();
-		//휴가신청서일때 휴가신청 값 따로 받기
-//		if(docKind=="A") {
-//			
-//		}else{}
-//		StringBuffer output = new StringBuffer();
-//		String str = "";
-//		BufferedReader br = new BufferedReader(boardContents.getCharacterStream());
-//		while((str = br.readLine()) != null) {
-//			output.append(str);
-//		}
-//		String Contents = output.toString();
-		
-		doc.setDocWriterNo(userNo);
-		doc.setDocKind(docKind);
-		doc.setDocContents(boardContents);
-		
-		int result = service.registerDocument(doc);
+
+		int result = service.registerDocument(paramMap);
 		if(result>0) {
 			mv.setViewName("redirect:/approval/myDocumentListView.do");
 		}else {
@@ -174,8 +163,30 @@ public class ApprovalController {
 		return mv;
 	}
 	
+	@RequestMapping(value = "apprList.do", method=RequestMethod.GET)
+	public void getApprovalList(@RequestParam("documentNo") int docNo, HttpServletResponse response) throws JsonIOException, IOException {
+		List<Approval> aList = service.printApprovalList(docNo);
+		if(!aList.isEmpty()) {
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+			gson.toJson(aList,response.getWriter());
+		}else {
+			System.out.println("데이터가 없음");
+		}
+	}
+	
+	
+	
+	
 	//결재문 상세 view
-	public ModelAndView documentDetail(ModelAndView mv, HttpServletRequest request) {
+	@RequestMapping(value="documentDatail.do")
+	public ModelAndView documentDetail(
+			ModelAndView mv, @RequestParam("documentNo") int documentNo) {
+		Document docOne = service.printDocumentOne(documentNo);
+		List<Approval> aList = service.printApprovalList(documentNo);
+		
+		mv.addObject("docOne", docOne);
+		mv.addObject("aList",aList);
+		mv.setViewName("/approval/documentDetail");
 		return mv;
 	}
 	
