@@ -18,8 +18,6 @@
 		SELECT COUNT(*) FROM ATTENDANCE 
 	</select>
 
-	
-  	
   <select id="selectAllList" resultMap="attendResultMap">
 		SELECT * FROM ATTENDANCE ORDER BY ATTEND_NO DESC
 	</select>
