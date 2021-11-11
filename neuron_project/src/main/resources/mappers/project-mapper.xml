@@ -38,17 +38,17 @@
  	
  	<resultMap type="Team" id="teamResultMap">
  		<id property="teamNo" column="TEAM_NO"/>
- 		<result property="deptNo" column="DEPT_NO"/>
+ 		<result property="deptNo" column="DEPT_CODE"/>
  		<result property="teamName" column="TEAM_NAME"/>
  	</resultMap>
  	
  	
  	<resultMap type="Dept" id="deptResultMap">
- 		<id property="deptNo" column="DEPT_NO"/>
+ 		<id property="deptNo" column="DEPT_CODE"/>
  		<result property="deptName" column="DEPT_NAME"/>
  	</resultMap>
 	
-	<select id="insertProjectSearchList" resultMap="employeeResultMap" parameterType="String">
-		SELECT EMP.EMP_NAME, EMP.EMP_JOB, EMP.EMP_NO, EMP.DEPT_CODE, DEPT.DEPT_NAME  FROM EMP EMP JOIN DEPT DEPT ON (EMP.DEPT_CODE=DEPT.DEPT_NO) WHERE EMP.EMP_NAME LIKE '%' || #{searcText} || '%'
+	<select id="insertProjectSearchList" resultMap="employeeResultMap" parameterType="hashMap">
+		SELECT EMP.EMP_NAME, EMP.EMP_JOB, EMP.EMP_NO, EMP.DEPT_CODE, DEPT.DEPT_NAME  FROM EMPLOYEE EMP JOIN DEPT DEPT ON (EMP.DEPT_CODE=DEPT.DEPT_CODE) WHERE EMP.EMP_NAME LIKE '%' || #{searchText} || '%' AND NOT EMP.EMP_NO = #{empNo}
 	</select>
   </mapper>

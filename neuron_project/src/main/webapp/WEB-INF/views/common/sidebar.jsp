@@ -101,7 +101,7 @@
           </li>
           
           <li class="nav-item">
-            <a class="nav-link" href="selectMemberCalendar.do">
+            <a class="nav-link" href="moveSelectMemberCalendar.do?empNo=${loginEmployee.empNo }">
               <i class="icon-file menu-icon"></i>
               <span class="menu-title">일정 관리</span>
             </a>

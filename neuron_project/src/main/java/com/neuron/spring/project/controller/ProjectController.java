@@ -2,7 +2,9 @@ package com.neuron.spring.project.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -72,10 +74,14 @@ public class ProjectController {
 	@RequestMapping(value="insertProjectSearchMemberList.do", method=RequestMethod.POST)
 	public void insertProjectSearchMemberList(
 				@RequestParam String searchText
+				,@RequestParam(value="empNo") int empNo
 				,HttpServletResponse response
 			) throws JsonIOException, IOException {
 		System.out.println(searchText);
-		List<Employee> eList = service.selectInsertProjectSearchList(searchText);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("empNo", empNo);
+		map.put("searchText", searchText);
+		List<Employee> eList = service.selectInsertProjectSearchList(map);
 		
 		for(int i = 0 ; i < eList.size(); i++) {
 				System.out.println(eList.get(i));
