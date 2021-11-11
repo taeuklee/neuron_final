@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="projectMapper">
+  
+    <resultMap type="Project" id="ProjectResultMap">
+	   <id property="projectNo" column="PROJECT_NO"/>
+	   <result property="projectTitle" column="PROJECT_TITLE"/>
+	   <result property="projectContents" column="PROJECT_CONTENTS"/>
+	   <result property="projectMaster" column="PROJECT_MASTER"/>
+	   <result property="projectInsertRequest" column="PROJECT_INSERT_REQUEST"/>
+	   <result property="projectDeleteRequest" column="PROJECT_DELETE_REQUEST"/>
+  	</resultMap>
+  	
+  	 	<resultMap type="Employee2" id="employeeResultMap">
+ 		<id property="empNo" column="EMP_NO"/>
+ 		<result property="deptNo" column="DEPT_CODE"></result>
+ 		<result property="teamNo" column="TEAM_CODE"></result>
+ 		<result property="empId" column="EMP_ID"></result>
+ 		<result property="empPwd" column="EMP_PWD"></result>
+ 		<result property="empName" column="EMP_NAME"></result>
+ 		<result property="empBirth" column="EMP_BIRTH"></result>
+ 		<result property="empPhone" column="EMP_PHONE"></result>
+ 		<result property="empJob" column="EMP_JOB"></result>
+ 		<result property="empEmail" column="EMP_EMAIL"></result>
+ 		<result property="empSubEmail" column="EMP_SUBEMAIL"></result>
+ 		<result property="empExnum" column="EMP_EXNUM"></result>
+ 		<result property="empState" column="EMP_STATE"></result>
+ 		<result property="empVac" column="EMP_VAC"></result>
+ 		<result property="empMed" column="EMP_MED"></result>
+ 		<result property="empExVac" column="EMP_EXVAC"></result>
+ 		<result property="empSign" column="EMP_SIGN"></result>
+ 		<result property="deptName" column="DEPT_NAME"></result>
+<!--  		<result property="empFilname" column="EMP_FILENAME"></result> -->
+<!--  		<result property="empFileRename" column="EMP_FILERENAME"></result> -->
+ 	</resultMap>
+ 	
+ 	<resultMap type="Team" id="teamResultMap">
+ 		<id property="teamNo" column="TEAM_NO"/>
+ 		<result property="deptNo" column="DEPT_CODE"/>
+ 		<result property="teamName" column="TEAM_NAME"/>
+ 	</resultMap>
+ 	
+ 	
+ 	<resultMap type="Dept" id="deptResultMap">
+ 		<id property="deptNo" column="DEPT_CODE"/>
+ 		<result property="deptName" column="DEPT_NAME"/>
+ 	</resultMap>
+	
+	<select id="insertProjectSearchList" resultMap="employeeResultMap" parameterType="hashMap">
+		SELECT EMP.EMP_NAME, EMP.EMP_JOB, EMP.EMP_NO, EMP.DEPT_CODE, DEPT.DEPT_NAME  FROM EMPLOYEE EMP JOIN DEPT DEPT ON (EMP.DEPT_CODE=DEPT.DEPT_CODE) WHERE EMP.EMP_NAME LIKE '%' || #{searchText} || '%' AND NOT EMP.EMP_NO = #{empNo}
+	</select>
+  </mapper>

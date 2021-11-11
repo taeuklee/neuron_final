@@ -1,21 +1,20 @@
 package com.neuron.spring.employee.domain;
 
 public class Team {
-	private int teamNo;
-	private int deptNo;
+	private String teamCode;
+	private String deptCode;
 	private String teamName;
-	
-	public int getTeamNo() {
-		return teamNo;
+	public String getTeamCode() {
+		return teamCode;
 	}
-	public void setTeamNo(int teamNo) {
-		this.teamNo = teamNo;
+	public void setTeamCode(String teamCode) {
+		this.teamCode = teamCode;
 	}
-	public int getDeptNo() {
-		return deptNo;
+	public String getDeptCode() {
+		return deptCode;
 	}
-	public void setDeptNo(int deptNo) {
-		this.deptNo = deptNo;
+	public void setDeptCode(String deptCode) {
+		this.deptCode = deptCode;
 	}
 	public String getTeamName() {
 		return teamName;
@@ -25,7 +24,9 @@ public class Team {
 	}
 	@Override
 	public String toString() {
-		return "Team [teamNo=" + teamNo + ", deptNo=" + deptNo + ", teamName=" + teamName + "]";
+		return "Team [teamCode=" + teamCode + ", deptCode=" + deptCode + ", teamName=" + teamName + "]";
 	}
 	
+	
+
 }

@@ -6,6 +6,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.neuron.spring.approval.domain.Approval;
+import com.neuron.spring.approval.domain.CodeInfo;
 import com.neuron.spring.approval.domain.Document;
 import com.neuron.spring.approval.domain.PageInfo;
 import com.neuron.spring.approval.service.ApprovalService;
@@ -20,13 +22,7 @@ public class ApprovalServiceImpl implements ApprovalService{
 	private ApprovalStore store;
 
 	@Override
-	public Employee printOneByEmp(int docWriterNo) {
-		Employee empOne = store.printOneByEmp(docWriterNo);
-		return empOne;
-	}
-
-	@Override
-	public List<Document> printMyAllDocList(PageInfo pi,Map docWriterNo) {
+	public List<Document> printMyAllDocList(PageInfo pi, Map docWriterNo) {
 		List<Document> dList = store.selectMyAllDoc(pi, docWriterNo);
 		return dList;
 	}
@@ -35,6 +31,11 @@ public class ApprovalServiceImpl implements ApprovalService{
 	public int getListCount(int docWriterNo) {
 		int count = store.selectListCount(docWriterNo);
 		return count;
+	}
+	
+	@Override
+	public List<CodeInfo> printCodeInfo() {
+		return store.selectCodeInfo();
 	}
 	
 	@Override
@@ -57,6 +58,40 @@ public class ApprovalServiceImpl implements ApprovalService{
 	public List<Dept> printAllDeptList() {
 		return store.selectAllDept();
 	}
+
+	@Override
+	public Employee printOneByEmp(int empNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int registerDocument(Map<String,Object> param) {
+		return store.insertDocument(param);
+	}
+
+	@Override
+	public int registerApprove() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int registerDocumentFile() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<Approval> printApprovalList(int documentNo) {
+		return store.selectApproval(documentNo);
+	}
+
+	@Override
+	public Document printDocumentOne(int documentNo) {
+		return store.selectDocumentOne(documentNo);
+	}
+
 	
 	
 	

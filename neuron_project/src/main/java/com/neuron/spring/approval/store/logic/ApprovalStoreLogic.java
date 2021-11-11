@@ -8,7 +8,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.neuron.spring.approval.domain.Approval;
+import com.neuron.spring.approval.domain.CodeInfo;
 import com.neuron.spring.approval.domain.Document;
+import com.neuron.spring.approval.domain.DocumentFile;
 import com.neuron.spring.approval.domain.PageInfo;
 import com.neuron.spring.approval.store.ApprovalStore;
 import com.neuron.spring.employee.domain.Dept;
@@ -33,12 +36,6 @@ public class ApprovalStoreLogic implements ApprovalStore{
 	}
 
 	@Override
-	public Employee printOneByEmp(int WriterNo) {
-		Employee empOne = sqlSession.selectOne("approvalMapper.selectOneEmp",WriterNo);
-		return empOne;
-	}
-
-	@Override
 	public int selectListCount(int docWriterNo) {
 		int count = sqlSession.selectOne("approvalMapper.selectListCount", docWriterNo);
 		return count;
@@ -49,6 +46,11 @@ public class ApprovalStoreLogic implements ApprovalStore{
 		return sqlSession.selectList("approvalMapper.selectCodeInfoOne", param);
 	}
 
+	@Override
+	public List<CodeInfo> selectCodeInfo() {
+		return sqlSession.selectList("approvalMapper.selectCodeInfo");
+	}
+	
 	@Override
 	public List<Employee> selectAllEmployee() {
 		return sqlSession.selectList("employeeMapper.selectAllEmp");
@@ -62,6 +64,33 @@ public class ApprovalStoreLogic implements ApprovalStore{
 	@Override
 	public List<Dept> selectAllDept() {
 		return sqlSession.selectList("employeeMapper.selectAllDept");
+	}
+
+	@Override
+	public int insertDocument(Map<String,Object> param) {
+		return sqlSession.insert("approvalMapper.insertDocument",param);
+	}
+
+	@Override
+	public int insertDocumentFile(DocumentFile file) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int issertApproval(Approval appr) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<Approval> selectApproval(int documentNo) {
+		return sqlSession.selectList("approvalMapper.selectApproval",documentNo);
+	}
+
+	@Override
+	public Document selectDocumentOne(int documentNo) {
+		return sqlSession.selectOne("approvalMapper.selectDocOne",documentNo);
 	}
 
 }

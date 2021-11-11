@@ -61,11 +61,19 @@
 <script src='../../../resources/fullcalendar-5.10.0/lib/main.js'></script>
 <script>
 
+//   var eventTitle = ${empCalendar[0].empCalendarEventTitle};
+  
+//   console.log(eventTitle)
+//   console.log(eventStartTime)
+//   console.log(eventEndTime)
+
+
 document.addEventListener('DOMContentLoaded', function() {
+  var empNo = ${empNo}
+  console.log(empNo)
+  var events;
   var calendarEl = document.getElementById('calendar');
-
-  var calendar = new FullCalendar.Calendar(calendarEl, {
-
+  var calendar = new FullCalendar.Calendar(calendarEl, {	  	  
     headerToolbar: {
       left: 'prev,next',
       center: 'title',
@@ -79,77 +87,67 @@ document.addEventListener('DOMContentLoaded', function() {
       listWeek: { buttonText: 'list week' }
     },
 
+    locale : 'ko',
     initialView: 'listWeek',
+    nextDayThreshold:'00:00',
     //initialDate: '2020-09-12',
     navLinks: true, // can click day/week names to navigate views
     editable: true,
     dayMaxEvents: true, // allow "more" link when too many events
-    events: [
-      {
-        title: 'All Day Event',
-        start: '2020-09-01'
-      },
-      {
-        title: 'Long Event',
-        start: '2020-09-07',
-        end: '2020-09-10'
-      },
-      {
-        groupId: 999,
-        title: 'Repeating Event',
-        start: '2020-09-09T16:00:00'
-      },
-      {
-        groupId: 999,
-        title: 'Repeating Event',
-        start: '2020-09-16T16:00:00'
-      },
-      {
-        title: 'Conference',
-        start: '2020-09-11',
-        end: '2020-09-13'
-      },
-      {
-        title: 'Meeting',
-        start: '2020-09-12T10:30:00',
-        end: '2020-09-12T12:30:00'
-      },
-      {
-        title: 'Lunch',
-        start: '2020-09-12T12:00:00'
-      },
-      {
-        title: 'Meeting',
-        start: '2020-09-12T14:30:00'
-      },
-      {
-        title: 'Happy Hour',
-        start: '2020-09-12T17:30:00'
-      },
-      {
-        title: 'Dinner',
-        start: '2020-09-12T20:00:00'
-      },
-      {
-        title: 'Birthday Party',
-        start: '2020-09-13T07:00:00'
-      },
-      {
-        title: 'Click for Google',
-        url: 'http://google.com/',
-        start: '2020-09-28'
-      },
-      {
-    	  title: 'today~~',
-    	  start: '2021-11-05T07:00:00',
-    	  end: '2021-11-05T11:30:00'
-      },
-      {
-    	  title: 'today~~',
-    	  start: '2021-11-06T13:00:00',
-    	  end: '2021-11-06T16:30:00'
-      }
-    ]
+		events: function(info, successCallback, failureCallback) {
+			$.ajax({
+				url: '<c:url value="selectMemberCalendar.do?empNo=${empNo}"/>',
+				type: 'POST',
+				dataType: 'json',
+				data: {
+					"empNo":empNo
+				},
+				success: function(data) {
+					console.log(data)
+					events = [];
+					for(var i in data){
+						
+					var title = data[i].empCalendarEventTitle;
+					var start = data[i].empCalendarStartTime;
+					var end = data[i].empCalendarEndTime;
+					var calNo = data[i].empCalendarNo
+					events.push({
+						title:title,
+						start:start,
+						end:end,
+						calNo:calNo
+					});
+					console.log(events)
+					}
+					successCallback(events)
+				},error: function () {
+					alert("통신오류 입니다")
+				}
+			});
+		},
+		eventClick:function(info){
+			var calNo = info.event.extendedProps.calNo;
+			//var calNo = events[0].calNo
+			$.ajax({
+				url:'<c:url value="selectEventDetail.do?calNo='+calNo+'&empNo=${empNo}"/>',
+				type:'POST',
+				data:{
+				},
+				success:function(data){
+					if(data == "success"){						
+					alert("성공!")
+					}
+					var url = "openEventDetail.do?calNo="+calNo;
+					var name = "일정 디테일";
+					var option = "width = 800, height = 700, top = 300 , left = 650, location = no, toolbars = no, status = no, scrollbars = no, resizable = no";
+					window.open(url, name, option);
+				},error: function () {
+					alert("통신오류입니다")
+				}
+			});
+		}
+
+    
   });
 
   calendar.render();
@@ -197,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <script type="text/javascript">
 	function moveInsertEvent() {
 
-			var url = "moveInsertEvent.do";
+			var url = "moveInsertEvent.do?empNo=${loginEmployee.empNo}";
 			var name = "일정 추가";
 			var option = "width = 800, height = 700, top = 300 , left = 650, location = no, toolbars = no, status = no, scrollbars = no, resizable = no";
 			window.open(url, name, option);

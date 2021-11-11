@@ -9,14 +9,23 @@
   	</settings>
 	<typeAliases>
 		<typeAlias type="com.neuron.spring.approval.domain.Document" alias="Document"/>
+		<typeAlias type="com.neuron.spring.approval.domain.Approval" alias="Approval"/>
+		<typeAlias type="com.neuron.spring.approval.domain.CodeInfo" alias="CodeInfo"/>
 		<typeAlias type="com.neuron.spring.employee.domain.Employee" alias="Employee"/>
 		<typeAlias type="com.neuron.spring.employee.domain.Dept" alias="Dept"/>
 		<typeAlias type="com.neuron.spring.employee.domain.Team" alias="Team"/>
+		<typeAlias type="com.neuron.spring.project.domain.Project" alias="Project"/>
+		<typeAlias type="com.neuron.spring.project.domain.Employee" alias="Employee2"/>
+		<typeAlias type="com.neuron.spring.empCalendar.domain.EmpCalendar" alias="EmpCalendar"/>
+		<typeAlias type="com.neuron.spring.attend.domain.Attendance" alias="Attendance"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="mappers/approval-mapper.xml" />
 		<mapper resource="mappers/employee-mapper.xml" />
+		<mapper resource="mappers/project-mapper.xml" />	
+		<mapper resource="mappers/empCalendar-mapper.xml" />	
+		<mapper resource="mappers/attendance-mapper.xml" />
 	</mappers>
 </configuration>
 <!-- 		<typeAlias type="com.neuron.spring.approval.domain.DocumentFile" alias="DocumentFile"/> -->

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="empCalendarMapper">
+  
+    <resultMap type="EmpCalendar" id="empCalendarResultMap">
+	   <id property="empCalendarNo" column="EMP_CALENDAR_NO"/>
+	   <result property="empNo" column="EMP_NO"/>
+	   <result property="empCalendarEventTitle" column="EMP_CALENDAR_EVENT_TITLE"/>
+	   <result property="empCalendarStartTime" column="EMP_CALENDAR_START_TIME"/>
+	   <result property="empCalendarEndTime" column="EMP_CALENDAR_END_TIME"/>
+  	</resultMap>
+	<select id="selectEmpCalendarList" resultMap="empCalendarResultMap">
+		SELECT * FROM EMP_CALENDAR WHERE EMP_NO = #{empNo}
+	</select>
+	<select id="selectDetail" resultMap="empCalendarResultMap">
+		SELECT * FROM EMP_CALENDAR WHERE EMP_CALENDAR_NO = #{calNo}
+	</select>
+  	<insert id="insertEvent" parameterType="EmpCalendar">
+  		INSERT INTO EMP_CALENDAR VALUES(SEQ_EMP_CALENDAR_NO.NEXTVAL, #{empNo}, #{empCalendarEventTitle}, #{empCalendarStartTime}, #{empCalendarEndTime})
+  	</insert>
+  	
+  	<update id="updateEvent" parameterType="EmpCalendar">
+  		UPDATE EMP_CALENDAR SET EMP_CALENDAR_EVENT_TITLE = #{empCalendarEventTitle}, EMP_CALENDAR_START_TIME= #{empCalendarStartTime}, EMP_CALENDAR_END_TIME = #{empCalendarEndTime} WHERE EMP_NO = #{empNo} AND EMP_CALENDAR_NO =#{empCalendarNo}
+  	</update>
+  	
+  	<delete id="deleteEvent" parameterType="EmpCalendar">
+  		DELETE FROM EMP_CALENDAR WHERE EMP_CALENDAR_NO = #{empCalendarNo} AND EMP_NO = #{empNo}
+  	</delete>
+  </mapper>
