@@ -57,19 +57,22 @@
 <!-- End custom js for this page-->
 </head>
 <body>
-	<form>
+	<form action="insertEmpCalendar.do" method="get">
+		<input type="hidden" value="${loginEmployee.empNo}" name="empNo">
 		<div class="mb-3">
 			<label for="exampleInputEmail1" class="form-label"> 일정제목 </label> <input
-				type="text" class="form-control" id="exampleInputEmail1"
+				type="text" class="form-control" id="eventTitle" name="eventTitle"
 				aria-describedby="emailHelp">
 		</div>
 		<div class="mb-3">
-			<label for="exampleInputPassword1" class="form-label">시작날짜</label> <input
-				type="text" class="form-control" id="exampleInputPassword1">
+			<label for="exampleInputPassword1" class="form-label">시작날짜</label> 
+			<input type="date" class="form-control" id="startTime" name="startTime">
+			<input type="time" class="form-control" name="startTimeDetail">	
 		</div>
 		<div class="mb-3">
-			<label for="exampleInputPassword1" class="form-label">마감 날짜</label> <input
-				type="text" class="form-control" id="exampleInputPassword1">
+			<label for="exampleInputPassword1" class="form-label">마감 날짜</label> 
+			<input type="date" class="form-control" id="endTime"  name="endTime">
+			<input type="time" class="form-control" name="endTimeDetail">	
 		</div>
 		<button type="submit" class="btn btn-primary">추가</button>
 	</form>
