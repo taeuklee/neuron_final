@@ -40,22 +40,44 @@
       $("#headerNav").load("/partials/_navbar.html");
       $("#sidebar").load("/partials/_sidebar.html");
       $('#docGu').change(function(){
-    	 if(this.value == 'A'){
-    		 $('#test').html('${code[0].CODE_CONTENTS }');
-    	 }else if(this.value == 'B'){
-    		 $('#test').html('${code[1].CODE_CONTENTS }');
-    	 }else if(this.value == 'C'){
-    		 $('#test').html('${code[2].CODE_CONTENTS }');
-    	 }else if(this.value == 'D'){
-    		 $('#test').html('${code[3].CODE_CONTENTS }');
-    	 }
+    	var docGuVal = $('#docGu option:selected').val();
+    	if(docGuVal != ''){
+    		$("#test").html($("#"+docGuVal).html());
+    	}
       });
     });
     
+    function fnSubmit(){
+    	$("input[name=docContents]").attr('value',$("#test").html());
+    	$('#doc_reg').submit();
+    }
+    // 결재선 추가 버튼 클릭
     function btn_approval(){
     	var a = window.open("approvalEmp.do","approval","width=1000, height=600");
-//     	a.document.write("<p>새창에 표시될 내용입니다.</p>");
     }
+    
+    // 결재선 추가 결과 받는 함수
+     window.fn_apprEmpInfo = function(apprEmpInfo){
+    	alert("자식창닫힘");
+    	console.log(apprEmpInfo);
+    	
+	   	for(var key in apprEmpInfo){
+	   		var oneEmp = apprEmpInfo[key];
+	   		console.log(oneEmp.split(":")[4]);
+	   		if(oneEmp.split(":")[4]=="합의"){
+	   			$("#doc_reg").append("<input type='hidden' name='emp_id_1' value='"+oneEmp+"'>");
+	   			$("#emp_name1").val(oneEmp.split(":")[2]);
+	   			$("#emp_job1").val(oneEmp.split(":")[1]);
+	   			$("#emp_dept1").val(oneEmp.split(":")[3]);
+	   		}else{
+	   			$("#doc_reg").append("<input type='hidden' name='emp_id_2' value='"+oneEmp+"'>");
+	   			$("#emp_name2").val(oneEmp.split(":")[2]);
+	   			$("#emp_job2").val(oneEmp.split(":")[1]);
+	   			$("#emp_dept2").val(oneEmp.split(":")[3]);
+	   		}
+	   	}
+    	
+    };
     
   </script>
 <style>
@@ -113,8 +135,8 @@
 						
 						
 					<div class="card">
-						<form action="">
-						<input type="hidden" value="">
+						<form id="doc_reg" action="documentRegister.do" method="post" enctype="multipart/form-data">
+							<input type="hidden" name="docContents" />
 							<table class="table">
 								<tr>
 									<td width="100">
@@ -124,9 +146,14 @@
 										<select id="docGu" name="docGubun">
 											<option>선택하세요.</option>
 											<c:forEach items="${code }" var="item">
-												<option value="${item.CODE_ID }">${item.CODE_NAME }</option>
+												<option value="${item.codeId }">${item.codeName }</option>
 											</c:forEach>
 										</select>
+										<div id="contentArea" style="display: none;">
+											<c:forEach items="${code }" var="item">
+												<div id="${item.codeId }">${item.codeContents }</div>
+											</c:forEach>
+										</div>
 									</td>
 								</tr>
 								<tr>
@@ -155,19 +182,27 @@
 								</tr>
 								<tr>
 									<td><b>합의자</b></td>
-									<td><input type="text"></td>
-									<td><input type="text"></td>
-									<td><input type="text"></td>
+									<td><input id="emp_name1" type="text"></td>
+									<td><input id="emp_job1" type="text"></td>
+									<td><input id="emp_dept1" type="text"></td>
 								</tr>
 								<tr>
 									<td><b>결재자</b></td>
-									<td><input type="text"></td>
-									<td><input type="text"></td>
-									<td><input type="text"></td>
+									<td><input id="emp_name2" type="text"></td>
+									<td><input id="emp_job2" type="text"></td>
+									<td><input id="emp_dept2" type="text"></td>
 								</tr>
 							</table>
+							<div id="결재선"></div>
+							
+							<div id="test" align="center" style="border:1px solid gray; padding:50px 0 0 0;" contenteditable="true">
+							
+							
+							</div>
+							
+							<input type="file" name="uploadFile">
+							<button type="button" class="btn" onclick="fnSubmit();">제출</button>
 						</form>
-						<div id="test" align="center" style="border:1px solid gray; padding:50px 0 0 0;" contenteditable="true"></div>
 					</div>
 					</div>
 				</div>	
