@@ -1,5 +1,7 @@
 package com.neuron.spring.employee.store.logic;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -23,6 +25,24 @@ public class EmployeeStoreLogic implements EmployeeStore{
 	public int insertEmp(Employee employee) {
 		int result = sqlSession.insert("employeeMapper.insertEmp", employee);
 		return result;
+	}
+
+	@Override
+	public int updateEmpInfo(Employee emp) {
+		int result = sqlSession.insert("employeeMapper.updateEmpInfo", emp);
+		return result;
+	}
+
+	@Override
+	public List<Employee> selectAllEmp() {
+		List<Employee> eList = sqlSession.selectList("employeeMapper.selectAllEmp");
+		return eList;
+	}
+
+	@Override
+	public Employee selectOneEmp(int eNo) {
+		Employee employee = sqlSession.selectOne("employeeMapper.selectOneEmp", eNo);
+		return employee;
 	}
 
 	

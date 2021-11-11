@@ -90,8 +90,10 @@
 						<div class="card">
 							<div class="card-body">
 								<br>
-								<h4 class="card-title">내 정보 수정</h4>
-								<br> <br> <br>
+								<h4 class="card-title">사원 정보 수정</h4>
+								<br>
+								<br>
+								<br>
 								<form class="form-sample">
 									<div class="row">
 										<div class="col-md-6">
@@ -100,32 +102,28 @@
 													<img src="../images/faces/face13.jpg"
 														style="width: 250px; height: 250px;">
 												</div>
-												<div class="col-sm-9">
-													<input type="button" class="btn btn-primary mr-2"
-														value="사진 변경" />
-												</div>
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group row">
 												<label class="col-sm-3 col-form-label">아이디</label>
 												<div class="col-sm-9">
-													<input type="text" class="form-control"
-														value="${loginEmployee.empId}" readonly />
+													<input type="text" class="form-control" value="user01"
+														readonly />
 												</div>
 											</div>
 											<div class="form-group row">
 												<label class="col-sm-3 col-form-label">비밀번호</label>
 												<div class="col-sm-9">
-													<input type="password" class="form-control"
-														value="${loginEmployee.empId}" />
+													<input type="password" class="form-control" value="123456"
+														readonly />
 												</div>
 											</div>
 											<div class="form-group row">
 												<label class="col-sm-3 col-form-label">이름</label>
 												<div class="col-sm-9">
-													<input type="text" class="form-control"
-														value="${loginEmployee.empName}" />
+													<input type="text" class="form-control" value="고희동"
+														readonly />
 												</div>
 											</div>
 										</div>
@@ -137,7 +135,7 @@
 												<label class="col-sm-3 col-form-label">생년월일</label>
 												<div class="col-sm-9">
 													<input type="text" class="form-control"
-														value="${loginEmployee.empBirth}" />
+														value="1987년 6월 20일" readonly />
 												</div>
 											</div>
 										</div>
@@ -146,7 +144,7 @@
 												<label class="col-sm-3 col-form-label">연락처</label>
 												<div class="col-sm-9">
 													<input type="text" class="form-control"
-														value="${loginEmployee.empPhone}" />
+														placeholder="01012345678" readonly />
 												</div>
 											</div>
 										</div>
@@ -154,9 +152,22 @@
 											<div class="form-group row">
 												<label class="col-sm-3 col-form-label">부서 및 팀</label>
 												<div class="col-sm-9">
-													<input type="text" class="form-control"
-														value="${loginEmployee.deptCode} ${loginEmployee.teamCode}"
-														readonly />
+													<select class="form-control form-control-lg"
+														id="exampleFormControlSelect2">
+														<option>경영지원부</option>
+														<option>개발부</option>
+														<option>마케팅부</option>
+														<option>고객지원부</option>
+													</select> <select class="form-control form-control-lg"
+														id="exampleFormControlSelect2">
+														<option>인사팀</option>
+														<option>총무팀</option>
+														<option>개발1팀</option>
+														<option>개발2팀</option>
+														<option>마케팅팀</option>
+														<option>영업팀</option>
+														<option>A/S팀</option>
+													</select>
 												</div>
 											</div>
 										</div>
@@ -164,8 +175,7 @@
 											<div class="form-group row">
 												<label class="col-sm-3 col-form-label">직책</label>
 												<div class="col-sm-9">
-													<input type="text" class="form-control"
-														value="${loginEmployee.empJob}" readonly />
+													<input type="text" class="form-control" value="사원" />
 												</div>
 											</div>
 										</div>
@@ -173,8 +183,12 @@
 											<div class="form-group row">
 												<label class="col-sm-3 col-form-label">상태</label>
 												<div class="col-sm-9">
-													<input type="text" class="form-control"
-														value="${loginEmployee.empState}" readonly />
+													<select class="form-control form-control-lg"
+														id="exampleFormControlSelect2">
+														<option>재직</option>
+														<option>휴직</option>
+														<option>퇴직</option>
+													</select>
 												</div>
 											</div>
 										</div>
@@ -182,8 +196,7 @@
 											<div class="form-group row">
 												<label class="col-sm-3 col-form-label">내선번호</label>
 												<div class="col-sm-9">
-													<input type="number" class="form-control"
-														value="${loginEmployee.empExnum}" readonly />
+													<input type="text" class="form-control" value="034" />
 												</div>
 											</div>
 										</div>
@@ -194,7 +207,7 @@
 												<label class="col-sm-3 col-form-label">내부 이메일</label>
 												<div class="col-sm-9">
 													<input type="text" class="form-control"
-														value="${loginEmployee.empEmail}" readonly/>
+														value="user01@neuron.com" readonly />
 												</div>
 											</div>
 										</div>
@@ -203,7 +216,7 @@
 												<label class="col-sm-3 col-form-label">외부 이메일</label>
 												<div class="col-sm-9">
 													<input type="text" class="form-control"
-														value="${loginEmployee.empSubEmail}" />
+														value="h2dong@gmail.com" readonly />
 												</div>
 											</div>
 										</div>
@@ -221,11 +234,11 @@
 						</div>
 					</div>
 				</div>
-		<!-- partial:partials/_footer.html -->
-		<footer class="footer" id="footer"></footer>
-		<!-- partial -->
-	</div>
-	<!-- main-panel ends -->
+			<!-- partial:partials/_footer.html -->
+			<footer class="footer" id="footer"></footer>
+			<!-- partial -->
+		</div>
+		<!-- main-panel ends -->
 	</div>
 	<!-- page-body-wrapper ends -->
 	</div>

@@ -12,20 +12,20 @@
 		<c:if test="${ empty sessionScope.loginEmployee }">
         <div class="user-profile">
           <div class="user-image">
-            <img src="images/faces/face28.png">
+            <img src="images/faces/basic.jpg">
           </div>
           <div class="emp-name">
-              edward spenser
+              	로그인이 
           </div>
           <div class="emp-job">
-              developer
+              	필요합니다
           </div>
         </div>
         </c:if>
 		<c:if test="${not empty sessionScope.loginEmployee }">
         <div class="user-profile">
           <div class="user-image">
-            <a href="#" onclick="location.href='empInfo.do'"><img src="images/faces/face28.png"></a>
+            <a href="#" onclick="location.href='empInfo.do'"><img src="/resources/euploadFiles/${loginEmployee.empFileReName}"></a>
           </div>
           <div class="emp-name">
               ${loginEmployee.empName}
@@ -37,7 +37,7 @@
         </c:if>
         <ul class="nav">
         	<li class="nav-item">
-            <a class="nav-link" href="index.jsp">
+            <a class="nav-link" href="home.jsp">
               <i class="icon-box menu-icon"></i>
               <span class="menu-title">Home</span>
             </a>
@@ -141,12 +141,20 @@
               <span class="menu-title">공지사항</span></a>
             </a>
           </li>
-          <c:if test="${not empty sessionScope.loginEmployee }">
-                   <li class="nav-item">
-            <a class="nav-link" onclick="location.href='/enrollView.do'">
-              <i class="icon-file menu-icon"></i>
-              <span class="menu-title">사원 관리</span></a>
+          <c:if test="${loginEmployee.empId eq 'admin' }">
+                     <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#menu6" aria-expanded="false" aria-controls="menu6">
+              <i class="icon-disc menu-icon"></i>
+              <span class="menu-title">사원관리</span>
+              <i class="menu-arrow"></i>
             </a>
+            <div class="collapse" id="menu6">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" onclick="location.href='/enrollView.do'">사원 등록</a></li>
+                <li class="nav-item"> <a class="nav-link" onclick="location.href='/empListView.do'">사원 조회</a></li>
+                <li class="nav-item"> <a class="nav-link" href="#">사원 수정</a></li>
+              </ul>
+            </div>
           </li>
           </c:if>
         </ul>
