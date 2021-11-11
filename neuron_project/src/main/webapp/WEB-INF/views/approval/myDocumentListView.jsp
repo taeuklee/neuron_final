@@ -10,35 +10,29 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <!-- Required meta tags -->
 <meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Regal Admin</title>
 <!-- base:css -->
-<link rel="stylesheet"
-	href="vendors/mdi/css/materialdesignicons.min.css">
-<link rel="stylesheet" href="vendors/feather/feather.css">
-<link rel="stylesheet" href="vendors/base/vendor.bundle.base.css">
+<link rel="stylesheet" href="/vendors/mdi/css/materialdesignicons.min.css">
+<link rel="stylesheet" href="/vendors/feather/feather.css">
+<link rel="stylesheet" href="/vendors/base/vendor.bundle.base.css">
 <!-- endinject -->
 <!-- plugin css for this page -->
-<link rel="stylesheet"
-	href="vendors/flag-icon-css/css/flag-icon.min.css" />
-<link rel="stylesheet"
-	href="vendors/font-awesome/css/font-awesome.min.css">
-<link rel="stylesheet"
-	href="vendors/jquery-bar-rating/fontawesome-stars-o.css">
-<link rel="stylesheet"
-	href="vendors/jquery-bar-rating/fontawesome-stars.css">
+<link rel="stylesheet" href="/vendors/flag-icon-css/css/flag-icon.min.css" />
+<link rel="stylesheet" href="/vendors/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/vendors/jquery-bar-rating/fontawesome-stars-o.css">
+<link rel="stylesheet" href="/vendors/jquery-bar-rating/fontawesome-stars.css">
 <!-- End plugin css for this page -->
 <!-- inject:css -->
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="/css/style.css">
 <!-- endinject -->
-<link rel="shortcut icon" href="images/favicon.png" />
+<link rel="shortcut icon" href="/images/favicon.png" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
     $(document).ready(function(){
-      $("#headerNav").load("partials/_navbar.html");
-      $("#sidebar").load("partials/_sidebar.html");
+      $("#headerNav").load("/partials/_navbar.html");
+      $("#sidebar").load("/partials/_sidebar.html");
     });
   </script>
 <style>
@@ -58,21 +52,21 @@
 }
 </style>
 <!-- base:js -->
-<script src="vendors/base/vendor.bundle.base.js"></script>
+<script src="/vendors/base/vendor.bundle.base.js"></script>
 <!-- endinject -->
 <!-- Plugin js for this page-->
 <!-- End plugin js for this page-->
 <!-- inject:js -->
-<script src="js/off-canvas.js"></script>
-<script src="js/hoverable-collapse.js"></script>
-<script src="js/template.js"></script>
+<script src="/js/off-canvas.js"></script>
+<script src="/js/hoverable-collapse.js"></script>
+<script src="/js/template.js"></script>
 <!-- endinject -->
 <!-- plugin js for this page -->
-<script src="vendors/chart.js/Chart.min.js"></script>
-<script src="vendors/jquery-bar-rating/jquery.barrating.min.js"></script>
+<script src="/vendors/chart.js/Chart.min.js"></script>
+<script src="/vendors/jquery-bar-rating/jquery.barrating.min.js"></script>
 <!-- End plugin js for this page -->
 <!-- Custom js for this page-->
-<script src="js/dashboard.js"></script>
+<script src="/js/dashboard.js"></script>
 <!-- End custom js for this page-->
 </head>
 
@@ -125,7 +119,7 @@
 						<div class="card">
 							<div class="card-body">
 								<h4 class="card-title" style="float:left">내 결재문서 조회 </h4>
-								<button type="button" onclick="location.href='documentWriteView.do';"
+								<button type="button" onclick="location.href='/documentWriteView.do';"
 									class="btn btn-outline btn-primary pull-right">
 									<i class="fa fa-edit fa-fw"></i> 결재요청
 								</button>
@@ -194,13 +188,13 @@
 										<!-- 페이징 처리 -->
 										<tr align="center" height="20">
 									         <td colspan="6">
-									         <c:url var="before" value="/documentList.do">
+									         <c:url var="before" value="/approval/myDocumentListView.do">
 									            <c:param name="page" value="${pi.currentPage - 1 }"></c:param>
 									         </c:url>
-									         <c:url var="after" value="/documentList.do">
+									         <c:url var="after" value="/approval/myDocumentListView.do">
 									            <c:param name="page" value="${pi.currentPage + 1 }"></c:param>         
 									         </c:url>
-									         <c:url var="pagination" value="/documentList.do">
+									         <c:url var="pagination" value="/approval/myDocumentListView.do">
 									            <c:param name="page" value="${p }"></c:param>
 									         </c:url>
 									            <c:if test="${pi.currentPage <=1 }">

@@ -21,13 +21,14 @@
 	</bean>
 	
 	<!-- 파일업로드 관련 bean 등록, multipartResolver -->
-<!-- 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> -->
-<!-- 		<property name="maxUploadSize" value="100000000"></property> -->
-<!-- 		<property name="maxInMemorySize" value="100000000"></property> -->
-<!-- 	</bean> -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="100000000"></property>
+		<property name="maxInMemorySize" value="100000000"></property>
+	</bean>
 	<!-- 
 		1. maxUploadSize : 한 요청당 업로드가 허용되는 최대 용량을 바이트단위로 설정
 		2. maxInMemorySize : 디스크에 저장하지 않고 메모리에 유지하도록 허용한는 바이트 단위 최대용량
 		기본값 10240바이트
 	 -->
+
 </beans>
