@@ -1,14 +1,21 @@
 package com.neuron.spring.employee.domain;
 
 public class Dept {
-	private int deptNo;
+	private String deptCode;
 	private String deptName;
 	
-	public int getDeptNo() {
-		return deptNo;
+	
+	public Dept(String deptCode, String deptName) {
+		super();
+		this.deptCode = deptCode;
+		this.deptName = deptName;
 	}
-	public void setDeptNo(int deptNo) {
-		this.deptNo = deptNo;
+	
+	public String getDeptCode() {
+		return deptCode;
+	}
+	public void setDeptCode(String deptCode) {
+		this.deptCode = deptCode;
 	}
 	public String getDeptName() {
 		return deptName;
@@ -16,9 +23,11 @@ public class Dept {
 	public void setDeptName(String deptName) {
 		this.deptName = deptName;
 	}
+
 	@Override
 	public String toString() {
-		return "Dept [deptNo=" + deptNo + ", deptName=" + deptName + "]";
+		return "Dept [deptCode=" + deptCode + ", deptName=" + deptName + "]";
 	}
 	
+
 }

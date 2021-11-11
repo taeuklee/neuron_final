@@ -58,7 +58,7 @@
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
       <!-- partial:partials/_sidebar.html 사이드 바  -->
-      <jsp:include page="common/sidebar.jsp"></jsp:include>
+      <jsp:include page="/common/sidebar.jsp"></jsp:include>
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper" id="contents">

@@ -90,9 +90,28 @@
 						<div class="card">
 							<div class="card-body">
 								<br> <br>
+								<!-- " -->
 								<h4 class="card-title">사원 등록</h4>
 								<br> <br> <br> <br>
-								<form action="empRegister.do" method="post">
+								<form action="empRegister.do" method="post" enctype="multipart/form-data">
+									<div class="row">
+									<img src="images/faces/basic.jpg" style="width: 250px; height: 250px;">
+									</div>
+									  <div class="row">
+										<div class="col-md-6">
+											<div class="form-group row">
+												<div class="col-sm-9">
+													<div class="col-md-6"">
+														<div class="form-group row">
+															<label for="gdsImg">사원증 사진 등록</label>
+															<input type="file" id="empImg" name="uploadFile">
+														</div>
+
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>  
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group row">
@@ -336,7 +355,20 @@
 	<!-- page-body-wrapper ends -->
 	</div>
 	<!-- container-scroller -->
+	
 
+</div>
+	<script>
+	  $("#empImg").change(function(){
+	   if(this.files && this.files[0]) {
+	    var reader = new FileReader;
+	    reader.onload = function(data) {
+	     $(".row img").attr("src", data.target.result).width(250);        
+	    }
+	    reader.readAsDataURL(this.files[0]);
+	   }
+	  });
+	 </script>
 </body>
 
 </html>
