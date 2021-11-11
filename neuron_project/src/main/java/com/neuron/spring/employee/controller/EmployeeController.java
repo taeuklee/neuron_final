@@ -176,6 +176,7 @@ public class EmployeeController {
 		}
 	}
 	
+	// 사원 정보 보기
 	// 사원 정보 수정
 	@RequestMapping(value="empAdminModifyView.do", method=RequestMethod.GET)
 	public String noticeModify(@RequestParam("empNo") int eNo, Model model) {
