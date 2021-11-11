@@ -12,14 +12,14 @@
 		<typeAlias type="com.neuron.spring.employee.domain.Employee" alias="Employee"/>
 		<typeAlias type="com.neuron.spring.employee.domain.Dept" alias="Dept"/>
 		<typeAlias type="com.neuron.spring.employee.domain.Team" alias="Team"/>
-		<typeAlias type="com.neuron.spring.attend.domain.Attendance" alias="Attendance"/>
+		<typeAlias type="com.neuron.spring.project.domain.Project" alias="Project"/>
+		<typeAlias type="com.neuron.spring.project.domain.Employee" alias="Employee2"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="mappers/approval-mapper.xml" />
 		<mapper resource="mappers/employee-mapper.xml" />
-		<mapper resource="mappers/attendance-mapper.xml" />
-		
+		<mapper resource="mappers/project-mapper.xml" />		
 	</mappers>
 </configuration>
 <!-- 		<typeAlias type="com.neuron.spring.approval.domain.DocumentFile" alias="DocumentFile"/> -->
