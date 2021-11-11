@@ -16,6 +16,7 @@
 		<typeAlias type="com.neuron.spring.project.domain.Project" alias="Project"/>
 		<typeAlias type="com.neuron.spring.project.domain.Employee" alias="Employee2"/>
 		<typeAlias type="com.neuron.spring.empCalendar.domain.EmpCalendar" alias="EmpCalendar"/>
+		<typeAlias type="com.neuron.spring.attend.domain.Attendance" alias="Attendance"/>
 	</typeAliases>
 	
 	<mappers>
@@ -23,6 +24,7 @@
 		<mapper resource="mappers/employee-mapper.xml" />
 		<mapper resource="mappers/project-mapper.xml" />	
 		<mapper resource="mappers/empCalendar-mapper.xml" />	
+		<mapper resource="mappers/attendance-mapper.xml" />
 	</mappers>
 </configuration>
 <!-- 		<typeAlias type="com.neuron.spring.approval.domain.DocumentFile" alias="DocumentFile"/> -->

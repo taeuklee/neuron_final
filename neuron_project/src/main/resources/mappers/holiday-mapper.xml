@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="HolidayMapper">
+   <resultMap type="Document" id="DocResultMap">
+	   <id property="docNo" column="DOCUMENT_NO"/>
+	   <result property="docWriterNo" column="DOCUMENT_WRITER_NO"/>
+	   <result property="docKind" column="DOCUMENT_KIND"/>
+	   <result property="docContents" column="DOCUMENT_CONTENTS"/>
+	   <result property="docStatus" column="DOCUMENT_STATUS"/>
+	   <result property="docReason" column="DOCUMNET_REASON"/>
+	   <result property="dCreateDate" column="D_CREATE_DATE"/>
+	   <result property="dUpdateDate" column="D_UPDATE_DATE"/>
+	   <result property="vStartDate" column="VACATION_START_DATE"/>
+	   <result property="vEndDate" column="VACATION_END_DATE"/>
+  	</resultMap>
+  	
+  
+  	
+  </mapper>
