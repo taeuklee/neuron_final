@@ -1,5 +1,7 @@
 package com.neuron.spring.approval.domain;
 
+import java.io.BufferedReader;
+import java.sql.Clob;
 import java.sql.Date;
 
 import com.neuron.spring.employee.domain.Employee;
@@ -17,22 +19,7 @@ public class Document {
 	private Date vEndDate;
 	private Employee docWriter;
 	
-	
-	public Document(int docNo, int docWriterNo, String docKind, String docContents, String docStatus, String docReason,
-			Date dCreateDate, Date dUpdateDate, Date vStartDate, Date vEndDate, Employee docWriter) {
-		super();
-		this.docNo = docNo;
-		this.docWriterNo = docWriterNo;
-		this.docKind = docKind;
-		this.docContents = docContents;
-		this.docStatus = docStatus;
-		this.docReason = docReason;
-		this.dCreateDate = dCreateDate;
-		this.dUpdateDate = dUpdateDate;
-		this.vStartDate = vStartDate;
-		this.vEndDate = vEndDate;
-		this.docWriter = docWriter;
-	}
+
 	
 	public Document() {
 		super();
@@ -57,12 +44,15 @@ public class Document {
 	public void setDocKind(String docKind) {
 		this.docKind = docKind;
 	}
+
 	public String getDocContents() {
 		return docContents;
 	}
+
 	public void setDocContents(String docContents) {
 		this.docContents = docContents;
 	}
+
 	public String getDocStatus() {
 		return docStatus;
 	}

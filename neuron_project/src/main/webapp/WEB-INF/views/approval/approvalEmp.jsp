@@ -56,23 +56,20 @@ body {
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
+	var count = 0;
 	// 결재선에 추가 
 	function addAppr() {
-
 		var selectApvl = $('input[name=select-apvl]:checked').val();// 체크된 사원 번호
 		var appl = $('input[name=appl]:checked').val(); // 체크된 결제 종류(합의 또는 결재)
-		// 		var empName = $('input[name=select-apvl]:checked').next($("#empName")).val();
-		// 		var empJob = $('input[name=select-apvl]:checked').next().next($("#empJop")).val();
-		// 		var teamName = $('input[name=select-apvl]:checked').next().next().next($("#teamName")).val();
 		var checkDup = false;
-		
 		if(!selectApvl){
 			alert("결재자 또는 합의자를 선택하세요.");
 			return;
 		}
+		
 		if ($("#결재 input[name='emp_id']").length >= 1) {
 			$("#결재 input[name='emp_id']").each(function(index, item) {
-				if ($(this).val() == selectApvl) {
+				if ($(this).val().split(":")[0] == selectApvl.split(":")[0]) {
 					alert("중복 체크는 안됩니다.");
 					checkDup = true;
 					return false;
@@ -81,26 +78,50 @@ body {
 		}
 		
 		if (!checkDup) {
-			$("#결재")
-					.append(
-							"<input type='hidden' name='emp_id' value='"+selectApvl+"'>");
-			$("#결재").append(
-					"<input type='hidden' name='appr_Type' value='"+appl+"'>");
-
-			$("#결재선택").append("<tr>");
-			$("#결재선택").append("<td>" + appl + "</td>");
-			$("#결재선택").append("<td>" + selectApvl.split(":")[3] + "</td>");
-			$("#결재선택").append("<td>" + selectApvl.split(":")[2] + "</td>");
-			$("#결재선택").append("<td>" + selectApvl.split(":")[1] + "</td>");
-			$("#결재선택").append("<td><button>삭제</button></td>");
-			$("#결재선택").append("</tr>");
+			if(appl == "결재"){
+				count = count+1;
+			}
+			//$("#결재").append("<input type='hidden' name='emp_id' value='"+selectApvl+":"+appl+"'>");
+			var html = "<tr>";
+			html += "<td>" + "<input type='hidden' name='emp_id' value='"+selectApvl+":"+appl+"'>" + appl + "</td>";
+			html += "<td>" + selectApvl.split(":")[3] + "</td>";
+			html += "<td>" + selectApvl.split(":")[2] + "</td>";
+			html += "<td>" + selectApvl.split(":")[1] + "</td>";
+			html += "<td><button onclick='rmAppr(this);'>삭제</button></td>";
+			html += "</tr>";
+			$("#결재선택").append(html);
+// 			$("#결재선택").append("<td>" + "<input type='hidden' name='emp_id' value='"+selectApvl+":"+appl+"'>" + appl + "</td>");
+// 			$("#결재선택").append("<td>" + selectApvl.split(":")[3] + "</td>");
+// 			$("#결재선택").append("<td>" + selectApvl.split(":")[2] + "</td>");
+// 			$("#결재선택").append("<td>" + selectApvl.split(":")[1] + "</td>");
+// 			$("#결재선택").append("<td><button onclick='rmAppr(this);'>삭제</button></td>");
+// 			$("#결재선택").append("</tr>");
 		}
 	}
 
 	function fn_submit() {
 		//1. 결재자 체크확인
+		console.log(count);
+		if(count<=0){
+			alert("결재자가 없습니다.")
+			count = 0;
+			return;
+		}
+
 		//2. 체크된 선택자 배열 넘기기
+		var apprEmpInfo = new Array();
+		$('input[name=emp_id]').each(function(index,item){
+			apprEmpInfo[index] = $(this).val();
+		}) 
+		
+		alert(apprEmpInfo);
 		//3. 부모창 호출
+		opener.fn_apprEmpInfo(apprEmpInfo);
+		window.close();
+	}
+	
+	function rmAppr(thisRm){
+		$(thisRm).closest("td").closest("tr").remove();
 	}
 
 	// html dom 이 다 로딩된 후 실행된다.
@@ -209,7 +230,7 @@ body {
 							<div id="결재">
 								<table id="결재선택" class="table">
 								</table>
-								<button>완료</button>
+								<button onclick="fn_submit();">완료</button>
 								<br>
 							</div>
 						</div>
