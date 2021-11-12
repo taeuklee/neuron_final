@@ -87,18 +87,18 @@ border-color:#1e2b37;
 				<div class="content-wrapper" id="contents">
 					<div class="col-lg-6" style="float: left">
 						<form action="insertProjectRegister.do" id="insertProjectForm" method="post">
-							<input type="hidden" value="${loginEmployee.empNo }">
+							<input type="hidden" value="${loginEmployee.empNo }" name="projectMaster">
 							<div id="projectContents" style="height: 30%">
 								<div class="mb-3">
 									<label for="exampleFormControlInput1" class="form-label"><h1>프로젝트
 											제목</h1> </label> <input type="text" class="form-control"
-										id="exampleFormControlInput1" placeholder="제목을 입력해주세요">
+										id="projectTitle" name="projectTitle" placeholder="제목을 입력해주세요">
 								</div>
 								<div class="mb-3">
 									<label for="exampleFormControlTextarea1" class="form-label"><h1>생성
 											사유</h1> </label>
-									<textarea class="form-control" id="exampleFormControlTextarea1"
-										rows="3"></textarea>
+									<textarea class="form-control" id="projectContents"
+										rows="3" name="projectContents"></textarea>
 								</div>
 							</div>
 
