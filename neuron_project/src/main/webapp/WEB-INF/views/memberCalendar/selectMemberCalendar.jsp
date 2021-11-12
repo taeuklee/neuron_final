@@ -134,9 +134,6 @@ document.addEventListener('DOMContentLoaded', function() {
 				data:{
 				},
 				success:function(data){
-					if(data == "success"){						
-					alert("성공!")
-					}
 					var url = "openEventDetail.do?calNo="+calNo;
 					var name = "일정 디테일";
 					var option = "width = 800, height = 700, top = 300 , left = 650, location = no, toolbars = no, status = no, scrollbars = no, resizable = no";

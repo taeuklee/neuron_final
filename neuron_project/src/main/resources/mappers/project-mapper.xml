@@ -13,6 +13,15 @@
 	   <result property="projectDeleteRequest" column="PROJECT_DELETE_REQUEST"/>
   	</resultMap>
   	
+  	
+  	<resultMap type="EmpProject" id="EmpProjectResultMap">
+  		<id property="empNo" column="EMP_NO"/>
+  		<id property="projectNo" column="PROJECT_NO"/>
+  		<result property="empAuth" column="EMP_PROJECT_AUTH"/>
+  		<result property="projectTitle" column="PROJECT_TITLE"/>
+  	</resultMap>
+  	
+  	
   	 	<resultMap type="Employee2" id="employeeResultMap">
  		<id property="empNo" column="EMP_NO"/>
  		<result property="deptNo" column="DEPT_CODE"></result>
@@ -51,4 +60,26 @@
 	<select id="insertProjectSearchList" resultMap="employeeResultMap" parameterType="hashMap">
 		SELECT EMP.EMP_NAME, EMP.EMP_JOB, EMP.EMP_NO, EMP.DEPT_CODE, DEPT.DEPT_NAME  FROM EMPLOYEE EMP JOIN DEPT DEPT ON (EMP.DEPT_CODE=DEPT.DEPT_CODE) WHERE EMP.EMP_NAME LIKE '%' || #{searchText} || '%' AND NOT EMP.EMP_NO = #{empNo}
 	</select>
+	
+	<select id="selectProjectOne" resultMap="ProjectResultMap" parameterType="Project">
+		SELECT * FROM PROJECT WHERE PROJECT_TITLE = #{projectTitle} AND PROJECT_CONTENTS = #{projectContents} AND PROJECT_MASTER = #{projectMaster}
+	</select>
+	
+	<select id="selectProjectList" resultMap="ProjectResultMap" parameterType="hashMap">
+		SELECT * FROM PROJECT WHERE PROJECT_MASTER = #{empNo} AND PROJECT_INSERT_REQUEST = #{info}
+	</select>
+	
+	<select id="selectMemberProjectList" resultMap="EmpProjectResultMap" parameterType="hashMap">
+		SELECT EPRO.PROJECT_NO, EPRO.EMP_NO, EPRO.EMP_PROJECT_AUTH, PRO.PROJECT_TITLE FROM EMP_PROJECT EPRO JOIN PROJECT PRO ON (EPRO.PROJECT_NO = PRO.PROJECT_NO) WHERE EPRO.EMP_NO = #{empNo} AND PRO.PROJECT_INSERT_REQUEST = #{info}
+	</select>
+	
+	<update id="insertProjectMemberList" parameterType="hashMap">
+		<foreach collection="empNoList" item="empNoList" index="index" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+		INTO EMP_PROJECT(EMP_NO, PROJECT_NO, EMP_PROJECT_AUTH) VALUES(#{empNoList}, #{projectNo}, DEFAULT)
+		</foreach>
+	</update>
+	
+	<insert id="insertProjectRegister" parameterType="Project">
+		INSERT INTO PROJECT VALUES(SEQ_PRO_NO.NEXTVAL, #{projectTitle}, #{projectContents}, #{projectMaster}, DEFAULT, DEFAULT)
+	</insert>
   </mapper>
