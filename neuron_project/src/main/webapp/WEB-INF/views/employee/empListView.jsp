@@ -96,16 +96,18 @@
 								<br>
 								<div class="row">
 									<div class="form-group" style="width: 10%;">
-										<select class="form-control form-control-lg"
+									<form action="empSearch.do" method="get">
+										<select name="searchCondition"class="form-control form-control-lg"
 											id="exampleFormControlSelect2">
-											<option>이름</option>
-											<option>부서</option>
-											<option>직책</option>
+											<option value="name"<c:if test="${search.searchCondition == 'name' }">selected</c:if>>이름</option>
+											<option value="deptcode"<c:if test="${search.searchCondition == 'deptcode' }">selected</c:if>>부서</option>
+											<option value="job"<c:if test="${search.searchCondition == 'job' }">selected</c:if>>직책</option>
+											<option value="state" <c:if test="${search.searchCondition == 'state' }">selected</c:if>>상태</option>
 										</select>
 									</div>
-									&nbsp;&nbsp;&nbsp; <input type="text" class="member-search"
-										style="height: 30px;"> &nbsp; <input type="button"
-										class="btn btn-primary mr-2" style="height: 30px;" value="검색" />
+									&nbsp;&nbsp;&nbsp; 
+									<input type="text"  name="searchValue" value="${search.searchValue }" class="member-search" style="height: 30px;"> &nbsp; 
+									<input type="submit" value="검색" class="btn btn-primary mr-2" style="height: 30px;" />
 								</div>
 								<div class="table-responsive pt-3">
 									<table class="table table-bordered">
@@ -138,12 +140,45 @@
 											</tr>
 											</c:forEach>
 										</tbody>
+										<tr align="center" height="20">
+									   		<td colspan="6">
+									   			<!-- 이전 페이지 보기 -->
+									   			<c:url var="before" value="empListView.do">
+									   				<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
+									   			</c:url>
+									   		 	<c:if test="${pi.currentPage <= 1 }">
+									   		 		[이전]
+									   		 	</c:if>
+									   		 	<c:if test="${pi.currentPage > 1 }">
+									   		 		<a href="${before }">[이전]</a>
+									   		 	</c:if>
+									   		 	<c:forEach var="p" begin="${pi.startNavi }" end="${pi.endNavi }">
+									   		 		<c:url var="pagination" value="empListView.do">
+									   		 			<c:param name="page" value="${p }"></c:param>
+									   		 		</c:url>
+									   		 		<c:if test="${p eq pi.currentPage }">
+									   		 			<font color="green" size="4">[${p }]</font>
+									   		 		</c:if>
+									   		 		<c:if test="${p ne pi.currentPage }">
+									   		 			<a href="${pagination }">[${p }]</a>&nbsp;
+									   		 		</c:if>
+									   		 	</c:forEach>
+									   		 	<c:url var="after" value="empListView.do">
+									   		 		<c:param name="page" value="${pi.currentPage +1 }"></c:param>
+									   		 	</c:url>
+									   		 	<c:if test="${pi.currentPage >= pi.maxPage }">
+									   		 		[다음]
+									   		 	</c:if>
+									   		 	<c:if test="${pi.currentPage < pi.maxPage }">
+									   		 		<a href="${after }">[다음]</a>
+									   		 	</c:if>
+									   		</td>
+									   	</tr>
 									</table>
 								</div>
 							</div>
 						</div>
 					</div>
-
 				</div>
 			</div>
 		</div>

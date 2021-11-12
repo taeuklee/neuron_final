@@ -42,9 +42,33 @@
  		SELECT * FROM EMPLOYEE WHERE EMP_ID = #{empId } and EMP_PWD = #{empPwd}
  	 </select>
  	 
- 	 <select id="selectAllEmp" resultMap="employeeResultMap">
+ 	 <select id="selectListCount" resultType="_int">
+  	SELECT COUNT(*) FROM EMPLOYEE
+  		</select>
+ 	   <select id="selectAllList" resultMap="employeeResultMap">
+  		SELECT * FROM EMPLOYEE ORDER BY EMP_NO ASC
+  		</select>
+ 	 
+<!-- 	 <select id="selectAllEmp" resultMap="employeeResultMap">
    		SELECT * FROM EMPLOYEE ORDER BY EMP_NO ASC
-   	</select>
+   	</select>  --> 
+   	
+   	 <select id="selectSearchAll" resultMap="employeeResultMap">
+      SELECT * FROM EMPLOYEE
+      <if test="searchCondition.toString() == 'name'">
+         WHERE EMP_NAME LIKE '%' || #{searchValue } || '%'
+      </if>
+      <if test="searchCondition.toString() == 'deptcode'">
+         WHERE DEPT_CODE LIKE '%' || #{searchValue } || '%'
+      </if>
+      <if test="searchCondition.toString() == 'job'">
+         WHERE EMP_JOB LIKE '%' || #{searchValue } || '%'
+      </if>
+      <if test="searchCondition.toString() == 'state'">
+         WHERE EMP_STATE LIKE '%' || #{searchValue } || '%'
+      </if>
+      ORDER BY EMP_NO ASC
+   </select>
    	
    	<select id="selectOneEmp" parameterType="_int"  resultMap="employeeResultMap">
   	SELECT * FROM EMPLOYEE WHERE EMP_NO = #{eNo}
@@ -67,4 +91,10 @@
  	  <update id="updateEmpInfo" parameterType="Employee">
   		UPDATE EMPLOYEE SET EMP_PWD = #{empPwd}, EMP_PHONE = #{empPhone}, EMP_SUBEMAIL = #{empSubEmail} WHERE EMP_ID = #{empId }
   	</update>
+  	
+  	 <update id="updateEmpAdmin" parameterType="Employee">
+  		UPDATE EMPLOYEE SET DEPT_CODE = #{deptCode}, TEAM_CODE = #{teamCode}, 
+  		EMP_JOB = #{empJob}, EMP_EXNUM = #{empExnum}, EMP_STATE = #{empState} WHERE EMP_NO = #{empNo }
+  	</update>
+
  </mapper>

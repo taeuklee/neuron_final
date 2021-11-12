@@ -4,6 +4,8 @@ public class Team {
 	private String teamCode;
 	private String deptCode;
 	private String teamName;
+	
+	
 	public String getTeamCode() {
 		return teamCode;
 	}

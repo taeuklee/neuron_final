@@ -152,7 +152,6 @@
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" onclick="location.href='/enrollView.do'">사원 등록</a></li>
                 <li class="nav-item"> <a class="nav-link" onclick="location.href='/empListView.do'">사원 조회</a></li>
-                <li class="nav-item"> <a class="nav-link" href="#">사원 수정</a></li>
               </ul>
             </div>
           </li>
