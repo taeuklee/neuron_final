@@ -85,40 +85,34 @@
 			<jsp:include page="../common/sidebar.jsp"></jsp:include>
 			<!-- partial -->
 			<div class="main-panel">
-				<div class="content-wrapper" id="contents">
-				<div class="col-lg-12 grid-margin stretch-card">
+				<div class="content-wrapper" id="contents"></div>
+				<div class="col-12 grid-margin stretch-card">
 					<div class="card">
 						<div class="card-body">
 							<br>
-							<h3 class="card-title">사내 공지사항</h3>
+							<h3 class="card-title">공지사항 상세보기</h3>
 							<br>
 							<br>
 							<br>
-							<div class="write-button" id="write-button" style="padding-left:92%;">
-								<button class="btn btn-primary mr-2" onclick="location.href='/noticeWriteForm.do'">글쓰기</button></div>
-							<div class="table-responsive pt-3">
-								<table class="table table-bordered">
-									<thead>
-										<tr>
-											<th>No</th>
-											<th>제목</th>
-											<th>작성자</th>
-											<th>조회수</th>
-											<th>작성일</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>1</td>
-											<td><a href="notice/noticeDetailView.jsp">Herman Beck</a></td>
-											<td>admin</td>
-											<td>$ 77.99</td>
-											<td>May 15, 2015</td>
-										</tr>
-										
-									</tbody>
-								</table>
-							</div>
+							<form class="forms-sample">
+								<h4 class="card-title-little">창립기념일 행사 안내</h4>
+								<div class="template-demo">
+									<h1 class="title-line"></h1>
+								</div>
+								<div class="col-md-12 grid-margin stretch-card">
+									<div class="card">
+										<div class="card-body">
+											<span> 주식회사 뉴런의 창립 기념일 행사가 있습니다 <br> <br>
+												============================================ <br> <br>
+												일시 : 2021년 11월 24일 14:00 <br> <br> 내용 : 창립 기념인사 및
+												간단한 다과회 <span>
+										</div>
+									</div>
+								</div>
+								<div class="button-notice">
+									<button type="submit" class="btn btn-primary mr-2 modify">수정하기</button>
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>

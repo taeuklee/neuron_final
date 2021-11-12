@@ -20,6 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.neuron.spring.employee.domain.Employee;
+import com.neuron.spring.employee.domain.PageInfo;
+import com.neuron.spring.employee.domain.Pagination;
+import com.neuron.spring.employee.domain.Search;
 import com.neuron.spring.employee.service.EmployeeService;
 
 @Controller
@@ -27,6 +30,24 @@ public class EmployeeController {
 	
 	@Autowired
 	private EmployeeService service;
+	
+	// 페이징 처리
+	@RequestMapping(value="empListView.do", method=RequestMethod.GET)
+	public ModelAndView empListView(ModelAndView mv, @RequestParam(value="page", required=false) Integer page) {
+		int currentPage = (page != null) ? page : 1; // 첫 페이지 1로 지정
+		int totalCount = service.getListCount();
+		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount); // 페이지 얼마나 출력할지 몇개 출력할지를 페이지네이션에서 정해서 가져옴
+		List<Employee> eList = service.printAll(pi);
+		if(!eList.isEmpty()) {
+			mv.addObject("eList", eList);
+			mv.addObject("pi", pi);
+			mv.setViewName("employee/empListView");
+		}else {
+			mv.addObject("msg", "게시글 전체조회 실패");
+			mv.setViewName("common/errorPage");
+		}
+		return mv;
+	}
 	
 	// 로그인
 	@RequestMapping(value="/login.do", method=RequestMethod.POST)
@@ -148,7 +169,6 @@ public class EmployeeController {
 				session.setAttribute("loginEmployee", employee);
 				return "redirect:home.do";
 			}else {
-//				request.setAttribute("msg", "회원 정보 수정 실패!");
 				model.addAttribute("msg", " 정보 수정 실패!");
 				return "common/errorPage";
 			}
@@ -159,31 +179,75 @@ public class EmployeeController {
 	}
 	
 	
-	// 사원 리스트 보기
-	@RequestMapping(value="empListView.do", method=RequestMethod.GET)
-	public String ShowEmpList(Model model) {
+//	// 사원 리스트 보기
+//	@RequestMapping(value="empListView.do", method=RequestMethod.GET)
+//	public String ShowEmpList(Model model) {
+//		try {
+//			List<Employee> eList = service.printAllEmp();
+//			if(!eList.isEmpty()) {
+//				model.addAttribute("eList",eList);
+//			}else {
+//				model.addAttribute("eList",null);
+//			}
+//			return "employee/empListView";
+//		}catch(Exception e) {
+//			model.addAttribute("msg", "회원 조회 실패!");
+//			return "common/errorPage";
+//		}
+//	}
+	
+	// 사원 정보 보기
+	@RequestMapping(value="empAdminModifyView.do", method=RequestMethod.GET)
+	public String noticeModify(@RequestParam("empNo") int eNo, Model model) {
+		Employee employee = service.printOneEmp(eNo);
+		model.addAttribute("employee", employee);
+		return "employee/empAdminModifyView";
+	}
+
+	// 사원 정보 수정
+	@RequestMapping(value="empAdminUpdate.do", method=RequestMethod.POST)
+	public String modifyEmpAdmin(
+			@ModelAttribute Employee employee
+			, @RequestParam("deptCode") String deptCode
+			, @RequestParam("teamCode") String teamCode
+			, @RequestParam("empJob") String empJob
+			, @RequestParam("empState") String empState
+			, @RequestParam("empExnum") String empExnum
+			, Model model
+			, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		System.out.println(deptCode+teamCode+empJob+empState+empExnum);
 		try {
-			List<Employee> eList = service.printAllEmp();
-			if(!eList.isEmpty()) {
-				model.addAttribute("eList",eList);
+			int result = service.modifyEmpAdmin(employee);
+			if(result > 0) {
+				session.setAttribute("loginEmployee", employee);
+				return "redirect:empListView.do";
 			}else {
-				model.addAttribute("eList",null);
+				model.addAttribute("msg", "회원 정보 수정 실패!");
+				return "common/errorPage";
 			}
-			return "employee/empListView";
-		}catch(Exception e) {
-			model.addAttribute("msg", "회원 조회 실패!");
+		} catch(Exception e) {
+			model.addAttribute("msg", e.toString());
 			return "common/errorPage";
 		}
 	}
 	
-	// 사원 정보 보기
-	// 사원 정보 수정
-	@RequestMapping(value="empAdminModifyView.do", method=RequestMethod.GET)
-	public String noticeModify(@RequestParam("empNo") int eNo, Model model) {
-		Employee employee = service.printOneEmp(eNo);
-		model.addAttribute("notice", employee);
-		return "employee/empAdminModifyView";
-	}
+	// 사원 내역 검색 처리
+	@RequestMapping(value="empSearch.do", method=RequestMethod.GET)
+	public String empSearchList(@ModelAttribute Search search, Model model) {
+		List<Employee> searchList = service.printSearchAll(search);
+		if(!searchList.isEmpty()) {
+			//noticeListView 와 동일
+			model.addAttribute("eList", searchList);
+			//검색한 값 유지
+			model.addAttribute("search", search);
+			return "employee/empListView";
+		}else {
+			model.addAttribute("msg", "사원 검색 실패");
+			return "common/errorPage";
+		}
 
+	}
+	
 	
 }

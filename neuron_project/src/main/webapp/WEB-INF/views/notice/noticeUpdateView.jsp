@@ -36,11 +36,11 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
-    $(document).ready(function(){
-      $("#headerNav").load("partials/_navbar.html");
-      $("#sidebar").load("partials/_sidebar.html");
-    });
-  </script>
+	$(document).ready(function() {
+		$("#headerNav").load("partials/_navbar.html");
+		$("#sidebar").load("partials/_sidebar.html");
+	});
+</script>
 <style>
 .answer {
 	display: none;
@@ -86,39 +86,35 @@
 			<!-- partial -->
 			<div class="main-panel">
 				<div class="content-wrapper" id="contents">
-				<div class="col-lg-12 grid-margin stretch-card">
+				<div class="col-12 grid-margin stretch-card">
 					<div class="card">
 						<div class="card-body">
 							<br>
-							<h3 class="card-title">사내 공지사항</h3>
+							<h3 class="card-title">공지사항 수정</h3>
 							<br>
 							<br>
 							<br>
-							<div class="write-button" id="write-button" style="padding-left:92%;">
-								<button class="btn btn-primary mr-2" onclick="location.href='/noticeWriteForm.do'">글쓰기</button></div>
-							<div class="table-responsive pt-3">
-								<table class="table table-bordered">
-									<thead>
-										<tr>
-											<th>No</th>
-											<th>제목</th>
-											<th>작성자</th>
-											<th>조회수</th>
-											<th>작성일</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>1</td>
-											<td><a href="notice/noticeDetailView.jsp">Herman Beck</a></td>
-											<td>admin</td>
-											<td>$ 77.99</td>
-											<td>May 15, 2015</td>
-										</tr>
-										
-									</tbody>
-								</table>
-							</div>
+							<form action="noticeRegister.do" class="forms-sample" method="post" enctype="multipart/form-data">
+								<div class="form-group">
+									<label for="exampleInputName1"><b>제목</b></label> 
+									<input type="text" class="form-control" id="exampleInputName1" name="noticeTitle" placeholder="제목">
+								</div>
+								<div class="form-group">
+									<label for="exampleInputName1"><b>작성자</b></label> 
+									<input type="text" class="form-control" id="exampleInputName1" name="noticeTitle" value="${loginEmployee.empId}" readonly>
+								</div>
+								<div class="form-group">
+									<label for="exampleInputName1"><b>첨부파일</b></label> 
+									<input type="file" class="form-control" id="exampleInputName1" name="uploadFile"">
+								</div>
+								<div class="form-group">
+									<label for="exampleTextarea1"><b></b>내용</b></label>
+									<textarea class="form-control" cols="70" rows="50" name="noticeCotents" id="exampleTextarea1" rows="4"></textarea>
+								</div>
+								<div class="button-notice">
+									<button type="submit" class="btn btn-primary mr-2">수정</button>
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>

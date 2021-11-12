@@ -2,11 +2,14 @@ package com.neuron.spring.employee.store.logic;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.neuron.spring.employee.domain.Employee;
+import com.neuron.spring.employee.domain.PageInfo;
+import com.neuron.spring.employee.domain.Search;
 import com.neuron.spring.employee.store.EmployeeStore;
 
 @Repository
@@ -43,6 +46,32 @@ public class EmployeeStoreLogic implements EmployeeStore{
 	public Employee selectOneEmp(int eNo) {
 		Employee employee = sqlSession.selectOne("employeeMapper.selectOneEmp", eNo);
 		return employee;
+	}
+
+	@Override
+	public int updateEmpAdmin(Employee employee) {
+		int result = sqlSession.insert("employeeMapper.updateEmpAdmin", employee);
+		return result;
+	}
+
+	@Override
+	public List<Employee> selectSearchAll(Search search) {
+		List<Employee> searchList = sqlSession.selectList("employeeMapper.selectSearchAll", search);
+		return searchList;
+	}
+
+	@Override
+	public int selectListCount() {
+		int count = sqlSession.selectOne("employeeMapper.selectListCount");
+		return count;
+	}
+
+	@Override
+	public List<Employee> selectAll(PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1 ) * pi.getEmpLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getEmpLimit());
+		List<Employee> eList = sqlSession.selectList("employeeMapper.selectAllList", pi, rowBounds);
+		return eList;
 	}
 
 	
