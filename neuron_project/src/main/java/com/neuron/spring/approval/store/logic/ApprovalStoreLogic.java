@@ -42,6 +42,12 @@ public class ApprovalStoreLogic implements ApprovalStore{
 	}
 	
 	@Override
+	public int selectListCount(Map param) {
+		int count = sqlSession.selectOne("approvalMapper.selectListCount", param);
+		return count;
+	}
+	
+	@Override
 	public  List<Map<String, Object>> selectCodeInfo(Map<String,String> param){
 		return sqlSession.selectList("approvalMapper.selectCodeInfoOne", param);
 	}
@@ -67,14 +73,15 @@ public class ApprovalStoreLogic implements ApprovalStore{
 	}
 
 	@Override
-	public int insertDocument(Map<String,Object> param) {
-		return sqlSession.insert("approvalMapper.insertDocument",param);
+	public int insertDocument(Document doc) {
+		int result = sqlSession.insert("approvalMapper.insertDocument",doc);
+		return result;
+		
 	}
 
 	@Override
 	public int insertDocumentFile(DocumentFile file) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.insert("approvalMapper.insertDocumentFile",file);
 	}
 
 	@Override
@@ -91,6 +98,20 @@ public class ApprovalStoreLogic implements ApprovalStore{
 	@Override
 	public Document selectDocumentOne(int documentNo) {
 		return sqlSession.selectOne("approvalMapper.selectDocOne",documentNo);
+	}
+
+	@Override
+	public int insertDocument(Map map,List<Approval> aList) {
+		Document doc = (Document)map.get("doc");
+		int docResult = sqlSession.insert("approvalMapper.insertDocument",doc);
+		for(Approval appr : aList) {
+			appr.setDocumentNo(doc.getDocNo());
+			sqlSession.insert("approvalMapper.insertAppr",appr);
+		}
+		DocumentFile file = (DocumentFile)map.get("docFile");
+		file.setDocumentNo(doc.getDocNo());
+		int fileResult =  sqlSession.insert("approvalMapper.insertDocumentFile",file);
+		return fileResult;
 	}
 
 }

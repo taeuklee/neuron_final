@@ -6,7 +6,7 @@ public class Pagination {
 		PageInfo pi = null;
 		
 		int naviLimit = 5;
-		int boardLimit = 3;
+		int boardLimit = 10;
 		int maxPage;
 		int startNavi;
 		int endNavi;

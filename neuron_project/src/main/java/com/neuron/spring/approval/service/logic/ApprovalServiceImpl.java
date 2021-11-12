@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.neuron.spring.approval.domain.Approval;
 import com.neuron.spring.approval.domain.CodeInfo;
 import com.neuron.spring.approval.domain.Document;
+import com.neuron.spring.approval.domain.DocumentFile;
 import com.neuron.spring.approval.domain.PageInfo;
 import com.neuron.spring.approval.service.ApprovalService;
 import com.neuron.spring.approval.store.ApprovalStore;
@@ -31,6 +32,11 @@ public class ApprovalServiceImpl implements ApprovalService{
 	public int getListCount(int docWriterNo) {
 		int count = store.selectListCount(docWriterNo);
 		return count;
+	}
+	
+	@Override
+	public int getListCount(Map param) {
+		return store.selectListCount(param);
 	}
 	
 	@Override
@@ -65,11 +71,16 @@ public class ApprovalServiceImpl implements ApprovalService{
 		return null;
 	}
 
+//	@Override
+//	public int registerDocument(Map<String,Object> param) {
+//		return store.insertDocument(param);
+//	}
+	
 	@Override
-	public int registerDocument(Map<String,Object> param) {
-		return store.insertDocument(param);
+	public int registerDocument(Document doc) {
+		return store.insertDocument(doc);
 	}
-
+	
 	@Override
 	public int registerApprove() {
 		// TODO Auto-generated method stub
@@ -77,9 +88,8 @@ public class ApprovalServiceImpl implements ApprovalService{
 	}
 
 	@Override
-	public int registerDocumentFile() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int registerDocumentFile(DocumentFile file) {
+		return store.insertDocumentFile(file);
 	}
 
 	@Override
@@ -92,6 +102,14 @@ public class ApprovalServiceImpl implements ApprovalService{
 		return store.selectDocumentOne(documentNo);
 	}
 
+	@Override
+	public int registerDocument(Map map, List<Approval> aList) {
+		int docResult = store.insertDocument(map,aList);
+		return docResult;
+	}
+
+
+	
 	
 	
 	

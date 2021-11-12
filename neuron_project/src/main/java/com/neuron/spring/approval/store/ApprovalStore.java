@@ -14,7 +14,7 @@ import com.neuron.spring.employee.domain.Team;
 
 public interface ApprovalStore {
 	public int selectListCount(int empNo);
-	
+	public int selectListCount(Map param);
 	public List<Document> selectMyAllDoc(PageInfo pi, Map empNo);
 	
 	public  List<Map<String, Object>> selectCodeInfo(Map<String,String> param);
@@ -27,7 +27,10 @@ public interface ApprovalStore {
 	
 	public List<Dept> selectAllDept();
 	
-	public int insertDocument(Map<String,Object> param);
+//	public int insertDocument(Map<String,Object> param);
+	
+	public int insertDocument(Document doc);
+	public int insertDocument(Map map, List<Approval> aList);
 	
 	public int insertDocumentFile(DocumentFile file);
 	

@@ -73,7 +73,13 @@
 <!-- End plugin js for this page -->
 <!-- Custom js for this page-->
 <script src="/js/dashboard.js"></script>
-<!-- End custom js for this page-->
+
+<script>
+	function fn_appr(){
+		window.open("/transApprove.do","tranApprove","width=400, height=400");
+	}
+
+</script>
 </head>
 
 <body>
@@ -88,15 +94,54 @@
 			<div class="main-panel">
 				<div class="content-wrapper" id="contents">
 					<!--게시판 넓이 -->
-<!-- 					<div class="col-lg-12"> -->
-<!-- 						<h1 class="page-header">결재문 작성</h1> -->
-<!-- 					</div> -->
+					<div class="col-lg-12">
+						<h1 class="page-header">결재문 조회</h1>
+					</div>
 					<div class="col-lg-6 grid-margin stretch-card"
 						style="max-width: 100%;">
 					<div class="card">
-						<div>
+						<div class="template-demo" >
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+							<button class="btn btn-inverse-light btn-fw">회수</button>
+							<button class="btn btn-inverse-light btn-fw">인쇄</button>
+							<button class="btn btn-inverse-light btn-fw" onclick="fn_appr();">결재</button>
+							<button class="btn btn-inverse-light btn-fw">목록</button>
+						</div>
+							
+						<div align="center" style="border:1px solid gray; margin:50px 90px 30px 90px; padding:50px 100px 50px 100px;">
 							${docOne.docContents }
 						</div>
+						<div class="col-lg-12">
+							<table class="table table-bordered">
+								<tr>
+									<th>순번</th>
+									<th>합의/결재자</th>
+									<th>졀재일시</th>
+									<th>결재의견</th>
+								</tr>
+								<c:forEach items="${aList }" var="aOne" varStatus="status">
+								<tr>
+									<td>${status.count }</td>
+									<td>${aOne.approvalEmpNo }</td>
+									<td>${aOne.approvalEndDate }</td>
+									<td>${aOne.approvalOpinion }</td>
+								</tr>
+								</c:forEach>
+								
+							</table>
+						</div>
+						<br><br><br>
 					</div>
 					</div>
 				</div>	

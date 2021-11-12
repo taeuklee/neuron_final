@@ -27,8 +27,8 @@
  	</resultMap>
  	
  	<resultMap type="Team" id="teamResultMap">
- 		<id property="teamNo" column="TEAM_NO"/>
- 		<result property="deptNo" column="DEPT_NO"/>
+ 		<id property="teamCode" column="TEAM_CODE"/>
+ 		<result property="deptCode" column="DEPT_CODE"/>
  		<result property="teamName" column="TEAM_NAME"/>
  	</resultMap>
  	

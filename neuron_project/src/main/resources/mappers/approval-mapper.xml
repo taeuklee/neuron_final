@@ -17,6 +17,17 @@
 	   <result property="vEndDate" column="VACATION_END_DATE"/>
   	</resultMap>
   	
+  	 <resultMap type="DocumentFile" id="DocFileResultMap">
+	   <id property="fileNo" column="FILE_NO"/>
+	   <id property="fileOrder" column="FILE_ORDER"/>
+	   <result property="documentNo" column="DOCUMENT_NO"/>
+	   <result property="fileName" column="FILE_NAME"/>
+	   <result property="fileRename" column="FILE_RENAME"/>
+	   <result property="fileSize" column="FILE_SIZE"/>
+	   <result property="filePath" column="FILE_PATH"/>
+	   <result property="fileKind" column="FILE_KIND"/>
+  	</resultMap>
+  	
   	 <resultMap type="CodeInfo" id="CodeInfoResultMap">
 	   <id property="groupCodeId" column="GROUP_CODE_ID"/>
 	   <result property="codeId" column="CODE_ID"/>
@@ -65,9 +76,25 @@
   		select count(*) from document where DOCUMENT_WRITER_NO = #{docWriterNo}
   	</select>
   	
-  	
-  	<insert id="insertDocument" parameterType="map">
-  		INSERT INTO DOCUMENT VALUES(SEQ_DOCUMENT.NEXTVAL,#{WriterEmpNo,jdbcType=BIGINT },#{docGubun,jdbcType=VARCHAR},#{docContents,jdbcType=CLOB},'결재대기',null,SYSDATE,SYSDATE,NULL,NULL)
+  	<!-- 결재문 등록 -->
+  	<insert id="insertDocument" parameterType="Document">
+  		INSERT INTO DOCUMENT 
+  		VALUES
+  		(SEQ_DOCUMENT.NEXTVAL,#{docWriterNo,jdbcType=BIGINT },#{docKind,jdbcType=VARCHAR},#{docContents,jdbcType=CLOB},'결재대기',null,SYSDATE,SYSDATE,NULL,NULL)
+	
+	<selectKey keyProperty="docNo" resultType="int" order="AFTER">
+		SELECT MAX(DOCUMENT_NO) FROM DOCUMENT
+	</selectKey>
+	</insert>
+	
+	<insert id="insertDocumentFile">
+		INSERT INTO DOC_FILE 
+  		VALUES(SEQ_DOC_FILE.NEXTVAL,1,#{documentNo},#{fileName},#{fileRename},#{fileSize},#{filePath},'문서')
+	</insert>
+	
+	<insert id="insertAppr">
+		INSERT INTO approval 
+  		VALUES(SEQ_APPR.NEXTVAL,#{documentNo}, #{approvalEmpNo},#{approvalType},'대기',NULL,SYSDATE,NULL,NULL)
 	</insert>
 	
 	<select id="selectApproval" parameterType="_int" resultMap="ApprResultMap">
@@ -77,4 +104,11 @@
   	<select id="selectDocOne" parameterType="_int" resultMap="DocResultMap">
   		SELECT * FROM DOCUMENT WHERE DOCUMENT_NO = #{documentNo }
   	</select>
+  	
+  	<select id="selectWaitApprDoc">
+  		select * 
+  		from DOCUMENT join approval using(document_no)
+  		where approval_status = '대기' and approval.emp_no = 2
+  	</select>
+  	
   </mapper>

@@ -183,11 +183,11 @@ body {
 								<li class="menu"><a>${dOne.deptName }</a>
 								<ul class="hide">
 								<c:forEach items="${tList }" var="tOne">
-								<c:if test="${dOne.deptNo eq tOne.deptNo }">
+								<c:if test="${dOne.deptCode eq tOne.deptCode }">
 									<li class="sub-menu"><a>${tOne.teamName }</a>
 									<ul class="hide">
 										<c:forEach items="${eList }" var="eOne">
-											<c:if test="${tOne.teamNo eq eOne.teamCode }">
+											<c:if test="${tOne.teamCode eq eOne.teamCode }">
 												<li id="select">
 													<label> 
 													<input type="radio" name="select-apvl" value="${eOne.empNo}:${eOne.empJob }:${eOne.empName }:${tOne.teamName }">
