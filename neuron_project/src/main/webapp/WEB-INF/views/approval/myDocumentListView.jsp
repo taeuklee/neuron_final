@@ -139,15 +139,15 @@
 											<c:url var="dDetail" value="documentDatail.do">
 												<c:param name="documentNo" value="${dOne.docNo }"></c:param>
 											</c:url>
-											<tr align="center" onclick="location.href='/${dDetail }'" style="cursor:pointer; color:#blue;">
-												<td>${dOne.docNo }</td>
-												<td>${dOne.docKind }</td>
-												<td>${dOne.dCreateDate }</td>
+											<tr align="center" style="cursor:pointer; color:#blue;">
+												<td onclick="location.href='/${dDetail }'">${dOne.docNo }</td>
+												<td onclick="location.href='/${dDetail }'">${dOne.docKind }</td>
+												<td onclick="location.href='/${dDetail }'">${dOne.dCreateDate }</td>
 												<c:if test="${dOne.docStatus eq '결재완료'}">
-												<td>${dOne.dUpdateDate }</td>												
+												<td onclick="location.href='/${dDetail }'">${dOne.dUpdateDate }</td>												
 												</c:if>
 												<c:if test="${dOne.docStatus ne '결재완료'}">
-												<td></td>												
+												<td onclick="location.href='/${dDetail }'"></td>												
 												</c:if>
 												<td>
 													<button class="question" id="que-${count.count }">
@@ -159,7 +159,7 @@
 												<td colspan="5" style="padding: 5px">
 													<div class="answer" id="ans-${count.count }">
 														<input type="hidden" id="docNo-${count.count }" value="${dOne.docNo }">
-														<table align="center" border="1">
+														<table class="table table-bordered"align="center" border="1">
 															<thead align="center">
 																<tr>
 																	<th>순번</th>
@@ -244,7 +244,7 @@
 	      var docNo = $('#'+docId).val();
 	      var tbody = this.id.replace("que","tbody");
 		  $.ajax({
-			  url : "apprList.do",
+			  url : "/apprList.do",
 			  type : "get",
 			  data : {"documentNo":docNo },
 			  dataType : "json",
@@ -260,9 +260,11 @@
 				  var $endDate;
 				  var $apprOp;
 				  if(data.length>0){
+						var count = 0;
 						for(var i in data){
+							count++;
 							$tr= $("<tr>");
-							$seq = $("<td>").text(i+1);
+							$seq = $("<td>").text(count);
 							$writer = $("<td>").text(data[i].approvalEmpNo);
 							$apprType = $("<td>").text(data[i].approvalType);
 							$apprState = $("<td>").text(data[i].approvalStatus);

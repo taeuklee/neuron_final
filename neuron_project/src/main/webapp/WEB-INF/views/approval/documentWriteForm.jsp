@@ -51,6 +51,7 @@
     	$("input[name=docContents]").attr('value',$("#test").html());
     	$('#doc_reg').submit();
     }
+    
     // 결재선 추가 버튼 클릭
     function btn_approval(){
     	var a = window.open("approvalEmp.do","approval","width=1000, height=600");
@@ -65,7 +66,7 @@
 	   		var oneEmp = apprEmpInfo[key];
 	   		console.log(oneEmp.split(":")[4]);
 	   		if(oneEmp.split(":")[4]=="합의"){
-	   			$("#doc_reg").append("<input type='hidden' name='emp_id_1' value='"+oneEmp+"'>");
+	   			$("#doc_reg").append("<input type='text' name='emp_id_1' value='"+oneEmp+"'>");
 	   			$("#emp_name1").val(oneEmp.split(":")[2]);
 	   			$("#emp_job1").val(oneEmp.split(":")[1]);
 	   			$("#emp_dept1").val(oneEmp.split(":")[3]);
@@ -152,6 +153,8 @@
 										<div id="contentArea" style="display: none;">
 											<c:forEach items="${code }" var="item">
 												<div id="${item.codeId }">${item.codeContents }</div>
+												<c:if test="${item.codeId eq 'A' }">
+												</c:if>
 											</c:forEach>
 										</div>
 									</td>
@@ -161,7 +164,7 @@
 										<b>기안자</b>
 									</td>
 									<td>
-										<span>이태욱사원 개발1팀</span>
+										<span>${emp.empName }${emp.empJob } ${emp.teamCode }</span>
 									</td>
 								</tr>
 							</table>
@@ -196,8 +199,6 @@
 							<div id="결재선"></div>
 							
 							<div id="test" align="center" style="border:1px solid gray; padding:50px 0 0 0;" contenteditable="true">
-							
-							
 							</div>
 							
 							<input type="file" name="uploadFile">

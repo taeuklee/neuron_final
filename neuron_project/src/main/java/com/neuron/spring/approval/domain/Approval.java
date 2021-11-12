@@ -9,8 +9,8 @@ public class Approval {
 	private String approvalType;
 	private String approvalStatus;
 	private String approvalOpinion;
-	private Date approvalEndDate;
 	private Date approvalStartDate;
+	private Date approvalEndDate;
 	private int signFileNo;
 	
 	
