@@ -62,25 +62,21 @@ public class ApprovalController {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("empNo", docWriterNo);
 		List<Document> dList = new ArrayList<Document>();
+		for(Document d : dList) {
+			d.setDocWriterNo(docWriterNo);
+		}
 		
-		if(path.equals("myDocumentListView")) {		
-			System.out.println(path);
-			totalCount = service.getListCount(docWriterNo);
-			for(Document d : dList) {
-				d.setDocWriterNo(docWriterNo);
-			}
+		if(path.equals("myDocumentListView")) {	
+			paramMap.put("gubun","myWrite");
+			totalCount = service.getListCount(paramMap);
 		}else if(path.equals("list1")) {
+			paramMap.put("gubun","wait");
 			paramMap.put("apprState","대기");
-			System.out.println("결재대기");
-
 			totalCount = service.getListCount(paramMap);
 		}
-
 		
 		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
 		dList = service.printMyAllDocList(pi,paramMap);
-		
-		
 		
 		if(!dList.isEmpty()) {
 			mv.addObject("dList",dList);

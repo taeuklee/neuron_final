@@ -65,15 +65,31 @@
   		select * from code_info ORDER BY SORT_ORDR
   	</select>
   	
+<!--   	<select id="selectWaitApprDoc"> -->
+<!-- 		select *  -->
+<!-- 		from DOCUMENT join approval using(document_no) -->
+<!-- 		where approval_status = '대기' and approval.emp_no = 2 -->
+<!--   	</select> -->
   	
   	<!-- 내가 작성한 리스트 -->
   	<select id="selectAllList" parameterType="map" resultMap="DocResultMap">
-  		select * from document where DOCUMENT_WRITER_NO = #{empNo, jdbcType=BIGINT } order by DOCUMENT_NO DESC
+  		select * 
+  		from document 
+  		<where>
+  			and DOCUMENT_WRITER_NO = #{empNo, jdbcType=BIGINT }
+  		</where>
+  		order by DOCUMENT_NO DESC
   	</select>
   	
 	<!--   	전체 리스트 갯수 -->
-  	<select id="selectListCount" parameterType="_int" resultType="_int">
-  		select count(*) from document where DOCUMENT_WRITER_NO = #{docWriterNo}
+  	<select id="selectListCount" parameterType="map" resultType="_int">
+  		select count(*) 
+  		from document 
+  		<where>
+  			<if test='#{gubun}.equals("myWrite")'>
+	 	 		and DOCUMENT_WRITER_NO = #{docWriterNo}  		
+  			</if>
+  		</where> 
   	</select>
   	
   	<!-- 결재문 등록 -->
@@ -103,12 +119,6 @@
   	
   	<select id="selectDocOne" parameterType="_int" resultMap="DocResultMap">
   		SELECT * FROM DOCUMENT WHERE DOCUMENT_NO = #{documentNo }
-  	</select>
-  	
-  	<select id="selectWaitApprDoc">
-  		select * 
-  		from DOCUMENT join approval using(document_no)
-  		where approval_status = '대기' and approval.emp_no = 2
   	</select>
   	
   </mapper>
