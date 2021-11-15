@@ -39,15 +39,15 @@ public interface ApprovalService {
 	
 	public List<Dept> printAllDeptList();
 	
-//	public int registerDocument(Map<String,Object> param);
-	
 	public int registerDocument(DataMap dataMap) throws Exception;
-	
-	public int registerApprove();
 	
 	public int registerDocumentFile(DocumentFile dfile);
 	
 	public List<DataMap> printApprovalList(DataMap dataMap);
-	
+		
 	public Document printDocumentOne(DataMap dataMap);
+	
+	public int updateTransApproval(DataMap dataMap);
+	
+	public int rejectTransApproval(DataMap dataMap);
 }

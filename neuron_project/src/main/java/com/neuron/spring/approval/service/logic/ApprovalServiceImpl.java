@@ -76,12 +76,6 @@ public class ApprovalServiceImpl implements ApprovalService{
 	public int registerDocument(DataMap dataMap) throws Exception {
 		return store.insertDocument(dataMap);
 	}
-	
-	@Override
-	public int registerApprove() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public int registerDocumentFile(DocumentFile file) {
@@ -96,6 +90,16 @@ public class ApprovalServiceImpl implements ApprovalService{
 	@Override
 	public Document printDocumentOne(DataMap dataMap) {
 		return store.selectDocumentOne(dataMap);
+	}
+
+	@Override
+	public int updateTransApproval(DataMap dataMap) {
+		return store.updateTransApproval(dataMap);
+	}
+
+	@Override
+	public int rejectTransApproval(DataMap dataMap) {
+		return store.rejectTransApproval(dataMap);
 	}
 	
 	

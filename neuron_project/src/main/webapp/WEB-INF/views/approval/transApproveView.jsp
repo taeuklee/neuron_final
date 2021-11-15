@@ -86,7 +86,8 @@ body {
 
 <body>
 	<div style="width: 100%; height: 30px; background: gray; color: white;">
-		결재선 지정</div>
+		결재처리
+	</div>
 	<div class="main-panel" style="width: 100%">
 		<div class="content-wrapper">
 			<div class="row">

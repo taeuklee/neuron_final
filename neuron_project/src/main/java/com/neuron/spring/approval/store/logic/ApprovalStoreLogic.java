@@ -64,12 +64,12 @@ public class ApprovalStoreLogic implements ApprovalStore{
 
 	@Override
 	public List<Team> selectAllTeam() {
-		return sqlSession.selectList("employeeMapper.selectAllTeam");
+		return sqlSession.selectList("deptMapper.selectAllTeam");
 	}
 
 	@Override
 	public List<Dept> selectAllDept() {
-		return sqlSession.selectList("employeeMapper.selectAllDept");
+		return sqlSession.selectList("deptMapper.selectAllDept");
 	}
 
 	@Override
@@ -77,11 +77,6 @@ public class ApprovalStoreLogic implements ApprovalStore{
 		return sqlSession.insert("approvalMapper.insertDocumentFile",file);
 	}
 
-	@Override
-	public int issertApproval(Approval appr) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public List<DataMap> selectApproval(DataMap dataMap) {
@@ -93,6 +88,7 @@ public class ApprovalStoreLogic implements ApprovalStore{
 		return sqlSession.selectOne("approvalMapper.selectDocOne",dataMap);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public int insertDocument(DataMap dataMap) throws Exception{
 		sqlSession.insert("approvalMapper.insertDocument",dataMap);
@@ -111,6 +107,22 @@ public class ApprovalStoreLogic implements ApprovalStore{
 			sqlSession.insert("approvalMapper.insertDocumentFile",file);			
 		}
 		return dataMap.getInt("documentNo");
+	}
+
+	@Override
+	public int updateTransApproval(DataMap dataMap) {
+		int result = sqlSession.update("approvalMapper.updateTransApproval", dataMap);
+		System.out.println("@@@@@@@@@@ test:"+ dataMap.getString("apprStateChk"));
+		if(dataMap.getString("apprStateChk").equals("Y")) {
+			sqlSession.update("approvalMapper.updateTransApprovalDoc",dataMap);
+		}
+		return result;
+	}
+
+	@Override
+	public int rejectTransApproval(DataMap dataMap) {
+		int result = sqlSession.update("approvalMapper.rejectTransApproval", dataMap);
+		return sqlSession.update("approvalMapper.updateTransApprovalDoc",dataMap);
 	}
 
 }

@@ -102,10 +102,13 @@
 							style="font-size: large; color: #F9D955;">결재</span>
 							<ul style="list-style: none">
 								<li class="nav-item"><a class="nav-link"
-									onclick="location:href='/approval/list1.do';">결재대기함</a></li>
-								<li class="nav-item"><a class="nav-link" href="#">결재진행함</a></li>
-								<li class="nav-item"><a class="nav-link" href="#">반려문서함</a></li>
-								<li class="nav-item"><a class="nav-link" href="#">완료문서함</a></li>
+									onclick="location:href='/approval/documentWaitListView.do';">결재대기함</a></li>
+								<li class="nav-item"><a class="nav-link"
+									onclick="location:href='#'">결재진행함</a></li>
+								<li class="nav-item"><a class="nav-link" 
+									onclick="location:href='/approval/documentRejectListView.do';">반려문서함</a></li>
+								<li class="nav-item"><a class="nav-link" 
+									onclick="location:href='/approval/documentCompleteListView.do';">완료문서함</a></li>
 							</ul></li>
 					</ul>
 				</div></li>

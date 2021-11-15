@@ -73,12 +73,44 @@
 <!-- End plugin js for this page -->
 <!-- Custom js for this page-->
 <script src="/js/dashboard.js"></script>
-
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
 	function fn_appr(type){
-		$("#check").val(type);
-		alert($("#check").val());
-		window.open("/transApproveView.do","tranApprove","width=400, height=400");
+		var apprOpinion = prompt("결재의견");
+		var docNo = $("#documentNo").val();
+		var approvalType = $("#approvalType").val();
+		if(apprOpinion){
+			alert("승인");
+			$.ajax({
+				url : "/transApproval.do",
+				type : "post",
+				data : {
+					"apprOpinion" : apprOpinion, // 결재의견
+					"apprStatus" : type, // 승인 or 반려 체크 
+					"documentNo" : docNo, // 문서 번호 
+					"approvalType" : approvalType // 합의 or 결재
+				},
+				success: function(data){
+					if(data == "success"){
+						alert("결재처리 완료!");
+						location.reload();
+					}else{
+						alert("결재처리 실패!");
+					}
+				},
+				error : function(){
+					alert("ajax 실패");
+				}
+			});
+		}else if(apprOpinion == null){
+			alert("취소");
+		}else{
+			alert("글자입력해")
+		}
+		
+
+				
 	}
 
 </script>
@@ -127,7 +159,8 @@
 						</div>
 						<div class="col-lg-12">
 							<form action="">
-								<input type="hidden" id="check" name="check">
+								<input type="hidden" id="documentNo" name="documentNo" value="${docOne.docNo }" >
+								
 							</form>
 							<table class="table table-bordered">
 								<tr>
@@ -140,7 +173,12 @@
 								</tr>
 								<c:forEach items="${aList }" var="aOne" varStatus="status">
 								<tr>
-									<td>${status.count }</td>
+									<td>
+										<c:if test="${aOne.empNo eq sessionScope.loginEmployee.empNo }">
+											<input type="hidden" id = "approvalType" name = "approvalType" value="${aOne.approvalType }">
+										</c:if>
+										${status.count }
+									</td>
 									<td>${aOne.empName } ${aOne.empJob } (${aOne.teamName })</td>
 									<td>${aOne.approvalType }</td>
 									<td>${aOne.approvalStatus }</td>

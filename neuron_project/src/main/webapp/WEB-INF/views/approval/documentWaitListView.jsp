@@ -256,11 +256,11 @@
 							count++;
 							$tr= $("<tr>");
 							$seq = $("<td>").text(count);
-							$writer = $("<td>").text(data[i].approvalEmpNo);
+							$writer = $("<td>").text(data[i].empName+" "+data[i].empJob+"("+data[i].teamName+")");
 							$apprType = $("<td>").text(data[i].approvalType);
 							$apprState = $("<td>").text(data[i].approvalStatus);
-							$startDate = $("<td>").text(data[i].approvalStartDate);
-							$endDate = $("<td>").text(data[i].approvalEndDate);
+							$startDate = $("<td>").text(data[i].approvalStartdate);
+							$endDate = $("<td>").text(data[i].approvalEnddate);
 							$apprOp = $("<td>").text(data[i].approvalOpinion);
 							$tr.append($seq);
 							$tr.append($writer);
