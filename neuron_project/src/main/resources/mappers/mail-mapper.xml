@@ -18,11 +18,11 @@
   	</resultMap>
   	
   <select id="selectListCount" resultType="_int">
-		SELECT COUNT(*) FROM BOARD WHERE RECEIVER_ID = #{receiverId } or #{receiverId2 }
+		SELECT COUNT(*) FROM MAIL WHERE RECEIVER_ID = #{receiverId } 
 	</select>
 
 	<select id="selectAllList" resultMap="mailResultMap">
-		SELECT * FROM BOARD WHERE RECEIVER_ID = #{receiverId } or #{receiverId2 } ORDER BY BOARD_NO DESC
+		SELECT * FROM MAIL WHERE RECEIVER_ID = #{receiverId } ORDER BY MAIL_NO DESC
 	</select>
   	
   </mapper>

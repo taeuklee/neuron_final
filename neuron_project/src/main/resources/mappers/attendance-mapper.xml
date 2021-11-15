@@ -15,7 +15,7 @@
   </resultMap>
   
   <select id="selectListCount" resultType="_int">
-		SELECT COUNT(*) FROM ATTENDANCE WHERE EMP_NO = #{empNo}
+		SELECT COUNT(*) FROM ATTENDANCE WHERE EMP_NO = #{empNo} 
 	</select>
 
   <select id="selectAllList" resultMap="attendResultMap">

@@ -10,7 +10,9 @@ public interface HolidayService {
 
 	public int getListCount();
 
-//	public List<Document> printAll(PageInfo pi);
-
 	public List<Attendance> printAll();
+
+//	public int getListCount(int empNo);
+//
+//	public List<Document> printAll(PageInfo pi, int empNo);
 }

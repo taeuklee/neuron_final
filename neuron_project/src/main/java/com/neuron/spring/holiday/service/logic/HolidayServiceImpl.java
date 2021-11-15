@@ -16,28 +16,34 @@ import com.neuron.spring.holiday.store.HolidayStore;
 public class HolidayServiceImpl implements HolidayService {
 
 	@Autowired
-	private HolidayStore hStore;
+	private HolidayStore Store;
 	
 //	@Autowired
 //	private ApprovalStore aStore;
 	
 	@Override
 	public int getListCount() {
-		int totalCount = hStore.selectListCount();
+		int totalCount = Store.selectListCount();
 		return totalCount;
 	}
 
-//	@Override
-//	public List<Document> printAll(PageInfo pi) {
-//		List<Document> dList = hStore.selectAll(pi);
-//		return dList;
-//	}
-
 	@Override
 	public List<Attendance> printAll() {
-		List<Attendance> dList = hStore.selectAll();
+		List<Attendance> dList = Store.selectAll();
 		return dList;
 	}
+
+//	@Override
+//	public int getListCount(int empNo) {
+//		int totalCount = Store.selectListCount(empNo);
+//		return totalCount;
+//	}
+//
+//	@Override
+//	public List<Document> printAll(PageInfo pi, int empNo) {
+//		List<Document> dList = Store.selectAll(pi, empNo);
+//		return dList;
+//	}
 
 	
 

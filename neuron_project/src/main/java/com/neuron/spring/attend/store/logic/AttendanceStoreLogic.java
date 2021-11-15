@@ -19,16 +19,16 @@ public class AttendanceStoreLogic implements AttendanceStore{
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
-	public int selectListCount() {
-		int count = sqlSession.selectOne("attendanceMapper.selectListCount");
+	public int selectListCount(int empNo) {
+		int count = sqlSession.selectOne("attendanceMapper.selectListCount", empNo);
 		return count;
 	}
 
 	@Override
-	public List<Attendance> selectAll(PageInfo pi) {
+	public List<Attendance> selectAll(PageInfo pi, int empNo) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		List<Attendance> aList = sqlSession.selectList("attendanceMapper.selectAllList", pi, rowBounds);
+		List<Attendance> aList = sqlSession.selectList("attendanceMapper.selectAllList", empNo, rowBounds);
 		return aList;
 	}
 

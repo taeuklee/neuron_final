@@ -7,9 +7,9 @@ import com.neuron.spring.attend.domain.PageInfo;
 import com.neuron.spring.employee.domain.Employee;
 
 public interface AttendanceService {
-	public int getListCount();
+	public int getListCount(int empNo);
 
-	public List<Attendance> printAll(PageInfo pi);
+	public List<Attendance> printAll(PageInfo pi, int empNo);
 
 //	public List<Employee> printAll();
 }

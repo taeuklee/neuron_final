@@ -3,6 +3,7 @@ package com.neuron.spring.attend.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,7 +29,8 @@ public class AttendanceController {
 		ModelAndView mv
 //		,@RequestParam("startTime") int startTime
 //		,@RequestParam("finishTime") int finishTime
-//		,HttpServletRequest request
+		,HttpServletRequest request
+		,HttpSession session
 		,@RequestParam(value="page", required=false) Integer page) {
 		
 			
@@ -40,11 +42,16 @@ public class AttendanceController {
 //				mv.addObject("eList", null);
 //				
 //			}
+		    session = request.getSession();
+		    Employee employee = new Employee();
+		    employee = (Employee)session.getAttribute("loginEmployee");
+
+		    int empNo = employee.getEmpNo();
 			int currentPage = (page !=null) ? page: 1;
-			int totalCount = service.getListCount();
+			int totalCount = service.getListCount(empNo);
 			PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
 			// pagination이 pageInfo를 꾸며준다
-			List<Attendance> aList = service.printAll(pi);
+			List<Attendance> aList = service.printAll(pi, empNo);
 			if(!aList.isEmpty()) {
 			//	return "board/boardListView" 이건 string 일때 쓰는거임
 				mv.addObject("aList", aList);

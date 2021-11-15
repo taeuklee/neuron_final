@@ -20,22 +20,29 @@ public class HolidayStoreLogic implements HolidayStore{
 	
 	@Override
 	public int selectListCount() {
-		int count = sqlSession.selectOne("AttendanceMapper.selectListCount"); 
+		int count = sqlSession.selectOne("attendanceMapper.selectListCount"); 
 		return count;
 	}
 
 	@Override
 	public List<Attendance> selectAll() {
-		List<Attendance> dList = sqlSession.selectList("AttendanceMapper.selectAllList");
+		List<Attendance> dList = sqlSession.selectList("attendanceMapper.selectAllList");
 		return dList;
 	}
 
 //	@Override
-//	public List<Document> selectAll(PageInfo pi) {
+//	public int selectListCount(int empNo) {
+//		int count = sqlSession.selectOne("approvalMapper.selectListCount", empNo); 
+//		return count;
+//	}
+//
+//	@Override
+//	public List<Document> selectAll(PageInfo pi, int empNo) {
 //		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 //		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-//		List<Document> dList = sqlSession.selectList("HolidayMapper.selectAllList", pi, rowBounds);
+//		List<Document> dList = sqlSession.selectList("approvalMapper.selectAllList", empNo, rowBounds);
 //		return dList;
 //	}
+
 
 }

@@ -18,15 +18,17 @@ public class MailServiceImpl implements MailService{
 	private MailStore store;
 	
 	@Override
-	public int getListCount(int senderId) {
-		int totalCount = store.selectListCount(senderId);
+	public int getListCount(int receiverId) {
+		int totalCount = store.selectListCount(receiverId);
 		return totalCount;
 	}
 
+	
 	@Override
-	public List<Mail> printAll(PageInfo pi, Map senderId) {
-		List<Mail> mList = store.selectAll(pi, senderId);
+	public List<Mail> printAll(PageInfo pi, int receiverId) {
+		List<Mail> mList = store.selectAll(pi, receiverId);
 		return mList;
 	}
+
 
 }
