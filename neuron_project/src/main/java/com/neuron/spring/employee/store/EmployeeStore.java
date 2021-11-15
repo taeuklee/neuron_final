@@ -26,4 +26,6 @@ public interface EmployeeStore {
 
 	public List<Employee> selectAll(PageInfo pi);
 
+//	public void updateEmpPwd(Employee employee);
+
 }

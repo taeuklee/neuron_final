@@ -2,6 +2,8 @@ package com.neuron.spring.employee.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import com.neuron.spring.employee.domain.Employee;
 import com.neuron.spring.employee.domain.PageInfo;
 import com.neuron.spring.employee.domain.Search;
@@ -25,5 +27,10 @@ public interface EmployeeService {
 	public int getListCount();
 
 	public List<Employee> printAll(PageInfo pi);
+	
+	//이메일발송
+//	public void sendEmail(Employee employee, String div) throws Exception;
+//
+//	public void findPwd(HttpServletResponse response, Employee employee);
 
 }

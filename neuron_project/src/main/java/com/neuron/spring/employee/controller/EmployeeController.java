@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,23 +32,17 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeService service;
 	
-	// 페이징 처리
-	@RequestMapping(value="empListView.do", method=RequestMethod.GET)
-	public ModelAndView empListView(ModelAndView mv, @RequestParam(value="page", required=false) Integer page) {
-		int currentPage = (page != null) ? page : 1; // 첫 페이지 1로 지정
-		int totalCount = service.getListCount();
-		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount); // 페이지 얼마나 출력할지 몇개 출력할지를 페이지네이션에서 정해서 가져옴
-		List<Employee> eList = service.printAll(pi);
-		if(!eList.isEmpty()) {
-			mv.addObject("eList", eList);
-			mv.addObject("pi", pi);
-			mv.setViewName("employee/empListView");
-		}else {
-			mv.addObject("msg", "게시글 전체조회 실패");
-			mv.setViewName("common/errorPage");
-		}
-		return mv;
-	}
+//	/* 비밀번호 찾기 */
+//	@RequestMapping(value = "/findPwd", method = RequestMethod.GET)
+//	public void findPwdGET() throws Exception{
+//	}
+//
+//	@RequestMapping(value = "/findPwd", method = RequestMethod.POST)
+//	public void findPwdPOST(@ModelAttribute Employee employee, HttpServletResponse response) throws Exception{
+//		service.findPwd(response, employee);
+//	}
+
+
 	
 	// 로그인
 	@RequestMapping(value="/login.do", method=RequestMethod.POST)
@@ -85,6 +80,26 @@ public class EmployeeController {
 			return "common/errorPage";
 		}
 	}
+	
+	// 페이징 처리 + 관리자 사원 리스트 출력
+	@RequestMapping(value="empListView.do", method=RequestMethod.GET)
+	public ModelAndView empListView(ModelAndView mv, @RequestParam(value="page", required=false) Integer page) {
+		int currentPage = (page != null) ? page : 1; // 첫 페이지 1로 지정
+		int totalCount = service.getListCount();
+		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount); // 페이지 얼마나 출력할지 몇개 출력할지를 페이지네이션에서 정해서 가져옴
+		List<Employee> eList = service.printAll(pi);
+		if(!eList.isEmpty()) {
+			mv.addObject("eList", eList);
+			mv.addObject("pi", pi);
+			mv.setViewName("employee/empListView");
+		}else {
+			mv.addObject("msg", "게시글 전체조회 실패");
+			mv.setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+	
 	
 	// 사원등록화면 출력
 	@RequestMapping(value="enrollView.do", method=RequestMethod.GET)
@@ -178,8 +193,6 @@ public class EmployeeController {
 		}
 	}
 	
-	
-	
 	// 사원 정보 보기
 	@RequestMapping(value="empAdminModifyView.do", method=RequestMethod.GET)
 	public String noticeModify(@RequestParam("empNo") int eNo, Model model) {
@@ -233,11 +246,49 @@ public class EmployeeController {
 
 	}
 	
-	// 조직원 보기 - 전체 사원 리스트 
-	@RequestMapping(value="orEmpListView.do", method=RequestMethod.GET)
-	public String orEmpListView() {
-		return "employee/orEmpListView";
-	}
+	   // 페이징 처리 + 조직도 사원 리스트 출력
+		@RequestMapping(value="orEmpListView.do", method=RequestMethod.GET)
+		public ModelAndView orEmpListView(ModelAndView mv, @RequestParam(value="page", required=false) Integer page) {
+			int currentPage = (page != null) ? page : 1; // 첫 페이지 1로 지정
+			int totalCount = service.getListCount();
+			PageInfo pi = Pagination.getPageInfo(currentPage, totalCount); // 페이지 얼마나 출력할지 몇개 출력할지를 페이지네이션에서 정해서 가져옴
+			List<Employee> eList = service.printAll(pi);
+			if(!eList.isEmpty()) {
+				mv.addObject("eList", eList);
+				mv.addObject("pi", pi);
+				mv.setViewName("employee/orEmpListView");
+			}else {
+				mv.addObject("msg", "전체조회 실패");
+				mv.setViewName("common/errorPage");
+			}
+			return mv;
+		}
+		
+		// 조직도 - 사원 정보 보기
+		@RequestMapping(value="orEmpInfo.do", method=RequestMethod.GET)
+		public String orEmpListView(@RequestParam("empNo") int eNo, Model model) {
+			Employee employee = service.printOneEmp(eNo);
+			model.addAttribute("employee", employee);
+			return "employee/orEmpInfo";
+		}
+		
+		// 조직도 - 사원 내역 검색 처리
+		@RequestMapping(value="orEmpSearch.do", method=RequestMethod.GET)
+		public String orEmpSearchList(@ModelAttribute Search search, Model model) {
+			List<Employee> searchList = service.printSearchAll(search);
+			if(!searchList.isEmpty()) {
+				//noticeListView 와 동일
+				model.addAttribute("eList", searchList);
+				//검색한 값 유지
+				model.addAttribute("search", search);
+				return "employee/orEmpListView";
+			}else {
+				model.addAttribute("msg", "사원 검색 실패");
+				return "common/errorPage";
+			}
+
+		}
+		
 	
 	
 }

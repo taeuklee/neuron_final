@@ -86,87 +86,90 @@
 			<!-- partial -->
 			<div class="main-panel">
 				<div class="content-wrapper">
-						<div class="col-12 grid-margin">
-							<br>
-							<h4 class="card-title" style="text-align: center;">
-								<b>전체 사원 보기</b>
-							</h4>
-							<br><br><br>
-							<div class="row">
-								<div class="form-group" style="width: 10%;">
-									<select class="form-control form-control-lg"
-										id="exampleFormControlSelect2">
-										<option>이름</option>
-										<option>부서</option>
-										<option>직책</option>
-									</select>
-								</div>
-								&nbsp;&nbsp;&nbsp; <input type="text" class="member-search"
-									style="height: 30px;"> &nbsp; <input type="button"
-									class="btn btn-primary mr-2" style="height: 30px;" value="검색" />
-							</div>
+					<div class="col-12 grid-margin">
+						<br>
+						<h4 class="card-title" style="text-align: center;">
+							<b>전체 사원 보기</b>
+						</h4>
+						<br>
+						<br>
+						<br>
 						<div class="row">
-							<div class="col-md-4 grid-margin stretch-card">
-								<div class="card">
-									<div class="card-body">
-										<div class="media">
-											<div class="col-md-6">
-												<div class="form-group row">
-													<div class="col-sm-9">
-														<img src="../images/faces/face1.jpg"
-															style="width: 100px; height: 100px;">
-													</div>
-												</div>
-											</div>
-											<div class="memberinfo" style="padding-top: 8%;">
-												<a href="#">박보검 사원</a><br> 부서 : 영업부 영업팀 <br> 내선번호
-												: 011
-											</div>
-										</div>
-									</div>
-								</div>
+							<div class="form-group" style="width: 10%;">
+								<form action="orEmpSearch.do" method="get">
+									<select name="searchCondition"
+										class="form-control form-control-lg"
+										id="exampleFormControlSelect2">
+										<option value="name"
+											<c:if test="${search.searchCondition == 'name' }">selected</c:if>>이름</option>
+										<option value="deptcode"
+											<c:if test="${search.searchCondition == 'deptcode' }">selected</c:if>>부서</option>
+										<option value="job"
+											<c:if test="${search.searchCondition == 'job' }">selected</c:if>>직책</option>
+									</select>
 							</div>
-							<div class="col-md-4 grid-margin stretch-card">
-								<div class="card">
-									<div class="card-body">
-										<div class="media">
-											<div class="col-md-6">
-												<div class="form-group row">
-													<div class="col-sm-9">
-														<img src="../images/faces/face2.jpg"
-															style="width: 100px; height: 100px;">
-													</div>
-												</div>
-											</div>
-											<div class="memberinfo" style="padding-top: 8%;">
-												<a href="#">이상엽 팀장</a><br> 부서 : 영업부 영업팀 <br> 내선번호
-												: 012
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-4 grid-margin stretch-card">
-								<div class="card">
-									<div class="card-body">
-										<div class="media">
-											<div class="col-md-6">
-												<div class="form-group row">
-													<div class="col-sm-9">
-														<img src="../images/faces/face3.jpg"
-															style="width: 100px; height: 100px;">
-													</div>
-												</div>
-											</div>
-											<div class="memberinfo" style="padding-top: 8%;">
-												<a href="#">김가은 대리</a><br> 부서 : 영업부 영업팀 <br> 내선번호
-												: 013
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
+							&nbsp;&nbsp;&nbsp; <input type="text" name="searchValue"
+								value="${search.searchValue }" class="member-search"
+								style="height: 30px;"> &nbsp; <input type="submit"
+								value="검색" class="btn btn-primary mr-2" style="height: 30px;" />
 						</div>
+						<div class="row">
+							<c:forEach items="${ eList }" var="employee">
+								<div class="col-md-4 grid-margin stretch-card">
+									<div class="card">
+										<div class="card-body">
+											<div class="media">
+												<div class="col-md-6">
+													<div class="form-group row">
+														<div class="col-sm-9">
+															<img
+																src="/resources/euploadFiles/${employee.empFileReName}"
+																style="width: 100px; height: 100px;">
+														</div>
+													</div>
+												</div>
+												<div class="memberinfo" style="padding-top: 8%;">
+													<c:url var="orEmpInfo" value="orEmpInfo.do">
+														<c:param name="empNo" value="${ employee.empNo }"></c:param>
+													</c:url>
+													<a href="${ orEmpInfo }">${employee.empName }</a><br>
+													부서 : ${employee.deptCode } ${employee.teamCode } <br>
+													${employee.empExnum }
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</c:forEach>
+						</div>
+						<tr align="center" height="20">
+							<td colspan="6">
+								<!-- 이전 페이지 보기 --> <c:url var="before" value="empListView.do">
+									<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
+								</c:url> <c:if test="${pi.currentPage <= 1 }">
+									   		 		[이전]
+									   		 	</c:if> <c:if test="${pi.currentPage > 1 }">
+									<a href="${before }">[이전]</a>
+								</c:if> <c:forEach var="p" begin="${pi.startNavi }"
+									end="${pi.endNavi }">
+									<c:url var="pagination" value="orEmpListView.do">
+										<c:param name="page" value="${p }"></c:param>
+									</c:url>
+									<c:if test="${p eq pi.currentPage }">
+										<font color="green" size="4">[${p }]</font>
+									</c:if>
+									<c:if test="${p ne pi.currentPage }">
+										<a href="${pagination }">[${p }]</a>&nbsp;
+									   		 		</c:if>
+								</c:forEach> <c:url var="after" value="orEmpListView.do">
+									<c:param name="page" value="${pi.currentPage +1 }"></c:param>
+								</c:url> <c:if test="${pi.currentPage >= pi.maxPage }">
+									   		 		[다음]
+									   		 	</c:if> <c:if test="${pi.currentPage < pi.maxPage }">
+									<a href="${after }">[다음]</a>
+								</c:if>
+							</td>
+						</tr>
 					</div>
 				</div>
 			</div>

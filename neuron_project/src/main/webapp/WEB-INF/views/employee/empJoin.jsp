@@ -247,11 +247,11 @@
 												<label class="col-sm-3 col-form-label">부서코드</label>
 												<div class="col-sm-9" style="padding-top: 2%;">
 													<select name="deptCode" class="form-control">
-														<option>A1</option>
-														<option>B1</option>
-														<option>C1</option>
-														<option>D1</option>
-														<option>Z1</option>
+														<option value="A1">경영지원부</option>
+														<option value="B1">개발부</option>
+														<option value="C1">영업부</option>
+														<option value="D1">고객지원부</option>
+														<option value="Z1">임원</option>
 													</select>
 												</div>
 											</div>
@@ -261,16 +261,16 @@
 												<label class="col-sm-3 col-form-label">팀 코드</label>
 												<div class="col-sm-9" style="padding-top: 2%;">
 													<select name="teamCode" class="form-control">
-														<option>A11</option>
-														<option>A12</option>
-														<option>B11</option>
-														<option>B12</option>
-														<option>C11</option>
-														<option>C12</option>
-														<option>D11</option>
-														<option>Z11</option>
-														<option>Z12</option>
-														<option>Z13</option>
+														<option value="A11">인사팀</option>
+														<option value="A12">총무팀</option>
+														<option value="B11">개발 1팀</option>
+														<option value="B12">개발 2팀</option>
+														<option value="C11">마케팅팀</option>
+														<option value="C12">영업팀</option>
+														<option value="D11">A/S팀</option>
+														<option value="Z11">대표</option>
+														<option value="Z12">부사장</option>
+														<option value="Z13">상무</option>
 													</select>
 												</div>
 											</div>
