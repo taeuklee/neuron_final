@@ -88,6 +88,8 @@
 		SELECT EMP.EMP_NAME, EMP.EMP_JOB, EMP.EMP_NO, EMP.DEPT_CODE, DEPT.DEPT_NAME  FROM EMPLOYEE EMP JOIN DEPT DEPT ON (EMP.DEPT_CODE=DEPT.DEPT_CODE) WHERE EMP.EMP_NAME LIKE '%' || #{searchText} || '%' AND NOT EMP.EMP_NO = #{empNo}
 	</select>
 	
+<!-- 	프로젝트 팀원 초대시 검색 -->
+	
 <!-- 	프로젝트 정보 등록한 뒤 팀원 넣을때 필요한 no 가져오는 구문 -->
 	<select id="selectProjectOne" resultMap="ProjectResultMap" parameterType="Project">
 		SELECT * FROM PROJECT WHERE PROJECT_TITLE = #{projectTitle} AND PROJECT_CONTENTS = #{projectContents} AND PROJECT_MASTER = #{projectMaster}
@@ -119,6 +121,11 @@
 		SELECT EPRO.EMP_NO, EPRO.EMP_PROJECT_AUTH, EMP.EMP_JOB, EMP.EMP_NAME, DEPT.DEPT_NAME FROM EMP_PROJECT EPRO JOIN EMPLOYEE EMP ON (EPRO.EMP_NO = EMP.EMP_NO) JOIN DEPT DEPT ON (DEPT.DEPT_CODE = EMP.DEPT_CODE) WHERE PROJECT_NO = #{projectNo}
 	</select>
 	
+<!-- 	팀원목록에서 검색시 -->
+	<select id="selectSearchMemberList" resultMap="ProjectMemberResultMap" parameterType="map">
+		SELECT EPRO.EMP_NO, EPRO.EMP_PROJECT_AUTH, EMP.EMP_JOB, EMP.EMP_NAME, DEPT.DEPT_NAME FROM EMP_PROJECT EPRO JOIN EMPLOYEE EMP ON (EPRO.EMP_NO = EMP.EMP_NO) JOIN DEPT DEPT ON (DEPT.DEPT_CODE = EMP.DEPT_CODE) WHERE PROJECT_NO = #{projectNo} AND EMP.EMP_NAME LIKE  '%' || #{searchText} || '%'
+	</select>
+	
 <!-- 	프로젝트 일정목록 가져오기 -->
 	<select id="selectProjectCalendar" resultMap="ProjectCalendarResultMap" parameterType="_int">
 		SELECT * FROM PROJECT_CALENDAR WHERE PROJECT_NO = #{projectNo}
@@ -135,6 +142,10 @@
 		INTO EMP_PROJECT(EMP_NO, PROJECT_NO, EMP_PROJECT_AUTH) VALUES(#{empNoList}, #{projectNo}, DEFAULT)
 		</foreach>
 	</update>
+	
+	<delete id="deleteMemberList" parameterType="hashMap">
+		DELETE FROM EMP_PROJECT WHERE EMP_NO = #{empNo} AND PROJECT_NO = #{projectNo}
+	</delete>
 	
 <!-- 	프로젝트등록 -->
 	<insert id="insertProjectRegister" parameterType="Project">

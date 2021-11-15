@@ -88,6 +88,30 @@ public class ProjectServiceImpl implements ProjectService{
 		return projectCalendar;
 	}
 
+	@Override
+	public List<ProjectMember> selectSearchMemberList(Map<String, Object> map) {
+		List<ProjectMember> memberList = store.selectSearchMemberList(map);
+		return memberList;
+	}
+
+	@Override
+	public int getListCount() {
+		int totalCount = store.selectListCount();
+		return totalCount;
+	}
+
+	@Override
+	public int deleteMemberList(Map<String, Object> map) {
+		int result = store.deleteMemberList(map);
+		return result;
+	}
+
+	@Override
+	public List<Employee> selectInviteList(Map<String, Object> map) {
+		List<Employee> eList = store.selectInviteList(map);
+		return eList;
+	}
+
 
 
 }

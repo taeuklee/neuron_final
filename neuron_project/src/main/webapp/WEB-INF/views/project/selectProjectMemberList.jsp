@@ -285,16 +285,21 @@
 									</div>
 									<div class="col-sm-9 col-xs-12 text-right">
 										<div class="btn_group">
-											<form class="d-flex" style="width: 70%; float: left">
+											<form class="d-flex" style="width: 70%; float: left"
+												onsubmit="return false">
 												<input class="form-control me-1" type="search"
-													placeholder="이름을 입력해주세요" aria-label="Search">
+													placeholder="이름을 입력해주세요" aria-label="Search"
+													id="searchText" onkeyup="enterKeyup()">
 												<button class="btn btn-primary" type="submit"
-													style="width: 20%; height: 50px">검색</button>
+													style="width: 20%; height: 50px"
+													onclick="projectSearchMemberList()">검색</button>
 											</form>
+											<c:if test="${loginEmployee.empNo eq master.empNo }">
 											<button class="btn btn-primary btn-sm btn-default"
 												style="height: 50px" onclick="inviteMember()">
 												<i class="fa fa-plus-circle"></i> 팀원 초대
 											</button>
+											</c:if>
 										</div>
 									</div>
 								</div>
@@ -309,98 +314,65 @@
 											<th>액션</th>
 										</tr>
 									</thead>
-									<tbody>
-									<c:forEach items="${memberList }" var="memberList">
+									<tbody id="memberList">
 										<tr>
 											<td>
 												<div class="user_icon">
 													<img src="images/img1.jpg" alt="">
-												</div> ${memberList.empName }
+												</div> ${master.empName }
 											</td>
-											<td>${memberList.deptName }</td>
-											<td>${memberList.empAuth }</td>
+											<td>${master.deptName }</td>
+											<td>책임자</td>
 											<td>
-												<ul class="action-list">
-													<li><a href="#" class="edit" data-tip="setting"><i
-															class="fa fa-cog"></i></a></li>
-													<li><a href="#" class="delete" data-tip="delete"><i
-															class="fa fa-times-circle"></i></a></li>
-												</ul>
 											</td>
 										</tr>
-									</c:forEach>
-<!-- 										<tr> -->
-<!-- 											<td>2</td> -->
-<!-- 											<td> -->
-<!-- 												<div class="user_icon"> -->
-<!-- 													<img src="images/img2.jpg" alt=""> -->
-<!-- 												</div> Taylor Reyes -->
-<!-- 											</td> -->
-<!-- 											<td>22</td> -->
-<!-- 											<td><span class="status inactive">Inactive</span></td> -->
-<!-- 											<td> -->
-<!-- 												<ul class="action-list"> -->
-<!-- 													<li><a href="#" class="setting" data-tip="setting"><i -->
-<!-- 															class="fa fa-cog"></i></a></li> -->
-<!-- 													<li><a href="#" class="delete" data-tip="delete"><i -->
-<!-- 															class="fa fa-times-circle"></i></a></li> -->
-<!-- 												</ul> -->
-<!-- 											</td> -->
-<!-- 										</tr> -->
-<!-- 										<tr> -->
-<!-- 											<td>3</td> -->
-<!-- 											<td> -->
-<!-- 												<div class="user_icon"> -->
-<!-- 													<img src="images/img3.jpg" alt=""> -->
-<!-- 												</div> Justin Block -->
-<!-- 											</td> -->
-<!-- 											<td>26</td> -->
-<!-- 											<td><span class="status">Active</span></td> -->
-<!-- 											<td> -->
-<!-- 												<ul class="action-list"> -->
-<!-- 													<li><a href="#" class="setting" data-tip="setting"><i -->
-<!-- 															class="fa fa-cog"></i></a></li> -->
-<!-- 													<li><a href="#" class="delete" data-tip="delete"><i -->
-<!-- 															class="fa fa-times-circle"></i></a></li> -->
-<!-- 												</ul> -->
-<!-- 											</td> -->
-<!-- 										</tr> -->
-<!-- 										<tr> -->
-<!-- 											<td>4</td> -->
-<!-- 											<td> -->
-<!-- 												<div class="user_icon"> -->
-<!-- 													<img src="images/img4.png" alt=""> -->
-<!-- 												</div> Sean Guzman -->
-<!-- 											</td> -->
-<!-- 											<td>26</td> -->
-<!-- 											<td><span class="status block">Blocked</span></td> -->
-<!-- 											<td> -->
-<!-- 												<ul class="action-list"> -->
-<!-- 													<li><a href="#" class="setting" data-tip="setting"><i -->
-<!-- 															class="fa fa-cog"></i></a></li> -->
-<!-- 													<li><a href="#" class="delete" data-tip="delete"><i -->
-<!-- 															class="fa fa-times-circle"></i></a></li> -->
-<!-- 												</ul> -->
-<!-- 											</td> -->
-<!-- 										</tr> -->
-<!-- 										<tr> -->
-<!-- 											<td>5</td> -->
-<!-- 											<td> -->
-<!-- 												<div class="user_icon"> -->
-<!-- 													<img src="images/img5.jpg" alt=""> -->
-<!-- 												</div> Keith Carter -->
-<!-- 											</td> -->
-<!-- 											<td>20</td> -->
-<!-- 											<td><span class="status">Active</span></td> -->
-<!-- 											<td> -->
-<!-- 												<ul class="action-list"> -->
-<!-- 													<li><a href="#" class="setting" data-tip="setting"><i -->
-<!-- 															class="fa fa-cog"></i></a></li> -->
-<!-- 													<li><a href="#" class="delete" data-tip="delete"><i -->
-<!-- 															class="fa fa-times-circle"></i></a></li> -->
-<!-- 												</ul> -->
-<!-- 											</td> -->
-<!-- 										</tr> -->
+										<c:forEach items="${memberList }" var="memberList">
+											<tr>
+												<td>
+													<div class="user_icon">
+														<img src="images/img1.jpg" alt="">
+													</div> ${memberList.empName }
+												</td>
+												<td>${memberList.deptName }</td>
+												<c:if test="${loginEmployee.empNo ne master.empNo }">
+												<td>${memberList.empAuth }</td>
+												</c:if>
+												<c:if test="${loginEmployee.empNo eq master.empNo }">
+												<td>
+												<select name="memberAuth" id="memberAuth">
+ 													<option <c:if test="${memberList.empAuth  == '보조관리자' }">selected</c:if>>보조관리자</option>
+ 													<option <c:if test="${memberList.empAuth  == '팀원' }">selected</c:if>>팀원</option>
+												</select>
+												</td>
+												</c:if>
+												<c:if test="${loginEmployee.empNo eq master.empNo }">
+												<td>
+												<button class="btn btn-danger " onclick="deleteMember(${memberList.empNo})">
+												추방
+												</button>
+												<button type="button" class="btn btn-primary" onclick="updateMember(${memberList.empNo}, memberAuth)">수정</button>
+												</td>
+												</c:if>
+											</tr>
+										</c:forEach>
+										<!-- 										<tr> -->
+										<!-- 											<td>2</td> -->
+										<!-- 											<td> -->
+										<!-- 												<div class="user_icon"> -->
+										<!-- 													<img src="images/img2.jpg" alt=""> -->
+										<!-- 												</div> Taylor Reyes -->
+										<!-- 											</td> -->
+										<!-- 											<td>22</td> -->
+										<!-- 											<td><span class="status inactive">Inactive</span></td> -->
+										<!-- 											<td> -->
+										<!-- 												<ul class="action-list"> -->
+										<!-- 													<li><a href="#" class="setting" data-tip="setting"><i -->
+										<!-- 															class="fa fa-cog"></i></a></li> -->
+										<!-- 													<li><a href="#" class="delete" data-tip="delete"><i -->
+										<!-- 															class="fa fa-times-circle"></i></a></li> -->
+										<!-- 												</ul> -->
+										<!-- 											</td> -->
+										<!-- 										</tr> -->
 									</tbody>
 								</table>
 							</div>
@@ -439,10 +411,92 @@
 	<script type="text/javascript">
 		function inviteMember() {
 
-			var url = "moveInviteMember.do";
+			var url = "moveInviteMember.do?projectNo=${projectNo}";
 			var name = "팀원 초대";
 			var option = "width = 1000, height = 800, top = 300 , left = 650, location = no, toolbars = no, status = no, scrollbars = no, resizable = no";
 			window.open(url, name, option);
+		}
+
+		function projectSearchMemberList() {
+			var searchText = document.getElementById('searchText').value;
+			var memberList = document.getElementById('memberList')
+			
+					$.ajax({
+						url : "selectSearchMemberList.do?projectNo=${project.projectNo}",
+						type : "get",
+						data : {
+							"searchText" : searchText
+						},
+						dataType : "json",
+						success : function(data) {
+							var $memberList = $("#memberList");
+							$memberList.html("");
+							var $tr;
+							var $td1;
+							var $td2;
+							var $td3;
+							var $td4;
+							var $memberName;
+							var $memberDeptCode;
+							var $memberJob;
+							var $btnArea;
+							var $imgArea;
+							if (data.length > 0) {
+								for ( var i in data) {
+									$div1 = $("	<div class='card mb-3' style='max-width: 540px;'>");
+									$tr = $("<tr>")
+									$td1 = $("<td><div class='user_icon'><img src='images/img1.jpg' alt=''></div>"+data[i].empName + "</td>")
+									$td2 = $("<td>"+data[i].deptName+"</td>")
+									$td3 = $("<td>"+data[i].empAuth+"</td>")
+									$td4 = $("<td><ul class='action-list'><li><a href='#' class='edit' data-tip='setting'><i class='fa fa-cog'></i></a></li><li><a href='#' class='delete' data-tip='delete'><i class='fa fa-times-circle'></i></a></li></ul></td>")
+									$tr.append($td1)
+									$tr.append($td2)
+									$tr.append($td3)
+									$tr.append($td4)
+									$memberList.append($tr)
+									//	 						$memberList.append($div2);
+									//	 						$memberList.append($div3);
+									//	 						$memberList.append($div4);
+									//	 						$memberList.append($div5);
+								}
+							}
+						},
+						error : function() {
+							alert("오류가 발생했습니다..")
+						}
+					});
+		}
+
+		function enterKeyup() {
+			console.log("여긴오니")
+			if (window.event.keyCode == 13) {
+				projectSearchMemberList()
+			}
+		}
+		
+		function deleteMember(empNo) {
+			$.ajax({
+				url:"deleteProjectMember.do?projectNo=${project.projectNo}",
+				type:"get",
+				data:{
+					"empNo":empNo
+				},
+				success:function(data){
+					if(data=="success"){
+						alert("삭제되었습니다.")
+						window.location.reload();
+					}else{
+						alert("삭제가 실패하였습니다.")
+					}
+				},error:function(){
+					alert("오류발생");
+				}
+			})
+		}
+		
+		function updateMember(empNo, member) {
+			console.log(empNo);
+			console.log(member);
 		}
 	</script>
 </body>

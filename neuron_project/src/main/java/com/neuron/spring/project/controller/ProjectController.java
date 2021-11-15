@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.neuron.spring.project.domain.EmpProject;
 import com.neuron.spring.project.domain.Employee;
+import com.neuron.spring.project.domain.PageInfo;
+import com.neuron.spring.project.domain.Pagination;
 import com.neuron.spring.project.domain.Project;
 import com.neuron.spring.project.domain.ProjectCalendar;
 import com.neuron.spring.project.domain.ProjectMember;
@@ -69,7 +72,11 @@ public class ProjectController {
 	public ModelAndView selectMemberList(
 			@RequestParam(value="projectNo") int projectNo
 			,ModelAndView mv
+			//,@RequestParam(value="page", required=false) Integer page
 			) {
+		//int currentPage = (page != null) ? page : 1;
+		//int totalCount = service.getListCount();
+		//PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
 		List<ProjectMember> memberList = service.selectMemberList(projectNo);
 		Project project = service.selectProject(projectNo);
 		int masterEmpNo = project.getProjectMaster();
@@ -85,13 +92,32 @@ public class ProjectController {
 	public void selectSearchMemberList(
 			@RequestParam(value="projectNo") int projectNo
 			,@RequestParam(value="searchText") String searchText
-			) {
-		
+			,ModelAndView mv
+			,HttpServletResponse response
+			) throws JsonIOException, IOException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("projectNo", projectNo);
+		map.put("searchText", searchText);
+		List<ProjectMember> memberList = service.selectSearchMemberList(map);
+		PrintWriter out = response.getWriter();
+		if(!memberList.isEmpty()) {
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+			gson.toJson(memberList, response.getWriter());			
+		}else {
+			out.println("<script>alert('해당하는 팀원이 없습니다');</script>");
+			out.flush();
+		}
 	}
 	
 	@RequestMapping(value="moveInviteMember.do", method=RequestMethod.GET)
-	public String moveInviteMember() {
-		return "project/inviteMember";
+	public ModelAndView moveInviteMember(
+			@RequestParam(value="projectNo") int projectNo
+			,ModelAndView mv
+			) {
+		Project project = service.selectProject(projectNo);
+		mv.addObject("project", project);
+		mv.setViewName("project/inviteMember");
+		return mv;
 	}
 	
 	@RequestMapping(value="moveTaskMember.do", method=RequestMethod.GET)
@@ -112,7 +138,7 @@ public class ProjectController {
 		map.put("empNo", empNo);
 		map.put("searchText", searchText);
 		List<Employee> eList = service.selectInsertProjectSearchList(map);
-		
+		PrintWriter out = response.getWriter();
 		for(int i = 0 ; i < eList.size(); i++) {
 				System.out.println(eList.get(i));
 		}
@@ -121,7 +147,8 @@ public class ProjectController {
 			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 			gson.toJson(eList, response.getWriter());
 		}else {
-			System.out.println("데이터가 없습니다");
+			out.println("<script>alert('해당하는 팀원이 없습니다');</script>");
+			out.flush();
 		}
 	}
 	
@@ -210,6 +237,7 @@ public class ProjectController {
 	public ModelAndView selectProjectDetail(
 				@RequestParam(value="projectNo") int projectNo
 				,ModelAndView mv
+				,HttpServletRequest request
 			) {
 		System.out.println(projectNo);
 		Project project = service.selectProject(projectNo);
@@ -221,6 +249,8 @@ public class ProjectController {
 			ProjectTask projectTask = service.selectProjectTask(projectNo);
 			List<ProjectCalendar> projectCalendar = service.selectProjectCalendar(projectNo);
 			System.out.println("성공");
+			HttpSession session = request.getSession();
+			session.setAttribute("project", project);
 			mv.addObject("master", master);
 			mv.addObject("project", project);
 			mv.addObject("projectCalendar", projectCalendar);			
@@ -234,6 +264,60 @@ public class ProjectController {
 		return mv;
 	}
 	
-	
+	@ResponseBody
+	@RequestMapping(value="deleteProjectMember.do", method=RequestMethod.GET)
+	public String deleteProjectMember(
+			@RequestParam(value="projectNo") int projectNo
+			,@RequestParam(value="empNo") int empNo
+			) {
+			System.out.println(projectNo);
+			System.out.println(empNo);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("projectNo", projectNo);
+			map.put("empNo", empNo);
+			int result = service.deleteMemberList(map);
+			if(result > 0) {
+				return "success";
+			}else{
+				return "fail";
+			}
+	}
 
+	
+	@RequestMapping(value="insertInviteProjectSearchMemberList.do", method=RequestMethod.GET)
+	public String insertInviteProjectSearchMemberList(
+			@RequestParam(value="empNo") int empNo
+			,@RequestParam(value="projectNo") int projectNo
+			,@RequestParam(value="searchText") String searchText
+			) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("empNo", empNo);
+		map.put("projectNo", projectNo);
+		map.put("searchText", searchText);
+		List<Employee> eList = service.selectInviteList(map);
+		return "";
+	}
+	
+	@RequestMapping(value="inviteMember.do", method=RequestMethod.GET)
+	public String inviteMember(
+			@RequestParam(value="projectNo") int projectNo
+			,HttpServletRequest request
+			,HttpServletResponse response
+			) throws IOException {
+		String[] empNoList = request.getParameterValues("empNo");
+		int [] empNoList2 = Arrays.stream(empNoList).mapToInt(Integer::parseInt).toArray();
+		PrintWriter out = response.getWriter();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("projectNo", projectNo);
+		map.put("empNoList", empNoList2);
+		int insertMemberResult = service.insertProjectMemberList(map);
+		if(insertMemberResult > 0) {
+			out.println("<script>alert('팀원 초대에 성공했습니다');</script>");
+			out.flush();				
+		}else {
+			out.println("<script>alert('팀원 초대에 실패하였습니다');</script>");
+			out.flush();				
+		}
+		return "";
+	}
 }

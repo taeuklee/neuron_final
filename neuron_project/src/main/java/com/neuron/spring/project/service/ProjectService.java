@@ -34,4 +34,12 @@ public interface ProjectService {
 
 	public List<ProjectCalendar> selectProjectCalendar(int projectNo);
 
+	public List<ProjectMember> selectSearchMemberList(Map<String, Object> map);
+
+	public int getListCount();
+
+	public int deleteMemberList(Map<String, Object> map);
+
+	public List<Employee> selectInviteList(Map<String, Object> map);
+
 }

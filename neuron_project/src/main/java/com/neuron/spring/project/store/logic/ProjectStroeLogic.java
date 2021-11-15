@@ -91,6 +91,30 @@ public class ProjectStroeLogic implements ProjectStore{
 		return projectCalendar;
 	}
 
+	@Override
+	public List<ProjectMember> selectSearchMemberList(Map<String, Object> map) {
+		List<ProjectMember> memberList = sqlSession.selectList("projectMapper.selectSearchMemberList", map);
+		return memberList;
+	}
+
+	@Override
+	public int selectListCount() {
+		int count = sqlSession.selectOne("projectMapper.selectListCount");
+		return count;
+	}
+
+	@Override
+	public int deleteMemberList(Map<String, Object> map) {
+		int result = sqlSession.delete("projectMapper.deleteMemberList", map);
+		return result;
+	}
+
+	@Override
+	public List<Employee> selectInviteList(Map<String, Object> map) {
+		List<Employee> eList = sqlSession.selectList("projectMapper.selectInviteList", map);
+		return eList;
+	}
+
 
 
 }
