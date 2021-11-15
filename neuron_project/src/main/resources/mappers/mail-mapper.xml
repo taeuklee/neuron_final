@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="mailMapper">
+   <resultMap type="Mail" id="mailResultMap">
+	   <id property="mailNo" column="MAIL_NO"/>
+	   <result property="mailTitle" column="MAIL_TITLE"/>
+	   <result property="mailContents" column="MAIL_CONTENTS"/>
+	   <result property="senderId" column="SENDER_ID"/>
+	   <result property="receiverId" column="RECEIVER_ID"/>
+	   <result property="receiverId2" column="RECEIVER_ID2"/>
+	   <result property="sendTime" column="SEND_TIME"/>
+	   <result property="readTime" column="READ_TIME"/>
+	   <result property="readYn" column="READ_YN"/>
+	   <result property="sStatus" column="S_STATUS"/>
+	   <result property="rStatus" column="R_STATUS"/>
+  	</resultMap>
+  	
+  <select id="selectListCount" resultType="_int">
+		SELECT COUNT(*) FROM BOARD WHERE RECEIVER_ID = #{receiverId } or #{receiverId2 }
+	</select>
+
+	<select id="selectAllList" resultMap="mailResultMap">
+		SELECT * FROM BOARD WHERE RECEIVER_ID = #{receiverId } or #{receiverId2 } ORDER BY BOARD_NO DESC
+	</select>
+  	
+  </mapper>

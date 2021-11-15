@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.neuron.spring.attend.domain.Attendance;
 import com.neuron.spring.attend.domain.PageInfo;
 import com.neuron.spring.attend.store.AttendanceStore;
+import com.neuron.spring.employee.domain.Employee;
 
 @Repository
 public class AttendanceStoreLogic implements AttendanceStore{
@@ -19,7 +20,7 @@ public class AttendanceStoreLogic implements AttendanceStore{
 	
 	@Override
 	public int selectListCount() {
-		int count = sqlSession.selectOne("AttendanceMapper.selectListCount");
+		int count = sqlSession.selectOne("attendanceMapper.selectListCount");
 		return count;
 	}
 
@@ -27,8 +28,9 @@ public class AttendanceStoreLogic implements AttendanceStore{
 	public List<Attendance> selectAll(PageInfo pi) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		List<Attendance> aList = sqlSession.selectList("AttendanceMapper.selectAllList", pi, rowBounds);
+		List<Attendance> aList = sqlSession.selectList("attendanceMapper.selectAllList", pi, rowBounds);
 		return aList;
 	}
+
 
 }

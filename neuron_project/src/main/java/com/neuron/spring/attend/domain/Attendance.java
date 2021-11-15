@@ -6,16 +6,16 @@ public class Attendance {
 	private int attendNo;
 	private int empNo;
 	private Date attendDate;
-	private int startTime;
-	private int finishTime;
-	private int totalWorkhour;
+	private String startTime;
+	private String finishTime;
+	private String totalWorkhour;
 	private String division;
 	private String note;
 	
 	public Attendance() {}
-	
-	public Attendance(int attendNo, int empNo, Date attendDate, int startTime, int finishTime, int totalWorkhour,
-			String division, String note) {
+
+	public Attendance(int attendNo, int empNo, Date attendDate, String startTime, String finishTime,
+			String totalWorkhour, String division, String note) {
 		super();
 		this.attendNo = attendNo;
 		this.empNo = empNo;
@@ -51,27 +51,27 @@ public class Attendance {
 		this.attendDate = attendDate;
 	}
 
-	public int getStartTime() {
+	public String getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(int startTime) {
+	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
 
-	public int getFinishTime() {
+	public String getFinishTime() {
 		return finishTime;
 	}
 
-	public void setFinishTime(int finishTime) {
+	public void setFinishTime(String finishTime) {
 		this.finishTime = finishTime;
 	}
 
-	public int getTotalWorkhour() {
+	public String getTotalWorkhour() {
 		return totalWorkhour;
 	}
 
-	public void setTotalWorkhour(int totalWorkhour) {
+	public void setTotalWorkhour(String totalWorkhour) {
 		this.totalWorkhour = totalWorkhour;
 	}
 

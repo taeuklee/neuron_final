@@ -69,7 +69,7 @@
 		            <div class="col-md-6 col-xl-3">
 		              <article class="stat-cards-item">
 		                <div class="stat-cards-icon primary">
-		                  <i data-feather="bar-chart-2" aria-hidden="true"></i>
+		                  <i class="icon-paper" ></i>
 		                </div>
 		                <div class="stat-cards-info">
 		                  <p class="stat-cards-info__num">1</p>
@@ -86,7 +86,7 @@
 		            <div class="col-md-6 col-xl-3">
 		              <article class="stat-cards-item">
 		                <div class="stat-cards-icon warning">
-		                  <i data-feather="file" aria-hidden="true"></i>
+		                  <i class="icon-paper" ></i>
 		                </div>
 		                <div class="stat-cards-info">
 		                  <p class="stat-cards-info__num">1</p>
@@ -103,7 +103,7 @@
 		            <div class="col-md-6 col-xl-3">
 		              <article class="stat-cards-item">
 		                <div class="stat-cards-icon purple">
-		                  <i data-feather="file" aria-hidden="true"></i>
+		                  <i class="icon-paper" ></i>
 		                </div>
 		                <div class="stat-cards-info">
 		                  <p class="stat-cards-info__num">1</p>
@@ -120,7 +120,7 @@
 		            <div class="col-md-6 col-xl-3">
 		              <article class="stat-cards-item">
 		                <div class="stat-cards-icon warning">
-		                  <i data-feather="file" aria-hidden="true"></i>
+		                  <i class="icon-paper" ></i>
 		                </div>
 		                <div class="stat-cards-info">
 		                  <p class="stat-cards-info__num">13</p>
@@ -143,9 +143,37 @@
 		                    <img src="../../elegant/elegant/img/avatar/avatar-face-02.png" alt="증명사진" class="profile" width="200" height="200" border-radius="30%">
 		                  </div>
 		                  <br><br>
-		                  <div align="center"><button id="">출근</button> <button id="">퇴근</button></div> 
+		                  <div align="center" id="attend_btn">
+			                  <c:if test="${attendance.startTime eq null}"> 
+			                  	<button id="startWork">출근</button>
+			                  </c:if>
+			                  <c:if test="${attendance.startTime ne null }">
+			                   	<button id="finishWork">퇴근</button>
+			                  </c:if>
+		                  </div>
+		                  <div id="now"></div>
+		                  <button></button> 
 		                  <br>
 		              </article>
+		              <script>
+		              $("#attend_btn").click(function(){
+		            	  var now = new Date();
+		            	  var hr = now.getHours();
+		            	  var min = now.getMinutes();
+		            	  var sec = now.getSeconds();
+		            	  var now1 = hr+ ":"+ min+ ":"+ sec;
+		            	  confirm("정말입니까?");
+		            	  if(confirmflag){
+		            		  
+		            	  }else{
+		            		  
+		            	  }
+		            	  $("#now").text(now1);
+		              console.log(now1);
+		              })
+		              
+		              
+		              </script>
 		              <article class="white-block">
 		                <div class="top-cat-title">
 		                  
@@ -179,6 +207,7 @@
 		                <table class="main-table">
 		                  <thead>
 		                    <tr class="table-detail">
+		                      <th>No</th>
 		                      <th>일자</th>
 		                      <th>업무시작시간</th>
 		                      <th>업무종료시간</th>
@@ -188,20 +217,62 @@
 		                    </tr>
 		                  </thead>
 		                  <tbody>
+		                  <c:if test="${empty aList }">
+		                  	<tr>
+		                  		<td colspan="7"> 조회된 정보가 없습니다. </td>
+		                  	</tr>
+		                  </c:if>
+		                  <c:forEach items="${aList }" var="Attendance">
 		                    <tr>
-		                      <td>21.01.01</td>
-		                      <td>09:00:00</td>    
-		                      <td>18:00:00</td>
-		                      <td>정상</td>
-		                      <td>09:00:00</td>
-		                      <td>.</td>
+		                      <td>${attendance.attendNo }</td>
+<%-- 		                      <td>${attendance.attendDate }</td> --%>
+		                      <td>${attendance.startTime }</td>    
+		                      <td>${attendance.finishTime }</td>
+		                      <td>${attendance.division }</td>
+		                      <td>${attendance.totalWorkhour }</td>
+		                      <td>${attendance.note }</td>
 		                    </tr>
+		                   </c:forEach>
+		                   
+		                   <tr align="center" height="20">
+					         <td colspan="7">
+					         <c:url var="before" value="/attend/attendanceList.do">
+					            <c:param name="page" value="${pi.currentPage - 1 }"></c:param>
+					         </c:url>
+					         <c:url var="after" value="/attend/attendanceList.do">
+					            <c:param name="page" value="${pi.currentPage + 1 }"></c:param>         
+					         </c:url>
+					         <c:url var="pagination" value="/attend/attendanceList.do">
+					            <c:param name="page" value="${p }"></c:param>
+					         </c:url>
+					            <c:if test="${pi.currentPage <=1 }">
+					               [이전]
+					            </c:if>
+					            <c:if test="${pi.currentPage >1 }">
+					               <a href="${before }">[이전]</a>
+					            </c:if>
+					            <c:forEach var="p" begin="${pi.startNavi }" end="${pi.endNavi }">
+					               <c:if test="${p eq pi.currentPage }">
+					                  <font color="red" size="4">[${p }]</font>
+					               </c:if>
+					               <c:if test="${p ne pi.currentPage }">
+					                  <a href="${pagination }${p}">[${p }]</a>&nbsp;
+					               </c:if>
+					            </c:forEach>
+					            
+					            <c:if test="${pi.currentPage >= pi.maxPage }">
+					               [다음]
+					            </c:if>
+					            <c:if test="${pi.currentPage < pi.maxPage }">
+					               <a href="${after }">[다음]</a>
+					            </c:if>
+					         </td>
+					      </tr>
 		                  </tbody>
 		                </table>
 		            </div>
 		          </div>
 		        </div>
-		          
 		      </div>
          </div>
 	</div>
