@@ -6,6 +6,9 @@ import java.util.Map;
 import com.neuron.spring.project.domain.EmpProject;
 import com.neuron.spring.project.domain.Employee;
 import com.neuron.spring.project.domain.Project;
+import com.neuron.spring.project.domain.ProjectCalendar;
+import com.neuron.spring.project.domain.ProjectMember;
+import com.neuron.spring.project.domain.ProjectTask;
 
 public interface ProjectStore {
 
@@ -20,4 +23,14 @@ public interface ProjectStore {
 	public List<Project> selectProjectList(Map<String, Object> map);
 
 	public List<EmpProject> selectMemberProjectList(Map<String, Object> map);
+
+	public Project selectProjectOne(int projectNo);
+
+	public Employee selectMaster(int masterEmpNo);
+
+	public List<ProjectMember> selectMemberList(int projectNo);
+
+	public ProjectTask selectProjectTask(int projectNo);
+
+	public List<ProjectCalendar> selectProjectCalendar(int projectNo);
 }

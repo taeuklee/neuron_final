@@ -27,6 +27,9 @@ import com.google.gson.JsonIOException;
 import com.neuron.spring.project.domain.EmpProject;
 import com.neuron.spring.project.domain.Employee;
 import com.neuron.spring.project.domain.Project;
+import com.neuron.spring.project.domain.ProjectCalendar;
+import com.neuron.spring.project.domain.ProjectMember;
+import com.neuron.spring.project.domain.ProjectTask;
 import com.neuron.spring.project.service.ProjectService;
 import com.neuron.spring.project.service.logic.ProjectServiceImpl;
 
@@ -63,8 +66,27 @@ public class ProjectController {
 	}
 	
 	@RequestMapping(value="selectProjectMemberList.do", method=RequestMethod.GET)
-	public String selectProjectMemberList() {
-		return "project/selectProjectMemberList";
+	public ModelAndView selectMemberList(
+			@RequestParam(value="projectNo") int projectNo
+			,ModelAndView mv
+			) {
+		List<ProjectMember> memberList = service.selectMemberList(projectNo);
+		Project project = service.selectProject(projectNo);
+		int masterEmpNo = project.getProjectMaster();
+		Employee master= service.selectMaster(masterEmpNo);
+		mv.addObject("project", project);
+		mv.addObject("master", master);
+		mv.addObject("memberList", memberList);
+		mv.setViewName("project/selectProjectMemberList");		
+		return mv;
+	}
+	
+	@RequestMapping(value="selectSearchMemberList.do", method=RequestMethod.GET)
+	public void selectSearchMemberList(
+			@RequestParam(value="projectNo") int projectNo
+			,@RequestParam(value="searchText") String searchText
+			) {
+		
 	}
 	
 	@RequestMapping(value="moveInviteMember.do", method=RequestMethod.GET)
@@ -185,10 +207,33 @@ public class ProjectController {
 	
 	
 	@RequestMapping(value="selectProjectDetail.do", method=RequestMethod.GET)
-	public String selectProjectDetail(
+	public ModelAndView selectProjectDetail(
 				@RequestParam(value="projectNo") int projectNo
+				,ModelAndView mv
 			) {
 		System.out.println(projectNo);
-		return "";
+		Project project = service.selectProject(projectNo);
+		
+		if(project !=null) {
+			int masterEmpNo = project.getProjectMaster();
+			Employee master = service.selectMaster(masterEmpNo);
+			List<ProjectMember> memberList = service.selectMemberList(projectNo);
+			ProjectTask projectTask = service.selectProjectTask(projectNo);
+			List<ProjectCalendar> projectCalendar = service.selectProjectCalendar(projectNo);
+			System.out.println("성공");
+			mv.addObject("master", master);
+			mv.addObject("project", project);
+			mv.addObject("projectCalendar", projectCalendar);			
+			mv.addObject("projectTask", projectTask);			
+			mv.addObject("memberList", memberList);			
+			mv.setViewName("project/selectProjectMainPage");
+		}else {
+			System.out.println("프로젝트 불러오기 실패");
+		}
+		
+		return mv;
 	}
+	
+	
+
 }

@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import com.neuron.spring.project.domain.EmpProject;
 import com.neuron.spring.project.domain.Employee;
 import com.neuron.spring.project.domain.Project;
+import com.neuron.spring.project.domain.ProjectCalendar;
+import com.neuron.spring.project.domain.ProjectMember;
+import com.neuron.spring.project.domain.ProjectTask;
 import com.neuron.spring.project.service.ProjectService;
 import com.neuron.spring.project.store.ProjectStore;
 
@@ -53,6 +56,36 @@ public class ProjectServiceImpl implements ProjectService{
 	public List<EmpProject> selectMemberProjectList(Map<String, Object> map) {
 		List<EmpProject> projectList = store.selectMemberProjectList(map);
 		return projectList;
+	}
+
+	@Override
+	public Project selectProject(int projectNo) {
+		Project project = store.selectProjectOne(projectNo);
+		return project;
+	}
+
+	@Override
+	public Employee selectMaster(int masterEmpNo) {
+		Employee master = store.selectMaster(masterEmpNo);
+		return master;
+	}
+
+	@Override
+	public List<ProjectMember> selectMemberList(int projectNo) {
+		List<ProjectMember> memberList = store.selectMemberList(projectNo);
+		return memberList;
+	}
+
+	@Override
+	public ProjectTask selectProjectTask(int projectNo) {
+		ProjectTask projectTask = store.selectProjectTask(projectNo);
+		return projectTask;
+	}
+
+	@Override
+	public List<ProjectCalendar> selectProjectCalendar(int projectNo) {
+		List<ProjectCalendar> projectCalendar = store.selectProjectCalendar(projectNo);
+		return projectCalendar;
 	}
 
 

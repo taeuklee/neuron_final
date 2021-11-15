@@ -84,14 +84,20 @@
 				<div class="content-wrapper" id="contents">
 					<div class="col-lg-10" style="float: left">
 						<div style="height: 10%; margin-bottom: 30px;">
-							<h1>뉴런</h1>
+							<h1>${project.projectTitle}</h1>
 						</div>
 						<div style="height: 20%; margin-bottom: 30px;">
-							<h1>대표업무 제목</h1>
-							<div class="progress" style="height: 20px;">
-								<div class="progress-bar" role="progressbar" style="width: 70%;"
-									aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">70%</div>
-							</div>
+							<c:if test="${ empty projectTask.taskTitle}">
+								<h1>등록된 대표업무가 없습니다.</h1>
+							</c:if>
+							<c:if test="${not empty projectTask.taskTitle }">
+								<h1>${projectTask.taskTitle }</h1>
+								<div class="progress" style="height: 20px;">
+									<div class="progress-bar" role="progressbar"
+										style="width: 70%;" aria-valuenow="${projectTask.taskProcessivity }" aria-valuemin="0"
+										aria-valuemax="100">${projectTask.taskProcessivity }%</div>
+								</div>
+							</c:if>
 						</div>
 						<div style="height: 20%; margin-bottom: 30px;">
 							<div class="card mb-3" style="max-width: 540px;">
@@ -101,12 +107,10 @@
 									</div>
 									<div class="col-md-8">
 										<div class="card-body">
-											<h5 class="card-title">Card title</h5>
-											<p class="card-text">This is a wider card with supporting
-												text below as a natural lead-in to additional content. This
-												content is a little bit longer.</p>
+											<h5 class="card-title">${master.empName}</h5>
+											<p class="card-text">${master.empJob}</p>
 											<p class="card-text">
-												<small class="text-muted">Last updated 3 mins ago</small>
+												<small class="text-muted">${master.deptName }</small>
 											</p>
 										</div>
 									</div>
@@ -116,36 +120,38 @@
 						<div id='calendar' style="height: 50%; margin-bottom: 10px;"></div>
 					</div>
 					<div class="col-lg-2" style="border: 1px solid black; float: left">
+					<c:forEach items="${memberList }" var="memberList" begin="0" end="4">
 						<div class="card" style="width: 10rem; margin-bottom: 10px;">
 							<img src="..." class="card-img-top" alt="...">
 							<div class="card-body">
-								<h4>이순신</h4>
+								<h4>${memberList.empName }</h4>
 							</div>
 						</div>
-						<div class="card" style="width: 10rem; margin-bottom: 10px;">
-							<img src="..." class="card-img-top" alt="...">
-							<div class="card-body">
-								<h4>홍길동</h4>
-							</div>
-						</div>
-						<div class="card" style="width: 10rem; margin-bottom: 10px;">
-							<img src="..." class="card-img-top" alt="...">
-							<div class="card-body">
-								<h4>장보고</h4>
-							</div>
-						</div>
-						<div class="card" style="width: 10rem; margin-bottom: 10px;">
-							<img src="..." class="card-img-top" alt="...">
-							<div class="card-body">
-								<h4>이산</h4>
-							</div>
-						</div>
-						<div class="card" style="width: 10rem; margin-bottom: 10px;">
-							<img src="..." class="card-img-top" alt="...">
-							<div class="card-body">
-								<h4>김유신</h4>
-							</div>
-						</div>
+					</c:forEach>
+<!-- 						<div class="card" style="width: 10rem; margin-bottom: 10px;"> -->
+<!-- 							<img src="..." class="card-img-top" alt="..."> -->
+<!-- 							<div class="card-body"> -->
+<!-- 								<h4>홍길동</h4> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 						<div class="card" style="width: 10rem; margin-bottom: 10px;"> -->
+<!-- 							<img src="..." class="card-img-top" alt="..."> -->
+<!-- 							<div class="card-body"> -->
+<!-- 								<h4>장보고</h4> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 						<div class="card" style="width: 10rem; margin-bottom: 10px;"> -->
+<!-- 							<img src="..." class="card-img-top" alt="..."> -->
+<!-- 							<div class="card-body"> -->
+<!-- 								<h4>이산</h4> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 						<div class="card" style="width: 10rem; margin-bottom: 10px;"> -->
+<!-- 							<img src="..." class="card-img-top" alt="..."> -->
+<!-- 							<div class="card-body"> -->
+<!-- 								<h4>김유신</h4> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
 						<div>
 							<button onclick="moveMemberList()">더보기</button>
 						</div>
@@ -160,12 +166,11 @@
 		<!-- page-body-wrapper ends -->
 	</div>
 	<!-- container-scroller -->
-<script>
-
-	function moveMemberList() {
-		location.href="selectProjectMemberList.do";
-	}
-</script>
+	<script>
+		function moveMemberList() {
+			location.href = "selectProjectMemberList.do?projectNo=${project.projectNo}";
+		}
+	</script>
 </body>
 
 </html>
