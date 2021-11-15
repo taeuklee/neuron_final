@@ -90,33 +90,33 @@
 					<div class="card">
 						<div class="card-body">
 							<br>
-							<h3 class="card-title">공지사항 상세보기</h3>
+							<h3 class="card-title">${notice.noticeNo }번 공지사항 상세보기</h3>
 							<br>
 							<br>
 							<br>
-							<form class="forms-sample">
-								<h4 class="card-title-little"> 제목 : ${notice.noticeTitle }</h4>
+							<input type="hidden" name="noticeNo" value="${noticeNo }">
+								<h4 class="card-title-little"><b>제목</b>&nbsp&nbsp${notice.noticeTitle }</h4>
 								<div class="template-demo">
 									<h1 class="title-line"></h1>
 								</div>
 								<div class="col-md-12 grid-margin stretch-card">
 									<div class="card">
 										<div class="card-body">
-											${notice.noticeWriter }
+											<b>작성자</b>&nbsp&nbsp${notice.noticeWriter }
 										</div>
 									</div>
 								</div>
 								<div class="col-md-12 grid-margin stretch-card">
 									<div class="card">
 										<div class="card-body">
-											${notice.noticeFilePath}
+											 <b>첨부파일</b>&nbsp&nbsp ${notice.noticeFilePath}
 										</div>
 									</div>
 								</div>
 								<div class="col-md-12 grid-margin stretch-card">
 									<div class="card">
 										<div class="card-body">
-											${notice.noticeCategory}
+											<b>긴급공지</b>&nbsp&nbsp${notice.noticeCategory}
 										</div>
 									</div>
 								</div>
@@ -140,7 +140,6 @@
 									<a href="${nDelete }" class="btn btn-primary mr-2 modify">삭제하기</a>
 								</div>
 								</c:if>
-							</form>
 						</div>
 					</div>
 				</div>

@@ -107,13 +107,17 @@
 									<label for="exampleInputName1"><b>첨부파일</b></label> 
 									<input type="file" class="form-control" id="exampleInputName1" name="uploadFile">
 								</div>
-								<div class="form-group">
-			                        <label for="exampleInputName1"><b>긴급 공지 설정</b></label> <br>
-			                      <label class="toggle-switch toggle-switch-warning">
-			                        <input type="checkbox" name="noticeCategory" checked>
-			                        <span class="toggle-slider round"></span>
-			                      </label>                      
-			                    </div>
+								<div class="col-md-6">
+											<div class="form-group row">
+												<label class="col-sm-3 col-form-label">긴급공지</label>
+												<div class="col-sm-9" style="padding-top: 2%;">
+													<select name="noticeCategory" class="form-control">
+														<option value="N">N</option>
+														<option value="Y">Y</option>
+													</select>
+												</div>
+											</div>
+										</div>
 								<div class="form-group">
 									<label for="exampleTextarea1"><b></b>내용</b></label>
 									<textarea class="form-control" cols="70" rows="50" name="noticeContents" id="exampleTextarea1" rows="4"></textarea>

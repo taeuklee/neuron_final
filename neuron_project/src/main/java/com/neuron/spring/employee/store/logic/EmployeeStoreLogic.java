@@ -74,5 +74,11 @@ public class EmployeeStoreLogic implements EmployeeStore{
 		return eList;
 	}
 
+//	@Override
+//	public int updateEmpPwd(Employee employee) {
+//		int result = sqlSession.update("employeeMapper.updatePw", employee);
+//		return result;
+//	}
+
 	
 }
