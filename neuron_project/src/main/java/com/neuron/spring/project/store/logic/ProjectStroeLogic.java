@@ -11,6 +11,9 @@ import org.springframework.stereotype.Repository;
 import com.neuron.spring.project.domain.EmpProject;
 import com.neuron.spring.project.domain.Employee;
 import com.neuron.spring.project.domain.Project;
+import com.neuron.spring.project.domain.ProjectCalendar;
+import com.neuron.spring.project.domain.ProjectMember;
+import com.neuron.spring.project.domain.ProjectTask;
 import com.neuron.spring.project.store.ProjectStore;
 
 
@@ -56,6 +59,36 @@ public class ProjectStroeLogic implements ProjectStore{
 	public List<EmpProject> selectMemberProjectList(Map<String, Object> map) {
 		List<EmpProject> projectList = sqlSession.selectList("projectMapper.selectMemberProjectList", map);
 		return projectList;
+	}
+
+	@Override
+	public Project selectProjectOne(int projectNo) {
+		Project project = sqlSession.selectOne("projectMapper.selectProject", projectNo);
+		return project;
+	}
+
+	@Override
+	public Employee selectMaster(int masterEmpNo) {
+		Employee master = sqlSession.selectOne("projectMapper.selectMaster",masterEmpNo);
+		return master;
+	}
+
+	@Override
+	public List<ProjectMember> selectMemberList(int projectNo) {
+		List<ProjectMember> memberList = sqlSession.selectList("projectMapper.selectMemberList", projectNo);
+		return memberList;
+	}
+
+	@Override
+	public ProjectTask selectProjectTask(int projectNo) {
+		ProjectTask projectTask = sqlSession.selectOne("projectMapper.selectProjectTask", projectNo);
+		return projectTask;
+	}
+
+	@Override
+	public List<ProjectCalendar> selectProjectCalendar(int projectNo) {
+		List<ProjectCalendar> projectCalendar = sqlSession.selectList("projectMapper.selectProjectCalendar", projectNo);
+		return projectCalendar;
 	}
 
 

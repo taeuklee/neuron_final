@@ -303,7 +303,6 @@
 								<table class="table table-hover" style="height: 100%">
 									<thead>
 										<tr>
-											<th>#</th>
 											<th>이름</th>
 											<th>부서</th>
 											<th>권한</th>
@@ -311,15 +310,15 @@
 										</tr>
 									</thead>
 									<tbody>
+									<c:forEach items="${memberList }" var="memberList">
 										<tr>
-											<td>1</td>
 											<td>
 												<div class="user_icon">
 													<img src="images/img1.jpg" alt="">
-												</div> Vincent Williamson
+												</div> ${memberList.empName }
 											</td>
-											<td>31</td>
-											<td><span class="status">Active</span></td>
+											<td>${memberList.deptName }</td>
+											<td>${memberList.empAuth }</td>
 											<td>
 												<ul class="action-list">
 													<li><a href="#" class="edit" data-tip="setting"><i
@@ -329,78 +328,79 @@
 												</ul>
 											</td>
 										</tr>
-										<tr>
-											<td>2</td>
-											<td>
-												<div class="user_icon">
-													<img src="images/img2.jpg" alt="">
-												</div> Taylor Reyes
-											</td>
-											<td>22</td>
-											<td><span class="status inactive">Inactive</span></td>
-											<td>
-												<ul class="action-list">
-													<li><a href="#" class="setting" data-tip="setting"><i
-															class="fa fa-cog"></i></a></li>
-													<li><a href="#" class="delete" data-tip="delete"><i
-															class="fa fa-times-circle"></i></a></li>
-												</ul>
-											</td>
-										</tr>
-										<tr>
-											<td>3</td>
-											<td>
-												<div class="user_icon">
-													<img src="images/img3.jpg" alt="">
-												</div> Justin Block
-											</td>
-											<td>26</td>
-											<td><span class="status">Active</span></td>
-											<td>
-												<ul class="action-list">
-													<li><a href="#" class="setting" data-tip="setting"><i
-															class="fa fa-cog"></i></a></li>
-													<li><a href="#" class="delete" data-tip="delete"><i
-															class="fa fa-times-circle"></i></a></li>
-												</ul>
-											</td>
-										</tr>
-										<tr>
-											<td>4</td>
-											<td>
-												<div class="user_icon">
-													<img src="images/img4.png" alt="">
-												</div> Sean Guzman
-											</td>
-											<td>26</td>
-											<td><span class="status block">Blocked</span></td>
-											<td>
-												<ul class="action-list">
-													<li><a href="#" class="setting" data-tip="setting"><i
-															class="fa fa-cog"></i></a></li>
-													<li><a href="#" class="delete" data-tip="delete"><i
-															class="fa fa-times-circle"></i></a></li>
-												</ul>
-											</td>
-										</tr>
-										<tr>
-											<td>5</td>
-											<td>
-												<div class="user_icon">
-													<img src="images/img5.jpg" alt="">
-												</div> Keith Carter
-											</td>
-											<td>20</td>
-											<td><span class="status">Active</span></td>
-											<td>
-												<ul class="action-list">
-													<li><a href="#" class="setting" data-tip="setting"><i
-															class="fa fa-cog"></i></a></li>
-													<li><a href="#" class="delete" data-tip="delete"><i
-															class="fa fa-times-circle"></i></a></li>
-												</ul>
-											</td>
-										</tr>
+									</c:forEach>
+<!-- 										<tr> -->
+<!-- 											<td>2</td> -->
+<!-- 											<td> -->
+<!-- 												<div class="user_icon"> -->
+<!-- 													<img src="images/img2.jpg" alt=""> -->
+<!-- 												</div> Taylor Reyes -->
+<!-- 											</td> -->
+<!-- 											<td>22</td> -->
+<!-- 											<td><span class="status inactive">Inactive</span></td> -->
+<!-- 											<td> -->
+<!-- 												<ul class="action-list"> -->
+<!-- 													<li><a href="#" class="setting" data-tip="setting"><i -->
+<!-- 															class="fa fa-cog"></i></a></li> -->
+<!-- 													<li><a href="#" class="delete" data-tip="delete"><i -->
+<!-- 															class="fa fa-times-circle"></i></a></li> -->
+<!-- 												</ul> -->
+<!-- 											</td> -->
+<!-- 										</tr> -->
+<!-- 										<tr> -->
+<!-- 											<td>3</td> -->
+<!-- 											<td> -->
+<!-- 												<div class="user_icon"> -->
+<!-- 													<img src="images/img3.jpg" alt=""> -->
+<!-- 												</div> Justin Block -->
+<!-- 											</td> -->
+<!-- 											<td>26</td> -->
+<!-- 											<td><span class="status">Active</span></td> -->
+<!-- 											<td> -->
+<!-- 												<ul class="action-list"> -->
+<!-- 													<li><a href="#" class="setting" data-tip="setting"><i -->
+<!-- 															class="fa fa-cog"></i></a></li> -->
+<!-- 													<li><a href="#" class="delete" data-tip="delete"><i -->
+<!-- 															class="fa fa-times-circle"></i></a></li> -->
+<!-- 												</ul> -->
+<!-- 											</td> -->
+<!-- 										</tr> -->
+<!-- 										<tr> -->
+<!-- 											<td>4</td> -->
+<!-- 											<td> -->
+<!-- 												<div class="user_icon"> -->
+<!-- 													<img src="images/img4.png" alt=""> -->
+<!-- 												</div> Sean Guzman -->
+<!-- 											</td> -->
+<!-- 											<td>26</td> -->
+<!-- 											<td><span class="status block">Blocked</span></td> -->
+<!-- 											<td> -->
+<!-- 												<ul class="action-list"> -->
+<!-- 													<li><a href="#" class="setting" data-tip="setting"><i -->
+<!-- 															class="fa fa-cog"></i></a></li> -->
+<!-- 													<li><a href="#" class="delete" data-tip="delete"><i -->
+<!-- 															class="fa fa-times-circle"></i></a></li> -->
+<!-- 												</ul> -->
+<!-- 											</td> -->
+<!-- 										</tr> -->
+<!-- 										<tr> -->
+<!-- 											<td>5</td> -->
+<!-- 											<td> -->
+<!-- 												<div class="user_icon"> -->
+<!-- 													<img src="images/img5.jpg" alt=""> -->
+<!-- 												</div> Keith Carter -->
+<!-- 											</td> -->
+<!-- 											<td>20</td> -->
+<!-- 											<td><span class="status">Active</span></td> -->
+<!-- 											<td> -->
+<!-- 												<ul class="action-list"> -->
+<!-- 													<li><a href="#" class="setting" data-tip="setting"><i -->
+<!-- 															class="fa fa-cog"></i></a></li> -->
+<!-- 													<li><a href="#" class="delete" data-tip="delete"><i -->
+<!-- 															class="fa fa-times-circle"></i></a></li> -->
+<!-- 												</ul> -->
+<!-- 											</td> -->
+<!-- 										</tr> -->
 									</tbody>
 								</table>
 							</div>

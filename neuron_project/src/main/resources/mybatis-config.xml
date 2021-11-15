@@ -21,6 +21,10 @@
 		<typeAlias type="com.neuron.spring.attend.domain.Attendance" alias="Attendance"/>
 		<typeAlias type="com.neuron.spring.notice.domain.Notice" alias="Notice"/>
 		<typeAlias type="com.neuron.spring.project.domain.EmpProject" alias="EmpProject"/>
+		<typeAlias type="com.neuron.spring.project.domain.ProjectMember" alias="ProjectMember"/>
+		<typeAlias type="com.neuron.spring.project.domain.ProjectTask" alias="ProjectTask"/>
+		<typeAlias type="com.neuron.spring.project.domain.ProjectTaskDetail" alias="ProjectTaskDetail"/>
+		<typeAlias type="com.neuron.spring.project.domain.ProjectCalendar" alias="ProjectCalendar"/>
 	</typeAliases>
 	
 	<mappers>
