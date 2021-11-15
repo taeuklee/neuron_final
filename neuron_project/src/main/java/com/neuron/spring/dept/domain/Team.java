@@ -1,6 +1,7 @@
-package com.neuron.spring.employee.domain;
+package com.neuron.spring.dept.domain;
 
 public class Team {
+	
 	private String teamCode;
 	private String deptCode;
 	private String teamName;
@@ -37,7 +38,5 @@ public class Team {
 	public String toString() {
 		return "Team [teamCode=" + teamCode + ", deptCode=" + deptCode + ", teamName=" + teamName + "]";
 	}
-	
-	
 
 }

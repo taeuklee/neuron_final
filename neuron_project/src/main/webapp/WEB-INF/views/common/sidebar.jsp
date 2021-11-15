@@ -47,18 +47,12 @@
 								내역</a></li>
 					</ul>
 				</div></li>
-
-			<li class="nav-item"><a class="nav-link" data-toggle="collapse"
-				href="#menu2" aria-expanded="false" aria-controls="menu2"> <i
-					class="icon-disc menu-icon"></i> <span class="menu-title">조직도</span>
-					<i class="menu-arrow"></i>
-			</a>
-				<div class="collapse" id="menu2">
-					<ul class="nav flex-column sub-menu">
-						<li class="nav-item"><a class="nav-link" href="#">조직개편</a></li>
-						<li class="nav-item"><a class="nav-link" href="#">사원관리</a></li>
-					</ul>
-				</div></li>
+			<li class="nav-item"><a class="nav-link" href="#menu2" onclick="location:href='/orEmpListView.do';"> <i
+					class="icon-box menu-icon"></i> <span class="menu-title">조직도</span>
+			</a></li>
+			<!-- <li class="nav-item"><a class="nav-link" data-toggle="collapse"
+				href="#menu2" aria-expanded="false" aria-controls="menu2" onclick="location:href='/orEmpListView.do';"> <i
+					class="icon-disc menu-icon"></i> <span class="menu-title">조직도</span></li></a> -->
 
 			<li class="nav-item"><a class="nav-link" data-toggle="collapse"
 				href="#menu3" aria-expanded="false" aria-controls="menu3"> <i
@@ -122,7 +116,7 @@
 			<c:if test="${loginEmployee.empId eq 'admin' }">
 				<li class="nav-item"><a class="nav-link" data-toggle="collapse"
 					href="#menu6" aria-expanded="false" aria-controls="menu6"> <i
-						class="icon-disc menu-icon"></i> <span class="menu-title">사원관리</span>
+						class="icon-disc menu-icon"></i> <span class="menu-title">사원 관리</span>
 						<i class="menu-arrow"></i>
 				</a>
 					<div class="collapse" id="menu6">
@@ -131,6 +125,34 @@
 								onclick="location.href='/enrollView.do'">사원 등록</a></li>
 							<li class="nav-item"><a class="nav-link"
 								onclick="location.href='/empListView.do'">사원 조회</a></li>
+						</ul>
+					</div></li>
+				<li class="nav-item"><a class="nav-link" data-toggle="collapse"
+					href="#menu7" aria-expanded="false" aria-controls="menu7"> <i
+						class="icon-disc menu-icon"></i> <span class="menu-title">부서 관리</span>
+						<i class="menu-arrow"></i>
+				</a>
+					<div class="collapse" id="menu7">
+						<ul class="nav flex-column sub-menu">
+							<li class="nav-item"><a class="nav-link"
+								onclick="location.href='/deptListView.do'">부서 조회</a></li>
+							<li class="nav-item"><a class="nav-link"
+								onclick="location.href='/deptAddView.do'">부서 추가</a></li>
+						</ul>
+					</div></li>
+				<li class="nav-item"><a class="nav-link" data-toggle="collapse"
+					href="#menu8" aria-expanded="false" aria-controls="menu8"> <i
+						class="icon-disc menu-icon"></i> <span class="menu-title">프로젝트 관리</span>
+						<i class="menu-arrow"></i>
+				</a>
+					<div class="collapse" id="menu8">
+						<ul class="nav flex-column sub-menu">
+							<li class="nav-item"><a class="nav-link"
+								onclick="">리스트 조회</a></li>
+							<li class="nav-item"><a class="nav-link"
+								onclick="">생성 요청</a></li>
+							<li class="nav-item"><a class="nav-link"
+								onclick="">삭제 요청</a></li>
 						</ul>
 					</div></li>
 			</c:if>
