@@ -28,15 +28,15 @@ public interface ApprovalStore {
 	
 	public List<Dept> selectAllDept();
 	
-//	public int insertDocument(Map<String,Object> param);
-	
 	public int insertDocument(DataMap dataMap) throws Exception;
 	
 	public int insertDocumentFile(DocumentFile file);
-	
-	public int issertApproval(Approval appr);
-	
+
 	public List<DataMap> selectApproval(DataMap dataMap);
 	
 	public Document selectDocumentOne(DataMap dataMap);
+	
+	public int updateTransApproval(DataMap dataMap);
+	
+	public int rejectTransApproval(DataMap dataMap);
 }

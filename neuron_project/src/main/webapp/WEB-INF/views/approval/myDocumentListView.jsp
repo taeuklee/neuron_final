@@ -143,11 +143,11 @@
 												<td onclick="location.href='/${dDetail }'">${dOne.docNo }</td>
 												<td onclick="location.href='/${dDetail }'">${dOne.docKind }</td>
 												<td onclick="location.href='/${dDetail }'">${dOne.dCreateDate }</td>
-												<c:if test="${dOne.docStatus eq '결재완료'}">
-												<td onclick="location.href='/${dDetail }'">${dOne.dUpdateDate }</td>												
+												<c:if test="${dOne.docStatus eq '최종완료' or dOne.docStatus eq '반려'}">
+													<td onclick="location.href='/${dDetail }'">${dOne.dUpdateDate }</td>												
 												</c:if>
-												<c:if test="${dOne.docStatus ne '결재완료'}">
-												<td onclick="location.href='/${dDetail }'"></td>												
+												<c:if test="${dOne.docStatus eq '합의대기' or dOne.docStatus eq '결재대기'}">
+													<td onclick="location.href='/${dDetail }'"></td>												
 												</c:if>
 												<td>
 													<button class="question" id="que-${count.count }">
@@ -265,7 +265,7 @@
 						for(var i in data){
 							count++;
 							$tr= $("<tr>");
-							$seq = $("<td>").text(count+1);
+							$seq = $("<td>").text(count);
 							$writer = $("<td>").text(data[i].empName+" "+data[i].empJob+"("+data[i].teamName+")");
 							$apprType = $("<td>").text(data[i].approvalType);
 							$apprState = $("<td>").text(data[i].approvalStatus);

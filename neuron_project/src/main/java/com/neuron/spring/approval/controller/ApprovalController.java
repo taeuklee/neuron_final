@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -53,7 +54,8 @@ public class ApprovalController {
 	// 문서 리스트
 	@RequestMapping(value="approval/{path}.do", method=RequestMethod.GET)
 	public ModelAndView ShowDocumentList(
-			@PathVariable String path, ModelAndView mv,HttpServletRequest request, HttpSession session, @RequestParam(value="page",required=false) Integer page) {
+			@PathVariable String path, ModelAndView mv,HttpServletRequest request, HttpSession session,
+			@RequestParam(value="page",required=false) Integer page) {
 		session = request.getSession();
 		Employee emp = new Employee();
 		if(session.getAttribute("loginEmployee") != null) {
@@ -73,10 +75,10 @@ public class ApprovalController {
 		if(path.equals("myDocumentListView")) {	
 			paramMap.put("gubun","myWrite");
 			totalCount = service.getListCount(paramMap);
-		}else if(path.equals("list1")) {
+		}else if(path.equals("documentWaitListView")) {
 			paramMap.put("gubun","wait");
 			totalCount = service.getListCount(paramMap);
-		}else if(path.equals("list2")) {
+		}else if(path.equals("documentWaitListView")) {
 			
 		}
 		
@@ -171,7 +173,6 @@ public class ApprovalController {
 	@RequestMapping(value = "/apprList.do", method=RequestMethod.GET)
 	public void getApprovalList(RequestResolver resolver, HttpServletResponse response) throws JsonIOException, IOException {
 		List<DataMap> aList = service.printApprovalList(resolver.getMap());
-		
 		if(!aList.isEmpty()) {
 			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 			gson.toJson(aList,response.getWriter());
@@ -204,11 +205,30 @@ public class ApprovalController {
 	}
 	
 	//결재 처리 update 처리 
+	@ResponseBody
 	@RequestMapping(value="/transApproval.do")
-	public ModelAndView transApproval(ModelAndView mv, HttpSession session) {
+	public String transApproval(RequestResolver resolver ,HttpSession session, HttpServletRequest request) {
+		int result = 0;
+		System.out.println(resolver.getString("approvalType"));
+		System.out.println(resolver.getMap().toString());
+		session = request.getSession();
+		Employee emp = new Employee();
+		if(session.getAttribute("loginEmployee") != null) {
+			emp = (Employee)session.getAttribute("loginEmployee");
+		}
+		resolver.put("empNo", emp.getEmpNo());
+		if(resolver.getString("apprStatus").equals("Y")) {
+			result = service.updateTransApproval(resolver.getMap());
+		}else {
+			result = service.rejectTransApproval(resolver.getMap());			
+			System.out.println("반려");
+		}
 		
-		
-		return mv;
+		if(result >0) {
+			return "success";			
+		}else {
+			return "fail";
+		}
 	}
 	
 	

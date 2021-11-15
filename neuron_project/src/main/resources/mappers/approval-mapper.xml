@@ -83,6 +83,7 @@
   				and document_no in ( select document_no
 								from approval 
 								where emp_no = #{empNo})
+				and document_status like '%대기%'
   			</if>
   		</where> 
   		order by a.DOCUMENT_NO DESC
@@ -97,10 +98,11 @@
 	 	 		and DOCUMENT_WRITER_NO = #{empNo}  		
   			</if>
   			<if test="gubun == 'wait'">
-  			and document_no in ( select document_no
-								from approval 
-								where emp_no = #{empNo}
-								and approval_status = '대기')
+	  			and document_no in ( select document_no
+									from approval 
+									where emp_no = #{empNo}
+									and approval_status = '대기')
+				and document_status like '%대기%'
   			</if>
   		</where> 
   	</select>
@@ -141,5 +143,48 @@
   		FROM DOCUMENT 
   		WHERE DOCUMENT_NO = #{documentNo,jdbcType=BIGINT }
   	</select>
+  	
+  	<update id="updateTransApproval" parameterType="com.neuron.spring.util.DataMap">
+  		UPDATE APPROVAL 
+  		SET APPROVAL_STATUS = '승인', approval_opinion=#{apprOpinion,jdbcType=VARCHAR}, APPROVAL_ENDDATE = SYSDATE
+		WHERE DOCUMENT_NO = #{documentNo,jdbcType=BIGINT} AND EMP_NO = #{empNo,jdbcType=BIGINT}
+		<selectKey keyProperty="apprStateChk" resultType="string" order="AFTER">
+			SELECT 
+			CASE WHEN 
+			    COUNT(*) = SUM(CASE WHEN APPROVAL_STATUS ='승인' THEN 1 ELSE 0 END) 
+			    THEN 'Y' 
+			    ELSE 'N'
+			    END CHK
+			FROM APPROVAL
+			<where>
+					DOCUMENT_NO = #{documentNo,jdbcType=BIGINT} AND
+					APPROVAL_TYPE in (select approval_type from approval
+                    					where document_no = #{documentNo,jdbcType=BIGINT}  and  EMP_NO = #{empNo,jdbcType=BIGINT})
+			</where>
+		</selectKey>
+  	</update>
+  	
+  	<update id="rejectTransApproval" parameterType="com.neuron.spring.util.DataMap">
+  		UPDATE APPROVAL 
+  		SET APPROVAL_STATUS = '반려', approval_opinion=#{apprOpinion,jdbcType=VARCHAR}, APPROVAL_ENDDATE = SYSDATE
+		WHERE DOCUMENT_NO = #{documentNo,jdbcType=BIGINT} AND EMP_NO = #{empNo,jdbcType=BIGINT}
+  	</update>
+  	
+  	<update id="updateTransApprovalDoc" parameterType="com.neuron.spring.util.DataMap">
+  		UPDATE DOCUMENT 
+  		<set>
+  		<if test='approvalType == "합의" and apprStatus == "Y"'>
+	  		DOCUMENT_STATUS = '결재대기', D_UPDATE_DATE = SYSDATE 
+  		</if>
+  		<if test='approvalType == "결재" and apprStatus == "Y"'>
+  			DOCUMENT_STATUS = '최종완료', D_UPDATE_DATE = SYSDATE 
+  		</if>
+  		<if test='apprStatus == "N"'>
+  			DOCUMENT_STATUS = '반려', D_UPDATE_DATE = SYSDATE 
+  		</if>
+  		</set>
+  		WHERE DOCUMENT_NO = #{documentNo,jdbcType=BIGINT}
+  	</update>
+  	
   	
   </mapper>
