@@ -56,7 +56,31 @@ body {
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
+	function fn_submit(){
+		var check = window.opener.document.getElementById("check").value;
+		alert(check);
+// 		$("#apprCheck").val(check);
+// 		$("#transAppr").submit();
+		$.ajax({
+			url : "/transApproval.do"
+			type : "post",
+			data : {
+				"" : ,
+				"" :
+			}
+			success: function(data){
+				if(data == "success"){
+					alert("결재처리 완료!");
+				}else{
+					alert("결재처리 실패!");
+				}
+			},
+			error : function(){
+				alert("ajax 실패");
+			}
+		});
 	
+	}
 </script>
 </head>
 
@@ -69,33 +93,22 @@ body {
 				<div class="col-md-5 grid-margin stretch-card">
 					<div class="card">
 						<div class="card-body">
-						<form action="" name="">
+							<input type="hidden" id="apprCheck" name="apprCheck">
 							<table style="border: 1px solid rgb(0, 0, 0); font-family: malgun gothic, dotum, arial, tahoma; margin-top: 1px; border-collapse: collapse;"><!-- User --><colgroup><col width="100"><col width="220"></colgroup>
 							<tbody>
-								<tr>
-									<td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 18px; text-align: center; color: rgb(0, 0, 0); font-size: 12px; font-weight: bold; vertical-align: middle;">
-										
-						결재처리
-									</td>
-									<td style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle;">
-										<input type="radio" name="">승인
-										<input type="radio" name="a">반려
-									</td>
-								</tr>
 								<tr width="500" height="200">
 									<td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 18px; text-align: center; color: rgb(0, 0, 0); font-size: 12px; font-weight: bold; vertical-align: middle;">
 										
 						결재의견
 									</td>
 									<td style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle;">
-									<textarea cols="50" rows="7"></textarea>
+									<textarea cols="50" rows="7" name="apprOpinion"></textarea>
 									</td>
 								</tr>
 								
 							</tbody>
 							</table>
 							<button onclick="fn_submit()">처리</button><button>취소</button>
-						</form>
 						</div>
 					</div>
 				</div>

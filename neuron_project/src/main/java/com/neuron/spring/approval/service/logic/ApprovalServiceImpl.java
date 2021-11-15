@@ -16,6 +16,7 @@ import com.neuron.spring.approval.store.ApprovalStore;
 import com.neuron.spring.employee.domain.Dept;
 import com.neuron.spring.employee.domain.Employee;
 import com.neuron.spring.employee.domain.Team;
+import com.neuron.spring.util.DataMap;
 
 @Service
 public class ApprovalServiceImpl implements ApprovalService{
@@ -71,14 +72,9 @@ public class ApprovalServiceImpl implements ApprovalService{
 		return null;
 	}
 
-//	@Override
-//	public int registerDocument(Map<String,Object> param) {
-//		return store.insertDocument(param);
-//	}
-	
 	@Override
-	public int registerDocument(Document doc) {
-		return store.insertDocument(doc);
+	public int registerDocument(DataMap dataMap) throws Exception {
+		return store.insertDocument(dataMap);
 	}
 	
 	@Override
@@ -93,24 +89,14 @@ public class ApprovalServiceImpl implements ApprovalService{
 	}
 
 	@Override
-	public List<Approval> printApprovalList(int documentNo) {
-		return store.selectApproval(documentNo);
+	public List<DataMap> printApprovalList(DataMap dataMap) {
+		return store.selectApproval(dataMap);
 	}
 
 	@Override
-	public Document printDocumentOne(int documentNo) {
-		return store.selectDocumentOne(documentNo);
+	public Document printDocumentOne(DataMap dataMap) {
+		return store.selectDocumentOne(dataMap);
 	}
-
-	@Override
-	public int registerDocument(Map map, List<Approval> aList) {
-		int docResult = store.insertDocument(map,aList);
-		return docResult;
-	}
-
-
-	
-	
 	
 	
 }

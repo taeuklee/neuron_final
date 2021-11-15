@@ -40,6 +40,9 @@ import com.neuron.spring.approval.service.ApprovalService;
 import com.neuron.spring.employee.domain.Dept;
 import com.neuron.spring.employee.domain.Employee;
 import com.neuron.spring.employee.domain.Team;
+import com.neuron.spring.util.DataMap;
+import com.neuron.spring.util.JsonConverter;
+import com.neuron.spring.util.RequestResolver;
 
 @Controller
 public class ApprovalController {
@@ -61,6 +64,7 @@ public class ApprovalController {
 		int totalCount = 0;
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("empNo", docWriterNo);
+		
 		List<Document> dList = new ArrayList<Document>();
 		for(Document d : dList) {
 			d.setDocWriterNo(docWriterNo);
@@ -71,8 +75,9 @@ public class ApprovalController {
 			totalCount = service.getListCount(paramMap);
 		}else if(path.equals("list1")) {
 			paramMap.put("gubun","wait");
-			paramMap.put("apprState","대기");
 			totalCount = service.getListCount(paramMap);
+		}else if(path.equals("list2")) {
+			
 		}
 		
 		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
@@ -110,40 +115,18 @@ public class ApprovalController {
 	@RequestMapping(value ="documentRegister.do", method=RequestMethod.POST)
 	public ModelAndView registerDocument(
 			ModelAndView mv
-			,HttpSession session
-			,@RequestParam(value="docGubun") String docKind // 문서종류
-			,@RequestParam(value="docContents") String boardContents //문서내용 
-			,@RequestParam(value="emp_id_1") String [] apprEmp1 // 합의자
-			,@RequestParam(value="emp_id_2") String [] apprEmp2 // 결재자
+			,HttpSession session, RequestResolver resolver
 			,@RequestParam(value="uploadFile", required=false) MultipartFile uploadFile
-			, HttpServletRequest request ) throws SQLException, IOException {
-		
-		List<Approval> aList = new ArrayList();
-		
-		for(String a : apprEmp1) {
-			Approval appr1 = new Approval();
-			appr1.setApprovalEmpNo(Integer.parseInt(a.split(":")[0]));
-			appr1.setApprovalType(a.split(":")[4]);
-			aList.add(appr1);
-		}
-		for(String a : apprEmp2) {
-			Approval appr2 = new Approval();
-			appr2.setApprovalEmpNo(Integer.parseInt(a.split(":")[0]));
-			appr2.setApprovalType(a.split(":")[4]);
-			aList.add(appr2);
-		}
-		
+			, HttpServletRequest request ) throws Exception {
+		// 회원 session값 불러오기
 		session = request.getSession();
 		Employee emp = new Employee();
+		
 		DocumentFile dFile = new DocumentFile();
+		
 		if(session.getAttribute("loginEmployee") != null) {
 			emp = (Employee)session.getAttribute("loginEmployee");
 		}
-		
-		// value값은 jsp의 input태그의 name값이고
-		// required = false, 파일이 필수가 아님을 알려주는 것이고
-		// MultipartFile은 MultipartResolver 객체를 빈으로 등록해서 사용한다는 것이다.
-		// uploadFile이 비어있지 않으면
 		if(!uploadFile.getOriginalFilename().equals("")) {
 			String renameFileName = saveFile(uploadFile,request);
 			if(renameFileName!=null) {
@@ -152,26 +135,16 @@ public class ApprovalController {
 				dFile.setFileRename(renameFileName);
 			}
 		}
-		Document doc = new Document();
-		doc.setDocKind(docKind);
-		doc.setDocWriterNo(emp.getEmpNo());
-		doc.setDocContents(boardContents);
+		resolver.put("documentWriterNo", emp.getEmpNo());
+		resolver.put("docFile", dFile);
 		
-		
-		Map<String,Object> insertMap = new HashMap<String, Object>();
-		insertMap.put("doc", doc);
-		insertMap.put("docFile", dFile);
-		
-//		Map<String, Object> paramMap = request.getParameterMap();
-//		paramMap.put("docGubun", docKind);
-//		paramMap.put("docContents", boardContents);
-//		paramMap.put("emp_id_1", Integer.parseInt(applEmp1.split(":")[0]));
-//		paramMap.put("emp_id_2", Integer.parseInt(applEmp2.split(":")[0]));
-//		paramMap.put("WriterEmpNo",1);
+		// json으로 결재자 배열 변환
+		resolver.put("empIdList",JsonConverter.getObjectList(resolver.getString("empIdList"), DataMap.class));
+		//1. 결재문서 데이터 생성
+		int documentNo = service.registerDocument(resolver.getMap());//현재 resolver에는 결재문서 데이터와 결재자들의 데이터가 담겨있음.
 
 		
-		int docResult = service.registerDocument(insertMap, aList);
-		if(docResult>0) {
+		if(documentNo>0) {
 			mv.setViewName("redirect:/approval/myDocumentListView.do");
 		}else {
 			System.out.println("에러");
@@ -196,8 +169,9 @@ public class ApprovalController {
 	
 	// 결재리스트 ajax
 	@RequestMapping(value = "/apprList.do", method=RequestMethod.GET)
-	public void getApprovalList(@RequestParam("documentNo") int docNo, HttpServletResponse response) throws JsonIOException, IOException {
-		List<Approval> aList = service.printApprovalList(docNo);
+	public void getApprovalList(RequestResolver resolver, HttpServletResponse response) throws JsonIOException, IOException {
+		List<DataMap> aList = service.printApprovalList(resolver.getMap());
+		
 		if(!aList.isEmpty()) {
 			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 			gson.toJson(aList,response.getWriter());
@@ -212,9 +186,9 @@ public class ApprovalController {
 	//결재문 상세 view
 	@RequestMapping(value="documentDatail.do")
 	public ModelAndView documentDetail(
-			ModelAndView mv, @RequestParam("documentNo") int documentNo) {
-		Document docOne = service.printDocumentOne(documentNo);
-		List<Approval> aList = service.printApprovalList(documentNo);
+			ModelAndView mv, RequestResolver resolver) {
+		Document docOne = service.printDocumentOne(resolver.getMap());
+		List<DataMap> aList = service.printApprovalList(resolver.getMap());
 		
 		mv.addObject("docOne", docOne);
 		mv.addObject("aList",aList);
@@ -222,13 +196,22 @@ public class ApprovalController {
 		return mv;
 	}
 	
-	//결재 처리 페이지 
-	@RequestMapping(value="/transApprove.do")
+	//결재 처리 view페이지 
+	@RequestMapping(value="/transApproveView.do")
 	public ModelAndView transApprove(ModelAndView mv, HttpSession session){
-		System.out.println("된다");
-		mv.setViewName("/approval/transApprove");
+		mv.setViewName("/approval/transApproveView");
 		return mv;
 	}
+	
+	//결재 처리 update 처리 
+	@RequestMapping(value="/transApproval.do")
+	public ModelAndView transApproval(ModelAndView mv, HttpSession session) {
+		
+		
+		return mv;
+	}
+	
+	
 	
 	//문서리스트 검색
 	public String DocumentSearchList(ApprovalSearch search, Model model) {
@@ -262,7 +245,7 @@ public class ApprovalController {
 			e.printStackTrace();
 		}
 		// 파일 결로 리턴
-		return filePath;
+		return renameFileName;
 	}
 	
 	public void deleteFile(String fileName, HttpServletRequest request) {

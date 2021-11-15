@@ -17,6 +17,8 @@ import com.neuron.spring.approval.store.ApprovalStore;
 import com.neuron.spring.employee.domain.Dept;
 import com.neuron.spring.employee.domain.Employee;
 import com.neuron.spring.employee.domain.Team;
+import com.neuron.spring.util.DataMap;
+import com.neuron.spring.util.JsonConverter;
 
 @Repository
 public class ApprovalStoreLogic implements ApprovalStore{
@@ -30,8 +32,6 @@ public class ApprovalStoreLogic implements ApprovalStore{
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit()); 
 		List<Document> bList = sqlSession.selectList("approvalMapper.selectAllList", empNo, rowBounds);
-
-		
 		return bList;
 	}
 
@@ -59,7 +59,7 @@ public class ApprovalStoreLogic implements ApprovalStore{
 	
 	@Override
 	public List<Employee> selectAllEmployee() {
-		return sqlSession.selectList("employeeMapper.selectAllEmp");
+		return sqlSession.selectList("employeeMapper.selectAllList");
 	}
 
 	@Override
@@ -70,13 +70,6 @@ public class ApprovalStoreLogic implements ApprovalStore{
 	@Override
 	public List<Dept> selectAllDept() {
 		return sqlSession.selectList("employeeMapper.selectAllDept");
-	}
-
-	@Override
-	public int insertDocument(Document doc) {
-		int result = sqlSession.insert("approvalMapper.insertDocument",doc);
-		return result;
-		
 	}
 
 	@Override
@@ -91,27 +84,33 @@ public class ApprovalStoreLogic implements ApprovalStore{
 	}
 
 	@Override
-	public List<Approval> selectApproval(int documentNo) {
-		return sqlSession.selectList("approvalMapper.selectApproval",documentNo);
+	public List<DataMap> selectApproval(DataMap dataMap) {
+		return sqlSession.selectList("approvalMapper.selectApproval",dataMap);
 	}
 
 	@Override
-	public Document selectDocumentOne(int documentNo) {
-		return sqlSession.selectOne("approvalMapper.selectDocOne",documentNo);
+	public Document selectDocumentOne(DataMap dataMap) {
+		return sqlSession.selectOne("approvalMapper.selectDocOne",dataMap);
 	}
 
 	@Override
-	public int insertDocument(Map map,List<Approval> aList) {
-		Document doc = (Document)map.get("doc");
-		int docResult = sqlSession.insert("approvalMapper.insertDocument",doc);
-		for(Approval appr : aList) {
-			appr.setDocumentNo(doc.getDocNo());
-			sqlSession.insert("approvalMapper.insertAppr",appr);
+	public int insertDocument(DataMap dataMap) throws Exception{
+		sqlSession.insert("approvalMapper.insertDocument",dataMap);
+		//JSON배열 파싱하여 결재자 리스트 리턴
+		List<DataMap> list = (List<DataMap>) dataMap.get("empIdList");
+		for(DataMap tmp : list) {
+			String empIdArr = tmp.getString("empId");
+			dataMap.put("approvalEmpNo", empIdArr.split(":")[0]);
+			dataMap.put("approvalType", empIdArr.split(":")[4]);
+			sqlSession.insert("approvalMapper.insertAppr", dataMap);
 		}
-		DocumentFile file = (DocumentFile)map.get("docFile");
-		file.setDocumentNo(doc.getDocNo());
-		int fileResult =  sqlSession.insert("approvalMapper.insertDocumentFile",file);
-		return fileResult;
+		DocumentFile file = (DocumentFile)dataMap.get("docFile");
+		
+		if(file.getFileName() != null || "".equals(file.getFileName())) {
+			file.setDocumentNo(dataMap.getInt("documentNo"));
+			sqlSession.insert("approvalMapper.insertDocumentFile",file);			
+		}
+		return dataMap.getInt("documentNo");
 	}
 
 }

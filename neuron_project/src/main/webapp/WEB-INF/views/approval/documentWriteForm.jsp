@@ -49,6 +49,22 @@
     
     function fnSubmit(){
     	$("input[name=docContents]").attr('value',$("#test").html());
+    	var empIdList = [];
+    	$("input[name='empId1']").each(function(){
+    		empIdList.push({"empId" : $(this).val()});
+    	});
+    	$("input[name='empId2']").each(function(){
+    		empIdList.push({"empId" : $(this).val()});
+    	});
+    	// JSON 배열로 리스트 담기
+    	$("input[name='empIdList']").val(JSON.stringify(empIdList));
+
+    	// 합의자 존재여부 체크 합의자가 존재하면 Y 존재하지 않으면 N 
+    	if($("input[name='empId1']").length == 0){
+    		$("#apprCheck").val("N");
+    	}else{
+	    	$("#apprCheck").val("Y");		
+    	}
     	$('#doc_reg').submit();
     }
     
@@ -59,22 +75,33 @@
     
     // 결재선 추가 결과 받는 함수
      window.fn_apprEmpInfo = function(apprEmpInfo){
-    	alert("자식창닫힘");
-    	console.log(apprEmpInfo);
+    	$("#approvalGubun tr").not(".default").each(function(i,v){
+    		$(this).remove();
+    	});
     	
+	   	 for(var key in apprEmpInfo){
+	   		var oneEmp = apprEmpInfo[key];
+	   		
+	   		if(oneEmp.split(":")[4]=="합의"){
+	   			var html = "<tr>";
+	   			html += "<td><b>합의자</b><input name='empId1' type='hidden' value=" + oneEmp + " /></td>";
+	   			html += "<td><input name='emp_name1' type='text' value=" + oneEmp.split(":")[2] + " /></td>";
+	   			html += "<td><input name='emp_job1' type='text' value=" + oneEmp.split(":")[1] + " /></td>";
+	   			html += "<td><input name='emp_dept1' type='text' value=" + oneEmp.split(":")[3] + " /></td>";
+				html += "</tr>";
+				$("#approvalGubun").append(html);
+	   		}
+	   	}
 	   	for(var key in apprEmpInfo){
 	   		var oneEmp = apprEmpInfo[key];
-	   		console.log(oneEmp.split(":")[4]);
-	   		if(oneEmp.split(":")[4]=="합의"){
-	   			$("#doc_reg").append("<input type='text' name='emp_id_1' value='"+oneEmp+"'>");
-	   			$("#emp_name1").val(oneEmp.split(":")[2]);
-	   			$("#emp_job1").val(oneEmp.split(":")[1]);
-	   			$("#emp_dept1").val(oneEmp.split(":")[3]);
-	   		}else{
-	   			$("#doc_reg").append("<input type='hidden' name='emp_id_2' value='"+oneEmp+"'>");
-	   			$("#emp_name2").val(oneEmp.split(":")[2]);
-	   			$("#emp_job2").val(oneEmp.split(":")[1]);
-	   			$("#emp_dept2").val(oneEmp.split(":")[3]);
+	   		if(oneEmp.split(":")[4] != "합의"){
+	   			var html = "<tr>";
+	   			html += "<td><b>결재자</b><input name='empId2' type='hidden' value=" + oneEmp + " /></td>";
+	   			html += "<td><input name='emp_name2' type='text' value=" + oneEmp.split(":")[2] + " /></td>";
+	   			html += "<td><input name='emp_job2' type='text' value=" + oneEmp.split(":")[1] + " /></td>";
+	   			html += "<td><input name='emp_dept2' type='text' value=" + oneEmp.split(":")[3] + " /></td>";
+				html += "</tr>";
+				$("#approvalGubun").append(html);
 	   		}
 	   	}
     	
@@ -138,6 +165,8 @@
 					<div class="card">
 						<form id="doc_reg" action="documentRegister.do" method="post" enctype="multipart/form-data">
 							<input type="hidden" name="docContents" />
+							<input type="hidden" name="empIdList" />
+							<input type="hidden" id="apprCheck" name="apprCheck"/>
 							<table class="table">
 								<tr>
 									<td width="100">
@@ -147,12 +176,12 @@
 										<select id="docGu" name="docGubun">
 											<option>선택하세요.</option>
 											<c:forEach items="${code }" var="item">
-												<option value="${item.codeId }">${item.codeName }</option>
+												<option value="${item.codeName }">${item.codeName }</option>
 											</c:forEach>
 										</select>
 										<div id="contentArea" style="display: none;">
 											<c:forEach items="${code }" var="item">
-												<div id="${item.codeId }">${item.codeContents }</div>
+												<div id="${item.codeName }">${item.codeContents }</div>
 												<c:if test="${item.codeId eq 'A' }">
 												</c:if>
 											</c:forEach>
@@ -168,8 +197,8 @@
 									</td>
 								</tr>
 							</table>
-							<table class="table">
-								<tr>
+							<table id="approvalGubun" class="table">
+								<tr class="default">
 									<td>
 										<button type="button" id="approvalBtn" onclick="btn_approval();"
 											class="btn btn-outline btn-primary pull-left">
@@ -177,7 +206,7 @@
 										</button>
 									</td>
 								</tr>
-								<tr>
+								<tr class="default">
 									<th>구분</th>
 									<th>이름</th>
 									<th>직급</th>

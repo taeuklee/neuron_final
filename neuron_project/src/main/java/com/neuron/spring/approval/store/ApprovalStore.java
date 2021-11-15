@@ -11,6 +11,7 @@ import com.neuron.spring.approval.domain.PageInfo;
 import com.neuron.spring.employee.domain.Dept;
 import com.neuron.spring.employee.domain.Employee;
 import com.neuron.spring.employee.domain.Team;
+import com.neuron.spring.util.DataMap;
 
 public interface ApprovalStore {
 	public int selectListCount(int empNo);
@@ -29,14 +30,13 @@ public interface ApprovalStore {
 	
 //	public int insertDocument(Map<String,Object> param);
 	
-	public int insertDocument(Document doc);
-	public int insertDocument(Map map, List<Approval> aList);
+	public int insertDocument(DataMap dataMap) throws Exception;
 	
 	public int insertDocumentFile(DocumentFile file);
 	
 	public int issertApproval(Approval appr);
 	
-	public List<Approval> selectApproval(int docNo);
+	public List<DataMap> selectApproval(DataMap dataMap);
 	
-	public Document selectDocumentOne(int docNo);
+	public Document selectDocumentOne(DataMap dataMap);
 }

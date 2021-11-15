@@ -73,52 +73,73 @@
   	
   	<!-- 내가 작성한 리스트 -->
   	<select id="selectAllList" parameterType="map" resultMap="DocResultMap">
-  		select * 
-  		from document 
+  		select a.* 
+  		from document a
   		<where>
-  			and DOCUMENT_WRITER_NO = #{empNo, jdbcType=BIGINT }
-  		</where>
-  		order by DOCUMENT_NO DESC
+  			<if test="gubun == 'myWrite'">
+	 	 		and a.DOCUMENT_WRITER_NO = #{empNo}  		
+  			</if>
+  			<if test="gubun == 'wait'">
+  				and document_no in ( select document_no
+								from approval 
+								where emp_no = #{empNo})
+  			</if>
+  		</where> 
+  		order by a.DOCUMENT_NO DESC
   	</select>
   	
 	<!--   	전체 리스트 갯수 -->
   	<select id="selectListCount" parameterType="map" resultType="_int">
   		select count(*) 
-  		from document 
+  		from document
   		<where>
-  			<if test='#{gubun}.equals("myWrite")'>
-	 	 		and DOCUMENT_WRITER_NO = #{docWriterNo}  		
+  			<if test="gubun == 'myWrite'">
+	 	 		and DOCUMENT_WRITER_NO = #{empNo}  		
+  			</if>
+  			<if test="gubun == 'wait'">
+  			and document_no in ( select document_no
+								from approval 
+								where emp_no = #{empNo}
+								and approval_status = '대기')
   			</if>
   		</where> 
   	</select>
   	
   	<!-- 결재문 등록 -->
-  	<insert id="insertDocument" parameterType="Document">
+  	<insert id="insertDocument" parameterType="com.neuron.spring.util.DataMap">
   		INSERT INTO DOCUMENT 
   		VALUES
-  		(SEQ_DOCUMENT.NEXTVAL,#{docWriterNo,jdbcType=BIGINT },#{docKind,jdbcType=VARCHAR},#{docContents,jdbcType=CLOB},'결재대기',null,SYSDATE,SYSDATE,NULL,NULL)
+  		(SEQ_DOCUMENT.NEXTVAL,#{documentWriterNo,jdbcType=BIGINT },#{docGubun,jdbcType=VARCHAR},#{docContents,jdbcType=CLOB},
+  		case #{apprCheck, jdbcType=VARCHAR } when 'Y' then '합의대기' else '결재대기' end
+  		,null,SYSDATE,SYSDATE,NULL,NULL)
 	
-	<selectKey keyProperty="docNo" resultType="int" order="AFTER">
+	<selectKey keyProperty="documentNo" resultType="int" order="AFTER">
 		SELECT MAX(DOCUMENT_NO) FROM DOCUMENT
 	</selectKey>
 	</insert>
 	
-	<insert id="insertDocumentFile">
+	<insert id="insertDocumentFile" parameterType="DocumentFile">
 		INSERT INTO DOC_FILE 
-  		VALUES(SEQ_DOC_FILE.NEXTVAL,1,#{documentNo},#{fileName},#{fileRename},#{fileSize},#{filePath},'문서')
+  		VALUES(SEQ_DOC_FILE.NEXTVAL,1,#{documentNo},#{fileName},#{fileRename},#{fileSize},'문서')
 	</insert>
 	
-	<insert id="insertAppr">
+	<insert id="insertAppr" parameterType="com.neuron.spring.util.DataMap">
 		INSERT INTO approval 
-  		VALUES(SEQ_APPR.NEXTVAL,#{documentNo}, #{approvalEmpNo},#{approvalType},'대기',NULL,SYSDATE,NULL,NULL)
+  		VALUES(SEQ_APPR.NEXTVAL,#{documentNo,jdbcType=BIGINT }, #{approvalEmpNo, jdbcType=BIGINT },#{approvalType, jdbcType=VARCHAR },'대기',NULL,SYSDATE,NULL,NULL)
 	</insert>
 	
-	<select id="selectApproval" parameterType="_int" resultMap="ApprResultMap">
-		SELECT * FROM approval WHERE DOCUMENT_NO = #{documentNo } ORDER BY 1
+	<select id="selectApproval" parameterType="com.neuron.spring.util.DataMap" resultType="com.neuron.spring.util.DataMap">
+		SELECT a.*,b.emp_name,b.emp_job,c.team_name
+		FROM approval a
+        left join employee b on a.emp_no=b.emp_no
+        left join team c on b.team_code = c.team_code
+		WHERE a.DOCUMENT_NO =  #{documentNo,jdbcType=BIGINT }
 	</select>
   	
-  	<select id="selectDocOne" parameterType="_int" resultMap="DocResultMap">
-  		SELECT * FROM DOCUMENT WHERE DOCUMENT_NO = #{documentNo }
+  	<select id="selectDocOne" parameterType="com.neuron.spring.util.DataMap" resultMap="DocResultMap">
+  		SELECT *
+  		FROM DOCUMENT 
+  		WHERE DOCUMENT_NO = #{documentNo,jdbcType=BIGINT }
   	</select>
   	
   </mapper>
