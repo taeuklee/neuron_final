@@ -14,34 +14,55 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.neuron.spring.notice.domain.Notice;
+import com.neuron.spring.notice.domain.PageInfo;
+import com.neuron.spring.notice.domain.Pagination;
 import com.neuron.spring.notice.service.NoticeService;
-
-
 
 @Controller
 public class NoticeController {
 	
 	@Autowired
 	private NoticeService service;
-	
-	// 리스트 띄우기
+
+	// 페이징 처리
+	// 모델+뷰 => 그냥 모델보다 기능이 많아요
 	@RequestMapping(value="noticeListView.do", method=RequestMethod.GET)
-	public String ShowNoticeList(Model model) {
-		try {
-			List<Notice> nList = service.printAll();
-			if(!nList.isEmpty()) {
-				model.addAttribute("nList",nList);
-			}else {
-				model.addAttribute("nList",null);
-			}
-			return "notice/noticeListView";
-		}catch(Exception e) {
-			model.addAttribute("msg", e.toString());
-			return "common/errorPage";
+	public ModelAndView noticeListView(ModelAndView mv, @RequestParam(value="page", required=false) Integer page) {
+		int currentPage = (page != null) ? page : 1; // 첫 페이지 1로 지정
+		int totalCount = service.getListCount();
+		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount); // 페이지 얼마나 출력할지 몇개 출력할지를 페이지네이션에서 정해서 가져옴
+		List<Notice> nList = service.printAllNotice(pi);
+		if(!nList.isEmpty()) {
+			mv.addObject("nList", nList);
+			mv.addObject("pi", pi);
+			mv.setViewName("notice/noticeListView");
+		}else {
+			mv.addObject("msg", "게시글 전체조회 실패");
+			mv.setViewName("common/errorPage");
 		}
+		return mv;
 	}
+	
+	
+//	// 리스트 띄우기
+//	@RequestMapping(value="noticeListView.do", method=RequestMethod.GET)
+//	public String ShowNoticeList(Model model) {
+//		try {
+//			List<Notice> nList = service.printAll();
+//			if(!nList.isEmpty()) {
+//				model.addAttribute("nList",nList);
+//			}else {
+//				model.addAttribute("nList",null);
+//			}
+//			return "notice/noticeListView";
+//		}catch(Exception e) {
+//			model.addAttribute("msg", e.toString());
+//			return "common/errorPage";
+//		}
+//	}
 	
 	
 	// 입력창 띄우기
@@ -69,7 +90,7 @@ public class NoticeController {
 		}
 		int result = service.registerNotice(notice);
 		if(result > 0) {
-			return "redirect:home.kh";
+			return "redirect:noticeListView.do";
 		}else {
 			model.addAttribute("msg", "공지사항 등록 실패");
 			return "common/errorPage";
@@ -81,7 +102,7 @@ public class NoticeController {
 		// 파일 저장 경로 설정
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		// 저장 폴더 선택
-		String savePath = root + "\\nuploadFiles";
+		String savePath = root + "\\noUploadFiles";
 		// 없으면 생성
 		File folder = new File(savePath);
 		if(!folder.exists()) {
@@ -102,5 +123,97 @@ public class NoticeController {
 		
 		return filePath;
 	}
+	
+	// 공지사항 상세보기
+	@RequestMapping(value="noticeDetailView.do", method=RequestMethod.GET)
+	public String noticeDetail(@RequestParam("noticeNo") int nId, Model model) {
+		try {
+			Notice notice = service.printOneNotice(nId);
+			if(notice != null) {
+				model.addAttribute("notice", notice);
+				return "notice/noticeDetailView";
+			}else {
+				model.addAttribute("msg", "공지사항 상세조회 실패");
+				return "common/errorPage";
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", "공지사항 상세조회 실패");
+			return "common/errorPage";		
+		}
+
+	}
+	
+	// 수정 창 띄우기
+	@RequestMapping(value="noticeModifyView.do", method=RequestMethod.GET)
+	public String noticeModify(@RequestParam("noticeNo") int nId, Model model) {
+		Notice notice = service.printOneNotice(nId);
+		model.addAttribute("notice", notice);
+		return "notice/noticeModifyView";
+	}
+	
+
+	// 수정하기
+	@RequestMapping(value="noticeModifyView.do", method=RequestMethod.POST)
+	public String noticeUpdate(
+			@ModelAttribute Notice notice
+			, Model model
+			, HttpServletRequest request
+			, @RequestParam("reloadFile") MultipartFile reloadFile) {
+		// 수정은 업로드된 파일이 있을 경우
+		if(reloadFile != null && !reloadFile.isEmpty()) {
+			if(notice.getNoticeFilePath() != null) {
+				// 삭제하고
+				deleteFile(notice.getNoticeFilePath(), request);
+			}
+			// 다시 업로드
+			String savePath = saveFile(reloadFile, request);
+			if(savePath != null) {
+				notice.setNoticeFilePath(reloadFile.getOriginalFilename());
+			}
+		}
+		
+		// DB 데이터 수정
+		int result = service.modifyNotice(notice);
+		if(result > 0) {
+			return "redirect:noticeDetailView.do?noticeNo="+notice.getNoticeNo();
+		}else {
+			model.addAttribute("msg", "공지사항 수정 실패");
+			return "common/errorPage";
+			}
+		}
+
+		
+		
+	// 기존파일 삭제
+	public void deleteFile(String fileName, HttpServletRequest request) {
+		// 파일 저장 경로 설정
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		// 저장 폴더 선택
+		String deletePath = root + "\\noUploadFiles";
+		File deleteFile = new File(deletePath+"\\"+fileName); 
+			if(deleteFile.exists()) {
+				deleteFile.delete(); // 파일삭제
+			}
+		
+	}
+	
+	// 공지사항 삭제
+	@RequestMapping(value="noticeDelete.do", method=RequestMethod.GET) 
+	public String noticeDelete(@RequestParam("noticeNo") int nId, Model model, HttpServletRequest request) {
+		Notice notice = service.printOneNotice(nId);
+		int result = service.removeNotice(nId);
+		if(result > 0) {
+			if(notice.getNoticeFilePath() != null) {
+				deleteFile(notice.getNoticeFilePath(), request);
+			}
+			return "redirect:noticeListView.do";
+		}else {
+			model.addAttribute("msg", "공지사항 삭제 실패");
+			return "common/errorPage";
+		}
+	}
+	
 
 }

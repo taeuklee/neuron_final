@@ -38,21 +38,20 @@
  		<result property="deptName" column="DEPT_NAME"/>
  	</resultMap>
  	
+ 	<!-- 로그인 -->
  	<select id="selectEmp" resultMap="employeeResultMap">
  		SELECT * FROM EMPLOYEE WHERE EMP_ID = #{empId } and EMP_PWD = #{empPwd}
  	 </select>
  	 
+ 	 <!-- 사원 리스트 출력 + 페이징처리-->
  	 <select id="selectListCount" resultType="_int">
   	SELECT COUNT(*) FROM EMPLOYEE
   		</select>
  	   <select id="selectAllList" resultMap="employeeResultMap">
   		SELECT * FROM EMPLOYEE ORDER BY EMP_NO ASC
   		</select>
- 	 
-<!-- 	 <select id="selectAllEmp" resultMap="employeeResultMap">
-   		SELECT * FROM EMPLOYEE ORDER BY EMP_NO ASC
-   	</select>  --> 
    	
+   	<!-- 사원 검색 -->
    	 <select id="selectSearchAll" resultMap="employeeResultMap">
       SELECT * FROM EMPLOYEE
       <if test="searchCondition.toString() == 'name'">
@@ -70,17 +69,18 @@
       ORDER BY EMP_NO ASC
    </select>
    	
-   	<select id="selectOneEmp" parameterType="_int"  resultMap="employeeResultMap">
-  	SELECT * FROM EMPLOYEE WHERE EMP_NO = #{eNo}
+   	<!-- 사원 디테일 보기 -->
+   	<select id="selectOneEmp" parameterType="_int"  resultMap="employeeResultMap">   	
+  	 SELECT * FROM EMPLOYEE WHERE EMP_NO = #{eNo}
   	</select>
  	 
  	 <select id="selectAllTeam" resultMap="teamResultMap">
  	 	SELECT * FROM TEAM
  	 </select>
  	 
- 	 <select id="selectAllDept" resultMap="deptResultMap">
+<!-- 	 <select id="selectAllDept" resultMap="deptResultMap">
  	 	SELECT * FROM DEPT
- 	 </select>
+ 	 </select>  -->
  	 
  	 <insert id="insertEmp" parameterType="Employee">
  		INSERT INTO EMPLOYEE VALUES (SEQ_EMPNUM.NEXTVAL, #{deptCode}, #{teamCode}, #{empId}, #{empPwd}, 

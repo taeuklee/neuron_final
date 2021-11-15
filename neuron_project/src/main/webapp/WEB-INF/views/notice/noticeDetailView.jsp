@@ -85,7 +85,7 @@
 			<jsp:include page="../common/sidebar.jsp"></jsp:include>
 			<!-- partial -->
 			<div class="main-panel">
-				<div class="content-wrapper" id="contents"></div>
+				<div class="content-wrapper" id="contents">
 				<div class="col-12 grid-margin stretch-card">
 					<div class="card">
 						<div class="card-body">
@@ -95,23 +95,51 @@
 							<br>
 							<br>
 							<form class="forms-sample">
-								<h4 class="card-title-little">창립기념일 행사 안내</h4>
+								<h4 class="card-title-little"> 제목 : ${notice.noticeTitle }</h4>
 								<div class="template-demo">
 									<h1 class="title-line"></h1>
 								</div>
 								<div class="col-md-12 grid-margin stretch-card">
 									<div class="card">
 										<div class="card-body">
-											<span> 주식회사 뉴런의 창립 기념일 행사가 있습니다 <br> <br>
-												============================================ <br> <br>
-												일시 : 2021년 11월 24일 14:00 <br> <br> 내용 : 창립 기념인사 및
-												간단한 다과회 <span>
+											${notice.noticeWriter }
 										</div>
 									</div>
 								</div>
-								<div class="button-notice">
-									<button type="submit" class="btn btn-primary mr-2 modify">수정하기</button>
+								<div class="col-md-12 grid-margin stretch-card">
+									<div class="card">
+										<div class="card-body">
+											${notice.noticeFilePath}
+										</div>
+									</div>
 								</div>
+								<div class="col-md-12 grid-margin stretch-card">
+									<div class="card">
+										<div class="card-body">
+											${notice.noticeCategory}
+										</div>
+									</div>
+								</div>
+								<div class="col-md-12 grid-margin stretch-card">
+									<div class="card">
+										<div class="card-body">
+											${notice.noticeContents }
+										</div>
+									</div>
+								</div>
+								<c:if test="${loginEmployee.empId eq 'admin' }">
+								<div class="button-notice">
+									<c:url var="nModify" value="noticeModifyView.do">
+										<c:param name="noticeNo" value="${notice.noticeNo }"></c:param>
+									</c:url>
+									<a href="${nModify }" class="btn btn-primary mr-2 modify">수정하기</a>
+									
+									<c:url var="nDelete" value="noticeDelete.do">
+										<c:param name="noticeNo" value="${notice.noticeNo }"></c:param>
+									</c:url>
+									<a href="${nDelete }" class="btn btn-primary mr-2 modify">삭제하기</a>
+								</div>
+								</c:if>
 							</form>
 						</div>
 					</div>

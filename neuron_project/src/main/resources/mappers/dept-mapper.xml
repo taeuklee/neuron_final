@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="deptMapper">
+   <resultMap type="Dept" id="deptResultMap">
+	<id property="deptCode" column="DEPT_CODE"/>
+  	<result property="deptName" column="DEPT_NAME"/>	
+  	</resultMap>
+  	
+ 	 <resultMap type="Team" id="teamResultMap">
+	  <id property="teamCode" column="TEAM_CODE"/>
+	  <result property="deptCode" column="DEPT_CODE"/>
+      <result property="teamName" column="TEAM_NAME"/>
+	</resultMap>
+	
+	 <select id="selectAllDept" resultMap="deptResultMap">
+ 	 	SELECT * FROM DEPT
+ 	 </select>
+ 	 
+ 	 <select id="selectAllTeam" resultMap="teamResultMap">
+ 	 	SELECT * FROM TEAM
+ 	 </select>
+  </mapper>

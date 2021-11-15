@@ -90,37 +90,29 @@
 					<div class="card">
 						<div class="card-body">
 							<br>
-							<h3 class="card-title">공지사항 등록</h3>
+							<h3 class="card-title">공지사항 수정</h3>
 							<br>
 							<br>
 							<br>
-							<form action="noticeRegister.do" class="forms-sample" method="post" enctype="multipart/form-data">
+							<form action="noticeModifyView.do" class="forms-sample" method="post" enctype="multipart/form-data">
 								<div class="form-group">
 									<label for="exampleInputName1"><b>제목</b></label> 
-									<input type="text" class="form-control" id="exampleInputName1" name="noticeTitle" placeholder="제목">
+									<input type="text" class="form-control" id="exampleInputName1" name="noticeTitle" value="${notice.noticeTitle }">
 								</div>
 								<div class="form-group">
 									<label for="exampleInputName1"><b>작성자</b></label> 
-									<input type="text"  class="form-control" id="exampleInputName1" name="noticeWriter" value="${loginEmployee.empId}">
+									<input type="text" class="form-control" id="exampleInputName1" name="noticeTitle" value="${loginEmployee.empId}" readonly>
 								</div>
 								<div class="form-group">
 									<label for="exampleInputName1"><b>첨부파일</b></label> 
-									<input type="file" class="form-control" id="exampleInputName1" name="uploadFile">
+									<input type="file" class="form-control" id="exampleInputName1" name="reloadFile">${notice.noticeFilePath}
 								</div>
 								<div class="form-group">
-			                        <label for="exampleInputName1"><b>긴급 공지 설정</b></label> <br>
-			                      <label class="toggle-switch toggle-switch-warning">
-			                        <input type="checkbox" name="noticeCategory" checked>
-			                        <span class="toggle-slider round"></span>
-			                      </label>                      
-			                    </div>
-								<div class="form-group">
-									<label for="exampleTextarea1"><b></b>내용</b></label>
-									<textarea class="form-control" cols="70" rows="50" name="noticeContents" id="exampleTextarea1" rows="4"></textarea>
+									<label for="exampleTextarea1"><b>내용</b></label>
+									<textarea class="form-control" cols="70" rows="50" name="noticeCotents" id="exampleTextarea1" rows="4">${notice.noticeContents }</textarea>
 								</div>
 								<div class="button-notice">
-									<button type="submit" class="btn btn-primary mr-2">등록</button>
-									<button type="reset" class="btn btn-light" onclick="location.href='/noticeListView.do'">취소</button>
+									<button type="submit" class="btn btn-primary mr-2">수정</button>
 								</div>
 							</form>
 						</div>
@@ -135,6 +127,7 @@
 		<!-- page-body-wrapper ends -->
 	</div>
 	<!-- container-scroller -->
+	</div>
 
 </body>
 

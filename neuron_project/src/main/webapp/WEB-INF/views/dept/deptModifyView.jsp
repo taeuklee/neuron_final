@@ -12,7 +12,7 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Neuron : 공지사항</title>
+<title>Neuron : 부서 조회</title>
 <!-- base:css -->
 <link rel="stylesheet"
 	href="vendors/mdi/css/materialdesignicons.min.css">
@@ -86,48 +86,53 @@
 			<!-- partial -->
 			<div class="main-panel">
 				<div class="content-wrapper" id="contents">
-				<div class="col-12 grid-margin stretch-card">
-					<div class="card">
-						<div class="card-body">
-							<br>
-							<h3 class="card-title">공지사항 수정</h3>
-							<br>
-							<br>
-							<br>
-							<form action="noticeRegister.do" class="forms-sample" method="post" enctype="multipart/form-data">
-								<div class="form-group">
-									<label for="exampleInputName1"><b>제목</b></label> 
-									<input type="text" class="form-control" id="exampleInputName1" name="noticeTitle" placeholder="제목">
+					<div class="col-lg-12 grid-margin stretch-card">
+						<div class="card">
+							<div class="card-body">
+								<br>
+								<h3 class="card-title">부서 수정</h3>
+								<br>
+								<br>
+								<br>
+								<div class="col-md-6 grid-margin stretch-card"
+									style="margin-left: 25%;">
+									<div class="card">
+										<div class="card-body">
+											<div class="form-group">
+												<div class="form-group">
+													<label>부서코드</label> <input type="text" class="form-control"
+														placeholder="부서코드" aria-label="Username">
+												</div>
+												<label>부서명</label> <input type="text"
+													class="form-control form-control-lg" placeholder="부서명"
+													aria-label="Username">
+											</div>
+											<div class="form-group">
+												<label>팀 코드</label> <input type="text" class="form-control"
+													placeholder="팀 코드" aria-label="Username">
+											</div>
+											<div class="form-group">
+												<label>팀명</label> <input type="text" class="form-control"
+													placeholder="팀명" aria-label="Username">
+											</div>
+											<div class="col-sm-9" style="margin-left: 85%;">
+												<input type="button" class="btn btn-primary mr-2" value="수정" />
+											</div>
+										</div>
+									</div>
 								</div>
-								<div class="form-group">
-									<label for="exampleInputName1"><b>작성자</b></label> 
-									<input type="text" class="form-control" id="exampleInputName1" name="noticeTitle" value="${loginEmployee.empId}" readonly>
-								</div>
-								<div class="form-group">
-									<label for="exampleInputName1"><b>첨부파일</b></label> 
-									<input type="file" class="form-control" id="exampleInputName1" name="uploadFile"">
-								</div>
-								<div class="form-group">
-									<label for="exampleTextarea1"><b></b>내용</b></label>
-									<textarea class="form-control" cols="70" rows="50" name="noticeCotents" id="exampleTextarea1" rows="4"></textarea>
-								</div>
-								<div class="button-notice">
-									<button type="submit" class="btn btn-primary mr-2">수정</button>
-								</div>
-							</form>
+							</div>
 						</div>
 					</div>
+					<!-- partial:partials/_footer.html -->
+					<footer class="footer" id="footer"></footer>
+					<!-- partial -->
 				</div>
-				<!-- partial:partials/_footer.html -->
-				<footer class="footer" id="footer"></footer>
-				<!-- partial -->
+				<!-- main-panel ends -->
 			</div>
-			<!-- main-panel ends -->
+			<!-- page-body-wrapper ends -->
 		</div>
-		<!-- page-body-wrapper ends -->
-	</div>
-	<!-- container-scroller -->
-
+		<!-- container-scroller -->
 </body>
 
 </html>

@@ -13,14 +13,16 @@
 		<typeAlias type="com.neuron.spring.approval.domain.Approval" alias="Approval"/>
 		<typeAlias type="com.neuron.spring.approval.domain.CodeInfo" alias="CodeInfo"/>
 		<typeAlias type="com.neuron.spring.employee.domain.Employee" alias="Employee"/>
-		<typeAlias type="com.neuron.spring.employee.domain.Dept" alias="Dept"/>
-		<typeAlias type="com.neuron.spring.employee.domain.Team" alias="Team"/>
+		<!--  <typeAlias type="com.neuron.spring.employee.domain.Dept" alias="Dept"/> -->
+		<!-- <typeAlias type="com.neuron.spring.employee.domain.Team" alias="Team"/> -->
 		<typeAlias type="com.neuron.spring.project.domain.Project" alias="Project"/>
 		<typeAlias type="com.neuron.spring.project.domain.Employee" alias="Employee2"/>
 		<typeAlias type="com.neuron.spring.empCalendar.domain.EmpCalendar" alias="EmpCalendar"/>
 		<typeAlias type="com.neuron.spring.attend.domain.Attendance" alias="Attendance"/>
 		<typeAlias type="com.neuron.spring.notice.domain.Notice" alias="Notice"/>
 		<typeAlias type="com.neuron.spring.project.domain.EmpProject" alias="EmpProject"/>
+		<typeAlias type="com.neuron.spring.dept.domain.Dept" alias="Dept"/>
+		<typeAlias type="com.neuron.spring.dept.domain.Team" alias="Team"/>
 	</typeAliases>
 	
 	<mappers>
@@ -30,6 +32,7 @@
 		<mapper resource="mappers/empCalendar-mapper.xml" />	
 		<mapper resource="mappers/attendance-mapper.xml" />
 		<mapper resource="mappers/notice-mapper.xml" />
+		<mapper resource="mappers/dept-mapper.xml" />
 	</mappers>
 </configuration>
 <!-- 		<typeAlias type="com.neuron.spring.approval.domain.DocumentFile" alias="DocumentFile"/> -->

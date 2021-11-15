@@ -12,7 +12,7 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Neuron : 공지사항</title>
+<title>Neuron : 프로젝트 조회</title>
 <!-- base:css -->
 <link rel="stylesheet"
 	href="vendors/mdi/css/materialdesignicons.min.css">
@@ -36,11 +36,11 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
-	$(document).ready(function() {
-		$("#headerNav").load("partials/_navbar.html");
-		$("#sidebar").load("partials/_sidebar.html");
-	});
-</script>
+    $(document).ready(function(){
+      $("#headerNav").load("partials/_navbar.html");
+      $("#sidebar").load("partials/_sidebar.html");
+    });
+  </script>
 <style>
 .answer {
 	display: none;
@@ -86,43 +86,34 @@
 			<!-- partial -->
 			<div class="main-panel">
 				<div class="content-wrapper" id="contents">
-				<div class="col-12 grid-margin stretch-card">
+				<div class="col-lg-12 grid-margin stretch-card">
 					<div class="card">
 						<div class="card-body">
 							<br>
-							<h3 class="card-title">공지사항 등록</h3>
+							<h3 class="card-title">프로젝트 리스트</h3>
 							<br>
 							<br>
 							<br>
-							<form action="noticeRegister.do" class="forms-sample" method="post" enctype="multipart/form-data">
-								<div class="form-group">
-									<label for="exampleInputName1"><b>제목</b></label> 
-									<input type="text" class="form-control" id="exampleInputName1" name="noticeTitle" placeholder="제목">
-								</div>
-								<div class="form-group">
-									<label for="exampleInputName1"><b>작성자</b></label> 
-									<input type="text"  class="form-control" id="exampleInputName1" name="noticeWriter" value="${loginEmployee.empId}">
-								</div>
-								<div class="form-group">
-									<label for="exampleInputName1"><b>첨부파일</b></label> 
-									<input type="file" class="form-control" id="exampleInputName1" name="uploadFile">
-								</div>
-								<div class="form-group">
-			                        <label for="exampleInputName1"><b>긴급 공지 설정</b></label> <br>
-			                      <label class="toggle-switch toggle-switch-warning">
-			                        <input type="checkbox" name="noticeCategory" checked>
-			                        <span class="toggle-slider round"></span>
-			                      </label>                      
-			                    </div>
-								<div class="form-group">
-									<label for="exampleTextarea1"><b></b>내용</b></label>
-									<textarea class="form-control" cols="70" rows="50" name="noticeContents" id="exampleTextarea1" rows="4"></textarea>
-								</div>
-								<div class="button-notice">
-									<button type="submit" class="btn btn-primary mr-2">등록</button>
-									<button type="reset" class="btn btn-light" onclick="location.href='/noticeListView.do'">취소</button>
-								</div>
-							</form>
+							<div class="table-responsive pt-3">
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th>No</th>
+											<th>프로젝트명</th>
+											<th>책임자</th>
+										</tr>
+									</thead>
+								        <!--  <c:forEach items="${ nList }" var="notice"> -->
+								            <tr align="center">
+								               <td>1</td>
+								               <td>
+								                  <a href="#">뉴런</a>
+								               </td>
+								               <td>박보검</td>
+								            </tr>
+								        <!-- </c:forEach> -->
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>

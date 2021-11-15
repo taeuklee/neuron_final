@@ -179,22 +179,6 @@ public class EmployeeController {
 	}
 	
 	
-//	// 사원 리스트 보기
-//	@RequestMapping(value="empListView.do", method=RequestMethod.GET)
-//	public String ShowEmpList(Model model) {
-//		try {
-//			List<Employee> eList = service.printAllEmp();
-//			if(!eList.isEmpty()) {
-//				model.addAttribute("eList",eList);
-//			}else {
-//				model.addAttribute("eList",null);
-//			}
-//			return "employee/empListView";
-//		}catch(Exception e) {
-//			model.addAttribute("msg", "회원 조회 실패!");
-//			return "common/errorPage";
-//		}
-//	}
 	
 	// 사원 정보 보기
 	@RequestMapping(value="empAdminModifyView.do", method=RequestMethod.GET)
@@ -247,6 +231,12 @@ public class EmployeeController {
 			return "common/errorPage";
 		}
 
+	}
+	
+	// 조직원 보기 - 전체 사원 리스트 
+	@RequestMapping(value="orEmpListView.do", method=RequestMethod.GET)
+	public String orEmpListView() {
+		return "employee/orEmpListView";
 	}
 	
 	
