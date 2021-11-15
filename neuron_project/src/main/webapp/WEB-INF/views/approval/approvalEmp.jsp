@@ -95,20 +95,16 @@ body {
 
 	function fn_submit() {
 		//1. 결재자 체크확인
-		console.log(count);
 		if(count<=0){
 			alert("결재자가 없습니다.")
 			count = 0;
 			return;
 		}
-
 		//2. 체크된 선택자 배열 넘기기
 		var apprEmpInfo = new Array();
 		$('input[name=emp_id]').each(function(index,item){
 			apprEmpInfo[index] = $(this).val();
-		}) 
-		
-		alert(apprEmpInfo);
+		})
 		//3. 부모창 호출
 		opener.fn_apprEmpInfo(apprEmpInfo);
 		window.close();

@@ -96,12 +96,13 @@
 								<li class="nav-item"><a class="nav-link"
 									onclick="location:href='/approval/myDocumentListView.do';">결재요청함</a></li>
 								<li class="nav-item"><a class="nav-link"
-									onclick="location:href='/approval/list1.do';">임시저장함</a></li>
+									href="#">임시저장함</a></li>
 							</ul></li>
 						<li class="nav-item" align="center"><i class="menu-arrow"></i><span
 							style="font-size: large; color: #F9D955;">결재</span>
 							<ul style="list-style: none">
-								<li class="nav-item"><a class="nav-link" href="#">결재대기함</a></li>
+								<li class="nav-item"><a class="nav-link"
+									onclick="location:href='/approval/list1.do';">결재대기함</a></li>
 								<li class="nav-item"><a class="nav-link" href="#">결재진행함</a></li>
 								<li class="nav-item"><a class="nav-link" href="#">반려문서함</a></li>
 								<li class="nav-item"><a class="nav-link" href="#">완료문서함</a></li>

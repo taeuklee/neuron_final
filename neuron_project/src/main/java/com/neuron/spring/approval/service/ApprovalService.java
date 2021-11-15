@@ -11,6 +11,7 @@ import com.neuron.spring.approval.domain.PageInfo;
 import com.neuron.spring.employee.domain.Dept;
 import com.neuron.spring.employee.domain.Employee;
 import com.neuron.spring.employee.domain.Team;
+import com.neuron.spring.util.DataMap;
 
 public interface ApprovalService {
 	/**
@@ -40,15 +41,13 @@ public interface ApprovalService {
 	
 //	public int registerDocument(Map<String,Object> param);
 	
-	public int registerDocument(Document doc);
-	
-	public int registerDocument(Map map, List<Approval> aList);
+	public int registerDocument(DataMap dataMap) throws Exception;
 	
 	public int registerApprove();
 	
 	public int registerDocumentFile(DocumentFile dfile);
 	
-	public List<Approval> printApprovalList(int docNo);
+	public List<DataMap> printApprovalList(DataMap dataMap);
 	
-	public Document printDocumentOne(int docNo);
+	public Document printDocumentOne(DataMap dataMap);
 }

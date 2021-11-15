@@ -181,13 +181,13 @@
 										<!-- 페이징 처리 -->
 										<tr align="center" height="20">
 									         <td colspan="6">
-									         <c:url var="before" value="/approval/myDocumentListView.do">
+									         <c:url var="before" value="/approval/list1.do">
 									            <c:param name="page" value="${pi.currentPage - 1 }"></c:param>
 									         </c:url>
-									         <c:url var="after" value="/approval/myDocumentListView.do">
+									         <c:url var="after" value="/approval/list1.do">
 									            <c:param name="page" value="${pi.currentPage + 1 }"></c:param>         
 									         </c:url>
-									         <c:url var="pagination" value="/approval/myDocumentListView.do">
+									         <c:url var="pagination" value="/approval/list1.do">
 									            <c:param name="page" value="${p }"></c:param>
 									         </c:url>
 									            <c:if test="${pi.currentPage <=1 }">

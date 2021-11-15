@@ -75,8 +75,10 @@
 <script src="/js/dashboard.js"></script>
 
 <script>
-	function fn_appr(){
-		window.open("/transApprove.do","tranApprove","width=400, height=400");
+	function fn_appr(type){
+		$("#check").val(type);
+		alert($("#check").val());
+		window.open("/transApproveView.do","tranApprove","width=400, height=400");
 	}
 
 </script>
@@ -115,7 +117,8 @@
 						&nbsp;
 							<button class="btn btn-inverse-light btn-fw">회수</button>
 							<button class="btn btn-inverse-light btn-fw">인쇄</button>
-							<button class="btn btn-inverse-light btn-fw" onclick="fn_appr();">결재</button>
+							<button class="btn btn-inverse-light btn-fw" onclick="fn_appr('Y');">승인</button>
+							<button class="btn btn-inverse-light btn-fw" onclick="fn_appr('N');">반려</button>
 							<button class="btn btn-inverse-light btn-fw">목록</button>
 						</div>
 							
@@ -123,18 +126,25 @@
 							${docOne.docContents }
 						</div>
 						<div class="col-lg-12">
+							<form action="">
+								<input type="hidden" id="check" name="check">
+							</form>
 							<table class="table table-bordered">
 								<tr>
 									<th>순번</th>
 									<th>합의/결재자</th>
-									<th>졀재일시</th>
+									<th>결재구분</th>
+									<th>진행현황</th>
+									<th>결재일시</th>
 									<th>결재의견</th>
 								</tr>
 								<c:forEach items="${aList }" var="aOne" varStatus="status">
 								<tr>
 									<td>${status.count }</td>
-									<td>${aOne.approvalEmpNo }</td>
-									<td>${aOne.approvalEndDate }</td>
+									<td>${aOne.empName } ${aOne.empJob } (${aOne.teamName })</td>
+									<td>${aOne.approvalType }</td>
+									<td>${aOne.approvalStatus }</td>
+									<td>${aOne.approvalEnddate }</td>
 									<td>${aOne.approvalOpinion }</td>
 								</tr>
 								</c:forEach>
