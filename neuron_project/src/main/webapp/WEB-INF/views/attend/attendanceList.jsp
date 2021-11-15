@@ -140,9 +140,10 @@
 		              <article class="customers-wrapper">
 		                <!-- <div id="employee-info"> -->
 		                  <div class="box">
-		                    <img src="../../elegant/elegant/img/avatar/avatar-face-02.png" alt="증명사진" class="profile" width="200" height="200" border-radius="30%">
+<!-- 		                    <img src="../../elegant/elegant/img/avatar/avatar-face-02.png" alt="증명사진" class="profile" width="200" height="200" border-radius="30%"> -->
+						
 		                  </div>
-		                  <br><br>
+		                	<div id="time"></div> 
 		                  <div align="center" id="attend_btn">
 			                  <c:if test="${attendance.startTime eq null}"> 
 			                  	<button id="startWork">출근</button>
@@ -151,8 +152,6 @@
 			                   	<button id="finishWork">퇴근</button>
 			                  </c:if>
 		                  </div>
-		                  <div id="now"></div>
-		                  <button></button> 
 		                  <br>
 		              </article>
 		              <script>
@@ -171,36 +170,46 @@
 		            	  $("#now").text(now1);
 		              console.log(now1);
 		              })
-		              
+		              $(document).ready(function(){
+		            	  var now = new Date();
+		            	  var year = now.getFullYear();
+		            	  var month = now.getMonth()+1;
+		            	  var date = now.getDate();
+		            	  var hr = now.getHours();
+		            	  var min = now.getMinutes();
+		            	  var sec = now.getSeconds();
+		            	  var now1 = year + "/" + month + "/" + date; 
+		            	  var now2 = hr+ ":"+ min+ ":"+ sec;
+		            	  $(".box").text(now1);
+		            	  $(".top-cat-title").text(now1);
+		            	  $("#time").text(now2);
+		            	  
+		              })
 		              
 		              </script>
 		              <article class="white-block">
 		                <div class="top-cat-title">
 		                  
 		                </div>
+		                <c:forEach items="${aList }" var="Attendance">
 		                <ul class="top-cat-list">
 		                  <li>
-		                    <a href="##">
-		                      <div class="top-cat-list__title">
-		                      
+		                      <div class="listTitle">
+		                      	출근시간 : ${attendance.startTime }
 		                      </div>
-		                    </a>
 		                  </li>
 		                  <li>
-		                    <a href="##">
-		                      <div class="top-cat-list__title">
-		                      
+		                      <div class="listTitle">
+		                      	퇴근시간: ${attendance.finishTime }
 		                      </div>
-		                    </a>
 		                  </li>
 		                  <li>
-		                    <a href="##">
-		                      <div class="top-cat-list__title">
-		                      
+		                      <div class="listTitle">
+		                      	주간 누적 근무시간: ${attendance.totalWorkhour }
 		                      </div>
-		                    </a>
 		                  </li>
 		                </ul>
+		                </c:forEach>
 		              </article>
 		            </div>
 		            <div class="main-contents">
@@ -222,10 +231,10 @@
 		                  		<td colspan="7"> 조회된 정보가 없습니다. </td>
 		                  	</tr>
 		                  </c:if>
-		                  <c:forEach items="${aList }" var="Attendance">
+		                  <c:forEach items="${aList }" var="attendance">
 		                    <tr>
 		                      <td>${attendance.attendNo }</td>
-<%-- 		                      <td>${attendance.attendDate }</td> --%>
+		                      <td>${attendance.attendDate }</td>
 		                      <td>${attendance.startTime }</td>    
 		                      <td>${attendance.finishTime }</td>
 		                      <td>${attendance.division }</td>
@@ -234,38 +243,38 @@
 		                    </tr>
 		                   </c:forEach>
 		                   
-		                   <tr align="center" height="20">
-					         <td colspan="7">
-					         <c:url var="before" value="/attend/attendanceList.do">
-					            <c:param name="page" value="${pi.currentPage - 1 }"></c:param>
-					         </c:url>
-					         <c:url var="after" value="/attend/attendanceList.do">
-					            <c:param name="page" value="${pi.currentPage + 1 }"></c:param>         
-					         </c:url>
-					         <c:url var="pagination" value="/attend/attendanceList.do">
-					            <c:param name="page" value="${p }"></c:param>
-					         </c:url>
-					            <c:if test="${pi.currentPage <=1 }">
-					               [이전]
-					            </c:if>
-					            <c:if test="${pi.currentPage >1 }">
-					               <a href="${before }">[이전]</a>
-					            </c:if>
-					            <c:forEach var="p" begin="${pi.startNavi }" end="${pi.endNavi }">
-					               <c:if test="${p eq pi.currentPage }">
-					                  <font color="red" size="4">[${p }]</font>
-					               </c:if>
-					               <c:if test="${p ne pi.currentPage }">
-					                  <a href="${pagination }${p}">[${p }]</a>&nbsp;
-					               </c:if>
-					            </c:forEach>
+<!-- 		                   <tr align="center" height="20"> -->
+<!-- 					         <td colspan="7"> -->
+<%-- 					         <c:url var="before" value="/attend/attendanceList.do"> --%>
+<%-- 					            <c:param name="page" value="${pi.currentPage - 1 }"></c:param> --%>
+<%-- 					         </c:url> --%>
+<%-- 					         <c:url var="after" value="/attend/attendanceList.do"> --%>
+<%-- 					            <c:param name="page" value="${pi.currentPage + 1 }"></c:param>          --%>
+<%-- 					         </c:url> --%>
+<%-- 					         <c:url var="pagination" value="/attend/attendanceList.do"> --%>
+<%-- 					            <c:param name="page" value="${p }"></c:param> --%>
+<%-- 					         </c:url> --%>
+<%-- 					            <c:if test="${pi.currentPage <= 1 }"> --%>
+<!-- 					               [이전] -->
+<%-- 					            </c:if> --%>
+<%-- 					            <c:if test="${pi.currentPage > 1 }"> --%>
+<%-- 					               <a href="${before }">[이전]</a> --%>
+<%-- 					            </c:if> --%>
+<%-- 					            <c:forEach var="p" begin="${pi.startNavi }" end="${pi.endNavi }"> --%>
+<%-- 					               <c:if test="${p eq pi.currentPage }"> --%>
+<%-- 					                  <font color="red" size="4">[${p }]</font> --%>
+<%-- 					               </c:if> --%>
+<%-- 					               <c:if test="${p ne pi.currentPage }"> --%>
+<%-- 					                  <a href="${pagination }${p}">[${p }]</a>&nbsp; --%>
+<%-- 					               </c:if> --%>
+<%-- 					            </c:forEach> --%>
 					            
-					            <c:if test="${pi.currentPage >= pi.maxPage }">
-					               [다음]
-					            </c:if>
-					            <c:if test="${pi.currentPage < pi.maxPage }">
-					               <a href="${after }">[다음]</a>
-					            </c:if>
+<%-- 					            <c:if test="${pi.currentPage >= pi.maxPage }"> --%>
+<!-- 					               [다음] -->
+<%-- 					            </c:if> --%>
+<%-- 					            <c:if test="${pi.currentPage < pi.maxPage }"> --%>
+<%-- 					               <a href="${after }">[다음]</a> --%>
+<%-- 					            </c:if> --%>
 					         </td>
 					      </tr>
 		                  </tbody>

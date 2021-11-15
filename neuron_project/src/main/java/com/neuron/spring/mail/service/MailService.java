@@ -7,9 +7,8 @@ import com.neuron.spring.attend.domain.PageInfo;
 import com.neuron.spring.mail.domain.Mail;
 
 public interface MailService {
-
-	public int getListCount(int senderId);
-
-	public List<Mail> printAll(PageInfo pi, Map senderId);
+	public int getListCount(int receiverId);
+	
+	public List<Mail> printAll(PageInfo pi, int receiverId);
 
 }

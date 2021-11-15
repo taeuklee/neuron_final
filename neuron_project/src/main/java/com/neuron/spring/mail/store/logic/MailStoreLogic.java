@@ -19,16 +19,16 @@ public class MailStoreLogic implements MailStore{
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
-	public int selectListCount(int senderId) {
-		int count = sqlSession.selectOne("mailMapper.selecListCount",senderId);
+	public int selectListCount(int receiverId) {
+		int count = sqlSession.selectOne("mailMapper.selectListCount",receiverId);
 		return count;
 	}
 
 	@Override
-	public List<Mail> selectAll(PageInfo pi, Map senderId) {
+	public List<Mail> selectAll(PageInfo pi, int receiverId) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		List<Mail> mList = sqlSession.selectList("mailMapper.selectAllList", senderId, rowBounds);
+		List<Mail> mList = sqlSession.selectList("mailMapper.selectAllList", receiverId, rowBounds);
 		return mList;
 	}
 

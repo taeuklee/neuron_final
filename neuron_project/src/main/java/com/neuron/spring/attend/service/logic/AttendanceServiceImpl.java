@@ -18,14 +18,14 @@ public class AttendanceServiceImpl implements AttendanceService{
 	private AttendanceStore store;
 	
 	@Override
-	public int getListCount() {
-		int totalCount = store.selectListCount();
+	public int getListCount(int empNo) {
+		int totalCount = store.selectListCount(empNo);
 		return totalCount;
 	}
 
 	@Override
-	public List<Attendance> printAll(PageInfo pi) {
-		List<Attendance> aList = store.selectAll(pi);
+	public List<Attendance> printAll(PageInfo pi, int empNo) {
+		List<Attendance> aList = store.selectAll(pi, empNo);
 		return aList;
 	}
 

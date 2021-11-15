@@ -8,9 +8,9 @@ import com.neuron.spring.employee.domain.Employee;
 
 public interface AttendanceStore {
 
-	public int selectListCount();
+	public int selectListCount(int empNo);
 
-	public List<Attendance> selectAll(PageInfo pi);
+	public List<Attendance> selectAll(PageInfo pi,int empNo);
 
 //	public List<Employee> selectAll();
 

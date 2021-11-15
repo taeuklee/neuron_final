@@ -33,20 +33,17 @@ public class MailController {
 			,HttpServletRequest request
 			,HttpSession session
 			,@RequestParam(value="page", required=false) Integer page) {
+		
 		session = request.getSession();
 		Employee employee = new Employee();
-		
 		employee = (Employee)session.getAttribute("loginEmployee");
 		
-		int senderId = employee.getEmpNo();
+		int receiverId= employee.getEmpNo();
 		int currentPage = (page != null) ? page:1;
-		int totalCount = service.getListCount(senderId);
+		int totalCount = service.getListCount(receiverId);
 		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
 		
-		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("empNo", senderId);
-		
-		List<Mail> mList = service.printAll(pi,paramMap);
+		List<Mail> mList = service.printAll(pi,receiverId);
 		if(!mList.isEmpty()) {
 			mv.addObject("mList", mList);
 			mv.addObject("pi", pi);
@@ -57,4 +54,33 @@ public class MailController {
 		}
 		return mv;
 	}
+	
+//	@RequestMapping(value="outbox.do", method=RequestMethod.GET)
+//	public ModelAndView showOutboxMail(
+//			ModelAndView mv
+//			,HttpSession session
+//			,HttpServletRequest request
+//			,@RequestParam(value="page", required=false) Integer page) {
+//			session = request.getSession();
+//			Employee employee = new Employee();
+//			employee = (Employee)session.getAttribute("loginEmployee");
+//			
+//			int senderId = employee.getEmpNo();
+//			int currentPage = (page != null) ? page:1;
+//			int totalCount = service.getListCount(senderId);
+//			
+//			PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
+//			List<Mail> mList = service.printAll(pi, senderId);
+//			if(!mList.isEmpty()) {
+//				mv.addObject("mList", mList);
+//				mv.addObject("pi", pi);
+//				mv.setViewName("mail/outboxMail");
+//			}else {
+//				mv.addObject("msg", "보낸메일함 불러오기 실패");
+//				mv.setViewName("common/errorPage");
+//			}
+//				
+//		return mv;
+//		
+//	} 
 }
