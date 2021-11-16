@@ -95,99 +95,43 @@
 								<br>
 								<br>
 								<div class="row">
-									<div class="form-group" style="width: 10%;">
-										<select class="form-control form-control-lg"
-											id="exampleFormControlSelect2">
-											<option>부서</option>
-											<option>팀</option>
-										</select>
-									</div>
-									&nbsp;&nbsp;&nbsp; <input type="text" class="member-search"
-										style="height: 30px;"> &nbsp; <input type="button"
-										class="btn btn-primary mr-2" style="height: 30px;" value="검색" />
-								</div>
+									
 								<div class="table-responsive pt-3">
 									<table class="table table-bordered">
 										<thead>
 											<tr>
 												<th></th>
-												<th>No</th>
+												<th>부서코드</th>
 												<th>부서명</th>
+												<th>팀코드</th>
 												<th>팀명</th>
 												<th>책임자</th>
 											</tr>
 										</thead>
 										<tbody>
+											<c:forEach items="${ daList }" var="deptAdmin">
 											<tr>
 												<td><input type="checkbox" name="teamDelete"></td>
-												<td>1</td>
-												<td><a href="#">경영지원부</a></td>
-												<td>인사팀</td>
-												<td>이제훈</td>
+												<td>${deptAdmin.deptCode }</td>
+												<c:url var="daModify" value="deptModifyView.do">
+								                     <c:param name="deptCode" value="${ deptAdmin.deptCode }"></c:param>
+								                  </c:url>
+												<td><a href="${daModify }">${deptAdmin.deptName }</a></td>
+												<td>${deptAdmin.teamCode }</td>
+												<td>${deptAdmin.teamName }</td>
+												<td>${deptAdmin.empName }</td>
 											</tr>
-											<tr>
-												<td><input type="checkbox" name="teamDelete"></td>
-												<td>1</td>
-												<td><a href="#">경영지원부</a></td>
-												<td>총무팀</td>
-												<td>문소리</td>
-											</tr>
-											<tr>
-												<td><input type="checkbox" name="teamDelete"></td>
-												<td>2</td>
-												<td><a href="#">개발부</a></td>
-												<td>개발1팀</td>
-												<td>이주빈</td>
-											</tr>
-											<tr>
-												<td><input type="checkbox" name="teamDelete"></td>
-												<td>2</td>
-												<td><a href="#">개발부</a></td>
-												<td>개발2팀</td>
-												<td>이익준</td>
-											</tr>
-											<tr>
-												<td><input type="checkbox" name="teamDelete"></td>
-												<td>3</td>
-												<td><a href="#">마케팅부</a></td>
-												<td>마케팅팀</td>
-												<td>안정원</td>
-											</tr>
-											<tr>
-												<td><input type="checkbox" name="teamDelete"></td>
-												<td>3</td>
-												<td><a href="#">마케팅부</a></td>
-												<td>영업팀</td>
-												<td>박보검</td>
-											</tr>
-											<tr>
-												<td><input type="checkbox" name="teamDelete"></td>
-												<td>4</td>
-												<td><a href="#">고객지원부</a></td>
-												<td>A/S팀</td>
-												<td>배수지</td>
-											</tr>
-											<tr>
-												<td><input type="checkbox" name="teamDelete"></td>
-												<td>0</td>
-												<td><a href="#">임원</a></td>
-												<td>-</td>
-												<td>김이사</td>
-											</tr>
+											</c:forEach>
 										</tbody>
 									</table>
 									<br>
 									<div class="button-notice"></div>
 									<button type="submit" class="btn btn-primary mr-2 modify">삭제</button>
-									<button type="reset" class="btn btn-primary mr-2 modify">수정</button>
 								</div>
 							</div>
 						</div>
 					</div>
-
 				</div>
-
-
 				<!-- partial:partials/_footer.html -->
 				<footer class="footer" id="footer"></footer>
 				<!-- partial -->
