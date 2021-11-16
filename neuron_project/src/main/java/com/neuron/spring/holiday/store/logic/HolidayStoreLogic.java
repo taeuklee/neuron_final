@@ -32,7 +32,7 @@ public class HolidayStoreLogic implements HolidayStore{
 
 //	@Override
 //	public int selectListCount(int empNo) {
-//		int count = sqlSession.selectOne("approvalMapper.selectListCount", empNo); 
+//		int count = sqlSession.selectOne("attendanceMapper.selectListCount", empNo); 
 //		return count;
 //	}
 //
@@ -40,9 +40,9 @@ public class HolidayStoreLogic implements HolidayStore{
 //	public List<Document> selectAll(PageInfo pi, int empNo) {
 //		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 //		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-//		List<Document> dList = sqlSession.selectList("approvalMapper.selectAllList", empNo, rowBounds);
+//		List<Document> dList = sqlSession.selectList("attendanceMapper.selectAllList", empNo, rowBounds);
 //		return dList;
 //	}
-
+//
 
 }

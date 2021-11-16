@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.neuron.spring.attend.domain.Attendance;
 import com.neuron.spring.attend.domain.PageInfo;
-import com.neuron.spring.employee.domain.Employee;
 
 public interface AttendanceStore {
 
@@ -12,6 +11,11 @@ public interface AttendanceStore {
 
 	public List<Attendance> selectAll(PageInfo pi,int empNo);
 
-//	public List<Employee> selectAll();
+	public int putTime(Attendance attend);
+
+	public Attendance selectOne(int empNo);
+
+	public int putFinishTime(Attendance attend);
+
 
 }

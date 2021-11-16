@@ -9,7 +9,6 @@ import com.neuron.spring.attend.domain.Attendance;
 import com.neuron.spring.attend.domain.PageInfo;
 import com.neuron.spring.attend.service.AttendanceService;
 import com.neuron.spring.attend.store.AttendanceStore;
-import com.neuron.spring.employee.domain.Employee;
 
 @Service
 public class AttendanceServiceImpl implements AttendanceService{
@@ -28,6 +27,26 @@ public class AttendanceServiceImpl implements AttendanceService{
 		List<Attendance> aList = store.selectAll(pi, empNo);
 		return aList;
 	}
+
+	@Override
+	public int insertTime(Attendance attend) {
+		int result  = store.putTime(attend);
+		return result;
+	}
+
+
+	@Override
+	public Attendance printOne(int empNo) {
+		Attendance attend = store.selectOne(empNo);
+		return attend;
+	}
+
+	@Override
+	public int insertFinishTime(Attendance attend) {
+		int result = store.putFinishTime(attend);
+		return result;
+	}
+
 
 
 }

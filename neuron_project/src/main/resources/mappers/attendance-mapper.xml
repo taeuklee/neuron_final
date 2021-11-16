@@ -14,6 +14,19 @@
   	<result property="note" column="NOTE"/>
   </resultMap>
   
+<!--   <resultMap type="Document" id="DocResultMap"> -->
+<!-- 	   <id property="docNo" column="DOCUMENT_NO"/> -->
+<!-- 	   <result property="docWriterNo" column="DOCUMENT_WRITER_NO"/> -->
+<!-- 	   <result property="docKind" column="DOCUMENT_KIND"/> -->
+<!-- 	   <result property="docContents" column="DOCUMENT_CONTENTS"/> -->
+<!-- 	   <result property="docStatus" column="DOCUMENT_STATUS"/> -->
+<!-- 	   <result property="docReason" column="DOCUMNET_REASON"/> -->
+<!-- 	   <result property="dCreateDate" column="D_CREATE_DATE"/> -->
+<!-- 	   <result property="dUpdateDate" column="D_UPDATE_DATE"/> -->
+<!-- 	   <result property="vStartDate" column="VACATION_START_DATE"/> -->
+<!-- 	   <result property="vEndDate" column="VACATION_END_DATE"/> -->
+<!--   	</resultMap> -->
+  
   <select id="selectListCount" resultType="_int">
 		SELECT COUNT(*) FROM ATTENDANCE WHERE EMP_NO = #{empNo} 
 	</select>
@@ -21,5 +34,15 @@
   <select id="selectAllList" resultMap="attendResultMap">
 		SELECT * FROM ATTENDANCE WHERE EMP_NO = #{empNo} ORDER BY ATTEND_NO DESC
 	</select>
-  
+<!--   출근시간, 퇴근시간 입력 -->
+  <insert id="putTime">
+  		INSERT INTO ATTENDANCE VALUES(SEQ_ATTENDNUM.NEXTVAL, #{empNo }, SYSDATE, #{startTime }, #{finishTime }, #{totalWorkhour }, #{division }, #{note } )
+  </insert>
+  <insert id="putFinishTime">
+  		UPDATE ATTENDANCE SET FINISH_TIME = #{finishTime }, TOTAL_WORKHOUR= #{totalWorkhour } WHERE TO_DATE(ATTEND_DATE,'YY/MM/DD') = (SELECT TO_CHAR(SYSDATE, 'YY/MM/DD') FROM DUAL)
+  </insert>
+<!--   근무시간 계산 -->
+  <select id="selectOne" resultMap="attendResultMap">
+  		SELECT * FROM ATTENDANCE WHERE EMP_NO = #{empNo } AND TO_DATE(ATTEND_DATE,'YY/MM/DD') = (SELECT TO_CHAR(SYSDATE, 'YY/MM/DD') FROM DUAL)
+  </select>
   </mapper>

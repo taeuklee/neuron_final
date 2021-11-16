@@ -1,5 +1,9 @@
 package com.neuron.spring.attend.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -7,6 +11,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,37 +33,24 @@ public class AttendanceController {
 	@RequestMapping(value="attendanceList.do", method=RequestMethod.GET)
 		public ModelAndView attendListView(
 		ModelAndView mv
-//		,@RequestParam("startTime") int startTime
-//		,@RequestParam("finishTime") int finishTime
 		,HttpServletRequest request
 		,HttpSession session
 		,@RequestParam(value="page", required=false) Integer page) {
 		
-			
-//			request.setAttribute("employee", emp);
-//			List<Employee> eList = service.printAll();
-//			if(!eList.isEmpty()) {
-//				mv.addObject("eList", eList);
-//			}else {
-//				mv.addObject("eList", null);
-//				
-//			}
 		    session = request.getSession();
 		    Employee employee = new Employee();
 		    employee = (Employee)session.getAttribute("loginEmployee");
-
 		    int empNo = employee.getEmpNo();
+		    Attendance attend = service.printOne(empNo);
+		    
 			int currentPage = (page !=null) ? page: 1;
 			int totalCount = service.getListCount(empNo);
 			PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
-			// pagination이 pageInfo를 꾸며준다
 			List<Attendance> aList = service.printAll(pi, empNo);
 			if(!aList.isEmpty()) {
-			//	return "board/boardListView" 이건 string 일때 쓰는거임
 				mv.addObject("aList", aList);
-				// addObject = modelandview쓰는구나 알아야해 addObject = addAttribute
 				mv.addObject("pi",pi);
-				// 이걸 적어야 boardListView에서 ${pi. 뭐시기 } 쓸수 있어
+				mv.addObject("attendance", attend);
 				mv.setViewName("attend/attendanceList");
 				
 			}else {
@@ -65,6 +58,80 @@ public class AttendanceController {
 				mv.setViewName("common/errorPage");
 			}
 			return mv;
+	}
+	
+	@RequestMapping(value="insertStartTime.do", method=RequestMethod.GET)
+	public String insertTime(
+			Model model
+			,HttpServletRequest request
+			,HttpSession session) {
+		session = request.getSession();
+		Employee emp = new Employee();
+		emp = (Employee)session.getAttribute("loginEmployee");
+		
+		Attendance attend = new Attendance();
+		int empNo = emp.getEmpNo(); 
+		int hr = LocalDateTime.now().getHour();
+		int min = LocalDateTime.now().getMinute();
+		int sec = LocalDateTime.now().getSecond();
+		String startTime = hr+ ":" + min + ":" + sec;
+		attend.setStartTime(startTime);
+		if( hr < 9) {
+				attend.setDivision("정상");
+		}else {
+		 		attend.setDivision("지각");
+		}
+		attend.setEmpNo(empNo);
+		int result = service.insertTime(attend);
+		if(result > 0) {
+			model.addAttribute("startTime", startTime);
+			return "redirect:attendanceList.do";
+		}else {
+			
+			model.addAttribute("msg", "시간 등록 실패!");
+			return "common/errorPage";
+		}
+	}
+	
+	@RequestMapping(value="insertFinishTime.do", method=RequestMethod.GET)
+	public String insertFinsihTime(
+			Model model
+			,HttpServletRequest request
+			,HttpSession session) {
+		
+		session = request.getSession();
+		Employee emp = new Employee();
+		emp = (Employee)session.getAttribute("loginEmployee");
+		
+		int empNo = emp.getEmpNo();
+		Attendance attend = service.printOne(empNo);
+		String startTime = attend.getStartTime();
+		
+		int hr = LocalDateTime.now().getHour();
+		int min = LocalDateTime.now().getMinute();
+		int sec = LocalDateTime.now().getSecond();
+		String finishTime = hr+ ":" + min + ":" + sec;
+		attend.setFinishTime(finishTime);
+		try {
+			Date date1  = new SimpleDateFormat("HH:mm:ss").parse(startTime);
+			Date date2	= new SimpleDateFormat("HH:mm:ss").parse(finishTime);
+			long totalhour = (date2.getTime() - date1.getTime());
+			String totalWorkhour = Long.toString(totalhour);
+			attend.setTotalWorkhour(totalWorkhour);
+			model.addAttribute("totalWorkhour", totalWorkhour);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		int result = service.insertFinishTime(attend);
+		if(result > 0) {
+			model.addAttribute("finishTime", finishTime);
+			return "redirect:attendanceList.do";
+		}else {
+			
+			model.addAttribute("msg", "시간 등록 실패!");
+			return "common/errorPage";
+		}
 	}
 	
 	
