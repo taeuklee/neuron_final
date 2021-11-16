@@ -7,11 +7,11 @@ import com.neuron.spring.attend.domain.Attendance;
 import com.neuron.spring.attend.domain.PageInfo;
 
 public interface HolidayStore {
-	public int selectListCount();
-
-	public List<Attendance> selectAll();
-
-//	public int selectListCount(int empNo);
+//	public int selectListCount();
 //
-//	public List<Document> selectAll(PageInfo pi, int empNo);
+//	public List<Attendance> selectAll();
+
+	public int selectListCount(int empNo);
+
+	public List<Document> selectAll(PageInfo pi, int empNo);
 }

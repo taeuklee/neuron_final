@@ -18,31 +18,31 @@ public class HolidayStoreLogic implements HolidayStore{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
-	@Override
-	public int selectListCount() {
-		int count = sqlSession.selectOne("attendanceMapper.selectListCount"); 
-		return count;
-	}
-
-	@Override
-	public List<Attendance> selectAll() {
-		List<Attendance> dList = sqlSession.selectList("attendanceMapper.selectAllList");
-		return dList;
-	}
-
 //	@Override
-//	public int selectListCount(int empNo) {
-//		int count = sqlSession.selectOne("attendanceMapper.selectListCount", empNo); 
+//	public int selectListCount() {
+//		int count = sqlSession.selectOne("attendanceMapper.selectListCount"); 
 //		return count;
 //	}
 //
 //	@Override
-//	public List<Document> selectAll(PageInfo pi, int empNo) {
-//		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
-//		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-//		List<Document> dList = sqlSession.selectList("attendanceMapper.selectAllList", empNo, rowBounds);
+//	public List<Attendance> selectAll() {
+//		List<Attendance> dList = sqlSession.selectList("attendanceMapper.selectAllList");
 //		return dList;
 //	}
-//
+
+	@Override
+	public int selectListCount(int empNo) {
+		int count = sqlSession.selectOne("approvalMapper.selectHlistCount", empNo); 
+		return count;
+	}
+
+	@Override
+	public List<Document> selectAll(PageInfo pi, int empNo) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		List<Document> dList = sqlSession.selectList("approvalMapper.selectAllHlist", empNo, rowBounds);
+		return dList;
+	}
+
 
 }
