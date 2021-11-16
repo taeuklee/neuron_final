@@ -2,23 +2,79 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- <mapper namespace="deptMapper">
-   <resultMap type="Dept" id="deptResultMap">
-	<id property="deptCode" column="DEPT_CODE"/>
-  	<result property="deptName" column="DEPT_NAME"/>	
-  	</resultMap>
-  	
- 	 <resultMap type="Team" id="teamResultMap">
-	  <id property="teamCode" column="TEAM_CODE"/>
-	  <result property="deptCode" column="DEPT_CODE"/>
-      <result property="teamName" column="TEAM_NAME"/>
+<mapper namespace="deptMapper">
+	<resultMap type="Dept" id="deptResultMap">
+		<id property="deptCode" column="DEPT_CODE" />
+		<result property="deptName" column="DEPT_NAME" />
 	</resultMap>
+
+	<resultMap type="Team" id="teamResultMap">
+		<id property="teamCode" column="TEAM_CODE" />
+		<result property="deptCode" column="DEPT_CODE" />
+		<result property="teamName" column="TEAM_NAME" />
+	</resultMap>
+
+	<resultMap type="Employee3" id="employee3ResultMap">
+		<id property="empNo" column="EMP_NO" />
+		<result property="deptCode" column="DEPT_CODE"></result>
+		<result property="teamCode" column="TEAM_CODE"></result>
+		<result property="empId" column="EMP_ID"></result>
+		<result property="empPwd" column="EMP_PWD"></result>
+		<result property="empName" column="EMP_NAME"></result>
+		<result property="empBirth" column="EMP_BIRTH"></result>
+		<result property="empPhone" column="EMP_PHONE"></result>
+		<result property="empJob" column="EMP_JOB"></result>
+		<result property="empEmail" column="EMP_EMAIL"></result>
+		<result property="empSubEmail" column="EMP_SUBEMAIL"></result>
+		<result property="empExnum" column="EMP_EXNUM"></result>
+		<result property="empState" column="EMP_STATE"></result>
+		<result property="empVac" column="EMP_VAC"></result>
+		<result property="empMed" column="EMP_MED"></result>
+		<result property="empExVac" column="EMP_EXVAC"></result>
+		<result property="empSign" column="EMP_SIGN"></result>
+		<result property="empFileName" column="EMP_FILENAME"></result>
+		<result property="empFileReName" column="EMP_FILERENAME"></result>
+		<result property="empMaster" column="EMP_MASTER"></result>
+	</resultMap>
+
+	<resultMap type="DeptAdmin" id="daResultMap">
+		<id property="deptCode" column="DEPT_CODE" />
+		<result property="deptName" column="DEPT_NAME" />
+		<result property="teamCode" column="TEAM_CODE" />
+		<result property="teamName" column="TEAM_NAME" />
+		<result property="empName" column="EMP_NAME"></result>
+		<result property="empMaster" column="EMP_MASTER"></result>
+	</resultMap>
+
+	<select id="selectAllDept" resultMap="daResultMap">
+		SELECT E.DEPT_CODE, D.DEPT_NAME, T.TEAM_CODE, T.TEAM_NAME, E.EMP_NAME
+		FROM EMPLOYEE E
+		JOIN DEPT D
+		ON (E.DEPT_CODE = D.DEPT_CODE)
+		JOIN TEAM T
+		ON (D.DEPT_CODE = T.DEPT_CODE)
+		WHERE E.TEAM_CODE = T.TEAM_CODE AND EMP_MASTER = #{master}
+	</select>
 	
-	 <select id="selectAllDept" resultMap="deptResultMap">
- 	 	SELECT * FROM DEPT
- 	 </select>
- 	 
- 	 <select id="selectAllTeam" resultMap="teamResultMap">
- 	 	SELECT * FROM TEAM
- 	 </select>
-  </mapper>
+	
+<!-- 	<select id=""  resultMap="daResultMap" parameterType="">
+	</select>   -->
+	
+	<insert id="deptRegister" parameterType="DeptAdmin">
+	INSERT ALL
+	INTO DEPT(DEPT_CODE, DEPT_NAME) VALUES(#{deptCode}, #{deptName})
+	INTO TEAM(DEPT_CODE, TEAM_CODE, TEAM_NAME) VALUES(#{teamCode}, #{teamName})
+	SELECT *
+	FROM DUAL;
+	</insert>
+	
+<!-- 	<update id="deptModify" parameterType="DeptAdmin">
+	 UPDATE DEPT SET 
+	</update>  -->
+	
+<!-- 	<delete id="" parameterType="string">
+	
+	</delete> -->
+	
+	
+</mapper>

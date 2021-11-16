@@ -94,7 +94,7 @@
   	
   	 <update id="updateEmpAdmin" parameterType="Employee">
   		UPDATE EMPLOYEE SET DEPT_CODE = #{deptCode}, TEAM_CODE = #{teamCode}, 
-  		EMP_JOB = #{empJob}, EMP_EXNUM = #{empExnum}, EMP_STATE = #{empState} WHERE EMP_ID = #{empId }
+  		EMP_JOB = #{empJob}, EMP_EXNUM = #{empExnum}, EMP_STATE = #{empState}, EMP_MASTER = #{empMaster } WHERE EMP_ID = #{empId }
   	</update>
 
  </mapper>

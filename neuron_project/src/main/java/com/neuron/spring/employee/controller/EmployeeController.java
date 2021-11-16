@@ -201,7 +201,7 @@ public class EmployeeController {
 		return "employee/empAdminModifyView";
 	}
 
-	// 사원 정보 수정
+	// 관리자 - 사원 정보 수정
 	@RequestMapping(value="empAdminUpdate.do", method=RequestMethod.POST)
 	public String modifyEmpAdmin(
 			@ModelAttribute Employee employee
@@ -210,14 +210,15 @@ public class EmployeeController {
 			, @RequestParam("empJob") String empJob
 			, @RequestParam("empState") String empState
 			, @RequestParam("empExnum") String empExnum
+			, @RequestParam("empMaster") String empMaster
 			, Model model
 			, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		System.out.println(deptCode+teamCode+empJob+empState+empExnum);
+//		System.out.println(deptCode+teamCode+empJob+empState+empExnum+empMaster);
 		try {
 			int result = service.modifyEmpAdmin(employee);
 			if(result > 0) {
-				session.setAttribute("loginEmployee", employee);
+				
 				return "redirect:empListView.do";
 			}else {
 				model.addAttribute("msg", "회원 정보 수정 실패!");

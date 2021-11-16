@@ -91,15 +91,15 @@
 							<div class="card-body">
 								<br>
 								<h4 class="card-title">사원 정보 수정</h4>
-								<br>
-								<br>
-								<br>
-								<form action="empAdminUpdate.do" class="form-sample" method="post" enctype="multipart/form-data">
+								<br> <br> <br>
+								<form action="empAdminUpdate.do" class="form-sample"
+									method="post" enctype="multipart/form-data">
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group row">
 												<div class="col-sm-9">
-													<img src="/resources/euploadFiles/${employee.empFileReName}">
+													<img
+														src="/resources/euploadFiles/${employee.empFileReName}">
 												</div>
 											</div>
 										</div>
@@ -107,16 +107,16 @@
 											<div class="form-group row">
 												<label class="col-sm-3 col-form-label">아이디</label>
 												<div class="col-sm-9">
-													<input type="text" name="empId" class="form-control" value="${ employee.empId }"
-														readonly />
+													<input type="text" name="empId" class="form-control"
+														value="${ employee.empId }" readonly />
 												</div>
 											</div>
 
 											<div class="form-group row">
 												<label class="col-sm-3 col-form-label">이름</label>
 												<div class="col-sm-9">
-													<input type="text" name="empName" class="form-control" value="${ employee.empName }"
-														readonly />
+													<input type="text" name="empName" class="form-control"
+														value="${ employee.empName }" readonly />
 												</div>
 											</div>
 											<div class="form-group row">
@@ -131,7 +131,7 @@
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group row">
-												<label class="col-sm-3 col-form-label">부서코드</label>
+												<label class="col-sm-3 col-form-label">부서</label>
 												<div class="col-sm-9" style="padding-top: 2%;">
 													<select name="deptCode" class="form-control">
 														<option value="A1">경영지원부</option>
@@ -145,7 +145,7 @@
 										</div>
 										<div class="col-md-6">
 											<div class="form-group row">
-												<label class="col-sm-3 col-form-label">팀 코드</label>
+												<label class="col-sm-3 col-form-label">팀</label>
 												<div class="col-sm-9" style="padding-top: 2%;">
 													<select name="teamCode" class="form-control">
 														<option value="A11">인사팀</option>
@@ -168,7 +168,8 @@
 											<div class="form-group row">
 												<label class="col-sm-3 col-form-label">직책</label>
 												<div class="col-sm-9">
-													<input type="text" name="empJob" class="form-control" value="${ employee.empJob }" />
+													<input type="text" name="empJob" class="form-control"
+														value="${ employee.empJob }" />
 												</div>
 											</div>
 										</div>
@@ -176,7 +177,8 @@
 											<div class="form-group row">
 												<label class="col-sm-3 col-form-label">상태</label>
 												<div class="col-sm-9">
-													<select name="empState" value="${ employee.empState }"class="form-control form-control-lg"
+													<select name="empState" value="${ employee.empState }"
+														class="form-control form-control-lg"
 														id="exampleFormControlSelect2">
 														<option>재직</option>
 														<option>휴직</option>
@@ -185,22 +187,35 @@
 												</div>
 											</div>
 										</div>
-										</div>
+									</div>
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group row">
 												<label class="col-sm-3 col-form-label">내선번호</label>
 												<div class="col-sm-9">
-													<input type="text" name="empExnum" class="form-control" value="${ employee.empExnum }" />
+													<input type="text" name="empExnum" class="form-control"
+														value="${ employee.empExnum }" />
 												</div>
 											</div>
-										<div class="form-group row">
-												<label class="col-sm-3 col-form-label">연락처</label>
-												<div class="col-sm-9">
-													<input type="text" name="empPhone" class="form-control"
-														placeholder="${ employee.empPhone }" readonly />
+
+											<div class="form-group row">
+												<label class="col-sm-3 col-form-label">책임자 여부</label>
+												<div class="col-sm-9" style="padding-top: 2%;">
+													<select name="empMaster" class="form-control">
+														<option>Y</option>
+														<option>N</option>
+													</select>
 												</div>
+											</div>
 										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group row">
+											<label class="col-sm-3 col-form-label">연락처</label>
+											<div class="col-sm-9">
+												<input type="text" name="empPhone" class="form-control"
+													placeholder="${ employee.empPhone }" readonly />
+											</div>
 										</div>
 									</div>
 									<div class="row">
@@ -236,11 +251,13 @@
 						</div>
 					</div>
 				</div>
-			<!-- partial:partials/_footer.html -->
-			<footer class="footer" id="footer"></footer>
-			<!-- partial -->
+			</div>
 		</div>
-		<!-- main-panel ends -->
+		<!-- partial:partials/_footer.html -->
+		<footer class="footer" id="footer"></footer>
+		<!-- partial -->
+	</div>
+	<!-- main-panel ends -->
 	</div>
 	<!-- page-body-wrapper ends -->
 	</div>
