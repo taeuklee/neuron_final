@@ -28,6 +28,8 @@ public interface ApprovalStore {
 	
 	public List<Dept> selectAllDept();
 	
+	public  Map<String, Object> selectOneByEmp(int empNo);
+	
 	public int insertDocument(DataMap dataMap) throws Exception;
 	
 	public int insertDocumentFile(DocumentFile file);
@@ -39,4 +41,6 @@ public interface ApprovalStore {
 	public int updateTransApproval(DataMap dataMap);
 	
 	public int rejectTransApproval(DataMap dataMap);
+	
+	public Map<String, Object> selectOneByTeam(String teamCode);
 }

@@ -39,86 +39,122 @@ p.freeP{font-weight: normal; font-size: 9pt; margin: 3px 1px 3px 5px;}
   <script src="/js/document.js"></script>
 </head>
 <body>
-	<!-- Page Wrapping (start) : Style retention -->
-<div id="divCustomWrapper">
-	<!-- 1. Title Section (start) -->
-	<div class="titleSection">양식명</div>
-	<!-- 1. Title Section (end) -->
-	<!-- 2. Draft Section (Start) -->
-	<div class="partition">
-		<!-- 2.1 Drafter Information (Start) -->
-		<div class="left">
-			<table style="width:335px; height:131px;">
-				<colgroup><col width="65"><col width="270"></colgroup>
-				<tbody>
-					<tr><td class="ACel">문서번호</td><td class="BCel"><span data-dsl="{{label:docNo}}"></span></td></tr>
-					<tr><td class="ACel">작 성 일</td><td class="BCel"><span data-dsl="{{label:draftDate}}"></span></td></tr>
-					<tr><td class="ACel">작성부서</td><td class="BCel"><span data-dsl="{{label:draftDept}}"></span></td></tr>
-					<tr><td class="ACel">작 성 자</td><td class="BCel"><span data-dsl="{{label:draftUser}}"></span></td></tr>
-				</tbody>
-			</table>
-		</div>
-		<!-- 2.1 Drafter Information (end) -->
-		<!-- 2.2 Draft Line (start) -->
-		<div class="inaRowRight">
-			<!-- 결재선 Start--><span unselectable="on" contenteditable="false" class="comp_wrap"><span class="sign_type1_inline" data-group-seq="0" data-group-name="결재" data-group-max-count="4" data-group-type="type1" data-is-reception=""><span class="sign_tit_wrap"><span class="sign_tit"><strong>결재</strong></span></span><!-- 결재방 1EA Start --><span class="sign_member_wrap"><span class="sign_member" ><span class="sign_rank_wrap" ><span class="sign_rank" ></span></span><span class="sign_wrap"></span><span class="sign_date_wrap"><span class="sign_date"></span></span></span></span><!-- 결재방 1EA End--><!-- 결재방 1EA Start --><span class="sign_member_wrap"><span class="sign_member" ><span class="sign_rank_wrap" ><span class="sign_rank" ></span></span><span class="sign_wrap"></span><span class="sign_date_wrap"><span class="sign_date"></span></span></span></span><!-- 결재방 1EA End--><!-- 결재방 1EA Start --><span class="sign_member_wrap"><span class="sign_member" ><span class="sign_rank_wrap" ><span class="sign_rank" ></span></span><span class="sign_wrap"></span><span class="sign_date_wrap"><span class="sign_date"></span></span></span></span><!-- 결재방 1EA End--><!-- 결재방 1EA Start --><span class="sign_member_wrap"><span class="sign_member" ><span class="sign_rank_wrap" ><span class="sign_rank" ></span></span><span class="sign_wrap"></span><span class="sign_date_wrap"><span class="sign_date"></span></span></span></span><!-- 결재방 1EA End--></span></span><!-- 결재선 End-->
-			<!-- 합의 Start --><span class="sign_type1_inline" data-group-seq="10" data-group-name="합의" data-group-max-count="1" data-group-type="type1" data-is-agreement="true" id="agreementWrap"><span class="sign_tit_wrap"><span class="sign_tit"><strong>합의</strong></span></span><span class="sign_member_wrap"><span class="sign_member"><span class="sign_rank_wrap"><span class="sign_rank"></span></span><span class="sign_wrap"></span><span class="sign_date_wrap"><span class="sign_date"></span></span></span></span></span><!-- 합의 End -->
-		</div>
-		<!-- 2.2 Draft Line (end) -->
-	</div>
-	<!-- 2. Draft Section (end) -->
-	<!-- 3. Detail Section (start) -->
-	<table class="detailSection">
-		<colgroup>
-			<col width="100">
-			<col width="700">
-		</colgroup>
-		<tbody>
-			<tr>
-				<td colspan="1" class="ACel">제목</td>
-				<td colspan="1" class="BCel">
-					<span data-dsl="{{text:subject}}"></span>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-	<table class="detailSection">
-		<colgroup>
-			<col width="40">
-			<col width="220">
-			<col width="220">
-			<col width="220">
-		</colgroup>
-		<tbody id="dynamic_table1"><!-- 기능 삽입 부분 -->
-			<tr><!-- 행 추가 삭제 버튼 -->
-				<td colspan="2" class="noneborder BCel">테이블명</td>
-				<td colspan="2" class="BCel viewModeHiddenPart noneborder right">
-					<a class="button" id="plus1">추가</a> <a class="button" id="minus1">삭제</a>
-				</td>
-			</tr>
-			<tr>
-				<td class="ACel">NO</td>
-				<td class="ACel">구분1</td>
-				<td class="ACel">구분2</td>
-				<td class="ACel">구분3</td>
-			</tr>
-			<tr class="copyRow1">
-				<td class="BCel center copyRowNo1">1</td>
-				<td class="BCel center">
-					<span data-dsl="{{text}}"></span>
-				</td>
-				<td class="BCel center">
-					<span data-dsl="{{text}}"></span>
-				</td>
-				<td class="BCel center">
-					<span data-dsl="{{text}}"></span>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-	<!-- 3. Detail Section (end) -->
-</div>
-<!-- Page Wrapping (end) -->
-<!----------------------------------------Style Start---------------------------------------->
+ 	<span style="font-family: &quot;맑은 고딕&quot;; font-size: 10pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"> 
+		<table style=" border: 2px solid rgb(0, 0, 0); font-family: malgun gothic, dotum, arial, tahoma; margin-top: 10px; border-collapse: collapse;">
+			<colgroup> 
+		       <col width="130"> 
+		       <col width="260"> 
+		       <col width="260"> 
+		       <col width="150"> 
+		      </colgroup>
+		      
+			<tbody>
+				<tr>
+					<td style="background: rgb(221, 221, 221);  padding: 5px; border:1px solid black; height:18px; text-align: center; color: black; font-size: 12px; font-weight: bold; vertical-align: top;">
+						
+		지급 요청일
+					</td>
+					<td style="background: rgb(255, 248, 123); padding: 5px; border: 1px solid black; text-align: center; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle;" colspan="3">
+						
+		당사 정기 결제일
+					</td>
+				</tr>
+				<tr>
+					<td style="background: rgb(221, 221, 221);  padding: 5px; border-top:2px solid black; border-right: 1px solid black; border-bottom: 1px solid black; height:24px; text-align: center; color: black; font-size: 12px; font-weight: bold; vertical-align: top;" class="dext_table_border_l">
+						
+		거&nbsp;&nbsp;래&nbsp;&nbsp;처
+					</td>
+					<td style="background: rgb(221, 221, 221);  padding: 5px; border-top:2px solid black; border-right: 1px solid black; border-bottom: 1px solid black; height:24px; text-align: center; color: black; font-size: 12px; font-weight: bold; vertical-align: top;" colspan="2" class="dext_table_border_l">
+						
+		사용내역 및 용도
+					</td>
+					<td style="background: rgb(221, 221, 221);  padding: 5px; border-top:2px solid black; border-bottom: 1px solid black; height:24px; text-align: center; color: black; font-size: 12px; font-weight: bold; vertical-align: top;" class="dext_table_border_r dext_table_border_l">
+						
+		금&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;액
+					</td>
+				</tr>
+				<tr>
+					<td style="background: rgb(255, 255, 255); height: 27px; padding: 5px; border-right: 1px solid black; border-bottom: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle;" class="dext_table_border_t dext_table_border_l">
+					</td>
+					<td style="background: rgb(255, 255, 255); padding: 5px; border-right: 1px solid black; border-bottom: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle;" colspan="2" class="dext_table_border_t dext_table_border_l">
+					</td>
+					<td style="text-align: left; padding: 5px; border-bottom: 1px solid black; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle; background: rgb(255, 255, 255);" class="dext_table_border_t dext_table_border_r dext_table_border_l">
+					</td>
+				</tr>
+				<tr>
+					<td style="background: rgb(255, 255, 255); height: 27px; padding: 5px; border-right: 1px solid black; border-bottom: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle;" class="dext_table_border_t dext_table_border_l">
+					</td>
+					<td style="background: rgb(255, 255, 255); padding: 5px; border-right: 1px solid black; border-bottom: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle;" colspan="2" class="dext_table_border_t dext_table_border_l">
+					</td>
+					<td style="text-align: left; padding: 5px; border-bottom: 1px solid black; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle; background: rgb(255, 255, 255);" class="dext_table_border_t dext_table_border_r dext_table_border_l">
+					</td>
+				</tr>
+				<tr>
+					<td style="background: rgb(255, 255, 255); height: 27px; padding: 5px; border-right: 1px solid black; border-bottom: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle;" class="dext_table_border_t dext_table_border_l">
+					</td>
+					<td style="background: rgb(255, 255, 255); padding: 5px; border-right: 1px solid black; border-bottom: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle;" colspan="2" class="dext_table_border_t dext_table_border_l">
+					</td>
+					<td style="text-align: left; padding: 5px; border-bottom: 1px solid black; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle; background: rgb(255, 255, 255);" class="dext_table_border_t dext_table_border_r dext_table_border_l">
+					</td>
+				</tr>
+				<tr>
+					<td style="background: rgb(255, 255, 255); height: 27px; padding: 5px; border-right: 1px solid black; border-bottom: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle;" class="dext_table_border_t dext_table_border_l">
+					</td>
+					<td style="background: rgb(255, 255, 255); padding: 5px; border-right: 1px solid black; border-bottom: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle;" colspan="2" class="dext_table_border_t dext_table_border_l">
+					</td>
+					<td style="text-align: left; padding: 5px; border-bottom: 1px solid black; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle; background: rgb(255, 255, 255);" class="dext_table_border_t dext_table_border_r dext_table_border_l">
+					</td>
+				</tr>
+				<tr>
+					<td style="background: rgb(255, 255, 255); height: 27px; padding: 5px; border-right: 1px solid black; border-bottom: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle;" class="dext_table_border_t dext_table_border_l">
+					</td>
+					<td style="background: rgb(255, 255, 255); padding: 5px; border-right: 1px solid black; border-bottom: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle;" colspan="2" class="dext_table_border_t dext_table_border_l">
+					</td>
+					<td style="text-align: left; padding: 5px; border-bottom: 1px solid black; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle; background: rgb(255, 255, 255);" class="dext_table_border_t dext_table_border_r dext_table_border_l">
+					</td>
+				</tr>
+				<tr>
+					<td style="background: rgb(255, 255, 255); height: 27px; padding: 5px; border-right: 1px solid black; border-bottom: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle;" class="dext_table_border_t dext_table_border_l">
+					</td>
+					<td style="background: rgb(255, 255, 255); padding: 5px; border-right: 1px solid black; border-bottom: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle;" colspan="2" class="dext_table_border_t dext_table_border_l">
+					</td>
+					<td style="text-align: left; padding: 5px; border-bottom: 1px solid black; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle; background: rgb(255, 255, 255);" class="dext_table_border_t dext_table_border_r dext_table_border_l">
+					</td>
+				</tr>
+				<tr>
+					<td style="background: rgb(255, 255, 255); height: 27px; padding: 5px; border-right: 1px solid black; border-bottom: 1.5px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle;" class="dext_table_border_t dext_table_border_l">
+					</td>
+					<td style="background: rgb(255, 255, 255); padding: 5px; border-right: 1px solid black; border-bottom: 1.5px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle;" colspan="2" class="dext_table_border_t dext_table_border_l">
+					</td>
+					<td style="text-align: left; padding: 5px; border-bottom: 1.5px solid black; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle; background: rgb(255, 255, 255);" class="dext_table_border_t dext_table_border_r dext_table_border_l">
+					</td>
+				</tr>
+				<tr>
+					<td style="background: rgb(255, 255, 255); padding: 5px; border-right: 1px solid black; border-bottom: 1.5px solid black; text-align: center; color: rgb(0, 0, 0); font-size: 12px; font-weight: bold; vertical-align: middle;" colspan="3" class="dext_table_border_t dext_table_border_l">
+						
+		합&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;계
+					</td>
+					<td style="text-align: left; padding: 5px; border-bottom: 1px solid black; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle; background: rgb(242, 220, 219);" class="dext_table_border_t dext_table_border_r dext_table_border_l">
+					</td>
+				</tr>
+				<tr>
+					<td style="background: rgb(255, 255, 255); padding: 5px; border-right: 1px solid black; border-bottom: 1.5px solid black; text-align: center; color: rgb(0, 0, 0); font-size: 12px; font-weight: bold; vertical-align: middle;" colspan="3" class="dext_table_border_t dext_table_border_l">
+						
+		부가가치세
+					</td>
+					<td style="text-align: left; padding: 5px; border-bottom: 1px solid black; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle; background: rgb(242, 220, 219);" class="dext_table_border_t dext_table_border_r dext_table_border_l">
+					</td>
+				</tr>
+				<tr>
+					<td style="background: rgb(255, 255, 255); padding: 5px; border-right: 1px solid black; border-bottom: 2px solid black; text-align: center; color: rgb(0, 0, 0); font-size: 12px; font-weight: bold; vertical-align: middle;" colspan="3" class="dext_table_border_t dext_table_border_l">
+						
+		총 지출 합계
+					</td>
+					<td style="text-align: left; padding: 5px; border-bottom: 2px solid black; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle; background: rgb(242, 220, 219);" class="dext_table_border_t dext_table_border_r dext_table_border_l">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</span>
 </body>
 </html>

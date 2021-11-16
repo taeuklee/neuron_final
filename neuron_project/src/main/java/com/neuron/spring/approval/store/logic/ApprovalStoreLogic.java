@@ -8,7 +8,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.neuron.spring.approval.domain.Approval;
 import com.neuron.spring.approval.domain.CodeInfo;
 import com.neuron.spring.approval.domain.Document;
 import com.neuron.spring.approval.domain.DocumentFile;
@@ -18,7 +17,6 @@ import com.neuron.spring.employee.domain.Dept;
 import com.neuron.spring.employee.domain.Employee;
 import com.neuron.spring.employee.domain.Team;
 import com.neuron.spring.util.DataMap;
-import com.neuron.spring.util.JsonConverter;
 
 @Repository
 public class ApprovalStoreLogic implements ApprovalStore{
@@ -123,6 +121,16 @@ public class ApprovalStoreLogic implements ApprovalStore{
 	public int rejectTransApproval(DataMap dataMap) {
 		int result = sqlSession.update("approvalMapper.rejectTransApproval", dataMap);
 		return sqlSession.update("approvalMapper.updateTransApprovalDoc",dataMap);
+	}
+
+	@Override
+	public Map<String, Object> selectOneByTeam(String teamCode) {
+		return sqlSession.selectOne("deptMapper.selectOneByTeam",teamCode);
+	}
+
+	@Override
+	public  Map<String, Object> selectOneByEmp(int empNo) {
+		return sqlSession.selectOne("employeeMapper.selectEmpJoinTeam",empNo);
 	}
 
 }

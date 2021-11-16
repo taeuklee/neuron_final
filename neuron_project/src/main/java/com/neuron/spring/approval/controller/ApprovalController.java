@@ -106,9 +106,13 @@ public class ApprovalController {
 		if(session.getAttribute("loginEmployee") != null) {
 			emp = (Employee)session.getAttribute("loginEmployee");
 		}
+		Map<String,Object> map = service.printOneByTeam(emp.getTeamCode());
+		System.out.println(map.toString());
+		
 		System.out.println("@@@@@@@@:"+emp.toString());
 		mv.addObject("code", code);
 		mv.addObject("emp",emp);
+		mv.addObject("team", map);
 		mv.setViewName("approval/documentWriteForm");
 		return mv;
 	}
@@ -118,9 +122,16 @@ public class ApprovalController {
 	public ModelAndView registerDocument(
 			ModelAndView mv
 			,HttpSession session, RequestResolver resolver
+//			,@RequestParam(value="v_start") Date vStart
+//			,@RequestParam(value="v_end") Date vEnd
+			,@RequestParam(value="doc_reason") String docReason
 			,@RequestParam(value="uploadFile", required=false) MultipartFile uploadFile
 			, HttpServletRequest request ) throws Exception {
 		// 회원 session값 불러오기
+		
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@이거확인@@@@@@@@@@@@@@@@@@@@@@@@"+ docReason);
+//		System.out.println(vStart.toString());
+//		System.out.println(vEnd.toString());
 		session = request.getSession();
 		Employee emp = new Employee();
 		
@@ -189,10 +200,12 @@ public class ApprovalController {
 	public ModelAndView documentDetail(
 			ModelAndView mv, RequestResolver resolver) {
 		Document docOne = service.printDocumentOne(resolver.getMap());
+		Map<String, Object> map = service.printOneByEmp(docOne.getDocWriterNo());
 		List<DataMap> aList = service.printApprovalList(resolver.getMap());
 		
 		mv.addObject("docOne", docOne);
 		mv.addObject("aList",aList);
+		mv.addObject("empInfo", map);
 		mv.setViewName("/approval/documentDetail");
 		return mv;
 	}

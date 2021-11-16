@@ -41,8 +41,49 @@
       $("#sidebar").load("/partials/_sidebar.html");
       $('#docGu').change(function(){
     	var docGuVal = $('#docGu option:selected').val();
+    	var name = '<c:out value="${emp.empName}"/>';
+    	var job = '<c:out value="${emp.empJob}"/>';
+    	var team ='<c:out value="${team.TEAM_NAME}"/>';
+    	alert(name);
+    	alert(docGuVal);
     	if(docGuVal != ''){
     		$("#test").html($("#"+docGuVal).html());
+    		$("#titleName").html(docGuVal);
+    		$("#apprTable").html("<tr id='apprLine1'>"
+    							+"<td id='apprLine1-def'style='width:20px; background: rgb(221, 221, 221);' rowspan='4'>신청</td><td id='apprLine1-def' style='width:80px; height:25px; text-align:center'>"+ job +"</td>"
+    							+"</tr>"
+    							+"<tr id='apprLine2'><td id='apprLine2-def' rowspan='2' style='height:90px; text-align:center'>"+ name +"</td></tr>"
+    							+"<tr></tr>"
+    							+"<tr id='apprLine3'><td id='apprLine3-def' style='height:28px;'></td></tr>");
+    		
+    		$("#infoTable").html("<tr>"
+    							+"<td style='background: rgb(221, 221, 221); width:100px; padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;'>"
+    							+"소속"
+    							+"</td>"
+    							+"<td style='background: rgb(255, 255, 255); width:200px; border-width:1px 1px; border-style:  solid solid; border-color: currentColor black black; padding: 5px; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;' colspan='3' class='dext_table_border_t'>"
+    							+team
+    							+"</td>"
+    							+"</tr>"
+    							
+    							+"<tr>"
+    							+"<td style='background: rgb(221, 221, 221); width:100px; padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;'>"
+    							+"직책"
+    							+"</td>"
+    							+"<td style='background: rgb(255, 255, 255); width:200px; border-width:1px 1px; border-style:  solid solid; border-color: currentColor black black; padding: 5px; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;' colspan='3' class='dext_table_border_t'>"
+    							+job
+    							+"</td>"
+    							+"</tr>"
+    							
+    							+"<tr>"
+    							+"<td style='background: rgb(221, 221, 221); width:100px; padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;'>"
+    							+"성명"
+    							+"</td>"
+    							+"<td style='background: rgb(255, 255, 255); width:200px; border-width:1px 1px; border-style:  solid solid; border-color: currentColor black black; padding: 5px; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;' colspan='3' class='dext_table_border_t'>"
+    							+name
+    							+"</td>"
+    							+"</tr>"
+    							);
+    		
     	}
       });
     });
@@ -78,6 +119,15 @@
     	$("#approvalGubun tr").not(".default").each(function(i,v){
     		$(this).remove();
     	});
+    	$("#apprLine1 td").not("#apprLine1-def").each(function(i,v){
+    		$(this).remove();
+    	});
+    	$("#apprLine2 td").not("#apprLine2-def").each(function(i,v){
+    		$(this).remove();
+    	});
+    	$("#apprLine3 td").not("#apprLine3-def").each(function(i,v){
+    		$(this).remove();
+    	});
     	
 	   	 for(var key in apprEmpInfo){
 	   		var oneEmp = apprEmpInfo[key];
@@ -90,6 +140,9 @@
 	   			html += "<td><input name='emp_dept1' type='text' value=" + oneEmp.split(":")[3] + " /></td>";
 				html += "</tr>";
 				$("#approvalGubun").append(html);
+				$("#apprLine1").append("<td style='width:20px; background: rgb(221, 221, 221);' rowspan='4'>합의</td><td style='width:80px; height:21px; text-align:center'>"+oneEmp.split(":")[1]+"</td>");
+				$("#apprLine2").append("<td rowspan='2' style='height:90px; text-align:center'>"+oneEmp.split(":")[2]+"</td>");
+				$("#apprLine3").append("<td style='height:28px;'></td>");
 	   		}
 	   	}
 	   	for(var key in apprEmpInfo){
@@ -102,6 +155,9 @@
 	   			html += "<td><input name='emp_dept2' type='text' value=" + oneEmp.split(":")[3] + " /></td>";
 				html += "</tr>";
 				$("#approvalGubun").append(html);
+				$("#apprLine1").append("<td style='width:20px; background: rgb(221, 221, 221);' rowspan='4'>결재</td><td style='width:80px; height:21px; text-align:center'>"+oneEmp.split(":")[1]+"</td>");
+				$("#apprLine2").append("<td rowspan='2' style='height:90px; text-align:center'>"+oneEmp.split(":")[2]+"</td>");
+				$("#apprLine3").append("<td style='height:28px;'></td>");
 	   		}
 	   	}
     	
@@ -193,7 +249,7 @@
 										<b>기안자</b>
 									</td>
 									<td>
-										<span>${emp.empName }${emp.empJob } ${emp.teamCode }</span>
+										<span>${emp.empName }${emp.empJob } ${team.TEAM_NAME }</span>
 									</td>
 								</tr>
 							</table>
@@ -226,10 +282,25 @@
 								</tr>
 							</table>
 							<div id="결재선"></div>
+							<hr><br><br>
 							
-							<div id="test" align="center" style="border:1px solid gray; padding:50px 0 0 0;" contenteditable="true">
+							
+							<div style="display: grid;border: 0.5px solid #989b9c78;margin:auto;justify-items: stretch;justify-content: space-evenly;margin-top: 20px;margin-bottom: 40px;">
+								<div>
+									<h1 id="titleName" align='center' style="padding : 70px 0 40px 0;"></h1>
+									<table style="display: inline-flex; position: relative; float: left;">
+										<tbody id="infoTable">
+										</tbody>
+									</table>
+									<table border="1" style="display:inline-flex; position:relative; float: right;">
+										<tbody id="apprTable">
+										</tbody>
+									</table>
+								</div>
+								<div id="test" align="center" style="" contenteditable="true">
+								</div>
 							</div>
-							
+							<br><br><br><hr>
 							<input type="file" name="uploadFile">
 							<button type="button" class="btn" onclick="fnSubmit();">제출</button>
 						</form>

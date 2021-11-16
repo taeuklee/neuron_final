@@ -67,9 +67,8 @@ public class ApprovalServiceImpl implements ApprovalService{
 	}
 
 	@Override
-	public Employee printOneByEmp(int empNo) {
-		// TODO Auto-generated method stub
-		return null;
+	public  Map<String, Object> printOneByEmp(int empNo) {
+		return store.selectOneByEmp(empNo);
 	}
 
 	@Override
@@ -100,6 +99,11 @@ public class ApprovalServiceImpl implements ApprovalService{
 	@Override
 	public int rejectTransApproval(DataMap dataMap) {
 		return store.rejectTransApproval(dataMap);
+	}
+	
+	@Override
+	public Map<String, Object> printOneByTeam(String teamCode){
+		return store.selectOneByTeam(teamCode);
 	}
 	
 	

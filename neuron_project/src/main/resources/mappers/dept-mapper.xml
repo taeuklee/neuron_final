@@ -21,4 +21,9 @@
  	 <select id="selectAllTeam" resultMap="teamResultMap">
  	 	SELECT * FROM TEAM
  	 </select>
+ 	 
+ 	  <select id="selectOneByTeam" parameterType="string" resultType="map">
+ 	 	SELECT * FROM TEAM where team_code = #{teamCode }
+ 	 </select>
+ 	 
   </mapper>
