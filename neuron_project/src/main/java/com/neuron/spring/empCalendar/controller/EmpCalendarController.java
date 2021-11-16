@@ -38,7 +38,6 @@ public class EmpCalendarController {
 	public void moveEmpCalendar(@RequestParam(value = "empNo") int empNo, ModelAndView mv,
 			HttpServletResponse response) {
 		List<EmpCalendar> empCalendar = service.selectEmpCalendarList(empNo);
-		System.out.println(empCalendar.size());
 		try {
 			// Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 			Gson gson = new Gson();

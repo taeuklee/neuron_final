@@ -350,7 +350,7 @@
 												<button class="btn btn-danger " onclick="deleteMember(${memberList.empNo})">
 												추방
 												</button>
-												<button type="button" class="btn btn-primary" onclick="updateMember(${memberList.empNo}, memberAuth)">수정</button>
+												<button type="button" class="btn btn-primary" onclick="updateMember(${memberList.empNo}, this)">수정</button>
 												</td>
 												</c:if>
 											</tr>
@@ -494,9 +494,25 @@
 			})
 		}
 		
-		function updateMember(empNo, member) {
-			console.log(empNo);
-			console.log(member);
+		function updateMember(empNo, data) {
+			console.log(data.parentNode.previousSibling.previousSibling.firstChild.nextSibling)
+			var memberAuth = data.parentNode.previousSibling.previousSibling.firstChild.nextSibling.value;
+			console.log(memberAuth);
+			$.ajax({
+				url:"updateProjectMember.do?projectNo=${project.projectNo}&empNo="+empNo,
+				type:"get",
+				data:{
+					"memberAuth":memberAuth
+				},
+				success:function(data){
+					if(data=="success"){						
+					alert("권한 부여 성공했습니다")
+					window.location.reload()
+					}
+				},error:function(){
+					alert("오류발생")
+				}
+			})
 		}
 	</script>
 </body>

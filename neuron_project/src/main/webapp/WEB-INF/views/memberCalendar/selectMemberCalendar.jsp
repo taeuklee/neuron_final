@@ -83,8 +83,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // customize the button names,
     // otherwise they'd all just say "list"
     views: {
-      listDay: { buttonText: 'list day' },
-      listWeek: { buttonText: 'list week' }
+      listDay: { buttonText: '일일일정' },
+      listWeek: { buttonText: '주간일정' }
     },
 
     locale : 'ko',

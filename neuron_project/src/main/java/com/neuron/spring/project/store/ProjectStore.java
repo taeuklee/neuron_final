@@ -41,4 +41,18 @@ public interface ProjectStore {
 	public int deleteMemberList(Map<String, Object> map);
 
 	public List<Employee> selectInviteList(Map<String, Object> map);
+
+	public int insertProjectCalendarEvent(ProjectCalendar pCalendar);
+
+	public ProjectCalendar selectProjectEventDetail(Map<String, Object> map);
+
+	public int updateProjectCalendarEvent(ProjectCalendar pCalendar);
+
+	public int deleteProjectCalendarEvent(ProjectCalendar pCalendar);
+
+	public List<ProjectMember> selectTaskProjectSearchList(Map<String, Object> map);
+
+	public int updateProjectMember(Map<String, Object> map);
+
+	public int deleteProjectRequest(int projectNo);
 }

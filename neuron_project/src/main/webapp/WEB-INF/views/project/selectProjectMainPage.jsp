@@ -61,14 +61,102 @@
 	rel='stylesheet' />
 <script src='../../../resources/fullcalendar-5.10.0/lib/main.js'></script>
 <script>
-	document.addEventListener('DOMContentLoaded', function() {
-		var calendarEl = document.getElementById('calendar');
-		var calendar = new FullCalendar.Calendar(calendarEl, {
-			initialView : 'dayGridMonth'
-		});
-		calendar.render();
-	});
+
+document.addEventListener('DOMContentLoaded', function() {
+  var projectNo = ${project.projectNo}
+  console.log(projectNo)
+  var events;
+  var calendarEl = document.getElementById('calendar');
+  var calendar = new FullCalendar.Calendar(calendarEl, {	  	  
+    headerToolbar: {
+      left: 'prev,next',
+      center: 'title',
+      right: 'dayGridMonth,listDay,listWeek'
+    },
+
+    // customize the button names,
+    // otherwise they'd all just say "list"
+    views: {
+      dayGridMonth:{buttonText:'월간일정'},
+      listDay: { buttonText: '일일일정' },
+      listWeek: { buttonText: '주간일정' }
+    },
+
+    locale : 'ko',
+    //initialView: 'listMonth',
+    nextDayThreshold:'00:00',
+    //initialDate: '2020-09-12',
+    navLinks: true, // can click day/week names to navigate views
+    editable: true,
+    selectable:true,
+    dayMaxEvents: true, // allow "more" link when too many events
+		events: function(info, successCallback, failureCallback) {
+			$.ajax({
+				url: '<c:url value="selectProjectCalendar.do?projectNo=${project.projectNo}"/>',
+				type: 'POST',
+				dataType: 'json',
+				data: {
+					"projectNo":projectNo
+				},
+				success: function(data) {
+					console.log(data)
+					events = [];
+					for(var i in data){
+						
+					var title = data[i].projectCalendarEventTitle;
+					var start = data[i].projectCalendarStartTime;
+					var end = data[i].projectCalendarEndTime;
+					var calNo = data[i].projectCalendarNo;
+					events.push({
+						title:title,
+						start:start,
+						end:end,
+						calNo:calNo
+					});
+					console.log(events)
+					}
+					successCallback(events)
+				},error: function () {
+					alert("통신오류 입니다")
+				}
+			});
+		},
+		eventClick:function(info){
+			var calNo = info.event.extendedProps.calNo;
+			//var calNo = events[0].calNo
+			$.ajax({
+				url:'<c:url value="selectProjectEventDetail.do?calNo='+calNo+'&projectNo=${project.projectNo}"/>',
+				type:'POST',
+				data:{
+				},
+				success:function(data){
+					var url = "openProjectEventDetail.do?projectNo=${project.projectNo}&calNo="+calNo;
+					var name = "일정 디테일";
+					var option = "width = 800, height = 700, top = 300 , left = 650, location = no, toolbars = no, status = no, scrollbars = no, resizable = no";
+					window.open(url, name, option);
+				},error: function () {
+					alert("통신오류입니다")
+				}
+			});
+		}
+
+    
+  });
+
+  calendar.render();
+});
 </script>
+<style>
+#insertEvent:hover{
+	background-color: #1e2b37;
+}
+
+	#insertEvent{
+		background-color: #2C3E50;
+	
+			color: white;
+	}
+</style>
 </head>
 
 <body>
@@ -117,6 +205,7 @@
 								</div>
 							</div>
 						</div>
+						<button type="button" class="btn" onclick="moveInsertProjectEvent()" id="insertEvent">일정추가</button>
 						<div id='calendar' style="height: 50%; margin-bottom: 10px;"></div>
 					</div>
 					<div class="col-lg-2" style="border: 1px solid black; float: left">
@@ -170,6 +259,14 @@
 		function moveMemberList() {
 			location.href = "selectProjectMemberList.do?projectNo=${project.projectNo}";
 		}
+		
+		
+		function moveInsertProjectEvent() {
+			var url = "moveInsertProjectEvent.do?projectNo=${project.projectNo}";
+			var name = "일정 추가";
+			var option = "width = 800, height = 700, top = 300 , left = 650, location = no, toolbars = no, status = no, scrollbars = no, resizable = no";
+			window.open(url, name, option);
+	}
 	</script>
 </body>
 

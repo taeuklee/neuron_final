@@ -100,6 +100,7 @@
 				console.log(data);
 				if(data=="success"){
 					alert("일정수정이 완료되었습니다")
+					window.opener.location.reload();
 				}else{
 					alert("등록이 실패했습니다")
 				}

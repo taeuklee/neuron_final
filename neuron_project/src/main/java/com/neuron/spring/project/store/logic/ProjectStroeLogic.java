@@ -115,6 +115,48 @@ public class ProjectStroeLogic implements ProjectStore{
 		return eList;
 	}
 
+	@Override
+	public int insertProjectCalendarEvent(ProjectCalendar pCalendar) {
+		int result = sqlSession.insert("projectMapper.insertProjectEvent", pCalendar);
+		return result;
+	}
+
+	@Override
+	public ProjectCalendar selectProjectEventDetail(Map<String, Object> map) {
+		ProjectCalendar eventDetail = sqlSession.selectOne("projectMapper.selectProjectEventDetail", map);
+		return eventDetail;
+	}
+
+	@Override
+	public int updateProjectCalendarEvent(ProjectCalendar pCalendar) {
+		int result = sqlSession.update("projectMapper.updateProjectEvent", pCalendar);
+		return result;
+	}
+
+	@Override
+	public int deleteProjectCalendarEvent(ProjectCalendar pCalendar) {
+		int result = sqlSession.delete("projectMapper.deleteProjectEvent", pCalendar);
+		return result;
+	}
+
+	@Override
+	public List<ProjectMember> selectTaskProjectSearchList(Map<String, Object> map) {
+		List<ProjectMember> eList = sqlSession.selectList("projectMapper.selectTaskMemberSearchList", map);
+		return eList;
+	}
+
+	@Override
+	public int updateProjectMember(Map<String, Object> map) {
+		int result = sqlSession.update("projectMapper.updateProjectMember", map);
+		return result;
+	}
+
+	@Override
+	public int deleteProjectRequest(int projectNo) {
+		int result = sqlSession.update("projectMapper.deleteProjectRequest", projectNo);
+		return result;
+	}
+
 
 
 }

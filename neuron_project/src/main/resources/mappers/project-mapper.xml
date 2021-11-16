@@ -31,11 +31,11 @@
   	</resultMap>
   	
   	<resultMap type="ProjectCalendar" id="ProjectCalendarResultMap">
-  		<id property="projectCalendarNo" column="PROJECT_CALENDAR_NO"/>
+  		<id property="projectCalendarNo" column="CALENDAR_NO"/>
   		<id property="projectNo" column="PROJECT_NO"/>
-  		<result property="projectCalendarTitle" column="PROJECT_CALENDAR_EVENT_TITLE"/>
-  		<result property="projectCalendarStartTime" column="PROJECT_CALENDAR_START_TIME"/>
-  		<result property="projectCalendarEndTime" column="PROJECT_CALENDAR_END_TIME"/>
+  		<result property="projectCalendarEventTitle" column="CALENDAR_TITLE"/>
+  		<result property="projectCalendarStartTime" column="CALENDAR_START_TIME"/>
+  		<result property="projectCalendarEndTime" column="CALENDAR_END_TIME"/>
   	</resultMap>
   	
   	<resultMap type="ProjectTask" id="ProjectTaskResultMap">
@@ -131,9 +131,19 @@
 		SELECT * FROM PROJECT_CALENDAR WHERE PROJECT_NO = #{projectNo}
 	</select>
 	
+<!-- 	프로젝트 일정 수정시 페이지 조회 -->
+	<select id="selectProjectEventDetail" resultMap="ProjectCalendarResultMap" parameterType="hashMap">
+		SELECT * FROM PROJECT_CALENDAR WHERE CALENDAR_NO = #{calNo} AND PROJECT_NO =#{projectNo}
+	</select>
+	
 <!-- 	프로젝트 대표업무 가져오기 -->
 	<select id="selectProjectTask" resultMap="ProjectTaskResultMap" parameterType="_int">
 		SELECT * FROM PROJECT_TASK WHERE PROJECT_NO = #{projectNo}
+	</select>
+	
+<!-- 	프로젝트 대표업무 세부사항에 할당할 팀원 검색 -->
+	<select id="selectTaskMemberSearchList" resultMap="ProjectMemberResultMap" parameterType="ProjectMember">
+		SELECT EPRO.EMP_NO, EPRO.EMP_PROJECT_AUTH, EMP.EMP_JOB, EMP.EMP_NAME, DEPT.DEPT_NAME FROM EMP_PROJECT EPRO JOIN EMPLOYEE EMP ON (EPRO.EMP_NO = EMP.EMP_NO) JOIN DEPT DEPT ON (DEPT.DEPT_CODE = EMP.DEPT_CODE) WHERE PROJECT_NO = #{projectNo} AND NOT EMP.EMP_NO = #{empNo} AND EMP.EMP_NAME LIKE '%' || #{searchText} || '%'
 	</select>
 	
 <!--     멤버등록 -->
@@ -143,12 +153,39 @@
 		</foreach>
 	</update>
 	
+<!-- 	프로젝트 팀원 권한 수정 -->
+	<update id="updateProjectMember" parameterType="hashMap">
+		UPDATE EMP_PROJECT SET EMP_PROJECT_AUTH = #{memberAuth} WHERE EMP_NO = #{empNo} AND PROJECT_NO = #{projectNo}	
+	</update>
+
+<!-- 	프로젝트 일정 수정 -->
+	<update id="updateProjectEvent" parameterType="ProjectCalendar">
+  		UPDATE PROJECT_CALENDAR SET CALENDAR_TITLE = #{projectCalendarEventTitle}, CALENDAR_START_TIME= #{projectCalendarStartTime}, CALENDAR_END_TIME = #{projectCalendarEndTime} WHERE PROJECT_NO = #{projectNo} AND CALENDAR_NO =#{projectCalendarNo}
+  	</update>
+  	
+<!--   	프로젝트 삭제 요청 -->
+	<update id="deleteProjectRequest" parameterType="_int">
+		UPDATE PROJECT SET PROJECT_DELETE_REQUEST = 'Y' WHERE PROJECT_NO = #{projectNo} 
+	</update>
+	
+<!-- 	팀원추방 -->
 	<delete id="deleteMemberList" parameterType="hashMap">
 		DELETE FROM EMP_PROJECT WHERE EMP_NO = #{empNo} AND PROJECT_NO = #{projectNo}
 	</delete>
+	
+<!-- 	프로젝트 일정 삭제 -->
+	<delete id="deleteProjectEvent" parameterType="ProjectCalendar">
+  		DELETE FROM PROJECT_CALENDAR WHERE CALENDAR_NO = #{projectCalendarNo} AND PROJECT_NO = #{projectNo}
+  	</delete>
+	
 	
 <!-- 	프로젝트등록 -->
 	<insert id="insertProjectRegister" parameterType="Project">
 		INSERT INTO PROJECT VALUES(SEQ_PRO_NO.NEXTVAL, #{projectTitle}, #{projectContents}, #{projectMaster}, DEFAULT, DEFAULT)
 	</insert>
+	
+<!-- 	프로젝트 일정등록 -->
+	<insert id="insertProjectEvent" parameterType="ProjectCalendar">
+  		INSERT INTO PROJECT_CALENDAR VALUES(SEQ_PROJECT_CALENDAR_NO.NEXTVAL, #{projectNo}, #{projectCalendarEventTitle}, #{projectCalendarStartTime}, #{projectCalendarEndTime})
+  	</insert>
   </mapper>

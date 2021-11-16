@@ -111,6 +111,7 @@ form .btn {
 								id="mainWorkMemberList"></div>
 							</div>
 						</div>
+<!-- 						<input type="date" name="endTime"> -->
 						<div style="height: 10%">
 							<input class="btn btn-primary" type="submit" value="등록">
 							<input class="btn btn-primary" type="reset" value="취소">
@@ -156,7 +157,7 @@ form .btn {
 			taskInfo1.innerHTML += "<button type='button' class='btn btn-primary btn-sm' value='삭제' onclick ='deleteTask(this)'>삭제</button>"
 			taskInfo1.innerHTML += "<div class='input-group mb-3'>"
 			taskInfo1.innerHTML += "<input type='text' class='form-control' placeholder='제목을 입력해주세요'aria-label='Sizing example input' aria-describedby='inputGroup-sizing-default' />"
-			taskInfo1.innerHTML += "<button type='button' class='btn btn-primary btn-sm'>팀원할당</button>"
+			taskInfo1.innerHTML += "<button type='button' class='btn btn-primary btn-sm' onclick='insertTaskMember()'>팀원할당</button>"
 			taskInfo1.innerHTML += "</div>"
 			taskInfo1.innerHTML += "<div style='width: 100%; border: 1px solid #1e2b37; height: 500px; overflow: auto' id='mainWorkMemberList'></div>"
 			task.innerHTML = taskInfo1.innerHTML
@@ -185,7 +186,7 @@ form .btn {
 		}
 		
 		function  insertTaskMember() {
-			var url = "moveTaskMember.do";
+			var url = "moveTaskMember.do?projectNo=${project.projectNo}";
 			var name = "팀원 할당";
 			var option = "width = 1000, height = 800, top = 300 , left = 650, location = no, toolbars = no, status = no, scrollbars = no, resizable = no";
 			window.open(url, name, option);
