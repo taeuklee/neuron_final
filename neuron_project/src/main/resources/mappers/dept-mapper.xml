@@ -76,5 +76,16 @@
 	
 	</delete> -->
 	
-	
-</mapper>
+	 <select id="selectAllDept" resultMap="deptResultMap">
+ 	 	SELECT * FROM DEPT
+ 	 </select>
+ 	 
+ 	 <select id="selectAllTeam" resultMap="teamResultMap">
+ 	 	SELECT * FROM TEAM
+ 	 </select>
+ 	 
+ 	  <select id="selectOneByTeam" parameterType="string" resultType="map">
+ 	 	SELECT * FROM TEAM where team_code = #{teamCode }
+ 	 </select>
+ 	 
+ </mapper>

@@ -27,8 +27,6 @@ public interface ApprovalService {
 	 */
 	public List<Document> printMyAllDocList(PageInfo pi,Map empNo);
 	
-	public Employee printOneByEmp(int empNo);
-
 	public List<Map<String, Object>> codeInfo(Map<String,String> param);
 	
 	public List<CodeInfo> printCodeInfo();
@@ -50,4 +48,9 @@ public interface ApprovalService {
 	public int updateTransApproval(DataMap dataMap);
 	
 	public int rejectTransApproval(DataMap dataMap);
+	
+	public Map<String, Object> printOneByTeam(String teamCode);
+
+	public Map<String, Object> printOneByEmp(int empNo);
+
 }
