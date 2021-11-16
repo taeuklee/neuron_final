@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import com.neuron.spring.attend.domain.Attendance;
 import com.neuron.spring.attend.domain.PageInfo;
 import com.neuron.spring.attend.store.AttendanceStore;
-import com.neuron.spring.employee.domain.Employee;
 
 @Repository
 public class AttendanceStoreLogic implements AttendanceStore{
@@ -31,6 +30,26 @@ public class AttendanceStoreLogic implements AttendanceStore{
 		List<Attendance> aList = sqlSession.selectList("attendanceMapper.selectAllList", empNo, rowBounds);
 		return aList;
 	}
+
+	@Override
+	public int putTime(Attendance attend) {
+		int result = sqlSession.insert("attendanceMapper.putTime", attend);
+		return result;
+	}
+
+	@Override
+	public Attendance selectOne(int empNo) {
+		Attendance attend = sqlSession.selectOne("attendanceMapper.selectOne", empNo);
+		return attend;
+	}
+
+	@Override
+	public int putFinishTime(Attendance attend) {
+		int result = sqlSession.insert("attendanceMapper.putFinishTime", attend);
+		return result;
+	}
+
+
 
 
 }

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,10 +63,11 @@
 		            <h2>나의 근태관리</h2>
 		          </div>
 		          <div class="top-date" align="center">
-		             <h4>2021년 11월 </h4> 
+		             <button><</button> 2021년 11월  <button>></button> 
 		             <br><br>
 		          </div>
 		          <div class="row stat-cards" id="stats">
+		          
 		            <div class="col-md-6 col-xl-3">
 		              <article class="stat-cards-item">
 		                <div class="stat-cards-icon primary">
@@ -89,7 +91,7 @@
 		                  <i class="icon-paper" ></i>
 		                </div>
 		                <div class="stat-cards-info">
-		                  <p class="stat-cards-info__num">1</p>
+		                  <p class="stat-cards-info__num">${attendance.division }</p>
 		                  <p class="stat-cards-info__title">결근</p>
 		                  <p class="stat-cards-info__progress">
 		                    <span class="stat-cards-info__profit success">
@@ -134,42 +136,55 @@
 		                </div>
 		              </article>
 		            </div>
+		         
 		          </div>
 		          <div class="row">
 		            <div class="col-lg-3">
 		              <article class="customers-wrapper">
 		                <!-- <div id="employee-info"> -->
 		                  <div class="box">
-<!-- 		                    <img src="../../elegant/elegant/img/avatar/avatar-face-02.png" alt="증명사진" class="profile" width="200" height="200" border-radius="30%"> -->
 						
 		                  </div>
 		                	<div id="time"></div> 
 		                  <div align="center" id="attend_btn">
-			                  <c:if test="${attendance.startTime eq null}"> 
-			                  	<button id="startWork">출근</button>
-			                  </c:if>
-			                  <c:if test="${attendance.startTime ne null }">
+<%-- 			                  <c:if test="${attendance.startTime eq null}">  --%>
+			                  	<input type="submit" id="startWork" value="출근">
+			                  
+<%-- 			                  </c:if> --%>
+<%-- 			                  <c:if test="${attendance.startTime ne null }"> --%>
 			                   	<button id="finishWork">퇴근</button>
-			                  </c:if>
+<%-- 			                  </c:if> --%>
 		                  </div>
 		                  <br>
 		              </article>
 		              <script>
-		              $("#attend_btn").click(function(){
+		              $("#startWork").click(function(){
+		            	  var now = new Date();
+		            	  var hr = now.getHours();
+		            	  var min = now.getMinutes();
+		            	  var sec = now.getSeconds();
+		            	  var now1 = hr+ ":" + min +":"+ sec;
+		            	  confirm("출근하시겠습니까?");
+		            	  if(true){
+								location.href="/insertStartTime.do";
+							
+		            	  }
+		            	  $("#now1").text(now1);
+		              })
+		              
+		              $("#finishWork").click(function(){
 		            	  var now = new Date();
 		            	  var hr = now.getHours();
 		            	  var min = now.getMinutes();
 		            	  var sec = now.getSeconds();
 		            	  var now1 = hr+ ":"+ min+ ":"+ sec;
-		            	  confirm("정말입니까?");
-		            	  if(confirmflag){
-		            		  
-		            	  }else{
-		            		  
-		            	  }
-		            	  $("#now").text(now1);
-		              console.log(now1);
+		            	  confirm("퇴근하시겠습니까?");
+		            		if(true){
+								location.href="/insertFinishTime.do";
+			            	 }
+		            	  $("#now2").text(now1);
 		              })
+		              
 		              $(document).ready(function(){
 		            	  var now = new Date();
 		            	  var year = now.getFullYear();
@@ -191,11 +206,11 @@
 		                <div class="top-cat-title">
 		                  
 		                </div>
-		                <c:forEach items="${aList }" var="Attendance">
+		               
 		                <ul class="top-cat-list">
 		                  <li>
-		                      <div class="listTitle">
-		                      	출근시간 : ${attendance.startTime }
+		                      <div class="listTitle" >
+		                      	출근시간 : ${attendance.startTime } 
 		                      </div>
 		                  </li>
 		                  <li>
@@ -209,14 +224,14 @@
 		                      </div>
 		                  </li>
 		                </ul>
-		                </c:forEach>
+		                
 		              </article>
 		            </div>
 		            <div class="main-contents">
 		                <table class="main-table">
 		                  <thead>
 		                    <tr class="table-detail">
-		                      <th>No</th>
+		                      
 		                      <th>일자</th>
 		                      <th>업무시작시간</th>
 		                      <th>업무종료시간</th>
@@ -228,53 +243,53 @@
 		                  <tbody>
 		                  <c:if test="${empty aList }">
 		                  	<tr>
-		                  		<td colspan="7"> 조회된 정보가 없습니다. </td>
+		                  		<td colspan="6"> 조회된 정보가 없습니다. </td>
 		                  	</tr>
 		                  </c:if>
 		                  <c:forEach items="${aList }" var="attendance">
 		                    <tr>
-		                      <td>${attendance.attendNo }</td>
-		                      <td>${attendance.attendDate }</td>
+		                      
+		                      <td><fmt:formatDate pattern="yyyy년 MM월 dd일" value="${attendance.attendDate }"/></td>
 		                      <td>${attendance.startTime }</td>    
 		                      <td>${attendance.finishTime }</td>
-		                      <td>${attendance.division }</td>
 		                      <td>${attendance.totalWorkhour }</td>
+		                      <td>${attendance.division }</td>
 		                      <td>${attendance.note }</td>
 		                    </tr>
 		                   </c:forEach>
 		                   
-<!-- 		                   <tr align="center" height="20"> -->
-<!-- 					         <td colspan="7"> -->
-<%-- 					         <c:url var="before" value="/attend/attendanceList.do"> --%>
-<%-- 					            <c:param name="page" value="${pi.currentPage - 1 }"></c:param> --%>
-<%-- 					         </c:url> --%>
-<%-- 					         <c:url var="after" value="/attend/attendanceList.do"> --%>
-<%-- 					            <c:param name="page" value="${pi.currentPage + 1 }"></c:param>          --%>
-<%-- 					         </c:url> --%>
-<%-- 					         <c:url var="pagination" value="/attend/attendanceList.do"> --%>
-<%-- 					            <c:param name="page" value="${p }"></c:param> --%>
-<%-- 					         </c:url> --%>
-<%-- 					            <c:if test="${pi.currentPage <= 1 }"> --%>
-<!-- 					               [이전] -->
-<%-- 					            </c:if> --%>
-<%-- 					            <c:if test="${pi.currentPage > 1 }"> --%>
-<%-- 					               <a href="${before }">[이전]</a> --%>
-<%-- 					            </c:if> --%>
-<%-- 					            <c:forEach var="p" begin="${pi.startNavi }" end="${pi.endNavi }"> --%>
-<%-- 					               <c:if test="${p eq pi.currentPage }"> --%>
-<%-- 					                  <font color="red" size="4">[${p }]</font> --%>
-<%-- 					               </c:if> --%>
-<%-- 					               <c:if test="${p ne pi.currentPage }"> --%>
-<%-- 					                  <a href="${pagination }${p}">[${p }]</a>&nbsp; --%>
-<%-- 					               </c:if> --%>
-<%-- 					            </c:forEach> --%>
+		                   <tr align="center" height="20">
+					         <td colspan="7">
+					         <c:url var="before" value="/attend/attendanceList.do">
+					            <c:param name="page" value="${pi.currentPage - 1 }"></c:param>
+					         </c:url>
+					         <c:url var="after" value="/attend/attendanceList.do">
+					            <c:param name="page" value="${pi.currentPage + 1 }"></c:param>         
+					         </c:url>
+					         <c:url var="pagination" value="/attend/attendanceList.do">
+					            <c:param name="page" value="${p }"></c:param>
+					         </c:url>
+					            <c:if test="${pi.currentPage <= 1 }">
+					               [이전]
+					            </c:if>
+					            <c:if test="${pi.currentPage > 1 }">
+					               <a href="${before }">[이전]</a>
+					            </c:if>
+					            <c:forEach var="p" begin="${pi.startNavi }" end="${pi.endNavi }">
+					               <c:if test="${p eq pi.currentPage }">
+					                  <font color="red" size="4">[${p }]</font>
+					               </c:if>
+					               <c:if test="${p ne pi.currentPage }">
+					                  <a href="${pagination }${p}">[${p }]</a>&nbsp;
+					               </c:if>
+					            </c:forEach>
 					            
-<%-- 					            <c:if test="${pi.currentPage >= pi.maxPage }"> --%>
-<!-- 					               [다음] -->
-<%-- 					            </c:if> --%>
-<%-- 					            <c:if test="${pi.currentPage < pi.maxPage }"> --%>
-<%-- 					               <a href="${after }">[다음]</a> --%>
-<%-- 					            </c:if> --%>
+					            <c:if test="${pi.currentPage >= pi.maxPage }">
+					               [다음]
+					            </c:if>
+					            <c:if test="${pi.currentPage < pi.maxPage }">
+					               <a href="${after }">[다음]</a>
+					            </c:if>
 					         </td>
 					      </tr>
 		                  </tbody>
