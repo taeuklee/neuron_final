@@ -73,13 +73,13 @@ public class ProjectController {
 			@RequestParam(value = "page", required = false) Integer page) {
 		int currentPage = (page != null) ? page : 1;
 		int totalCount = service.getListCount(projectNo);
-		System.out.println(totalCount);
 		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
-		List<ProjectMember> memberList = service.selectMemberList(projectNo);
+		List<ProjectMember> memberList = service.selectMemberAllList(pi,projectNo);
 		Project project = service.selectProject(projectNo);
 		int masterEmpNo = project.getProjectMaster();
 		Employee master = service.selectMaster(masterEmpNo);
 		mv.addObject("project", project);
+		mv.addObject("pi", pi);
 		mv.addObject("master", master);
 		mv.addObject("memberList", memberList);
 		mv.setViewName("project/selectProjectMemberList");
@@ -87,25 +87,36 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "selectSearchMemberList.do", method = RequestMethod.GET)
-	public void selectSearchMemberList(@RequestParam(value = "projectNo") int projectNo,
-			@RequestParam(value = "searchText") String searchText, ModelAndView mv, HttpServletResponse response)
+	public ModelAndView selectSearchMemberList(@RequestParam(value="projectNo") int projectNo,
+			@RequestParam(value = "searchText") String searchText, ModelAndView mv, HttpServletResponse response
+			,@RequestParam(value = "page", required = false) Integer page)
 			throws JsonIOException, IOException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("projectNo", projectNo);
 		map.put("searchText", searchText);
-		List<ProjectMember> memberList = service.selectSearchMemberList(map);
-		PrintWriter out = response.getWriter();
-		if (!memberList.isEmpty()) {
-			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-			gson.toJson(memberList, response.getWriter());
-		} else {
-			out.println("<script>alert('해당하는 팀원이 없습니다');</script>");
-			out.flush();
-		}
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = service.getListSearchCount(map);
+		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
+		pi.setSearchText(searchText);
+		pi.setProjectNo(projectNo);
+		List<ProjectMember> memberList = service.selectSearchMemberList(pi);
+//		PrintWriter out = response.getWriter();
+//		if (!memberList.isEmpty()) {
+//			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+//			gson.toJson(memberList, response.getWriter());
+//		} else {
+//			out.println("<script>alert('해당하는 팀원이 없습니다');</script>");
+//			out.flush();
+//		}
+		mv.addObject("pi", pi);
+		mv.addObject("memberList", memberList);
+		mv.addObject("searchText", searchText);
+		mv.setViewName("project/selectSearchProjectMember");
+		return mv;
 	}
 
 	@RequestMapping(value = "moveInviteMember.do", method = RequestMethod.GET)
-	public ModelAndView moveInviteMember(@RequestParam(value = "projectNo") int projectNo, ModelAndView mv) {
+	public ModelAndView moveInviteMember(@RequestParam(value="projectNo") int projectNo, ModelAndView mv) {
 		Project project = service.selectProject(projectNo);
 		mv.addObject("project", project);
 		mv.setViewName("project/inviteMember");
@@ -113,7 +124,7 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "moveTaskMember.do", method = RequestMethod.GET)
-	public ModelAndView moveTaskMember(@RequestParam(value = "projectNo") int projectNo, ModelAndView mv) {
+	public ModelAndView moveTaskMember(@RequestParam(value="projectNo") int projectNo, ModelAndView mv) {
 		mv.addObject("projectNo", projectNo);
 		mv.setViewName("project/insertTaskMemberList");
 		return mv;
@@ -257,35 +268,46 @@ public class ProjectController {
 		}
 	}
 
-	@RequestMapping(value = "insertInviteProjectSearchMemberList.do", method = RequestMethod.GET)
-	public String insertInviteProjectSearchMemberList(@RequestParam(value = "empNo") int empNo,
-			@RequestParam(value = "projectNo") int projectNo, @RequestParam(value = "searchText") String searchText) {
+	@RequestMapping(value = "insertInviteProjectSearchMemberList.do", method = RequestMethod.POST)
+	public void insertInviteProjectSearchMemberList(@RequestParam(value = "empNo") int empNo,
+			@RequestParam(value = "projectNo") int projectNo, @RequestParam(value = "searchText") String searchText
+			,HttpServletResponse response) throws IOException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("empNo", empNo);
 		map.put("projectNo", projectNo);
 		map.put("searchText", searchText);
 		List<Employee> eList = service.selectInviteList(map);
-		return "";
+		PrintWriter out = response.getWriter();
+		if (!eList.isEmpty()) {
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+			gson.toJson(eList, response.getWriter());
+		} else {
+			out.println("<script>alert('해당하는 팀원이 없습니다');</script>");
+			out.flush();
+		}
 	}
 
 	@RequestMapping(value = "inviteMember.do", method = RequestMethod.GET)
-	public String inviteMember(@RequestParam(value = "projectNo") int projectNo, HttpServletRequest request,
+	public void inviteMember(@RequestParam(value="projectNo") int projectNo, HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		String[] empNoList = request.getParameterValues("empNo");
 		int[] empNoList2 = Arrays.stream(empNoList).mapToInt(Integer::parseInt).toArray();
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("projectNo", projectNo);
 		map.put("empNoList", empNoList2);
 		int insertMemberResult = service.insertProjectMemberList(map);
 		if (insertMemberResult > 0) {
-			out.println("<script>alert('팀원 초대에 성공했습니다');</script>");
+			out.println("<script>alert('팀원이 초대되었습니다');</script>");
+			out.println("<script>window.opener.location.reload();</script>");
+			out.println("<script>window.close();</script>");
 			out.flush();
 		} else {
 			out.println("<script>alert('팀원 초대에 실패하였습니다');</script>");
 			out.flush();
 		}
-		return "";
 	}
 
 	@RequestMapping(value = "moveInsertProjectEvent.do", method = RequestMethod.GET)

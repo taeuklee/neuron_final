@@ -35,7 +35,7 @@ public interface ProjectStore {
 
 	public List<ProjectCalendar> selectProjectCalendar(int projectNo);
 
-	public List<ProjectMember> selectSearchMemberList(Map<String, Object> map);
+	public List<ProjectMember> selectSearchMemberList(PageInfo pi);
 
 	public int selectListCount(int projectNo);
 
@@ -56,4 +56,8 @@ public interface ProjectStore {
 	public int updateProjectMember(Map<String, Object> map);
 
 	public int deleteProjectRequest(int projectNo);
+
+	public List<ProjectMember> selectMemberAllList(PageInfo pi, int projectNo);
+
+	public int getSearchListCount(Map<String, Object> map);
 }

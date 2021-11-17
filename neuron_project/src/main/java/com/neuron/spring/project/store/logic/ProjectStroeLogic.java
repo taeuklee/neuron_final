@@ -3,6 +3,7 @@ package com.neuron.spring.project.store.logic;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.object.StoredProcedure;
@@ -93,8 +94,10 @@ public class ProjectStroeLogic implements ProjectStore{
 	}
 
 	@Override
-	public List<ProjectMember> selectSearchMemberList(Map<String, Object> map) {
-		List<ProjectMember> memberList = sqlSession.selectList("projectMapper.selectSearchMemberList", map);
+	public List<ProjectMember> selectSearchMemberList(PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		List<ProjectMember> memberList = sqlSession.selectList("projectMapper.selectSearchMemberList", pi, rowBounds);
 		return memberList;
 	}
 
@@ -156,6 +159,22 @@ public class ProjectStroeLogic implements ProjectStore{
 	public int deleteProjectRequest(int projectNo) {
 		int result = sqlSession.update("projectMapper.deleteProjectRequest", projectNo);
 		return result;
+	}
+
+	@Override
+	public List<ProjectMember> selectMemberAllList(PageInfo pi, int projectNo) {
+		pi.setProjectNo(projectNo);
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		List<ProjectMember> bList 
+			= sqlSession.selectList("projectMapper.selectMemberAllList", pi, rowBounds);
+		return bList;
+	}
+
+	@Override
+	public int getSearchListCount(Map<String, Object> map) {
+		int totalCount = sqlSession.selectOne("projectMapper.searchListCount", map);
+		return totalCount;
 	}
 
 

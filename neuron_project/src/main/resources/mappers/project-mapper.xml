@@ -89,6 +89,18 @@
 	</select>
 	
 <!-- 	프로젝트 팀원 초대시 검색 -->
+	<select id="selectInviteList" resultMap="employeeResultMap" parameterType="hashMap">
+		SELECT
+	DISTINCT EMP.EMP_NAME, EMP.EMP_JOB,EMP.EMP_NO, EMP.DEPT_CODE, DEPT.DEPT_NAME
+	FROM
+	EMPLOYEE EMP
+	LEFT JOIN
+DEPT DEPT ON (EMP.DEPT_CODE=DEPT.DEPT_CODE)
+LEFT JOIN EMP_PROJECT A ON (EMP.EMP_NO = A.EMP_NO)
+WHERE EMP.EMP_NAME LIKE '%'|| #{searchText} ||'%'
+AND NOT EMP.EMP_NO = #{empNo}
+AND EMP.EMP_NO NOT IN ( SELECT EMP_NO FROM EMP_PROJECT WHERE PROJECT_NO = #{projectNo})
+	</select>
 	
 <!-- 	프로젝트 정보 등록한 뒤 팀원 넣을때 필요한 no 가져오는 구문 -->
 	<select id="selectProjectOne" resultMap="ProjectResultMap" parameterType="Project">
@@ -121,8 +133,13 @@
 		SELECT EPRO.EMP_NO, EPRO.EMP_PROJECT_AUTH, EMP.EMP_JOB, EMP.EMP_NAME, DEPT.DEPT_NAME FROM EMP_PROJECT EPRO JOIN EMPLOYEE EMP ON (EPRO.EMP_NO = EMP.EMP_NO) JOIN DEPT DEPT ON (DEPT.DEPT_CODE = EMP.DEPT_CODE) WHERE PROJECT_NO = #{projectNo}
 	</select>
 	
+<!-- 	프로젝트 팀원리스트(팀원목록 페이지) -->
+	<select id="selectMemberAllList" resultMap="ProjectMemberResultMap">
+		SELECT EPRO.EMP_NO, EPRO.EMP_PROJECT_AUTH, EMP.EMP_JOB, EMP.EMP_NAME, DEPT.DEPT_NAME FROM EMP_PROJECT EPRO JOIN EMPLOYEE EMP ON (EPRO.EMP_NO = EMP.EMP_NO) JOIN DEPT DEPT ON (DEPT.DEPT_CODE = EMP.DEPT_CODE) WHERE PROJECT_NO = #{projectNo}
+	</select>
+	
 <!-- 	팀원목록에서 검색시 -->
-	<select id="selectSearchMemberList" resultMap="ProjectMemberResultMap" parameterType="map">
+	<select id="selectSearchMemberList" resultMap="ProjectMemberResultMap">
 		SELECT EPRO.EMP_NO, EPRO.EMP_PROJECT_AUTH, EMP.EMP_JOB, EMP.EMP_NAME, DEPT.DEPT_NAME FROM EMP_PROJECT EPRO JOIN EMPLOYEE EMP ON (EPRO.EMP_NO = EMP.EMP_NO) JOIN DEPT DEPT ON (DEPT.DEPT_CODE = EMP.DEPT_CODE) WHERE PROJECT_NO = #{projectNo} AND EMP.EMP_NAME LIKE  '%' || #{searchText} || '%'
 	</select>
 	
@@ -149,6 +166,11 @@
 <!-- 	프로젝트 멤버 총 안원수 -->
 	<select id="selectListCount" resultType="_int" parameterType="_int">
 		SELECT COUNT(*) FROM EMP_PROJECT EPRO JOIN EMPLOYEE EMP ON (EPRO.EMP_NO = EMP.EMP_NO) JOIN DEPT DEPT ON (DEPT.DEPT_CODE = EMP.DEPT_CODE) WHERE PROJECT_NO =#{projectNo}
+	</select>
+	
+<!-- 	검색된 프로젝트 멤버 총 인원수 -->
+	<select id="searchListCount" resultType="_int" parameterType="hashMap">
+	SELECT COUNT(*) FROM EMP_PROJECT EPRO JOIN EMPLOYEE EMP ON (EPRO.EMP_NO = EMP.EMP_NO) JOIN DEPT DEPT ON (DEPT.DEPT_CODE = EMP.DEPT_CODE) WHERE PROJECT_NO =#{projectNo} AND EMP.EMP_NAME LIKE '%' || #{searchText} || '%'
 	</select>
 	
 <!--     멤버등록 -->

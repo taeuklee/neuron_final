@@ -79,8 +79,9 @@ border-color:#1e2b37;
 			</form>
 		</div>
 		<div style="height: 70%; width: 100%">
-		<form id="insertProjectForm" action="inviteMember.do?projectNo=${project.projectNo }" method="get">
-			<div style="float: left; width: 50%; height: 100%; overflow: auto" id="projectMember">
+		<form id="insertProjectForm" action="inviteMember.do" method="get" style="height: 100%; width: 50%; float: left;">
+			<input type="hidden" value=${project.projectNo } name="projectNo">
+			<div style="float: left; width: 100%; height: 100%; overflow: auto" id="projectMember">
 			
 			</div>
 			<input type="submit" class="btn btn-primary" id="invite" style="position: relative; left:470px;" value="확인">

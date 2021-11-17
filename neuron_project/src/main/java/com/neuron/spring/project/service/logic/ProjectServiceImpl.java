@@ -91,8 +91,8 @@ public class ProjectServiceImpl implements ProjectService{
 	}
 
 	@Override
-	public List<ProjectMember> selectSearchMemberList(Map<String, Object> map) {
-		List<ProjectMember> memberList = store.selectSearchMemberList(map);
+	public List<ProjectMember> selectSearchMemberList(PageInfo pi) {
+		List<ProjectMember> memberList = store.selectSearchMemberList(pi);
 		return memberList;
 	}
 
@@ -154,6 +154,18 @@ public class ProjectServiceImpl implements ProjectService{
 	public int deleteProjectRequest(int projectNo) {
 		int result = store.deleteProjectRequest(projectNo);
 		return result;
+	}
+
+	@Override
+	public List<ProjectMember> selectMemberAllList(PageInfo pi, int projectNo) {
+		List<ProjectMember> pList = store.selectMemberAllList(pi, projectNo);
+		return pList;
+	}
+
+	@Override
+	public int getListSearchCount(Map<String, Object> map) {
+		int totalCount = store.getSearchListCount(map);
+		return totalCount;
 	}
 
 

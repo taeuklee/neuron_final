@@ -315,17 +315,6 @@
 										</tr>
 									</thead>
 									<tbody id="memberList">
-										<tr>
-											<td>
-												<div class="user_icon">
-													<img src="images/img1.jpg" alt="">
-												</div> ${master.empName }
-											</td>
-											<td>${master.deptName }</td>
-											<td>책임자</td>
-											<td></td>
-										</tr>
-										<c:if test="${not empty memberList }">
 										<c:forEach items="${memberList }" var="memberList">
 											<tr>
 												<td>
@@ -355,7 +344,6 @@
 												</c:if>
 											</tr>
 										</c:forEach>
-										</c:if>
 										<!-- 										<tr> -->
 										<!-- 											<td>2</td> -->
 										<!-- 											<td> -->
@@ -380,7 +368,7 @@
 							<div class="panel-footer p-0" style="height: 5%">
 								<div class="row" style="height: 100%">
 									<div class="col-sm-6 col-xs-4" style="height: 100%" id="page">
-										<c:url var="before" value="selectProjectMemberList.do?projectNo=${project.projectNo }">
+										<c:url var="before" value="selectSearchMemberList.do?projectNo=${project.projectNo }&searchText=${searchText }">
 											<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
 										</c:url>
 										<c:if test="${pi.currentPage <= 1 }">
@@ -391,7 +379,7 @@
 										</c:if>
 										<c:forEach var="p" begin="${pi.startNavi }"
 											end="${pi.endNavi }">
-											<c:url var="pagination" value="selectProjectMemberList.do?projectNo=${project.projectNo }">
+											<c:url var="pagination" value="selectSearchMemberList.do?projectNo=${project.projectNo }&searchText=${searchText }">
 												<c:param name="page" value="${p }"></c:param>
 											</c:url>
 											<c:if test="${p eq pi.currentPage }">
@@ -401,7 +389,7 @@
 												<a href="${pagination }">${p }</a>&nbsp;
 										</c:if>
 										</c:forEach>
-										<c:url var="after" value="selectProjectMemberList.do?projectNo=${project.projectNo }">
+										<c:url var="after" value="selectSearchMemberList.do?projectNo=${project.projectNo }&searchText=${searchText }">
 											<c:param name="page" value="${pi.currentPage + 1 }"></c:param>
 										</c:url>
 										<c:if test="${pi.currentPage >= pi.maxPage }">
@@ -432,7 +420,7 @@
 	<script type="text/javascript">
 		function inviteMember() {
 
-			var url = "moveInviteMember.do?projectNo=${project.projectNo}";
+			var url = "moveInviteMember.do?projectNo=${projectNo}";
 			var name = "팀원 초대";
 			var option = "width = 1000, height = 800, top = 300 , left = 650, location = no, toolbars = no, status = no, scrollbars = no, resizable = no";
 			window.open(url, name, option);

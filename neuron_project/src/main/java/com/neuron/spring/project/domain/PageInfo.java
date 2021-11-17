@@ -16,8 +16,29 @@ public class PageInfo {
 	// 페이지 마지막 번호
 	private int maxPage;
 	
+	private int projectNo;
+	
+	private String searchText;
 	public PageInfo() {}
 	
+
+
+	public PageInfo(int currentPage, int boardLimit, int naviLimit, int startNavi, int endNavi, int totalCount,
+			int maxPage, int projectNo, String searchText) {
+		super();
+		this.currentPage = currentPage;
+		this.boardLimit = boardLimit;
+		this.naviLimit = naviLimit;
+		this.startNavi = startNavi;
+		this.endNavi = endNavi;
+		this.totalCount = totalCount;
+		this.maxPage = maxPage;
+		this.projectNo = projectNo;
+		this.searchText = searchText;
+	}
+
+
+
 	public PageInfo(int currentPage, int boardLimit, int naviLimit, int startNavi, int endNavi, int totalCount,
 			int maxPage) {
 		super();
@@ -88,11 +109,29 @@ public class PageInfo {
 		this.maxPage = maxPage;
 	}
 
+	
+	public int getProjectNo() {
+		return projectNo;
+	}
+
+	public void setProjectNo(int projectNo) {
+		this.projectNo = projectNo;
+	}
+
+	public String getSearchText() {
+		return searchText;
+	}
+
+	public void setSearchText(String searchText) {
+		this.searchText = searchText;
+	}
+
 	@Override
 	public String toString() {
-		return "PageInfo [현재 페이지=" + currentPage + ", 게시글 갯수=" + boardLimit + ", 네비 갯수=" + naviLimit
-				+ ", 네비시작=" + startNavi + ", 네비끝=" + endNavi + ", 전체 갯수=" + totalCount + ", 최대 페이지="
-				+ maxPage + "]";
+		return "PageInfo [currentPage=" + currentPage + ", boardLimit=" + boardLimit + ", naviLimit=" + naviLimit
+				+ ", startNavi=" + startNavi + ", endNavi=" + endNavi + ", totalCount=" + totalCount + ", maxPage="
+				+ maxPage + ", projectNo=" + projectNo + ", searchText=" + searchText + "]";
 	}
+
 	
 }
