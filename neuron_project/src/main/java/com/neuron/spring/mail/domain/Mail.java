@@ -11,6 +11,10 @@ public class Mail {
 	private String receiverId2;
 	private Date sendTime;
 	private Date readTime;
+	private String mailFileName;
+	private String mailFileRename;
+	private String mailFileSize;
+	private String mailFilePath;
 	private String readYn;
 	private String sStatus;
 	private String rStatus;
@@ -18,7 +22,8 @@ public class Mail {
 	public Mail () {}
 
 	public Mail(int mailNo, String mailTitle, String mailContents, String senderId, String receiverId,
-			String receiverId2, Date sendTime, Date readTime, String readYn, String sStatus, String rStatus) {
+			String receiverId2, Date sendTime, Date readTime, String mailFileName, String mailFileRename,
+			String mailFileSize, String mailFilePath, String readYn, String sStatus, String rStatus) {
 		super();
 		this.mailNo = mailNo;
 		this.mailTitle = mailTitle;
@@ -28,6 +33,10 @@ public class Mail {
 		this.receiverId2 = receiverId2;
 		this.sendTime = sendTime;
 		this.readTime = readTime;
+		this.mailFileName = mailFileName;
+		this.mailFileRename = mailFileRename;
+		this.mailFileSize = mailFileSize;
+		this.mailFilePath = mailFilePath;
 		this.readYn = readYn;
 		this.sStatus = sStatus;
 		this.rStatus = rStatus;
@@ -97,6 +106,38 @@ public class Mail {
 		this.readTime = readTime;
 	}
 
+	public String getMailFileName() {
+		return mailFileName;
+	}
+
+	public void setMailFileName(String mailFileName) {
+		this.mailFileName = mailFileName;
+	}
+
+	public String getMailFileRename() {
+		return mailFileRename;
+	}
+
+	public void setMailFileRename(String mailFileRename) {
+		this.mailFileRename = mailFileRename;
+	}
+
+	public String getMailFileSize() {
+		return mailFileSize;
+	}
+
+	public void setMailFileSize(String mailFileSize) {
+		this.mailFileSize = mailFileSize;
+	}
+
+	public String getMailFilePath() {
+		return mailFilePath;
+	}
+
+	public void setMailFilePath(String mailFilePath) {
+		this.mailFilePath = mailFilePath;
+	}
+
 	public String getReadYn() {
 		return readYn;
 	}
@@ -125,9 +166,11 @@ public class Mail {
 	public String toString() {
 		return "Mail [mailNo=" + mailNo + ", mailTitle=" + mailTitle + ", mailContents=" + mailContents + ", senderId="
 				+ senderId + ", receiverId=" + receiverId + ", receiverId2=" + receiverId2 + ", sendTime=" + sendTime
-				+ ", readTime=" + readTime + ", readYn=" + readYn + ", sStatus=" + sStatus + ", rStatus=" + rStatus
-				+ "]";
+				+ ", readTime=" + readTime + ", mailFileName=" + mailFileName + ", mailFileRename=" + mailFileRename
+				+ ", mailFileSize=" + mailFileSize + ", mailFilePath=" + mailFilePath + ", readYn=" + readYn
+				+ ", sStatus=" + sStatus + ", rStatus=" + rStatus + "]";
 	}
+
 	
 	
 	

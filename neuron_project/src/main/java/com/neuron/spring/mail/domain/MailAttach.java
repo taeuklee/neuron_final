@@ -1,15 +1,15 @@
 package com.neuron.spring.mail.domain;
 
-public class Attach {
+public class MailAttach {
 	private int mfileNo;
 	private int mailNo;
 	private String mfileName;
 	private int mfileSize;
 	private String mfilePath;
 	
-	public Attach() {}
+	public MailAttach() {}
 
-	public Attach(int mfileNo, int mailNo, String mfileName, int mfileSize, String mfilePath) {
+	public MailAttach(int mfileNo, int mailNo, String mfileName, int mfileSize, String mfilePath) {
 		super();
 		this.mfileNo = mfileNo;
 		this.mailNo = mailNo;

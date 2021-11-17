@@ -18,4 +18,11 @@ public interface MailService {
 
 	public List<Mail> printAllChkOut(PageInfo pi, int empNo);
 
+	public int registerMail(Mail mail);
+
+	public Mail printOne(int mailNo);
+
+	public int removeReceiveMail(int mailNo);
+	public int removeSendMail(int mailNo);
+
 }

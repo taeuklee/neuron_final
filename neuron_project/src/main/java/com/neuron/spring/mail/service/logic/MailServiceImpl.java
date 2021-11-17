@@ -58,4 +58,30 @@ public class MailServiceImpl implements MailService{
 	}
 
 
+	@Override
+	public int registerMail(Mail mail) {
+		int result = store.postMail(mail);
+		return result;
+	}
+
+
+	@Override
+	public Mail printOne(int mailNo) {
+		Mail mail = store.selectOne(mailNo);
+		return mail;
+	}
+
+
+	@Override
+	public int removeReceiveMail(int mailNo) {
+		int result = store.deleteReceiveMail(mailNo);
+		return result;
+	}
+	@Override
+	public int removeSendMail(int mailNo) {
+		int result = store.deleteSendMail(mailNo);
+		return result;
+	}
+
+
 }

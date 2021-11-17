@@ -18,4 +18,11 @@ public interface MailStore {
 	public int selectChkOutListCount(int empNo);
 
 	public List<Mail> selectAllChkOut(PageInfo pi, int empNo);
+
+	public int postMail(Mail mail);
+
+	public Mail selectOne(int mailNo);
+
+	public int deleteReceiveMail(int mailNo);
+	public int deleteSendMail(int mailNo);
 }

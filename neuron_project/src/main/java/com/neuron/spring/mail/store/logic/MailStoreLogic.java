@@ -59,4 +59,27 @@ public class MailStoreLogic implements MailStore{
 		return mList;
 	}
 
+	@Override
+	public int postMail(Mail mail) {
+		int result = sqlSession.insert("mailMapper.postMail", mail);
+		return result;
+	}
+
+	@Override
+	public Mail selectOne(int mailNo) {
+		Mail mail = sqlSession.selectOne("mailMapper.selectOne", mailNo);
+		return mail;
+	}
+
+	@Override
+	public int deleteReceiveMail(int mailNo) {
+		int result = sqlSession.delete("mailMapper.deleteRecieveMail", mailNo);
+		return result;
+	}
+
+	@Override
+	public int deleteSendMail(int mailNo) {
+		int result = sqlSession.delete("mailMapper.deleteSendMail", mailNo);
+		return result;
+	}
 }

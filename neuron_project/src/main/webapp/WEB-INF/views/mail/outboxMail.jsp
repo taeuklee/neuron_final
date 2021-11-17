@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+       <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,16 +78,16 @@
 		                <th id="col_7">크기</th>
 		              </tr>  
 		              
+		              <c:forEach items="${mList }" var="mail">
 		              <tr>
 		                <td><input type="checkbox" name="" id=""></td>
+		                <td>${mail.receiverId }</td>
+		                <td>${mail.mailTitle}</td>
 		                <td></td>
-		                <td></td>
-		                <td></td>
-		                <td></td>
-		                <td></td>
+		                <td>${mail.sendTime }</td>
 		                <td></td>
 		              </tr>
-		              
+		              </c:forEach>
 		            </table>
 		            
 		          </div>
