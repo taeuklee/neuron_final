@@ -22,6 +22,9 @@
   <select id="selectAllList" resultMap="attendResultMap">
 		SELECT * FROM ATTENDANCE WHERE EMP_NO = #{empNo} ORDER BY ATTEND_NO DESC
 	</select>
+	
+<!-- 	<select id ="" -->
+<!-- 	SELECT COUNT(*) FROM ATTENDANCE WHERE EMP_NO = #{empNo} AND DIVISION = '지각' AND TO_DATE(ATTEND_DATE,'YY/MM') = (SELECT TO_CHAR(SYSDATE, 'YY/MM') FROM DUAL) -->
 <!--   출근시간, 퇴근시간 입력 -->
   <insert id="putTime">
   		INSERT INTO ATTENDANCE VALUES(SEQ_ATTENDNUM.NEXTVAL, #{empNo }, SYSDATE, #{startTime }, #{finishTime }, #{totalWorkhour }, #{division }, #{note } )

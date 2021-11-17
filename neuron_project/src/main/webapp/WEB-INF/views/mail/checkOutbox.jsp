@@ -4,8 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>받은메일함</title>
-<link rel="stylesheet" href="../../css/mailWrite.css">
+<title>보낸메일함</title>
+<link rel="stylesheet" href="../../css/outboxMail.css">
  
   <!-- base:css -->
   <link rel="stylesheet" href="vendors/mdi/css/materialdesignicons.min.css">
@@ -48,12 +48,6 @@
   <!-- Custom js for this page-->
   <script src="js/dashboard.js"></script>
   <!-- End custom js for this page-->
-  
-  <script>
-            function openPop(){
-              var popup = window.open('/addressbook.jsp', '주소록팝업','width=800px;, height=800px;');
-            }
-   </script>
 </head>
 <body>
 	<div class="container-scroller">
@@ -64,35 +58,43 @@
 			<div class="main-panel">
 		        <div class="content-wrapper">
 		          <div class="top-title">
-		            <h2>메일쓰기</h2>
+		            <h2>수신확인</h2>
+		            <br><br>
 		          </div>
-		          <br><br>
-		          <div class="mail-content">
-		            <table class="mail-top" border="0">
+		          <div class="mail-navi">
+		            <button>삭제</button>
+		            <button>전달</button> *2개이상 불가
+		          </div>
+		
+		          <div >
+		            <table class="mail-table">
 		              <tr>
-		                <th>받는사람</th>
-		                <td><input type="text" name="" class="mt1"><button class="addr_btn" target="_blank" onclick="openPop()">주소록</button></td>
-		                <!-- 엔터 누르면 블락 잡히는거 -->
-		              </tr>
+		                <th id="col_1"><input type="checkbox" name="checkAll" id="checkAll"></th>
+		                <th id="col_3">수신인</th>
+		                <th id="col_4">제목</th>
+		                <th id="col_5">icon</th>
+		                <th id="col_6">날짜 및 시간</th>
+		                <th id="col_6-1">수신확인</th>
+		                <th id="col_7">크기</th>
+		              </tr>  
+		              
 		              <tr>
-		                <th>참조</th>
-		                <td><input type="text" name="" class="mt1"><button class="addr_btn">주소록</button></td>
-		              </tr>
-		              <tr>
-		                <th>제목</th>
+		                <td><input type="checkbox" name="" id=""></td>
+		                <td></td>
+		                <td></td>
+		                <td></td>
+		                <td></td>
+		                <td></td>
 		                <td></td>
 		              </tr>
-		              <tr>
-		                <th>첨부파일</th>
-		                <td></td>
-		              </tr>
+		              
 		            </table>
-		            <br>
-		            <textarea name="" id="" cols="173" rows="10"></textarea>
+		            
 		          </div>
-		        </div>
+		        
+		        </div>  
 		      </div>
-		</div>
-	</div>
+		     </div>
+		   </div>
 </body>
 </html>
