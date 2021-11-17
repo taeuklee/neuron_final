@@ -46,7 +46,8 @@
 		<result property="empMaster" column="EMP_MASTER"></result>
 	</resultMap>
 
-	<select id="selectAllDept" resultMap="daResultMap">
+<!-- 	id수정했습니다- 이태욱 -->
+	<select id="selectDeptAdminAll" resultMap="daResultMap">
 		SELECT E.DEPT_CODE, D.DEPT_NAME, T.TEAM_CODE, T.TEAM_NAME, E.EMP_NAME
 		FROM EMPLOYEE E
 		JOIN DEPT D

@@ -20,7 +20,7 @@ public class DeptStoreLogic implements DeptStore{
 
 	@Override
 	public List<DeptAdmin> selectAllDept(String master) {
-		List<DeptAdmin> daList = sqlSession.selectList("deptMapper.selectAllDept", master);
+		List<DeptAdmin> daList = sqlSession.selectList("deptMapper.selectDeptAdminAll", master);
 		return daList;
 	}
 
