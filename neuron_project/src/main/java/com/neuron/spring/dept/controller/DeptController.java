@@ -41,18 +41,6 @@ public class DeptController {
 		}
 	}
 	
-	
-//	@RequestMapping(value="deptListView.do", method=RequestMethod.GET)
-//	public String deptListView() {
-//		return "dept/deptListView";
-//	}
-//	
-
-	@RequestMapping(value="deptModifyView.do", method=RequestMethod.GET)
-	public String deptModifyView() {
-		return "dept/deptModifyView";
-	}
-	
 	// 부서 추가 폼 띄우기
 	@RequestMapping(value="deptAddView.do", method=RequestMethod.GET)
 	public String deptAddView() {
@@ -72,7 +60,7 @@ public class DeptController {
 		try {
 			int result = service.registerDept(deptAdmin);
 			if(result > 0) {
-				return "redirect:deptList.do";
+				return "redirect:deptListView.do";
 			}else {
 				request.setAttribute("msg", "실패");
 				return "common/errorPage";
@@ -83,6 +71,11 @@ public class DeptController {
 		}
 	}
 	
+	// 부서 수정하기 
+	@RequestMapping(value="deptModifyView.do", method=RequestMethod.GET)
+	public String deptModifyView() {
+		return "dept/deptModifyView";
+	}
 	
 	// 부서 수정
 //	@RequestMapping(value="deptModify.do", method=RequestMethod.POST)
@@ -112,7 +105,16 @@ public class DeptController {
 //	}
 	
 	// 부서 삭제
-	
+	  @RequestMapping(value="deptDelete.kh", method=RequestMethod.GET)
+	  public String deptDelete(@RequestParam("deptCode") String deptCode, Model model) {
+	     int result = service.removeDept(deptCode);
+	     if(result > 0) {
+	        return "redirect:deptListView.do";
+	     } else {
+	        model.addAttribute("msg", "부서 삭제 실패");
+	        return "common/errorPage";
+	     }
+	  }
 	
 
 }

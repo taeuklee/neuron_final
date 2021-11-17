@@ -62,20 +62,23 @@
 	</select>   -->
 	
 	<insert id="deptRegister" parameterType="DeptAdmin">
-	INSERT ALL
-	INTO DEPT(DEPT_CODE, DEPT_NAME) VALUES(#{deptCode}, #{deptName})
-	INTO TEAM(DEPT_CODE, TEAM_CODE, TEAM_NAME) VALUES(#{teamCode}, #{teamName})
-	SELECT *
-	FROM DUAL;
+		INSERT ALL
+		INTO DEPT(DEPT_CODE, DEPT_NAME) VALUES(#{deptCode}, #{deptName})
+		INTO TEAM(DEPT_CODE, TEAM_CODE, TEAM_NAME) VALUES(#{deptCode},#{teamCode}, #{teamName})
+		SELECT *
+		FROM DUAL
 	</insert>
 	
-<!-- 	<update id="deptModify" parameterType="DeptAdmin">
+	 	 
+ 	  <delete id="deptRemove" parameterType="String">
+ 		DELETE DEPT WHERE DEPT_CODE = #{deptCode}
+ 	 </delete>
+ 	 
+	
+<!--  	<update id="deptModify" parameterType="DeptAdmin">
 	 UPDATE DEPT SET 
-	</update>  -->
+	</update>  --> 
 	
-<!-- 	<delete id="" parameterType="string">
-	
-	</delete> -->
 	
 	 <select id="selectAllDept" resultMap="deptResultMap">
  	 	SELECT * FROM DEPT
@@ -88,5 +91,5 @@
  	  <select id="selectOneByTeam" parameterType="string" resultType="map">
  	 	SELECT * FROM TEAM where team_code = #{teamCode }
  	 </select>
- 	 
+
  </mapper>
