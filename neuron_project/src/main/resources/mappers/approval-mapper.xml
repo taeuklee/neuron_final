@@ -186,6 +186,13 @@
   		WHERE DOCUMENT_NO = #{documentNo,jdbcType=BIGINT}
   	</update>
   	
-  	
-  	
+<!--   	holiday용 -->
+  	<select id="selectHlistCount" resultType="_int">
+		SELECT COUNT(*) FROM DOCUMENT WHERE DOCUMENT_WRITER_NO = #{empNo} 
+	</select>
+
+  <select id="selectAllHlist" resultMap="DocResultMap">
+		SELECT * FROM DOCUMENT WHERE DOCUMENT_WRITER_NO = #{empNo} ORDER BY DOCUMENT_NO DESC
+	</select>
+	
   </mapper>

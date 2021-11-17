@@ -133,13 +133,6 @@
 		                    </tr>
 		                  </thead>
 		                  <tbody>
-		                  <tr>
-		                      <td>21.03.01</td>
-		                      <td>연차</td>    
-		                      <td>2021.03.12 ~ 2021.03.15</td>
-		                      <td>4일</td>
-		                      <td>.</td>
-		                    </tr>
 		                  
 		                  <c:forEach items="${dList }" var="document">
 		                    <tr>

@@ -8,11 +8,10 @@ import com.neuron.spring.attend.domain.PageInfo;
 
 public interface HolidayService {
 
-	public int getListCount();
+//	public int getListCount();
+//	public List<Attendance> printAll();
 
-	public List<Attendance> printAll();
+	public int getListCount(int empNo);
 
-//	public int getListCount(int empNo);
-//
-//	public List<Document> printAll(PageInfo pi, int empNo);
+	public List<Document> printAll(PageInfo pi, int empNo);
 }

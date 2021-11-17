@@ -21,29 +21,29 @@ public class HolidayServiceImpl implements HolidayService {
 //	@Autowired
 //	private ApprovalStore aStore;
 	
-	@Override
-	public int getListCount() {
-		int totalCount = Store.selectListCount();
-		return totalCount;
-	}
-
-	@Override
-	public List<Attendance> printAll() {
-		List<Attendance> dList = Store.selectAll();
-		return dList;
-	}
-
 //	@Override
-//	public int getListCount(int empNo) {
-//		int totalCount = Store.selectListCount(empNo);
+//	public int getListCount() {
+//		int totalCount = Store.selectListCount();
 //		return totalCount;
 //	}
 //
 //	@Override
-//	public List<Document> printAll(PageInfo pi, int empNo) {
-//		List<Document> dList = Store.selectAll(pi, empNo);
+//	public List<Attendance> printAll() {
+//		List<Attendance> dList = Store.selectAll();
 //		return dList;
 //	}
+
+	@Override
+	public int getListCount(int empNo) {
+		int totalCount = Store.selectListCount(empNo);
+		return totalCount;
+	}
+
+	@Override
+	public List<Document> printAll(PageInfo pi, int empNo) {
+		List<Document> dList = Store.selectAll(pi, empNo);
+		return dList;
+	}
 
 	
 

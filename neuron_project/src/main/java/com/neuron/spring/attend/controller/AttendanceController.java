@@ -12,7 +12,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,6 +64,7 @@ public class AttendanceController {
 			Model model
 			,HttpServletRequest request
 			,HttpSession session) {
+		
 		session = request.getSession();
 		Employee emp = new Employee();
 		emp = (Employee)session.getAttribute("loginEmployee");
@@ -75,22 +75,25 @@ public class AttendanceController {
 		int min = LocalDateTime.now().getMinute();
 		int sec = LocalDateTime.now().getSecond();
 		String startTime = hr+ ":" + min + ":" + sec;
-		attend.setStartTime(startTime);
-		if( hr < 9) {
-				attend.setDivision("정상");
-		}else {
-		 		attend.setDivision("지각");
-		}
-		attend.setEmpNo(empNo);
-		int result = service.insertTime(attend);
-		if(result > 0) {
-			model.addAttribute("startTime", startTime);
-			return "redirect:attendanceList.do";
-		}else {
+		
+		
+			attend.setStartTime(startTime);
+			if( hr < 9) {
+					attend.setDivision("정상");
+			}else {
+			 		attend.setDivision("지각");
+			}
+			attend.setEmpNo(empNo);
 			
-			model.addAttribute("msg", "시간 등록 실패!");
-			return "common/errorPage";
-		}
+			int result = service.insertTime(attend);
+			if(result > 0) {
+				model.addAttribute("startTime", startTime);
+				return "redirect:attendanceList.do";
+			}else {
+				model.addAttribute("msg", "시간 등록 실패!");
+				return "common/errorPage";
+			}
+		
 	}
 	
 	@RequestMapping(value="insertFinishTime.do", method=RequestMethod.GET)
@@ -133,6 +136,4 @@ public class AttendanceController {
 			return "common/errorPage";
 		}
 	}
-	
-	
 }

@@ -41,9 +41,9 @@
 			</a>
 				<div class="collapse" id="menu1">
 					<ul class="nav flex-column sub-menu">
-						<li class="nav-item"><a class="nav-link" href="#">나의 근태
+						<li class="nav-item"><a class="nav-link" onclick="location.href='/attendanceList.do'">나의 근태
 								내역</a></li>
-						<li class="nav-item"><a class="nav-link" href="#">나의 휴가
+						<li class="nav-item"><a class="nav-link" href="#" onclick="location.href='/holidayList.do'">나의 휴가
 								내역</a></li>
 					</ul>
 				</div></li>
