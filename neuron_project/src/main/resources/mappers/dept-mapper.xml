@@ -76,7 +76,7 @@
 	
 	</delete> -->
 	
-	 <select id="selectAllDept" resultMap="deptResultMap">
+	 <select id="selectAllDept2" resultMap="deptResultMap">
  	 	SELECT * FROM DEPT
  	 </select>
  	 

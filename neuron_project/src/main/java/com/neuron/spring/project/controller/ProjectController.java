@@ -69,12 +69,12 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "selectProjectMemberList.do", method = RequestMethod.GET)
-	public ModelAndView selectMemberList(@RequestParam(value = "projectNo") int projectNo, ModelAndView mv
-	// ,@RequestParam(value="page", required=false) Integer page
-	) {
-		// int currentPage = (page != null) ? page : 1;
-		// int totalCount = service.getListCount();
-		// PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
+	public ModelAndView selectMemberList(@RequestParam(value = "projectNo") int projectNo, ModelAndView mv,
+			@RequestParam(value = "page", required = false) Integer page) {
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = service.getListCount(projectNo);
+		System.out.println(totalCount);
+		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
 		List<ProjectMember> memberList = service.selectMemberList(projectNo);
 		Project project = service.selectProject(projectNo);
 		int masterEmpNo = project.getProjectMaster();
@@ -246,8 +246,6 @@ public class ProjectController {
 	@RequestMapping(value = "deleteProjectMember.do", method = RequestMethod.GET)
 	public String deleteProjectMember(@RequestParam(value = "projectNo") int projectNo,
 			@RequestParam(value = "empNo") int empNo) {
-		System.out.println(projectNo);
-		System.out.println(empNo);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("projectNo", projectNo);
 		map.put("empNo", empNo);
@@ -304,11 +302,6 @@ public class ProjectController {
 			@RequestParam(value = "startTimeDetail") String startTimeDetail,
 			@RequestParam(value = "endTimeDetail") String endTimeDetail,
 			@RequestParam(value = "projectNo") int projectNo) {
-		System.out.println(eventTitle);
-		System.out.println(startTime);
-		System.out.println(endTime);
-		System.out.println(startTimeDetail);
-		System.out.println(endTimeDetail);
 		String eventStartTime = "";
 		String eventEndTime = "";
 		if (startTimeDetail.equals("")) {
@@ -321,8 +314,6 @@ public class ProjectController {
 		} else {
 			eventEndTime = endTime + "T" + endTimeDetail;
 		}
-		System.out.println(eventStartTime);
-		System.out.println(eventEndTime);
 		ProjectCalendar pCalendar = new ProjectCalendar();
 		pCalendar.setProjectCalendarEventTitle(eventTitle);
 		pCalendar.setProjectCalendarStartTime(eventStartTime);
@@ -483,14 +474,11 @@ public class ProjectController {
 		}
 
 	}
-	
+
 	@ResponseBody
-	@RequestMapping(value="updateProjectMember.do", method = RequestMethod.GET)
-	public String updateProjectMember(
-			@RequestParam(value ="projectNo") int projectNo
-			,@RequestParam(value="empNo") int empNo
-			,@RequestParam(value="memberAuth") String memberAuth
-			) {
+	@RequestMapping(value = "updateProjectMember.do", method = RequestMethod.GET)
+	public String updateProjectMember(@RequestParam(value = "projectNo") int projectNo,
+			@RequestParam(value = "empNo") int empNo, @RequestParam(value = "memberAuth") String memberAuth) {
 		System.out.println(projectNo);
 		System.out.println(empNo);
 		System.out.println(memberAuth);
@@ -499,26 +487,24 @@ public class ProjectController {
 		map.put("empNo", empNo);
 		map.put("memberAuth", memberAuth);
 		int result = service.updateProjectMember(map);
-		if(result > 0) {
-			return "success";			
-		}else {
+		if (result > 0) {
+			return "success";
+		} else {
 			return "fail";
 		}
-		
+
 	}
-	
-	
-	@RequestMapping(value="deleteProject.do", method = RequestMethod.GET)
-	public String deleteProject(
-			@RequestParam(value="projectNo") int projectNo
-			,HttpServletResponse response) throws IOException {
+
+	@RequestMapping(value = "deleteProject.do", method = RequestMethod.GET)
+	public String deleteProject(@RequestParam(value = "projectNo") int projectNo, HttpServletResponse response)
+			throws IOException {
 		int result = service.deleteProjectRequest(projectNo);
 		PrintWriter out = response.getWriter();
-		if(result > 0) {
+		if (result > 0) {
 			out.println("<script>alert('삭제요청이 되었습니다')</script>");
 			out.flush();
 			return "home";
-		}else {
+		} else {
 			out.println("<script>alert('오류가 발생했습니다')</script>");
 			out.flush();
 			return "home";

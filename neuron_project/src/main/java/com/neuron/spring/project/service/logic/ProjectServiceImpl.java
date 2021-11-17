@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.neuron.spring.empCalendar.domain.EmpCalendar;
 import com.neuron.spring.project.domain.EmpProject;
 import com.neuron.spring.project.domain.Employee;
+import com.neuron.spring.project.domain.PageInfo;
 import com.neuron.spring.project.domain.Project;
 import com.neuron.spring.project.domain.ProjectCalendar;
 import com.neuron.spring.project.domain.ProjectMember;
@@ -96,8 +97,8 @@ public class ProjectServiceImpl implements ProjectService{
 	}
 
 	@Override
-	public int getListCount() {
-		int totalCount = store.selectListCount();
+	public int getListCount(int projectNo) {
+		int totalCount = store.selectListCount(projectNo);
 		return totalCount;
 	}
 

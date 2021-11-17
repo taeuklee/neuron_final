@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.neuron.spring.project.domain.EmpProject;
 import com.neuron.spring.project.domain.Employee;
+import com.neuron.spring.project.domain.PageInfo;
 import com.neuron.spring.project.domain.Project;
 import com.neuron.spring.project.domain.ProjectCalendar;
 import com.neuron.spring.project.domain.ProjectMember;
@@ -98,8 +99,8 @@ public class ProjectStroeLogic implements ProjectStore{
 	}
 
 	@Override
-	public int selectListCount() {
-		int count = sqlSession.selectOne("projectMapper.selectListCount");
+	public int selectListCount(int projectNo) {
+		int count = sqlSession.selectOne("projectMapper.selectListCount", projectNo);
 		return count;
 	}
 

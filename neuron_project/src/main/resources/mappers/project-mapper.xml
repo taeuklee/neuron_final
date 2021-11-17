@@ -146,6 +146,11 @@
 		SELECT EPRO.EMP_NO, EPRO.EMP_PROJECT_AUTH, EMP.EMP_JOB, EMP.EMP_NAME, DEPT.DEPT_NAME FROM EMP_PROJECT EPRO JOIN EMPLOYEE EMP ON (EPRO.EMP_NO = EMP.EMP_NO) JOIN DEPT DEPT ON (DEPT.DEPT_CODE = EMP.DEPT_CODE) WHERE PROJECT_NO = #{projectNo} AND NOT EMP.EMP_NO = #{empNo} AND EMP.EMP_NAME LIKE '%' || #{searchText} || '%'
 	</select>
 	
+<!-- 	프로젝트 멤버 총 안원수 -->
+	<select id="selectListCount" resultType="_int" parameterType="_int">
+		SELECT COUNT(*) FROM EMP_PROJECT EPRO JOIN EMPLOYEE EMP ON (EPRO.EMP_NO = EMP.EMP_NO) JOIN DEPT DEPT ON (DEPT.DEPT_CODE = EMP.DEPT_CODE) WHERE PROJECT_NO =#{projectNo}
+	</select>
+	
 <!--     멤버등록 -->
 	<update id="insertProjectMemberList" parameterType="hashMap">
 		<foreach collection="empNoList" item="empNoList" index="index" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
