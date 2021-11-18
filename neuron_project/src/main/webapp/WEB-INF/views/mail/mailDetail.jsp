@@ -4,8 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>받은메일함</title>
-<link rel="stylesheet" href="../../css/mailWrite.css">
+<title>보낸메일함</title>
+<link rel="stylesheet" href="../../css/outboxMail.css">
  
   <!-- base:css -->
   <link rel="stylesheet" href="vendors/mdi/css/materialdesignicons.min.css">
@@ -48,12 +48,11 @@
   <!-- Custom js for this page-->
   <script src="js/dashboard.js"></script>
   <!-- End custom js for this page-->
-  
-  <script>
-            function openPop(){
-              var popup = window.open('/addressbook.jsp', '주소록팝업','width=800px;, height=800px;');
-            }
-   </script>
+  <style>
+	  .content-wrapper{
+	    background-color: #ffff;
+		}
+  </style>
 </head>
 <body>
 	<div class="container-scroller">
@@ -63,36 +62,44 @@
 			
 			<div class="main-panel">
 		        <div class="content-wrapper">
-		          <div class="top-title">
-		            <h2>메일쓰기</h2>
-		          </div>
-		          <br><br>
-		          <div class="mail-content">
-		            <table class="mail-top" border="0">
-		              <tr>
-		                <th>받는사람</th>
-		                <td><input type="text" name="" class="mt1"><button class="addr_btn" target="_blank" onclick="openPop()">주소록</button></td>
-		                <!-- 엔터 누르면 블락 잡히는거 -->
-		              </tr>
-		              <tr>
-		                <th>참조</th>
-		                <td><input type="text" name="" class="mt1"><button class="addr_btn">주소록</button></td>
-		              </tr>
-		              <tr>
-		                <th>제목</th>
-		                <td></td>
-		              </tr>
-		              <tr>
-		                <th>첨부파일</th>
-		                <td></td>
-		              </tr>
-		            </table>
+		          <div class="detail-header">
+		            <button>답장</button>
+		            <button>전체답장</button>
+		            <button>전달</button>
+		            <button>삭제</button>
+		          </div>  
+		          <div class="detail-top">
+		            
+		            <div class="detail-title">
+		              <br>
+		              <h2>  안녕하세요~  </h2>
+		            </div>
 		            <br>
-		            <textarea name="" id="" cols="173" rows="10"></textarea>
+		            <div class="detail-Info">
+		              <table>
+		                <tr>
+		                  <th>보낸사람: </th>
+		                  <td></td>
+		                </tr>
+		                <tr>
+		                  <th>받는사람: </th>
+		                  <td></td>
+		                </tr>
+		                <tr>
+		                  <th>참조: </th>
+		                  <td></td>
+		                </tr>
+		              </table>
+		              <hr>
+		            </div>
+		          </div>
+		          <div class="detail-contents">
+		            안녕하세요~ test
 		          </div>
 		        </div>
-		      </div>
+      </div>
+		
 		</div>
-	</div>
+	</div>	
 </body>
 </html>

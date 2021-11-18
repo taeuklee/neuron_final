@@ -1,13 +1,10 @@
 package com.neuron.spring.mail.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.binding.MapperMethod.ParamMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,12 +35,12 @@ public class MailController {
 		Employee employee = new Employee();
 		employee = (Employee)session.getAttribute("loginEmployee");
 		
-		int receiverId= employee.getEmpNo();
+		int empNo= employee.getEmpNo();
 		int currentPage = (page != null) ? page:1;
-		int totalCount = service.getListCount(receiverId);
+		int totalCount = service.getListCount(empNo);
 		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
 		
-		List<Mail> mList = service.printAll(pi,receiverId);
+		List<Mail> mList = service.printAll(pi,empNo);
 		if(!mList.isEmpty()) {
 			mv.addObject("mList", mList);
 			mv.addObject("pi", pi);
@@ -55,32 +52,39 @@ public class MailController {
 		return mv;
 	}
 	
-//	@RequestMapping(value="outbox.do", method=RequestMethod.GET)
-//	public ModelAndView showOutboxMail(
-//			ModelAndView mv
-//			,HttpSession session
-//			,HttpServletRequest request
-//			,@RequestParam(value="page", required=false) Integer page) {
-//			session = request.getSession();
-//			Employee employee = new Employee();
-//			employee = (Employee)session.getAttribute("loginEmployee");
-//			
-//			int senderId = employee.getEmpNo();
-//			int currentPage = (page != null) ? page:1;
-//			int totalCount = service.getListCount(senderId);
-//			
-//			PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
-//			List<Mail> mList = service.printAll(pi, senderId);
-//			if(!mList.isEmpty()) {
-//				mv.addObject("mList", mList);
-//				mv.addObject("pi", pi);
-//				mv.setViewName("mail/outboxMail");
-//			}else {
-//				mv.addObject("msg", "보낸메일함 불러오기 실패");
-//				mv.setViewName("common/errorPage");
-//			}
-//				
-//		return mv;
-//		
-//	} 
+	@RequestMapping(value="outbox.do", method=RequestMethod.GET)
+	public ModelAndView showOutboxMail(
+			ModelAndView mv
+			,HttpSession session
+			,HttpServletRequest request
+			,@RequestParam(value="page", required=false) Integer page) {
+			session = request.getSession();
+			Employee employee = new Employee();
+			employee = (Employee)session.getAttribute("loginEmployee");
+			
+			int empNo = employee.getEmpNo();
+			int currentPage = (page != null) ? page:1;
+			int totalCount = service.getOutListCount(empNo);
+			
+			PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
+			List<Mail> mList = service.printAllOut(pi, empNo);
+			if(!mList.isEmpty()) {
+				mv.addObject("mList", mList);
+				mv.addObject("pi", pi);
+				mv.setViewName("mail/outboxMail");
+			}else {
+				mv.addObject("msg", "보낸메일함 불러오기 실패");
+				mv.setViewName("common/errorPage");
+			}
+				
+		return mv;
+		
+	} 
+	@RequestMapping(value="checkOutbox.do", method=RequestMethod.GET)
+	public String checkOutboxMail() {
+			
+		return "mail/checkOutbox";
+	} 
+	
+	
 }

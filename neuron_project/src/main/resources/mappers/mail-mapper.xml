@@ -17,12 +17,22 @@
 	   <result property="rStatus" column="R_STATUS"/>
   	</resultMap>
   	
-  <select id="selectListCount" resultType="_int">
-		SELECT COUNT(*) FROM MAIL WHERE RECEIVER_ID = #{receiverId } 
+  <select id="selectReceiverListCount" resultType="_int">
+		SELECT COUNT(*) FROM MAIL WHERE RECEIVER_ID = #{empNo } 
 	</select>
 
-	<select id="selectAllList" resultMap="mailResultMap">
-		SELECT * FROM MAIL WHERE RECEIVER_ID = #{receiverId } ORDER BY MAIL_NO DESC
+	<select id="selectReceiverAllList" resultMap="mailResultMap">
+		SELECT * FROM MAIL WHERE RECEIVER_ID = #{empNo } ORDER BY MAIL_NO DESC
 	</select>
+	
+<!-- 	 보낸메일함 -->
+	<select id="selectSenderListCount" resultType="_int">
+		SELECT COUNT(*) FROM MAIL WHERE SENDER_ID = #{empNo } 
+	</select>
+
+	<select id="selectSenderAllList" resultMap="mailResultMap">
+		SELECT * FROM MAIL WHERE SENDER_ID = #{empNo } ORDER BY MAIL_NO DESC
+	</select>
+
   	
   </mapper>
