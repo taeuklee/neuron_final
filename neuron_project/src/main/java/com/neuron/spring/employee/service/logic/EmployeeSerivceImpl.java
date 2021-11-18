@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.neuron.spring.employee.domain.DeptTeam;
 import com.neuron.spring.employee.domain.Employee;
 import com.neuron.spring.employee.domain.PageInfo;
 import com.neuron.spring.employee.domain.Search;
@@ -75,6 +76,12 @@ public class EmployeeSerivceImpl implements EmployeeService{
 	public List<Employee> printAll(PageInfo pi) {
 		List<Employee> eList = store.selectAll(pi);
 		return eList;
+	}
+
+	@Override
+	public List<DeptTeam> printAllDtList() {
+		List<DeptTeam> dtList = store.selectAllDtList();
+		return dtList;
 	}
 
 //	@Override

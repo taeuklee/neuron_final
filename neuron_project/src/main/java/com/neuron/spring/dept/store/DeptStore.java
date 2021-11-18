@@ -16,5 +16,7 @@ public interface DeptStore {
 
 	int deptRemove(String deptCode);
 
+	DeptAdmin selectOneDept(String deptCode);
+
 
 }

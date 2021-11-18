@@ -16,6 +16,8 @@ public interface DeptService {
 
 	int removeDept(String deptCode);
 
+	DeptAdmin printOneDept(String deptCode);
+
 
 
 }

@@ -182,7 +182,7 @@
 									<div class="card">
 										<div class="card-body">
 										<form action="deptModify.do" class="forms-sample" method="post">
-							 				<input type="hidden" name="deptCode" value="${deptAdmin.deptCode }">
+							 				<input type="hidden" name="teamCode" value="${deptAdmin.deptCode }">
 												<div class="form-group">
 													<label>부서코드</label> 
 													<input type="text" class="form-control" value="${deptAdmin.deptCode }" name="deptCode" aria-label="Username">

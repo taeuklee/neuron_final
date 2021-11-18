@@ -10,6 +10,7 @@ import com.neuron.spring.dept.domain.DeptAdmin;
 import com.neuron.spring.dept.domain.Team;
 import com.neuron.spring.dept.service.DeptService;
 import com.neuron.spring.dept.store.DeptStore;
+import com.neuron.spring.employee.domain.Employee;
 
 @Service
 public class DeptServiceImpl implements DeptService{
@@ -24,9 +25,15 @@ public class DeptServiceImpl implements DeptService{
 	}
 
 	@Override
+	public DeptAdmin printOneDept(String deptCode) {
+		DeptAdmin deptAdmin = store.selectOneDept(deptCode);
+		return deptAdmin;
+	}
+	
+	@Override
 	public int deptModify(DeptAdmin deptAdmin) {
 		int result = store.deptModify(deptAdmin);
-		return 0;
+		return result;
 	}
 
 	@Override
@@ -38,8 +45,10 @@ public class DeptServiceImpl implements DeptService{
 	@Override
 	public int removeDept(String deptCode) {
 		int result = store.deptRemove(deptCode);
-		return 0;
+		return result;
 	}
+
+
 
 
 }

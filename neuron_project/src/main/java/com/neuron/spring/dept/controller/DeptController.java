@@ -59,6 +59,7 @@ public class DeptController {
 		
 		try {
 			int result = service.registerDept(deptAdmin);
+
 			if(result > 0) {
 				return "redirect:deptListView.do";
 			}else {
@@ -71,41 +72,44 @@ public class DeptController {
 		}
 	}
 	
-	// 부서 수정하기 
+	// 부서 디테일 클릭 -> 수정으로 이어짐
 	@RequestMapping(value="deptModifyView.do", method=RequestMethod.GET)
-	public String deptModifyView() {
+	public String deptModifyView(@RequestParam("deptCode") String deptCode, Model model) {
+		DeptAdmin deptAdmin  = service.printOneDept(deptCode);
+		model.addAttribute("deptAdmin", deptAdmin);
 		return "dept/deptModifyView";
 	}
 	
+	
 	// 부서 수정
-//	@RequestMapping(value="deptModify.do", method=RequestMethod.POST)
-//	public String modifyEmpAdmin(
-//			@ModelAttribute DeptAdmin deptAdmin
-//			, @RequestParam("deptCode") String deptCode
-//			, @RequestParam("deptName") String deptName
-//			, @RequestParam("teamCode") String teamCode
-//			, @RequestParam("teamName") String teamName
-//			, Model model
-//			, HttpServletRequest request) {
-//		HttpSession session = request.getSession();
-//
-//		try {
-//			int result = service.deptModify(deptAdmin);
-//			if(result > 0) {
-//				
-//				return "redirect:deptListView.do";
-//			}else {
-//				model.addAttribute("msg", "회원 정보 수정 실패!");
-//				return "common/errorPage";
-//			}
-//		} catch(Exception e) {
-//			model.addAttribute("msg", e.toString());
-//			return "common/errorPage";
-//		}
-//	}
+	@RequestMapping(value="deptModify.do", method=RequestMethod.POST)
+	public String deptUpdate(
+			@ModelAttribute DeptAdmin deptAdmin
+			, @RequestParam("deptCode") String deptCode
+			, @RequestParam("deptName") String deptName
+			, @RequestParam("teamCode") String teamCode
+			, @RequestParam("teamName") String teamName
+			, Model model
+			, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+
+		try {
+			int result = service.deptModify(deptAdmin);
+			if(result > 0) {
+				
+				return "redirect:deptListView.do";
+			}else {
+				model.addAttribute("msg", "부서 정보 수정 실패!");
+				return "common/errorPage";
+			}
+		} catch(Exception e) {
+			model.addAttribute("msg", e.toString());
+			return "common/errorPage";
+		}
+	}
 	
 	// 부서 삭제
-	  @RequestMapping(value="deptDelete.kh", method=RequestMethod.GET)
+	  @RequestMapping(value="deptDelete.do", method=RequestMethod.GET)
 	  public String deptDelete(@RequestParam("deptCode") String deptCode, Model model) {
 	     int result = service.removeDept(deptCode);
 	     if(result > 0) {
