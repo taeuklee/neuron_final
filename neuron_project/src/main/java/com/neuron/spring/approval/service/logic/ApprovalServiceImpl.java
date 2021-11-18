@@ -87,7 +87,7 @@ public class ApprovalServiceImpl implements ApprovalService{
 	}
 
 	@Override
-	public Document printDocumentOne(DataMap dataMap) {
+	public DataMap printDocumentOne(DataMap dataMap) {
 		return store.selectDocumentOne(dataMap);
 	}
 

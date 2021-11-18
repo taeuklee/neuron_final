@@ -82,7 +82,7 @@ public class ApprovalStoreLogic implements ApprovalStore{
 	}
 
 	@Override
-	public Document selectDocumentOne(DataMap dataMap) {
+	public DataMap selectDocumentOne(DataMap dataMap) {
 		return sqlSession.selectOne("approvalMapper.selectDocOne",dataMap);
 	}
 
@@ -99,7 +99,6 @@ public class ApprovalStoreLogic implements ApprovalStore{
 			sqlSession.insert("approvalMapper.insertAppr", dataMap);
 		}
 		DocumentFile file = (DocumentFile)dataMap.get("docFile");
-		
 		if(file.getFileName() != null || "".equals(file.getFileName())) {
 			file.setDocumentNo(dataMap.getInt("documentNo"));
 			sqlSession.insert("approvalMapper.insertDocumentFile",file);			

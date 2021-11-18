@@ -62,6 +62,13 @@ body {
 		var selectApvl = $('input[name=select-apvl]:checked').val();// 체크된 사원 번호
 		var appl = $('input[name=appl]:checked').val(); // 체크된 결제 종류(합의 또는 결재)
 		var checkDup = false;
+		var loginId = '<c:out value="${sessionScope.loginEmployee.empNo}"/>';
+		
+		if(selectApvl.split(":")[0] == loginId){
+			alert("자신은 결재선에 추가할 수 없습니다.")
+			return;
+		}
+		
 		if(!selectApvl){
 			alert("결재자 또는 합의자를 선택하세요.");
 			return;

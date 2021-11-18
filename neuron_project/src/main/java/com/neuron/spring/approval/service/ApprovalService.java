@@ -43,7 +43,7 @@ public interface ApprovalService {
 	
 	public List<DataMap> printApprovalList(DataMap dataMap);
 		
-	public Document printDocumentOne(DataMap dataMap);
+	public DataMap printDocumentOne(DataMap dataMap);
 	
 	public int updateTransApproval(DataMap dataMap);
 	

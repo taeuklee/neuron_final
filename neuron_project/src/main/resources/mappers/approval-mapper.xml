@@ -113,7 +113,13 @@
   		VALUES
   		(SEQ_DOCUMENT.NEXTVAL,#{documentWriterNo,jdbcType=BIGINT },#{docGubun,jdbcType=VARCHAR},#{docContents,jdbcType=CLOB},
   		case #{apprCheck, jdbcType=VARCHAR } when 'Y' then '합의대기' else '결재대기' end
-  		,null,SYSDATE,SYSDATE,NULL,NULL)
+  		,
+  		<if test='docGubun=="휴가신청서"'>
+  			#{documentReason,jdbcType=VARCHAR},SYSDATE,SYSDATE,#{vacationStartDate,jdbcType=DATE},#{vacationEndDate,jdbcType=DATE})
+  		</if>
+  		<if test='docGubun!="휴가신청서"'>
+	  		null,SYSDATE,SYSDATE,NULL,NULL)
+  		</if>
 	
 	<selectKey keyProperty="documentNo" resultType="int" order="AFTER">
 		SELECT MAX(DOCUMENT_NO) FROM DOCUMENT
@@ -136,12 +142,13 @@
         left join employee b on a.emp_no=b.emp_no
         left join team c on b.team_code = c.team_code
 		WHERE a.DOCUMENT_NO =  #{documentNo,jdbcType=BIGINT }
+		order by A.APPROVAL_TYPE DESC
 	</select>
   	
-  	<select id="selectDocOne" parameterType="com.neuron.spring.util.DataMap" resultMap="DocResultMap">
-  		SELECT *
-  		FROM DOCUMENT 
-  		WHERE DOCUMENT_NO = #{documentNo,jdbcType=BIGINT }
+  	<select id="selectDocOne" parameterType="com.neuron.spring.util.DataMap" resultType="com.neuron.spring.util.DataMap">
+  		SELECT CASE WHEN (SELECT COUNT(*) FROM approval WHERE DOCUMENT_NO = A.DOCUMENT_NO AND approval_status != '대기') > 0 THEN 'Y' ELSE 'N' END withDrow_Chk, A.* 
+		FROM DOCUMENT A
+		WHERE document_no =#{documentNo,jdbcType=BIGINT }
   	</select>
   	
   	<update id="updateTransApproval" parameterType="com.neuron.spring.util.DataMap">
