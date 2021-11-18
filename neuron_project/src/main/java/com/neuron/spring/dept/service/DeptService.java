@@ -12,6 +12,10 @@ public interface DeptService {
 
 	int registerDept(DeptAdmin deptAdmin);
 
+	int deptModify(DeptAdmin deptAdmin);
+
+	int removeDept(String deptCode);
+
 
 
 }

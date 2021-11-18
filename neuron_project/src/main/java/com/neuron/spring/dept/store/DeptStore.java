@@ -10,9 +10,11 @@ public interface DeptStore {
 
 	List<DeptAdmin> selectAllDept(String master);
 
-	int deptModify();
+	int deptRegister(DeptAdmin deptAdmin);
 
-	int deptRegister();
+	int deptModify(DeptAdmin deptAdmin);
+
+	int deptRemove(String deptCode);
 
 
 }

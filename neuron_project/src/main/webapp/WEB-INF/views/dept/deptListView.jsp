@@ -126,7 +126,7 @@
 									</table>
 									<br>
 									<div class="button-notice"></div>
-									<button type="submit" class="btn btn-primary mr-2 modify">삭제</button>
+									<input type="submit" value="선택 삭제" class="btn btn-primary mr-2 modify" onclick="deleteValue();">
 								</div>
 							</div>
 						</div>
@@ -141,6 +141,13 @@
 		<!-- page-body-wrapper ends -->
 	</div>
 	<!-- container-scroller -->
+	<script>
+//		function deleteValue() {
+//			var url = "";
+//			var valueArr
+			
+//		}
+	</script>
 
 </body>
 

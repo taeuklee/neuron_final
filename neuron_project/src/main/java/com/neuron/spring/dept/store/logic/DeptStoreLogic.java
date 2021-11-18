@@ -25,16 +25,23 @@ public class DeptStoreLogic implements DeptStore{
 	}
 
 	@Override
-	public int deptModify() {
+	public int deptRegister(DeptAdmin deptAdmin) {
+		return sqlSession.insert("deptMapper.deptRegister",deptAdmin);
+	}
+
+	@Override
+	public int deptModify(DeptAdmin deptAdmin) {
 		int result = sqlSession.update("deptMapper.deptModify");
 		return result;
 	}
 
 	@Override
-	public int deptRegister() {
-		int result = sqlSession.insert("deptMapper.deptRegister");
+	public int deptRemove(String deptCode) {
+		int result = sqlSession.delete("deptMapper.deptRemove");
 		return result;
 	}
+
+
 
 
 

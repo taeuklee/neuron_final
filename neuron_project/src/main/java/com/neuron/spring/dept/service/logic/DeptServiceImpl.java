@@ -23,16 +23,22 @@ public class DeptServiceImpl implements DeptService{
 		return daList;
 	}
 
-//	@Override
-//	public int deptModify(DeptAdmin deptAdmin) {
-//		int result = store.deptModify();
-//		return 0;
-//	}
+	@Override
+	public int deptModify(DeptAdmin deptAdmin) {
+		int result = store.deptModify(deptAdmin);
+		return 0;
+	}
 
 	@Override
 	public int registerDept(DeptAdmin deptAdmin) {
-		int result = store.deptRegister();
+		int result = store.deptRegister(deptAdmin);
 		return result;
+	}
+
+	@Override
+	public int removeDept(String deptCode) {
+		int result = store.deptRemove(deptCode);
+		return 0;
 	}
 
 
