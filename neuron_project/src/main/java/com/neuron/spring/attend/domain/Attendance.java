@@ -11,11 +11,14 @@ public class Attendance {
 	private String totalWorkhour;
 	private String division;
 	private String note;
+	private int count;
+	private int countLate;
+	private int countAbs;
 	
 	public Attendance() {}
 
 	public Attendance(int attendNo, int empNo, Date attendDate, String startTime, String finishTime,
-			String totalWorkhour, String division, String note) {
+			String totalWorkhour, String division, String note, int count, int countLate, int countAbs) {
 		super();
 		this.attendNo = attendNo;
 		this.empNo = empNo;
@@ -25,6 +28,9 @@ public class Attendance {
 		this.totalWorkhour = totalWorkhour;
 		this.division = division;
 		this.note = note;
+		this.count = count;
+		this.countLate = countLate;
+		this.countAbs = countAbs;
 	}
 
 	public int getAttendNo() {
@@ -91,12 +97,37 @@ public class Attendance {
 		this.note = note;
 	}
 
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
+	public int getCountLate() {
+		return countLate;
+	}
+
+	public void setCountLate(int countLate) {
+		this.countLate = countLate;
+	}
+
+	public int getCountAbs() {
+		return countAbs;
+	}
+
+	public void setCountAbs(int countAbs) {
+		this.countAbs = countAbs;
+	}
+
 	@Override
 	public String toString() {
 		return "Attendance [attendNo=" + attendNo + ", empNo=" + empNo + ", attendDate=" + attendDate + ", startTime="
 				+ startTime + ", finishTime=" + finishTime + ", totalWorkhour=" + totalWorkhour + ", division="
-				+ division + ", note=" + note + "]";
+				+ division + ", note=" + note + ", count=" + count + ", countLate=" + countLate + ", countAbs="
+				+ countAbs + "]";
 	}
-	
+
 	
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.neuron.spring.attend.domain.Attendance;
 import com.neuron.spring.attend.domain.PageInfo;
+import com.neuron.spring.attend.domain.Search;
 import com.neuron.spring.attend.service.AttendanceService;
 import com.neuron.spring.attend.store.AttendanceStore;
 
@@ -45,6 +46,30 @@ public class AttendanceServiceImpl implements AttendanceService{
 	public int insertFinishTime(Attendance attend) {
 		int result = store.putFinishTime(attend);
 		return result;
+	}
+
+	@Override
+	public int getAbsCount(int empNo) {
+		int countAbs = store.selectListCountAbs(empNo);
+		return countAbs;
+	}
+
+	@Override
+	public int getLateCount(int empNo) {
+		int countLate = store.selectListCountLate(empNo);
+		return countLate;
+	}
+
+	@Override
+	public int getCount(int empNo) {
+		int count = store.selectListCountNor(empNo);
+		return count;
+	}
+
+	@Override
+	public List<Attendance> printSearchAll(Search search) {
+		List<Attendance> aList = store.searchList(search);
+		return aList;
 	}
 
 

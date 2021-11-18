@@ -6,17 +6,15 @@ import com.neuron.spring.attend.domain.PageInfo;
 import com.neuron.spring.mail.domain.Mail;
 
 public interface MailService {
-	public int getListCount(int empNo);
+	public String printOneEmail(int empNo);
 	
-	public List<Mail> printAll(PageInfo pi, int empNo);
+	public int getListCount(String email);
+	public int getOutListCount(String email);
+	public int getChkOutListCount(String email);
 
-	public int getOutListCount(int empNo);
-
-	public List<Mail> printAllOut(PageInfo pi, int empNo);
-
-	public int getChkOutListCount(int empNo);
-
-	public List<Mail> printAllChkOut(PageInfo pi, int empNo);
+	public List<Mail> printAll(PageInfo pi, String email);
+	public List<Mail> printAllOut(PageInfo pi, String email);
+	public List<Mail> printAllChkOut(PageInfo pi, String email);
 
 	public int registerMail(Mail mail);
 
@@ -24,5 +22,8 @@ public interface MailService {
 
 	public int removeReceiveMail(int mailNo);
 	public int removeSendMail(int mailNo);
+
+	public int updateMail(int mailNo);
+
 
 }

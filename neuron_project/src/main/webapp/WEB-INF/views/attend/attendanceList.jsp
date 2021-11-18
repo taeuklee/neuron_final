@@ -74,13 +74,13 @@
 		                  <i class="icon-paper" ></i>
 		                </div>
 		                <div class="stat-cards-info">
-		                  <p class="stat-cards-info__num">1</p>
-		                  <p class="stat-cards-info__title">지각</p>
+		                  <p class="stat-cards-info__num">${attendance.countLate }</p>
+		                  <p class="stat-cards-info__title">이달 지각일</p>
 		                  <p class="stat-cards-info__progress">
 		                    <span class="stat-cards-info__profit success">
-		                      <i data-feather="trending-up" aria-hidden="true"></i>5
+		                      <i data-feather="trending-up" aria-hidden="true"></i>
 		                    </span>
-		                    이번년 지각일 수
+		                   
 		                  </p>
 		                </div>
 		              </article>
@@ -91,30 +91,13 @@
 		                  <i class="icon-paper" ></i>
 		                </div>
 		                <div class="stat-cards-info">
-		                  <p class="stat-cards-info__num">${attendance.division }</p>
-		                  <p class="stat-cards-info__title">결근</p>
+		                  <p class="stat-cards-info__num"><span id="countAbs">${attendance.countAbs }</span></p>
+		                  <p class="stat-cards-info__title">이달 결근일</p>
 		                  <p class="stat-cards-info__progress">
 		                    <span class="stat-cards-info__profit success">
-		                      <i data-feather="trending-up" aria-hidden="true"></i>3
+		                      <i data-feather="trending-up" aria-hidden="true"></i>
 		                    </span>
-		                    이번년 결근일 수
-		                  </p>
-		                </div>
-		              </article>
-		            </div>
-		            <div class="col-md-6 col-xl-3">
-		              <article class="stat-cards-item">
-		                <div class="stat-cards-icon purple">
-		                  <i class="icon-paper" ></i>
-		                </div>
-		                <div class="stat-cards-info">
-		                  <p class="stat-cards-info__num">1</p>
-		                  <p class="stat-cards-info__title">휴가</p>
-		                  <p class="stat-cards-info__progress">
-		                    <span class="stat-cards-info__profit danger">
-		                      <i data-feather="trending-down" aria-hidden="true"></i>13
-		                    </span>
-		                    이번년 휴가일 수
+		                  
 		                  </p>
 		                </div>
 		              </article>
@@ -125,17 +108,19 @@
 		                  <i class="icon-paper" ></i>
 		                </div>
 		                <div class="stat-cards-info">
-		                  <p class="stat-cards-info__num">13</p>
-		                  <p class="stat-cards-info__title">근무일</p>
+		                  <p class="stat-cards-info__num">${attendance.count }</p>
+		                  <p class="stat-cards-info__title">이달 근무일</p>
 		                  <p class="stat-cards-info__progress">
 		                    <span class="stat-cards-info__profit success">
-		                      <i data-feather="trending-up" aria-hidden="true"></i>2
+		                      <i data-feather="trending-up" aria-hidden="true"></i>
 		                    </span>
-		                    이번년 총 근무일 수 
+		                    
 		                  </p>
 		                </div>
 		              </article>
+		            
 		            </div>
+		            
 		         
 		          </div>
 		          <div class="row">
@@ -200,6 +185,10 @@
 		            	  $("#time").text(now2);
 		            	  
 		              })
+		              
+// 		              $(document).ready(function){
+		            	  
+// 		              }
 		              
 		              </script>
 		              <article class="white-block">

@@ -22,20 +22,20 @@
   	</resultMap>
 <!--   	받은메일함 -->
   <select id="selectReceiverListCount" resultType="_int">
-		SELECT COUNT(*) FROM MAIL WHERE ( RECEIVER_ID = #{empNo } OR RECEIVER_ID2 = #{empNo } ) AND R_STATUS = 'OPEN' 
+		SELECT COUNT(*) FROM MAIL WHERE (RECEIVER_ID = #{email } OR RECEIVER_ID2 = #{email }) AND R_STATUS = 'OPEN' 
 	</select>
 
 	<select id="selectReceiverAllList" resultMap="mailResultMap">
-		SELECT * FROM MAIL WHERE ( RECEIVER_ID = #{empNo } OR RECEIVER_ID2 = #{empNo } ) AND R_STATUS = 'OPEN' ORDER BY MAIL_NO DESC 
+		SELECT * FROM MAIL WHERE (RECEIVER_ID = #{email } OR RECEIVER_ID2 = #{email }) AND R_STATUS = 'OPEN' ORDER BY MAIL_NO DESC 
 	</select>
 	
 <!-- 	 보낸메일함 -->
 	<select id="selectSenderListCount" resultType="_int">
-		SELECT COUNT(*) FROM MAIL WHERE SENDER_ID = #{empNo } AND S_STATUS = 'OPEN' 
+		SELECT COUNT(*) FROM MAIL WHERE SENDER_ID = #{email } AND S_STATUS = 'OPEN' 
 	</select>
 
 	<select id="selectSenderAllList" resultMap="mailResultMap">
-		SELECT * FROM MAIL WHERE SENDER_ID = #{empNo } AND S_STATUS = 'OPEN' ORDER BY MAIL_NO DESC
+		SELECT * FROM MAIL WHERE SENDER_ID = #{email } AND S_STATUS = 'OPEN' ORDER BY MAIL_NO DESC
 	</select>
 	
 <!-- 	메일쓰기 -->
@@ -44,7 +44,7 @@
   	</insert>
   	
 <!--   	메일 상세조회 -->
-	<select id="selectOne" resultType="mail">
+	<select id="selectOne" parameterType="_int" resultMap="mailResultMap">
 		SELECT * FROM MAIL WHERE MAIL_NO = #{mailNo }
 	</select>
 <!-- 	메일 삭제 -->
@@ -57,6 +57,11 @@
 	<update id="deleteSendMail" parameterType="_int">
 		UPDATE MAIL SET S_STATUS = 'HIDE' WHERE MAIL_NO = #{mailNo} 
 <!-- 		AND SENDER_ID = #{empNo } -->
+	</update>
+	
+<!-- 	수신상태 변경, 읽음  -->
+	<update id="addMail" parameterType="_int">
+		UPDATE MAIL SET READ_YN = '읽음', READ_TIME = SYSDATE WHERE MAIL_NO = #{mailNo} 
 	</update>
 	
   </mapper>

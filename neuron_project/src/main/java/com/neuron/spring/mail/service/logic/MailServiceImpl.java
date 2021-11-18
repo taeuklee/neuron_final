@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.neuron.spring.attend.domain.PageInfo;
+import com.neuron.spring.employee.store.EmployeeStore;
 import com.neuron.spring.mail.domain.Mail;
 import com.neuron.spring.mail.service.MailService;
 import com.neuron.spring.mail.store.MailStore;
@@ -17,43 +18,50 @@ public class MailServiceImpl implements MailService{
 	private MailStore store;
 	
 	@Override
-	public int getListCount(int empNo) {
-		int totalCount = store.selectListCount(empNo);
+	public String printOneEmail(int empNo) {
+		String email = store.selectOneEmail(empNo);
+		return email;
+	}
+
+	
+	@Override
+	public int getListCount(String email) {
+		int totalCount = store.selectListCount(email);
 		return totalCount;
 	}
 
 	
 	@Override
-	public List<Mail> printAll(PageInfo pi, int empNo) {
-		List<Mail> mList = store.selectAll(pi, empNo);
+	public List<Mail> printAll(PageInfo pi, String email) {
+		List<Mail> mList = store.selectAll(pi, email);
 		return mList;
 	}
 
 
 	@Override
-	public int getOutListCount(int empNo) {
-		int totalCount = store.selectOutListCount(empNo);
+	public int getOutListCount(String email) {
+		int totalCount = store.selectOutListCount(email);
 		return totalCount;
 	}
 
 
 	@Override
-	public List<Mail> printAllOut(PageInfo pi, int empNo) {
-		List<Mail> mList = store.selectAllOut(pi, empNo);
+	public List<Mail> printAllOut(PageInfo pi, String email) {
+		List<Mail> mList = store.selectAllOut(pi, email);
 		return mList;
 	}
 
 
 	@Override
-	public int getChkOutListCount(int empNo) {
-		int totalCount = store.selectChkOutListCount(empNo);
+	public int getChkOutListCount(String email) {
+		int totalCount = store.selectChkOutListCount(email);
 		return totalCount;
 	}
 
 
 	@Override
-	public List<Mail> printAllChkOut(PageInfo pi, int empNo) {
-		List<Mail> mList = store.selectAllChkOut(pi, empNo);
+	public List<Mail> printAllChkOut(PageInfo pi, String email) {
+		List<Mail> mList = store.selectAllChkOut(pi, email);
 		return mList;
 	}
 
@@ -83,5 +91,14 @@ public class MailServiceImpl implements MailService{
 		return result;
 	}
 
+
+	@Override
+	public int updateMail(int mailNo) {
+		int result = store.addMail(mailNo);
+		return result;
+	}
+
+
+	
 
 }

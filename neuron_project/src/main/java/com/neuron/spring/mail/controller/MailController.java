@@ -39,11 +39,16 @@ public class MailController {
 		employee = (Employee)session.getAttribute("loginEmployee");
 		
 		int empNo= employee.getEmpNo();
+		String RecEmail = service.printOneEmail(empNo);
+		Mail mail = new Mail();
+		mail.setReceiverId(RecEmail);
+		
+		String email = mail.getReceiverId();
 		int currentPage = (page != null) ? page:1;
-		int totalCount = service.getListCount(empNo);
+		int totalCount = service.getListCount(email);
 		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
 		
-		List<Mail> mList = service.printAll(pi,empNo);
+		List<Mail> mList = service.printAll(pi,email);
 		if(!mList.isEmpty()) {
 			mv.addObject("mList", mList);
 			mv.addObject("pi", pi);
@@ -61,16 +66,23 @@ public class MailController {
 			,HttpSession session
 			,HttpServletRequest request
 			,@RequestParam(value="page", required=false) Integer page) {
+			
 			session = request.getSession();
 			Employee employee = new Employee();
 			employee = (Employee)session.getAttribute("loginEmployee");
 			
-			int empNo = employee.getEmpNo();
+			int empNo= employee.getEmpNo();
+			String SendEmail = service.printOneEmail(empNo);
+			Mail mail = new Mail();
+			mail.setSenderId(SendEmail);
+			
+			String email = mail.getSenderId();
+			
 			int currentPage = (page != null) ? page:1;
-			int totalCount = service.getOutListCount(empNo);
+			int totalCount = service.getOutListCount(email);
 			
 			PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
-			List<Mail> mList = service.printAllOut(pi, empNo);
+			List<Mail> mList = service.printAllOut(pi, email);
 			if(!mList.isEmpty()) {
 				mv.addObject("mList", mList);
 				mv.addObject("pi", pi);
@@ -84,9 +96,41 @@ public class MailController {
 		
 	} 
 	@RequestMapping(value="checkOutbox.do", method=RequestMethod.GET)
-	public String checkOutboxMail() {
-		return "mail/checkOutbox";
+	public ModelAndView checkOutboxMail(
+		ModelAndView mv
+		,HttpSession session
+		,HttpServletRequest request
+		,@RequestParam(value="page", required=false) Integer page) {
+		
+		session = request.getSession();
+		Employee employee = new Employee();
+		employee = (Employee)session.getAttribute("loginEmployee");
+		
+		int empNo= employee.getEmpNo();
+		String SendEmail = service.printOneEmail(empNo);
+		Mail mail = new Mail();
+		mail.setSenderId(SendEmail);
+		
+		String email = mail.getSenderId();
+		
+		int currentPage = (page != null) ? page:1;
+		int totalCount = service.getOutListCount(email);
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
+		List<Mail> mList = service.printAllOut(pi, email);
+		if(!mList.isEmpty()) {
+			mv.addObject("mList", mList);
+			mv.addObject("pi", pi);
+			mv.setViewName("mail/checkOutbox");
+		}else {
+			mv.addObject("msg", "보낸메일함 불러오기 실패");
+			mv.setViewName("common/errorPage");
+		}
+			
+	return mv;
 	} 
+	
+	
 	
 	@RequestMapping(value="mailWriteView.do", method=RequestMethod.GET)
 	public String mailWriteView() {
@@ -111,7 +155,8 @@ public class MailController {
 //		if(!uploadFile.getOriginalFilename().equals("")) {
 //			String renameFilename = saveFile(uploadFile, request);
 //			if(renameFilename != null) {
-//				mail.set
+//				mail.setMailFileName(uploadFile.getOriginalFilename());
+//				mail.setMailFileRename(renameFilename);
 //			}
 //		}
 		
@@ -128,10 +173,11 @@ public class MailController {
 	public ModelAndView mailDetail(
 			ModelAndView mv
 			,@RequestParam("mailNo") int mailNo) {
-		Mail mail = service.printOne(mailNo);
 		
+		Mail mail = service.printOne(mailNo);
 		if(mail != null) {
-			mv.addObject("Mail", mail);
+			int result = service.updateMail(mailNo);
+			mv.addObject("mail", mail);
 			mv.setViewName("mail/mailDetail");
 		}else {
 			mv.addObject("msg", "상세조회 실패");
@@ -168,4 +214,11 @@ public class MailController {
 			return "common/errorPage";
 		}
 	}
+//	
+//	@RequestMapping(value="addressBook.do", method=RequestMethod.GET)
+//	public ModelAndView addressBook(
+//			ModelAndView mv
+//			,) {
+//		
+//	}
 }
