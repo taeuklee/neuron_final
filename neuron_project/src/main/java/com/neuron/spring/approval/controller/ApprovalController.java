@@ -1,14 +1,14 @@
 package com.neuron.spring.approval.controller;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Clob;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +30,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
-import com.neuron.spring.approval.domain.Approval;
 import com.neuron.spring.approval.domain.ApprovalSearch;
 import com.neuron.spring.approval.domain.CodeInfo;
 import com.neuron.spring.approval.domain.Document;
@@ -107,9 +106,8 @@ public class ApprovalController {
 			emp = (Employee)session.getAttribute("loginEmployee");
 		}
 		Map<String,Object> map = service.printOneByTeam(emp.getTeamCode());
-		System.out.println(map.toString());
 		
-		System.out.println("@@@@@@@@:"+emp.toString());
+		System.out.println(emp.toString());
 		mv.addObject("code", code);
 		mv.addObject("emp",emp);
 		mv.addObject("team", map);
@@ -122,16 +120,10 @@ public class ApprovalController {
 	public ModelAndView registerDocument(
 			ModelAndView mv
 			,HttpSession session, RequestResolver resolver
-//			,@RequestParam(value="v_start") Date vStart
-//			,@RequestParam(value="v_end") Date vEnd
-			,@RequestParam(value="doc_reason") String docReason
 			,@RequestParam(value="uploadFile", required=false) MultipartFile uploadFile
 			, HttpServletRequest request ) throws Exception {
-		// 회원 session값 불러오기
 		
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@이거확인@@@@@@@@@@@@@@@@@@@@@@@@"+ docReason);
-//		System.out.println(vStart.toString());
-//		System.out.println(vEnd.toString());
+		// 회원 session값 불러오기
 		session = request.getSession();
 		Employee emp = new Employee();
 		
@@ -198,12 +190,24 @@ public class ApprovalController {
 	//결재문 상세 view
 	@RequestMapping(value="documentDatail.do")
 	public ModelAndView documentDetail(
-			ModelAndView mv, RequestResolver resolver) {
-		Document docOne = service.printDocumentOne(resolver.getMap());
-		Map<String, Object> map = service.printOneByEmp(docOne.getDocWriterNo());
+			ModelAndView mv, RequestResolver resolver) throws SQLException, IOException {
+		DataMap dMap = service.printDocumentOne(resolver.getMap());
+		
+		//Clob 파싱
+		StringBuffer strOut = new StringBuffer();
+		String str = "";
+		Clob clob = (java.sql.Clob)dMap.get("documentContents");
+		BufferedReader br = new BufferedReader(clob.getCharacterStream());
+		while((str = br.readLine())!= null) {
+			strOut.append(str);
+		}
+		dMap.put("documentContents", strOut.toString());
+		
+		Map<String, Object> map = service.printOneByEmp(dMap.getInt("documentWriterNo"));
 		List<DataMap> aList = service.printApprovalList(resolver.getMap());
 		
-		mv.addObject("docOne", docOne);
+		
+		mv.addObject("docOne", dMap);
 		mv.addObject("aList",aList);
 		mv.addObject("empInfo", map);
 		mv.setViewName("/approval/documentDetail");

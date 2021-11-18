@@ -36,7 +36,7 @@ public interface ApprovalStore {
 
 	public List<DataMap> selectApproval(DataMap dataMap);
 	
-	public Document selectDocumentOne(DataMap dataMap);
+	public DataMap selectDocumentOne(DataMap dataMap);
 	
 	public int updateTransApproval(DataMap dataMap);
 	

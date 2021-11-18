@@ -152,14 +152,20 @@
 						&nbsp;
 						&nbsp;
 						&nbsp;
-						<c:if test="${sessionScope.loginEmployee.empNo eq docOne.docWriterNo }">
+						<c:if test="${sessionScope.loginEmployee.empNo eq docOne.documentWriterNo and docOne.withdrowChk eq 'N' }">
 							<button class="btn btn-inverse-light btn-fw">회수</button>
 						</c:if>
 							<button class="btn btn-inverse-light btn-fw">인쇄</button>
 						<c:forEach items="${aList }" var="aOne">
 						<c:if test="${sessionScope.loginEmployee.empNo eq aOne.empNo  }">
-							<button class="btn btn-inverse-light btn-fw" onclick="fn_appr('Y');">승인</button>
-							<button class="btn btn-inverse-light btn-fw" onclick="fn_appr('N');">반려</button>
+							<c:if test="${docOne.documentStatus eq '합의대기' and aOne.approvalType eq '합의' and aOne.approvalStatus eq '대기'}">
+								<button class="btn btn-inverse-light btn-fw" onclick="fn_appr('Y');">승인</button>
+								<button class="btn btn-inverse-light btn-fw" onclick="fn_appr('N');">반려</button>
+							</c:if>
+							<c:if test="${docOne.documentStatus eq '결재대기' and aOne.approvalType eq '결재'}">
+								<button class="btn btn-inverse-light btn-fw" onclick="fn_appr('Y');">승인</button>
+								<button class="btn btn-inverse-light btn-fw" onclick="fn_appr('N');">반려</button>
+							</c:if>
 						</c:if>
 						</c:forEach>
 							<button class="btn btn-inverse-light btn-fw">목록</button>
@@ -167,7 +173,7 @@
 						<div style="display:grid;  border: 0.5px solid #989b9c78; margin:auto; justify-items: stretch; justify-content: space-evenly;margin-top: 20px; margin-bottom: 40px;">
 							<!-- 문서 정보 불러오는부분 -->
 							<div>
-								<h1 id="titleName" align='center' style='padding:70px 0 40px 0'>${docOne.docKind }</h1>
+								<h1 id="titleName" align='center' style='padding:70px 0 40px 0'>${docOne.documentKind }</h1>
 								<table style="display: inline-flex; position: relative; float: left; left: 10%;">
 									<tbody id="infoTable">
 									<tr>
@@ -270,12 +276,12 @@
 							</div>
 							<!-- 문서 내용 불러오는부분 -->
 							<div align="center" style="padding:0 100px 50px 100px;">
-								${docOne.docContents }
+								${docOne.documentContents }
 							</div>
 						</div>
 						<div class="col-lg-12">
 							<form action="">
-								<input type="hidden" id="documentNo" name="documentNo" value="${docOne.docNo }" >
+								<input type="hidden" id="documentNo" name="documentNo" value="${docOne.documentNo }" >
 							</form>
 							
 							<table class="table table-bordered">
