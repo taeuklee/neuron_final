@@ -80,7 +80,7 @@
 	</update>  --> 
 	
 	
-	 <select id="selectAllDept2" resultMap="deptResultMap">
+	 <select id="selectAllDept" resultMap="deptResultMap">
  	 	SELECT * FROM DEPT
  	 </select>
  	 

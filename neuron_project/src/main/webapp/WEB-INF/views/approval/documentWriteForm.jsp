@@ -40,6 +40,10 @@
 						$("#headerNav").load("/partials/_navbar.html");
 						$("#sidebar").load("/partials/_sidebar.html");
 						
+						$('#vacationEndDate').change(function(){
+							alert($('#vacationEndDate').val());
+						});
+						
 						$('#vacationGubun').change(function() {
 							var vacGuVal = $('#vacationGubun option:selected').val();
 							var empVac = '<c:out value="${emp.empVac}"/>';
@@ -379,9 +383,9 @@
 													<td style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;" colspan="3">
 														<select id="vacationGubun" name="vacationGubun">
 															<option>선택하세요</option>
-															<option>연차</option>
-															<option>병가</option>
-															<option>기타</option>
+															<option value="연차">연차</option>
+															<option value="병가">병가</option>
+															<option value="기타">기타</option>
 														</select>
 													</td>
 												</tr>

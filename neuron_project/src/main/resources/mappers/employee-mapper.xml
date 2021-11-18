@@ -99,7 +99,7 @@
 
 
 	<select id="selectEmpJoinTeam" parameterType="_int" resultType="map">
-		select a.emp_name, a.emp_job ,b.team_name
+		select a.* ,b.team_name
 		from employee a left join team b on(a.team_code = b.team_code)
 		where emp_no = #{empNo }
 	</select>

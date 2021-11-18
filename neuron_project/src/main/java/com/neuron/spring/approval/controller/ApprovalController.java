@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Clob;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -54,7 +55,7 @@ public class ApprovalController {
 	@RequestMapping(value="approval/{path}.do", method=RequestMethod.GET)
 	public ModelAndView ShowDocumentList(
 			@PathVariable String path, ModelAndView mv,HttpServletRequest request, HttpSession session,
-			@RequestParam(value="page",required=false) Integer page) {
+			@RequestParam(value="page",required=false) Integer page, RequestResolver resolver) {
 		session = request.getSession();
 		Employee emp = new Employee();
 		if(session.getAttribute("loginEmployee") != null) {
@@ -65,11 +66,10 @@ public class ApprovalController {
 		int totalCount = 0;
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("empNo", docWriterNo);
-		
-		List<Document> dList = new ArrayList<Document>();
-		for(Document d : dList) {
-			d.setDocWriterNo(docWriterNo);
-		}
+		paramMap.put("startDt", resolver.getString("startDt"));
+		paramMap.put("endDt", resolver.getString("endDt"));
+		paramMap.put("docGubun", resolver.getString("docGubun"));
+		System.out.println(paramMap.toString());
 		
 		if(path.equals("myDocumentListView")) {	
 			paramMap.put("gubun","myWrite");
@@ -82,8 +82,8 @@ public class ApprovalController {
 		}
 		
 		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
-		dList = service.printMyAllDocList(pi,paramMap);
-		
+		List<Document> dList = service.printMyAllDocList(pi,paramMap);
+		mv.addObject("rMap", resolver.getMap());
 		if(!dList.isEmpty()) {
 			mv.addObject("dList",dList);
 			mv.addObject("pi",pi);
@@ -193,16 +193,28 @@ public class ApprovalController {
 			ModelAndView mv, RequestResolver resolver) throws SQLException, IOException {
 		DataMap dMap = service.printDocumentOne(resolver.getMap());
 		
-		//Clob 파싱
+		System.out.println(dMap.getString("documentKind"));
+			
+				//Clob 파싱
 		StringBuffer strOut = new StringBuffer();
 		String str = "";
-		Clob clob = (java.sql.Clob)dMap.get("documentContents");
-		BufferedReader br = new BufferedReader(clob.getCharacterStream());
-		while((str = br.readLine())!= null) {
-			strOut.append(str);
-		}
-		dMap.put("documentContents", strOut.toString());
 		
+		Clob clob = (java.sql.Clob)dMap.get("documentContents");
+		if(clob!=null) {					
+			BufferedReader br = new BufferedReader(clob.getCharacterStream());
+			while((str = br.readLine())!= null) {
+				strOut.append(str);
+			}
+			dMap.put("documentContents", strOut.toString());
+		}else {
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			String vStartDate = format.format((Date)dMap.get("vacationStartDate"));
+			String vEndDate = format.format((Date)dMap.get("vacationEndDate"));
+			dMap.put("vStartDate", vStartDate);
+			dMap.put("vEndDate", vEndDate);
+		}
+		
+		System.out.println("1."+dMap.toString());
 		Map<String, Object> map = service.printOneByEmp(dMap.getInt("documentWriterNo"));
 		List<DataMap> aList = service.printApprovalList(resolver.getMap());
 		

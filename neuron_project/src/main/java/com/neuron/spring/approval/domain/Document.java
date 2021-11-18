@@ -17,6 +17,7 @@ public class Document {
 	private Date dUpdateDate;
 	private Date vStartDate;
 	private Date vEndDate;
+	private String vacKind;
 	private Employee docWriter;
 	
 
@@ -26,6 +27,15 @@ public class Document {
 		// TODO Auto-generated constructor stub
 	}
 	
+	
+	public String getVacKind() {
+		return vacKind;
+	}
+
+
+	public void setVacKind(String vacKind) {
+		this.vacKind = vacKind;
+	}
 	public int getDocNo() {
 		return docNo;
 	}
@@ -95,13 +105,16 @@ public class Document {
 	public void setDocWriter(Employee docWriter) {
 		this.docWriter = docWriter;
 	}
+
+
 	@Override
 	public String toString() {
 		return "Document [docNo=" + docNo + ", docWriterNo=" + docWriterNo + ", docKind=" + docKind + ", docContents="
 				+ docContents + ", docStatus=" + docStatus + ", docReason=" + docReason + ", dCreateDate=" + dCreateDate
 				+ ", dUpdateDate=" + dUpdateDate + ", vStartDate=" + vStartDate + ", vEndDate=" + vEndDate
-				+ ", docWriter=" + docWriter + "]";
+				+ ", vacKind=" + vacKind + ", docWriter=" + docWriter + "]";
 	}
+	
 
 	
 }

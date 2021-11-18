@@ -15,6 +15,7 @@
 	   <result property="dUpdateDate" column="D_UPDATE_DATE"/>
 	   <result property="vStartDate" column="VACATION_START_DATE"/>
 	   <result property="vEndDate" column="VACATION_END_DATE"/>
+		<result property="vacKind" column="VACATION_KIND"/>
   	</resultMap>
   	
   	 <resultMap type="DocumentFile" id="DocFileResultMap">
@@ -85,6 +86,12 @@
 								where emp_no = #{empNo})
 				and document_status like '%대기%'
   			</if>
+  			<if test="startDt != null and startDt != '' and endDt != null and endDt != '' ">
+  				and to_char(D_CREATE_DATE, 'yyyyMMdd') between replace(#{startDt,jdbcType=VARCHAR}, '-', '') and replace(#{endDt,jdbcType=VARCHAR}, '-', '') 
+  			</if>
+<!--   			<if test="docGubun != null and docGubun != '' "> -->
+
+<!--   			</if> -->
   		</where> 
   		order by a.DOCUMENT_NO DESC
   	</select>
@@ -115,10 +122,10 @@
   		case #{apprCheck, jdbcType=VARCHAR } when 'Y' then '합의대기' else '결재대기' end
   		,
   		<if test='docGubun=="휴가신청서"'>
-  			#{documentReason,jdbcType=VARCHAR},SYSDATE,SYSDATE,#{vacationStartDate,jdbcType=DATE},#{vacationEndDate,jdbcType=DATE})
+  			#{documentReason,jdbcType=VARCHAR},SYSDATE,SYSDATE,#{vacationStartDate,jdbcType=DATE},#{vacationEndDate,jdbcType=DATE},#{vacationGubun,jdbcType=VARCHAR})
   		</if>
   		<if test='docGubun!="휴가신청서"'>
-	  		null,SYSDATE,SYSDATE,NULL,NULL)
+	  		null,SYSDATE,SYSDATE,NULL,NULL,NULL)
   		</if>
 	
 	<selectKey keyProperty="documentNo" resultType="int" order="AFTER">

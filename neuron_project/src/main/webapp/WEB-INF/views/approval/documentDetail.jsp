@@ -275,9 +275,81 @@
 								</table>
 							</div>
 							<!-- 문서 내용 불러오는부분 -->
+							<c:if test="${docOne.documentKind eq '휴가신청서'}">
+							<div id="vacationArea" style="padding:0 100px 50px 100px;">
+								<table
+									style="border: 0px solid rgb(0, 0, 0); width: 800px; font-family: malgun gothic, dotum, arial, tahoma; margin-top: 10px; border-collapse: collapse;">
+									<!-- 품의서 -->
+									<colgroup>
+										<col width="200">
+										<col width="350">
+										<col width="200">
+										<col width="200">
+									</colgroup>
+									<tbody>
+										<tr>
+											<td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
+												휴가종류
+											</td>
+											<td style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;" colspan="3">
+												${docOne.vacationKind }
+											</td>
+										</tr>
+										<tr>
+											<td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
+
+												휴가기간</td>
+											<td style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; vertical-align: middle;">
+												${docOne.vStartDate }
+												~
+												${docOne.vEndDate }
+											</td>
+											<td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
+
+												잔여일</td>
+											<td id="잔여일" style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; vertical-align: middle;">
+												<c:if test="${docOne.vacationKind eq '연차' }">
+													${empInfo.EMP_VAC}
+												</c:if>
+												<c:if test="${docOne.vacationKind eq '병가' }">
+													${empInfo.EMP_MED}
+												</c:if>
+												<c:if test="${docOne.vacationKind eq '기타' }">
+													${empInfo.EMP_EXVAC}
+												</c:if>
+											</td>
+										</tr>
+										<tr>
+											<td
+												style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
+
+												휴가사유</td>
+											<td
+												style="background: rgb(255, 255, 255); border-width: medium 1px 1px; border-style: none solid solid; border-color: currentColor black black; padding: 5px; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;"
+												colspan="3" class="dext_table_border_t">
+												${docOne.documnetReason }
+											</td>
+										</tr>
+										<tr>
+											<td
+												style="border-width: medium 1px 1px; border-style: none solid solid; border-color: currentColor black black; padding: 5px; height: 100px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; vertical-align: middle; background-color: rgb(255, 255, 255);"
+												colspan="4" class="dext_table_border_t"><span
+												style="font-weight: bold; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">휴가기준
+													제 13조에 의거 휴가를 신청하오니 허락하여 주시기 바랍니다.</span></td>
+										</tr>
+									</tbody>
+								</table>
+								<p
+									style="font-family: &amp; quot; 맑은 고딕&amp;quot;; font-size: 10pt; line-height: 20px; margin-top: 0px; margin-bottom: 0px;">
+									<br>
+								</p>
+								</div>
+							</c:if>
+							<c:if test="${docOne.documentKind ne '휴가신청서'}">
 							<div align="center" style="padding:0 100px 50px 100px;">
 								${docOne.documentContents }
 							</div>
+							</c:if>
 						</div>
 						<div class="col-lg-12">
 							<form action="">

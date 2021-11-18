@@ -18,9 +18,9 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<bean id="dataSourceSpied" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName"	value="oracle.jdbc.driver.OracleDriver"></property>
-		<property name="url"				value="jdbc:oracle:thin:@localhost:1521:xe"></property>
-		<property name="username"			value="SPRING"></property>
-		<property name="password"			value="SPRING"></property>
+		<property name="url"				value="jdbc:oracle:thin:@sonof.iptime.org:8521:xe"></property>
+		<property name="username"			value="NEURON"></property>
+		<property name="password"			value="NEURON"></property>
 	</bean>
 	
 	<bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">

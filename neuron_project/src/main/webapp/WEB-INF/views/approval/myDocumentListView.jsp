@@ -91,14 +91,14 @@
 					<div class="col-lg-6 grid-margin stretch-card"
 						style="max-width: 100%;">
 					<div class="card">
-						<form action="">
+						<form action="/approval/myDocumentListView.do">
 							<table id="search">
 								<tr>
 									<td>
-										<span>기안일 : </span> <input type="date"> ~ <input type="date">
+										<span>기안일 : </span> <input type="date" name="startDt" value="${rMap.startDt }" /> ~ <input type="date" name ="endDt" value="${rMap.endDt }" />
 									
 										<span>문서형태 : </span> 
-										<select>
+										<select name="docGubun">
 											<option value="none" hidden>=== 선택 ===</option>
 											<option value="all">전체</option>
 											<option value="none">휴가신청서</option>
