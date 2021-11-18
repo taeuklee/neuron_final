@@ -69,10 +69,10 @@
 					<ul class="nav flex-column sub-menu">
 						<li class="nav-item"><b1>대표업무</b1></li>
 						<li class="nav-item"><a class="nav-link" href="#"
-							onclick="location.href='selectProjectMainWork.do?projectNo-${project.projectNo}'">대표업무
+							onclick="location.href='selectProjectMainWork.do?projectNo=${project.projectNo}'">대표업무
 								조회</a></li>
 						<li class="nav-item"><a class="nav-link" href="#"
-							onclick="location.href='moveInsertMainWorkForm.do?projectNo=${project.projectNo}'">대표업무
+							onclick="moveInsertMainWork()">대표업무
 								등록</a></li>
 						<li class="nav-item"><b1>팀원</b1></li>
 						<li class="nav-item"><a class="nav-link" href="#"
@@ -110,5 +110,24 @@
 			</c:if>
 		</ul>
 	</nav>
+	<script>
+	
+	function moveInsertMainWork() {
+		$.ajax({
+			url:"moveInsertMainWorkForm.do?projectNo=${project.projectNo}",
+			type:"get",
+			success:function(data){
+				if(data=="success"){
+					location.href="moveInsertMainWork.do?projectNo=${project.projectNo}";
+				}else{
+					alert("이미 대표업무가 등록되어 있습니다.")
+				}
+			},error:function(){
+				
+			}
+		})
+	}
+	
+	</script>
 </body>
 </html>
