@@ -160,6 +160,7 @@
 											</div>
 										</div>
 									</div>
+									
 									<div class="col-lg-6 grid-margin stretch-card" style="margin-left: 23%;">
 										<div class="card">
 											<div class="card-body">
@@ -175,66 +176,14 @@
 															</tr>
 														</thead>
 														<tbody>
-															<tr>
-																<td>A1</td>
-																<td>경영지원부</td>
-																<td>A11</td>
-																<td>인사팀</td>
-															</tr>
-															<tr>
-																<td>A1</td>
-																<td>경영지원부</td>
-																<td>A12</td>
-																<td>총무팀</td>
-															</tr>
-															<tr>
-																<td>B1</td>
-																<td>개발부</td>
-																<td>B11</td>
-																<td>개발1팀</td>
-															</tr>
-															<tr>
-																<td>B1</td>
-																<td>개발부</td>
-																<td>B12</td>
-																<td>개발2팀</td>
-															</tr>
-															<tr>
-																<td>C1</td>
-																<td>마케팅부</td>
-																<td>C11</td>
-																<td>마케팅팀</td>
-															</tr>
-															<tr>
-																<td>C1</td>
-																<td>마케팅부</td>
-																<td>C12</td>
-																<td>영업팀</td>
-															</tr>
-															<tr>
-																<td>D1</td>
-																<td>고객지원부</td>
-																<td>D12</td>
-																<td>A/S팀</td>
-															</tr>
-															<tr>
-																<td>Z1</td>
-																<td>임원</td>
-																<td>Z11</td>
-																<td>대표이사</td>
-															</tr>
-															<tr>
-																<td>Z1</td>
-																<td>임원</td>
-																<td>Z12</td>
-																<td>부사장</td>
-															</tr>
-															<tr>
-																<td>Z1</td>
-																<td>임원</td>
-																<td>Z13</td>
-																<td>상무</td>
-															</tr>
+														<c:forEach items="${dtList }" var="deptTeam">
+																<tr>
+																	<td>${deptTeam.deptCode }</td>
+																	<td>${deptTeam.deptName }</td>
+																	<td>${deptTeam.teamCode }</td>
+																	<td>${deptTeam.teamName }</td>
+																</tr>
+														</c:forEach>
 														</tbody>
 													</table>
 												</div>
@@ -247,11 +196,9 @@
 												<label class="col-sm-3 col-form-label">부서코드</label>
 												<div class="col-sm-9" style="padding-top: 2%;">
 													<select name="deptCode" class="form-control">
-														<option value="A1">경영지원부</option>
-														<option value="B1">개발부</option>
-														<option value="C1">영업부</option>
-														<option value="D1">고객지원부</option>
-														<option value="Z1">임원</option>
+														<c:forEach items="${ dtList }" var="deptTeam"> 
+														<option value="${deptTeam.deptCode}">${deptTeam.deptCode}</option> 
+														</c:forEach>
 													</select>
 												</div>
 											</div>
@@ -261,21 +208,15 @@
 												<label class="col-sm-3 col-form-label">팀 코드</label>
 												<div class="col-sm-9" style="padding-top: 2%;">
 													<select name="teamCode" class="form-control">
-														<option value="A11">인사팀</option>
-														<option value="A12">총무팀</option>
-														<option value="B11">개발 1팀</option>
-														<option value="B12">개발 2팀</option>
-														<option value="C11">마케팅팀</option>
-														<option value="C12">영업팀</option>
-														<option value="D11">A/S팀</option>
-														<option value="Z11">대표</option>
-														<option value="Z12">부사장</option>
-														<option value="Z13">상무</option>
+														<c:forEach items="${ dtList }" var="deptTeam"> 
+														<option value="${deptTeam.teamCode}">${deptTeam.teamCode}</option> 
+														</c:forEach>
 													</select>
 												</div>
 											</div>
 										</div>
 									</div>
+									
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group row">

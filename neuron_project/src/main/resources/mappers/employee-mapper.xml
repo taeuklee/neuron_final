@@ -38,6 +38,13 @@
  		<result property="deptName" column="DEPT_NAME"/>
  	</resultMap>
  	
+ 	 <resultMap type="DeptTeam" id="dtResultMap">
+ 		<id property="deptCode" column="DEPT_CODE"/>
+ 		<result property="deptName" column="DEPT_NAME"/>
+ 		<result property="teamCode" column="TEAM_CODE"/>
+ 		<result property="teamName" column="TEAM_NAME"/>
+ 	</resultMap>
+ 	
  	<!-- 로그인 -->
  	<select id="selectEmp" resultMap="employeeResultMap">
  		SELECT * FROM EMPLOYEE WHERE EMP_ID = #{empId } and EMP_PWD = #{empPwd}
@@ -50,6 +57,13 @@
  	   <select id="selectAllList" resultMap="employeeResultMap">
   		SELECT * FROM EMPLOYEE ORDER BY EMP_NO ASC
   		</select>
+  		
+	<!--  사원 등록 페이지에서 부서, 팀 출력 -->
+	<select id="selectAllDtList" resultMap="dtResultMap">
+	SELECT D.DEPT_CODE, D.DEPT_NAME, T.TEAM_CODE, T.TEAM_NAME
+	FROM DEPT D, TEAM T
+	WHERE D.DEPT_CODE = T.DEPT_CODE
+	</select>
    	
    	<!-- 사원 검색 -->
    	 <select id="selectSearchAll" resultMap="employeeResultMap">

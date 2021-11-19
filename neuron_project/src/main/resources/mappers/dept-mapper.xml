@@ -48,18 +48,16 @@
 
 <!-- 	id수정했습니다- 이태욱 -->
 	<select id="selectDeptAdminAll" resultMap="daResultMap">
-		SELECT E.DEPT_CODE, D.DEPT_NAME, T.TEAM_CODE, T.TEAM_NAME, E.EMP_NAME
-		FROM EMPLOYEE E
-		JOIN DEPT D
-		ON (E.DEPT_CODE = D.DEPT_CODE)
-		JOIN TEAM T
-		ON (D.DEPT_CODE = T.DEPT_CODE)
-		WHERE E.TEAM_CODE = T.TEAM_CODE AND EMP_MASTER = #{master}
+	SELECT D.DEPT_CODE, D.DEPT_NAME, T.TEAM_CODE, T.TEAM_NAME
+	FROM DEPT D, TEAM T
+	WHERE T.DEPT_CODE = D.DEPT_CODE
 	</select>
 	
-	
-<!-- 	<select id=""  resultMap="daResultMap" parameterType="">
-	</select>   -->
+  	<select id="selectOneDept" parameterType="string"  resultMap="daResultMap">   	
+		SELECT D.DEPT_CODE, D.DEPT_NAME, T.TEAM_CODE, T.TEAM_NAME
+		FROM DEPT D, TEAM T
+		WHERE T.DEPT_CODE = D.DEPT_CODE AND T.TEAM_CODE =  #{teamCode}
+  	</select>
 	
 	<insert id="deptRegister" parameterType="DeptAdmin">
 		INSERT ALL
@@ -70,14 +68,15 @@
 	</insert>
 	
 	 	 
- 	  <delete id="deptRemove" parameterType="String">
+ 	  <delete id="deptRemove" parameterType="string">
  		DELETE DEPT WHERE DEPT_CODE = #{deptCode}
  	 </delete>
  	 
 	
-<!--  	<update id="deptModify" parameterType="DeptAdmin">
-	 UPDATE DEPT SET 
-	</update>  --> 
+ 	<update id="deptModify" parameterType="DeptAdmin">
+	 UPDATE DEPT SET DEPT_CODE = #{deptCode}, DEPT_NAME = #{deptName}
+	 UPDATE TEAM SET TEAM_CODE = #{teamCode}, TEAM_NAME = #{teamName}
+	</update>
 	
 	
 	 <select id="selectAllDept" resultMap="deptResultMap">

@@ -88,6 +88,7 @@
 				<div class="content-wrapper" id="contents">
 					<div class="col-lg-12 grid-margin stretch-card">
 						<div class="card">
+						<input type="hidden" name="deptCode" value="${deptCode }">
 							<div class="card-body">
 								<br>
 								<h3 class="card-title">부서 관리</h3>
@@ -100,33 +101,33 @@
 									<table class="table table-bordered">
 										<thead>
 											<tr>
-												<th></th>
 												<th>부서코드</th>
 												<th>부서명</th>
 												<th>팀코드</th>
 												<th>팀명</th>
-												<th>책임자</th>
+												<th>삭제</th>
 											</tr>
 										</thead>
 										<tbody>
 											<c:forEach items="${ daList }" var="deptAdmin">
 											<tr>
-												<td><input type="checkbox" name="teamDelete"></td>
 												<td>${deptAdmin.deptCode }</td>
-												<c:url var="daModify" value="deptModifyView.do">
-								                     <c:param name="deptCode" value="${ deptAdmin.deptCode }"></c:param>
-								                  </c:url>
-												<td><a href="${daModify }">${deptAdmin.deptName }</a></td>
+												
+												<td>${deptAdmin.deptName }</td>
 												<td>${deptAdmin.teamCode }</td>
 												<td>${deptAdmin.teamName }</td>
-												<td>${deptAdmin.empName }</td>
+												<c:url var="dDelete" value="deptDelete.do">
+													<c:param name="deptCode" value="${deptAdmin.deptCode }"></c:param>
+												</c:url>
+												<td><a href="${dDelete }" class="btn btn-primary mr-2 modify">삭제</a></td>
+												
 											</tr>
 											</c:forEach>
 										</tbody>
 									</table>
 									<br>
 									<div class="button-notice"></div>
-									<input type="submit" value="선택 삭제" class="btn btn-primary mr-2 modify" onclick="deleteValue();">
+								
 								</div>
 							</div>
 						</div>
@@ -141,13 +142,6 @@
 		<!-- page-body-wrapper ends -->
 	</div>
 	<!-- container-scroller -->
-	<script>
-//		function deleteValue() {
-//			var url = "";
-//			var valueArr
-			
-//		}
-	</script>
 
 </body>
 

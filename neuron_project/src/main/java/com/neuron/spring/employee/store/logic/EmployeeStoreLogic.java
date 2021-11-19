@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.neuron.spring.employee.domain.DeptTeam;
 import com.neuron.spring.employee.domain.Employee;
 import com.neuron.spring.employee.domain.PageInfo;
 import com.neuron.spring.employee.domain.Search;
@@ -72,6 +73,12 @@ public class EmployeeStoreLogic implements EmployeeStore{
 		RowBounds rowBounds = new RowBounds(offset, pi.getEmpLimit());
 		List<Employee> eList = sqlSession.selectList("employeeMapper.selectAllList", pi, rowBounds);
 		return eList;
+	}
+
+	@Override
+	public List<DeptTeam> selectAllDtList() {
+		List<DeptTeam> dtList = sqlSession.selectList("employeeMapper.selectAllDtList");
+		return dtList;
 	}
 
 //	@Override

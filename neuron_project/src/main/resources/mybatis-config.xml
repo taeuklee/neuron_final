@@ -28,6 +28,8 @@
 		<typeAlias type="com.neuron.spring.dept.domain.Employee" alias="Employee3"/>
 		<typeAlias type="com.neuron.spring.dept.domain.DeptAdmin" alias="DeptAdmin"/>
 		<typeAlias type="com.neuron.spring.mail.domain.Mail" alias="Mail"/>
+		<typeAlias type="com.neuron.spring.employee.domain.DeptTeam" alias="DeptTeam"/>
+		
 	</typeAliases>
 	
 	<mappers>

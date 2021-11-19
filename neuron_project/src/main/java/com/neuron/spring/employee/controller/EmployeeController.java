@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.neuron.spring.dept.domain.DeptAdmin;
+import com.neuron.spring.employee.domain.DeptTeam;
 import com.neuron.spring.employee.domain.Employee;
 import com.neuron.spring.employee.domain.PageInfo;
 import com.neuron.spring.employee.domain.Pagination;
@@ -81,6 +83,7 @@ public class EmployeeController {
 		}
 	}
 	
+	
 	// 페이징 처리 + 관리자 사원 리스트 출력
 	@RequestMapping(value="empListView.do", method=RequestMethod.GET)
 	public ModelAndView empListView(ModelAndView mv, @RequestParam(value="page", required=false) Integer page) {
@@ -100,14 +103,16 @@ public class EmployeeController {
 	}
 	
 	
-	
 	// 사원등록화면 출력
 	@RequestMapping(value="enrollView.do", method=RequestMethod.GET)
-	public String enrollView() {
+	public String enrollView(Model model) {
+		List<DeptTeam> dtList = service.printAllDtList();
+		
+		model.addAttribute("dtList",dtList);
+		
 		return "employee/empJoin";
 	}
 	
-
 	
 	// 사원 등록 (내용+사원증 사진)
 	@RequestMapping(value="empRegister.do", method=RequestMethod.POST) 
@@ -126,6 +131,27 @@ public class EmployeeController {
 			return "redirect:home.do";
 		}else {
 			model.addAttribute("msg", "등록 실패");
+			return "common/errorPage";
+		}
+	}
+	
+	// 사원등록 
+	@RequestMapping(value="joinDeptListView.do", method=RequestMethod.GET)
+	public String ShowDeptList(Model model) {
+		try {
+			List<DeptTeam> dtList = service.printAllDtList();
+			for(DeptTeam a : dtList) {
+				System.out.println("#######################");
+			}
+			
+			if(!dtList.isEmpty()) {
+				model.addAttribute("dtList",dtList);
+			}else {
+				model.addAttribute("dtList",null);
+			}
+			return "employee/empJoin";
+		}catch(Exception e) {
+			model.addAttribute("msg", e.toString());
 			return "common/errorPage";
 		}
 	}
