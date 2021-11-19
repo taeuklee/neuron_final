@@ -38,9 +38,10 @@ public class NoticeController {
 		if(!nList.isEmpty()) {
 			mv.addObject("nList", nList);
 			mv.addObject("pi", pi);
+			System.out.println(nList);
 			mv.setViewName("notice/noticeListView");
 		}else {
-			mv.addObject("msg", "게시글 전체조회 실패");
+			mv.addObject("msg", "공지사항 전체조회 실패");
 			mv.setViewName("common/errorPage");
 		}
 		return mv;

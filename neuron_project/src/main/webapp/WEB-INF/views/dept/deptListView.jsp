@@ -88,7 +88,8 @@
 				<div class="content-wrapper" id="contents">
 					<div class="col-lg-12 grid-margin stretch-card">
 						<div class="card">
-						<input type="hidden" name="deptCode" value="${deptCode }">
+						<!--  <input type="hidden" name="deptCode" value="${deptCode }"> -->
+						<input type="hidden" name="teamCode" value="${teamCode }">
 							<div class="card-body">
 								<br>
 								<h3 class="card-title">부서 관리</h3>
@@ -112,10 +113,12 @@
 											<c:forEach items="${ daList }" var="deptAdmin">
 											<tr>
 												<td>${deptAdmin.deptCode }</td>
-												
 												<td>${deptAdmin.deptName }</td>
 												<td>${deptAdmin.teamCode }</td>
-												<td>${deptAdmin.teamName }</td>
+												<c:url var="dModify" value="deptModifyView.do">
+								                     <c:param name="teamCode" value="${ deptAdmin.teamCode }"></c:param>
+								                 </c:url>
+												<td><a href="${dModify} ">${deptAdmin.teamName }</a></td>
 												<c:url var="dDelete" value="deptDelete.do">
 													<c:param name="deptCode" value="${deptAdmin.deptCode }"></c:param>
 												</c:url>

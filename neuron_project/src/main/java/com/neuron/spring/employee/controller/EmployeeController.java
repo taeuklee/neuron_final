@@ -107,7 +107,6 @@ public class EmployeeController {
 	@RequestMapping(value="enrollView.do", method=RequestMethod.GET)
 	public String enrollView(Model model) {
 		List<DeptTeam> dtList = service.printAllDtList();
-		
 		model.addAttribute("dtList",dtList);
 		
 		return "employee/empJoin";

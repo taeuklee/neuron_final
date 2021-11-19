@@ -19,20 +19,26 @@ public class DeptServiceImpl implements DeptService{
 	private DeptStore store;
 
 	@Override
-	public List<DeptAdmin> printAllDept(String master) {
-		List<DeptAdmin> daList = store.selectAllDept(master);
+	public List<DeptAdmin> printAllDept() {
+		List<DeptAdmin> daList = store.selectAllDept();
 		return daList;
 	}
 
 	@Override
-	public DeptAdmin printOneDept(String deptCode) {
-		DeptAdmin deptAdmin = store.selectOneDept(deptCode);
+	public DeptAdmin printOneDept(String teamCode) {
+		DeptAdmin deptAdmin = store.selectOneDept(teamCode);
 		return deptAdmin;
 	}
 	
 	@Override
 	public int deptModify(DeptAdmin deptAdmin) {
 		int result = store.deptModify(deptAdmin);
+		return result;
+	}
+	
+	@Override
+	public int teamModify(DeptAdmin deptAdmin) {
+		int result = store.teamModify(deptAdmin);
 		return result;
 	}
 
@@ -47,6 +53,8 @@ public class DeptServiceImpl implements DeptService{
 		int result = store.deptRemove(deptCode);
 		return result;
 	}
+
+
 
 
 

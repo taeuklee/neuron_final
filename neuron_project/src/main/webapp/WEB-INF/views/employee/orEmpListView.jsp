@@ -144,7 +144,7 @@
 						</div>
 						<tr align="center" height="20">
 							<td colspan="6">
-								<!-- 이전 페이지 보기 --> <c:url var="before" value="empListView.do">
+								<!-- 이전 페이지 보기 --> <c:url var="before" value="orEmpListView.do">
 									<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
 								</c:url> <c:if test="${pi.currentPage <= 1 }">
 									   		 		[이전]

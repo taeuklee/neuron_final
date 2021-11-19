@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="adprojectMapper">
+ 
+    <resultMap type="Project" id="ProjectResultMap">
+	   <id property="projectNo" column="PROJECT_NO"/>
+	   <result property="projectTitle" column="PROJECT_TITLE"/>
+	   <result property="projectContents" column="PROJECT_CONTENTS"/>
+	   <result property="projectMaster" column="PROJECT_MASTER"/>
+  	</resultMap>
+  	
+  	<!-- 프로젝트 전체 리스트 출력 -->
+
+ 
+   	<!-- 프로젝트 생성 요청 리스트 출력 -->
+   	
+
+  	<!-- 프로젝트 생성 승인 / 반려 처리 -->
+
+	
+	<!-- 프로젝트 삭제 요청 리스트 -->
+
+	
+	<!-- 프로젝트 삭제 요청 처리 -->
+ 
+  </mapper>

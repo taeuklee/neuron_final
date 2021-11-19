@@ -53,12 +53,14 @@
 	WHERE T.DEPT_CODE = D.DEPT_CODE
 	</select>
 	
+	<!-- 부서 수정 폼 보기 -->
   	<select id="selectOneDept" parameterType="string"  resultMap="daResultMap">   	
 		SELECT D.DEPT_CODE, D.DEPT_NAME, T.TEAM_CODE, T.TEAM_NAME
 		FROM DEPT D, TEAM T
 		WHERE T.DEPT_CODE = D.DEPT_CODE AND T.TEAM_CODE =  #{teamCode}
   	</select>
 	
+	<!-- 부서 추가  -->
 	<insert id="deptRegister" parameterType="DeptAdmin">
 		INSERT ALL
 		INTO DEPT(DEPT_CODE, DEPT_NAME) VALUES(#{deptCode}, #{deptName})
@@ -67,15 +69,21 @@
 		FROM DUAL
 	</insert>
 	
-	 	 
+	 
+	 <!-- 부서 삭제 -->	 
  	  <delete id="deptRemove" parameterType="string">
  		DELETE DEPT WHERE DEPT_CODE = #{deptCode}
  	 </delete>
  	 
 	
+	<!-- 부서 이름 수정 -->
  	<update id="deptModify" parameterType="DeptAdmin">
-	 UPDATE DEPT SET DEPT_CODE = #{deptCode}, DEPT_NAME = #{deptName}
-	 UPDATE TEAM SET TEAM_CODE = #{teamCode}, TEAM_NAME = #{teamName}
+	 UPDATE DEPT SET DEPT_NAME = #{deptName} WHERE DEPT_CODE = #{deptCode }
+	</update>
+	
+	<!-- 팀 이름 수정 -->
+	 <update id="teamModify" parameterType="DeptAdmin">
+	 UPDATE TEAM SET TEAM_NAME = #{teamName} WHERE TEAM_CODE = #{teamCode}
 	</update>
 	
 	

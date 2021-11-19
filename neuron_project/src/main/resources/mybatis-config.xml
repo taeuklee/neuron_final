@@ -41,6 +41,7 @@
 		<mapper resource="mappers/notice-mapper.xml" />
 		<mapper resource="mappers/dept-mapper.xml" />
 		<mapper resource="mappers/mail-mapper.xml" />
+		<mapper resource="mappers/adproject-mapper.xml" />
 	</mappers>
 </configuration>
 <!-- 		<typeAlias type="com.neuron.spring.approval.domain.DocumentFile" alias="DocumentFile"/> -->
