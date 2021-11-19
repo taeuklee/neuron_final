@@ -9,8 +9,9 @@
 th, td {
     height:28px;    
 }
+th{ width:30%;}
 td {
-    width:85%;    
+    width:70%;    
     border-bottom: 1px solid rgb(143, 141, 141);
 }
 .mt1{

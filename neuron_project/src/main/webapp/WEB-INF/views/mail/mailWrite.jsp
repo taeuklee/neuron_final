@@ -57,7 +57,7 @@
 </head>
 <body>
 	<div class="container-scroller">
-		<jsp:include page="../common/navbar.jsp"></jsp:include>
+		<jsp:include page="../mailCommon/navbarPost.jsp"></jsp:include>
 		<div class="container-fluid page-body-wrapper">
 			<jsp:include page="../common/sidebar.jsp"></jsp:include>
 			
@@ -68,6 +68,7 @@
 		          </div>
 		          <br><br>
 		          <div class="mail-content">
+		          <form action="mailPost.do" method="post" enctype="Multipart/form-data">
 		            <table class="mail-top" border="0">
 		            <input type="hidden" name="senderId"> 
 		              <tr>
@@ -85,11 +86,14 @@
 		              </tr>
 		              <tr>
 		                <th>첨부파일</th>
-		                <td></td>
+		                <td><input type="file" name="uploadFile"></td>
 		              </tr>
+		              <tr>
+						<th>내용</th>
+						<td><textarea rows="10" cols="173" name="mailContents"></textarea></td>
+					</tr>
 		            </table>
-		            <br>
-		            <textarea name="" id="" cols="173" rows="10"></textarea>
+		            </form>
 		          </div>
 		        </div>
 		      </div>

@@ -56,7 +56,7 @@
 </head>
 <body>
 	<div class="container-scroller">
-		<jsp:include page="../common/navbar.jsp"></jsp:include>
+		<jsp:include page="../mailCommon/navbar.jsp"></jsp:include>
 		<div class="container-fluid page-body-wrapper">
 			<jsp:include page="../common/sidebar.jsp"></jsp:include>
 			

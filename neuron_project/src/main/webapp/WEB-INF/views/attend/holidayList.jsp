@@ -73,7 +73,7 @@
 		                  <i data-feather="bar-chart-2" aria-hidden="true"></i>
 		                </div>
 		                <div class="stat-cards-info">
-		                  <p class="stat-cards-info__num">15</p>
+		                  <p class="stat-cards-info__num">${employee.empVac }</p>
 		                  <p class="stat-cards-info__title">남은연가</p>
 		                  <p class="stat-cards-info__progress">
 		                    <span class="stat-cards-info__profit success">
@@ -90,7 +90,7 @@
 		                  <i data-feather="file" aria-hidden="true"></i>
 		                </div>
 		                <div class="stat-cards-info">
-		                  <p class="stat-cards-info__num">13</p>
+		                  <p class="stat-cards-info__num">${employee.empMed }</p>
 		                  <p class="stat-cards-info__title">남은 병가</p>
 		                  <p class="stat-cards-info__progress">
 		                    <span class="stat-cards-info__profit success">
@@ -107,7 +107,7 @@
 		                  <i data-feather="file" aria-hidden="true"></i>
 		                </div>
 		                <div class="stat-cards-info">
-		                  <p class="stat-cards-info__num">0</p>
+		                  <p class="stat-cards-info__num">${employee.empExVac }</p>
 		                  <p class="stat-cards-info__title">기타휴가</p>
 		                  <p class="stat-cards-info__progress">
 		                    <span class="stat-cards-info__profit danger">
@@ -141,7 +141,7 @@
 		                      <td>연차</td>    
 		                      <td>${document.vStartDate } ~ ${document.vEndDate }</td>
 		                      <td>4일</td>
-		                      <td>.</td>
+		                      <td>${document.docReason }</td>
 		                    </tr>
 		                    </c:forEach>
 		                  </tbody>
