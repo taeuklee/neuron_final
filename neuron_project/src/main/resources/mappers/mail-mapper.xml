@@ -12,27 +12,56 @@
 	   <result property="receiverId2" column="RECEIVER_ID2"/>
 	   <result property="sendTime" column="SEND_TIME"/>
 	   <result property="readTime" column="READ_TIME"/>
+	   <result property="mailFileName" column="MAIL_FILENAME"/>
+	   <result property="mailFileRename" column="MAIL_FILERENAME"/>
+	   <result property="mailFileSize" column="MAIL_FILESIZE"/>
+	   <result property="mailFilePath" column="MAIL_FILEPATH"/>
 	   <result property="readYn" column="READ_YN"/>
 	   <result property="sStatus" column="S_STATUS"/>
 	   <result property="rStatus" column="R_STATUS"/>
   	</resultMap>
-  	
+<!--   	받은메일함 -->
   <select id="selectReceiverListCount" resultType="_int">
-		SELECT COUNT(*) FROM MAIL WHERE RECEIVER_ID = #{empNo } 
+		SELECT COUNT(*) FROM MAIL WHERE (RECEIVER_ID = #{email } OR RECEIVER_ID2 = #{email }) AND R_STATUS = 'OPEN' 
 	</select>
 
 	<select id="selectReceiverAllList" resultMap="mailResultMap">
-		SELECT * FROM MAIL WHERE RECEIVER_ID = #{empNo } ORDER BY MAIL_NO DESC
+		SELECT * FROM MAIL WHERE (RECEIVER_ID = #{email } OR RECEIVER_ID2 = #{email }) AND R_STATUS = 'OPEN' ORDER BY MAIL_NO DESC 
 	</select>
 	
 <!-- 	 보낸메일함 -->
 	<select id="selectSenderListCount" resultType="_int">
-		SELECT COUNT(*) FROM MAIL WHERE SENDER_ID = #{empNo } 
+		SELECT COUNT(*) FROM MAIL WHERE SENDER_ID = #{email } AND S_STATUS = 'OPEN' 
 	</select>
 
 	<select id="selectSenderAllList" resultMap="mailResultMap">
-		SELECT * FROM MAIL WHERE SENDER_ID = #{empNo } ORDER BY MAIL_NO DESC
+		SELECT * FROM MAIL WHERE SENDER_ID = #{email } AND S_STATUS = 'OPEN' ORDER BY MAIL_NO DESC
 	</select>
-
+	
+<!-- 	메일쓰기 -->
+  	<insert id="postMail" parameterType="Mail">
+  		INSERT INTO MAIL VALUES(SEQ_MAILNUM.NEXTVAL, #{mailTitle } , #{mailContents }, #{senderId }, #{receiverId }, #{receiverId2 }, SYSDATE, NULL, DEFAULT, DEFAULT, DEFAULT)
+  	</insert>
   	
+<!--   	메일 상세조회 -->
+	<select id="selectOne" parameterType="_int" resultMap="mailResultMap">
+		SELECT * FROM MAIL WHERE MAIL_NO = #{mailNo }
+	</select>
+<!-- 	메일 삭제 -->
+<!-- 	받은메일 삭제 -->
+	<update id="deleteRecieveMail" parameterType="_int">
+		UPDATE MAIL SET R_STATUS = 'HIDE' WHERE MAIL_NO = #{mailNo} 
+<!-- 		AND RECEIVER_ID = #{empNo } -->
+	</update>
+<!-- 	보낸메일 삭제 -->
+	<update id="deleteSendMail" parameterType="_int">
+		UPDATE MAIL SET S_STATUS = 'HIDE' WHERE MAIL_NO = #{mailNo} 
+<!-- 		AND SENDER_ID = #{empNo } -->
+	</update>
+	
+<!-- 	수신상태 변경, 읽음  -->
+	<update id="addMail" parameterType="_int">
+		UPDATE MAIL SET READ_YN = '읽음', READ_TIME = SYSDATE WHERE MAIL_NO = #{mailNo} 
+	</update>
+	
   </mapper>

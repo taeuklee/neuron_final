@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.neuron.spring.attend.domain.Attendance;
 import com.neuron.spring.attend.domain.PageInfo;
+import com.neuron.spring.attend.domain.Search;
 
 public interface AttendanceService {
 	public int getListCount(int empNo);
@@ -15,5 +16,13 @@ public interface AttendanceService {
 	public Attendance printOne(int empNo);
 
 	public int insertFinishTime(Attendance attend);
+
+	public int getAbsCount(int empNo);
+
+	public int getLateCount(int empNo);
+
+	public int getCount(int empNo);
+
+	public List<Attendance> printSearchAll(Search search);
 
 }

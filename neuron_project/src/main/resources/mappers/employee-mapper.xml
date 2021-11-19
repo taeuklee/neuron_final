@@ -117,5 +117,9 @@
 		from employee a left join team b on(a.team_code = b.team_code)
 		where emp_no = #{empNo }
 	</select>
-
+	
+<!-- 	메일에서 사원번호  메일주소로 변환 -->
+	<select id="selectOneEmail" parameterType="_int" resultType="string">
+		SELECT EMP_EMAIL FROM EMPLOYEE WHERE EMP_NO = #{empNo}
+	</select>
  </mapper>

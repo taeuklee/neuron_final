@@ -78,15 +78,15 @@
 		            <div class="detail-Info">
 		              <table>
 		                <tr>
-		                  <th>보낸사람: </th>
+		                  <th>보낸사람: ${mail.senderId }  </th>
 		                  <td></td>
 		                </tr>
 		                <tr>
-		                  <th>받는사람: </th>
+		                  <th>받는사람: ${mail.receiverId }</th>
 		                  <td></td>
 		                </tr>
 		                <tr>
-		                  <th>참조: </th>
+		                  <th>참조: ${mail.receiverId2 }</th>
 		                  <td></td>
 		                </tr>
 		              </table>

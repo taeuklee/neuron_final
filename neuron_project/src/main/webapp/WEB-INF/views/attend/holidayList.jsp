@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
       <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+      <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -136,7 +137,7 @@
 		                  
 		                  <c:forEach items="${dList }" var="document">
 		                    <tr>
-		                      <td>${document.dUpdateDate }</td>
+		                      <td><fmt:formatDate pattern="yyyy년 MM월 dd일" value="${document.dUpdateDate }"/></td>
 		                      <td>연차</td>    
 		                      <td>${document.vStartDate } ~ ${document.vEndDate }</td>
 		                      <td>4일</td>

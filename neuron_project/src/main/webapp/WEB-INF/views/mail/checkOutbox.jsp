@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+       <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+       <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -63,7 +65,7 @@
 		          </div>
 		          <div class="mail-navi">
 		            <button>삭제</button>
-		            <button>전달</button> *2개이상 불가
+		            <button>전달</button>
 		          </div>
 		
 		          <div >
@@ -73,25 +75,23 @@
 		                <th id="col_3">수신인</th>
 		                <th id="col_4">제목</th>
 		                <th id="col_5">icon</th>
-		                <th id="col_6">날짜 및 시간</th>
+		                <th id="col_6">수신시간</th>
 		                <th id="col_6-1">수신확인</th>
 		                <th id="col_7">크기</th>
 		              </tr>  
-		              
+		              <c:forEach items="${mList }" var="mail">
 		              <tr>
 		                <td><input type="checkbox" name="" id=""></td>
+		                <td>${mail.senderId }</td>
+		                <td>${mail.mailTitle}</td>
 		                <td></td>
-		                <td></td>
-		                <td></td>
-		                <td></td>
-		                <td></td>
-		                <td></td>
+<%-- 		                <td>${mail. }</td> --%>
+		                <td><fmt:formatDate pattern="yyyy년 MM월 dd일 HH:mm:ss" value="${mail.readTime }"/></td>
+		                <td>${mail.readYn }</td>
 		              </tr>
-		              
+		              </c:forEach>
 		            </table>
-		            
 		          </div>
-		        
 		        </div>  
 		      </div>
 		     </div>

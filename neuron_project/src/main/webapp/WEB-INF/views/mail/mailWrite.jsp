@@ -69,6 +69,7 @@
 		          <br><br>
 		          <div class="mail-content">
 		            <table class="mail-top" border="0">
+		            <input type="hidden" name="senderId"> 
 		              <tr>
 		                <th>받는사람</th>
 		                <td><input type="text" name="" class="mt1"><button class="addr_btn" target="_blank" onclick="openPop()">주소록</button></td>

@@ -11,20 +11,28 @@
   	<result property="finishTime" column="FINISH_TIME"/>
   	<result property="totalWorkhour" column="TOTAL_WORKHOUR"/>
   	<result property="division" column="DIVISION"/>
-  	<result property="note" column="NOTE"/>
+  	<result property="countLate" column="COUNT_lATE"/>
+  	<result property="countAbs" column="COUNT_ABS"/>
+  	<result property="count" column="COUNT"/>
+  	
   </resultMap>
-  
-  
+  <select id="selectListCountAbs" resultType="_int">
+    SELECT COUNT(*) "COUNTABS" FROM ATTENDANCE WHERE EMP_NO = 1 AND DIVISION= '결근'
+   </select>
+   <select id="selectListCountLate" resultType="_int">
+  	SELECT COUNT(*) "COUNTLATE" FROM ATTENDANCE WHERE EMP_NO = #{empNo } AND DIVISION= '지각'
+  	</select>
+  	<select id="selectListCountNor" resultType="_int">
+    SELECT COUNT(*) "COUNT" FROM ATTENDANCE WHERE EMP_NO = 1 AND DIVISION= '정상'
+    </select>
   <select id="selectListCount" resultType="_int">
-		SELECT COUNT(*) FROM ATTENDANCE WHERE EMP_NO = #{empNo} 
+		SELECT COUNT(*) FROM ATTENDANCE WHERE EMP_NO = #{empNo} AND EXTRACT(MONTH FROM ATTEND_DATE) = EXTRACT(MONTH FROM SYSDATE)
 	</select>
 
   <select id="selectAllList" resultMap="attendResultMap">
-		SELECT * FROM ATTENDANCE WHERE EMP_NO = #{empNo} ORDER BY ATTEND_NO DESC
+		SELECT * FROM ATTENDANCE WHERE EMP_NO = #{empNo}  AND EXTRACT(MONTH FROM ATTEND_DATE) = EXTRACT(MONTH FROM SYSDATE) ORDER BY ATTEND_NO DESC
 	</select>
 	
-<!-- 	<select id ="" -->
-<!-- 	SELECT COUNT(*) FROM ATTENDANCE WHERE EMP_NO = #{empNo} AND DIVISION = '지각' AND TO_DATE(ATTEND_DATE,'YY/MM') = (SELECT TO_CHAR(SYSDATE, 'YY/MM') FROM DUAL) -->
 <!--   출근시간, 퇴근시간 입력 -->
   <insert id="putTime">
   		INSERT INTO ATTENDANCE VALUES(SEQ_ATTENDNUM.NEXTVAL, #{empNo }, SYSDATE, #{startTime }, #{finishTime }, #{totalWorkhour }, #{division }, #{note } )
@@ -32,9 +40,20 @@
   <insert id="putFinishTime">
   		UPDATE ATTENDANCE SET FINISH_TIME = #{finishTime }, TOTAL_WORKHOUR= #{totalWorkhour } WHERE TO_DATE(ATTEND_DATE,'YY/MM/DD') = (SELECT TO_CHAR(SYSDATE, 'YY/MM/DD') FROM DUAL)
   </insert>
+  
 <!--   근무시간 계산 -->
   <select id="selectOne" resultMap="attendResultMap">
   		SELECT * FROM ATTENDANCE WHERE EMP_NO = #{empNo } AND TO_DATE(ATTEND_DATE,'YY/MM/DD') = (SELECT TO_CHAR(SYSDATE, 'YY/MM/DD') FROM DUAL)
   </select>
-  
+<!--   	검색 -->
+	<select id="searchList" resultMap="attendResultMap">
+		SELECT * FROM ATTENDANCE
+<!-- 		<if test="searchCondition.toString() == "division"> -->
+		
+<!-- 		</if> -->
+<!-- 		<if test="searchCondition.toString() == ""> -->
+		
+<!-- 		</if> -->
+		
+	</select>
   </mapper>

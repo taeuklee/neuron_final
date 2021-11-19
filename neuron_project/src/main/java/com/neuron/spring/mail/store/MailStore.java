@@ -7,15 +7,21 @@ import com.neuron.spring.mail.domain.Mail;
 
 
 public interface MailStore {
-	public int selectListCount(int empNo);
+	public int selectListCount(String email);
+	public int selectOutListCount(String email);
+	public int selectChkOutListCount(String email);
 	
-	public List<Mail> selectAll(PageInfo pi, int empNo);
+	public List<Mail> selectAll(PageInfo pi, String email);
+	public List<Mail> selectAllOut(PageInfo pi, String email);
+	public List<Mail> selectAllChkOut(PageInfo pi, String email);
 
-	public int selectOutListCount(int empNo);
+	public int postMail(Mail mail);
 
-	public List<Mail> selectAllOut(PageInfo pi, int empNo);
+	public Mail selectOne(int mailNo);
 
-	public int selectChkOutListCount(int empNo);
+	public int deleteReceiveMail(int mailNo);
+	public int deleteSendMail(int mailNo);
 
-	public List<Mail> selectAllChkOut(PageInfo pi, int empNo);
+	public String selectOneEmail(int empNo);
+	public int addMail(int mailNo);
 }
