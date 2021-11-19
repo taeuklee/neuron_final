@@ -203,13 +203,13 @@
 				<div class="content-wrapper" id="contents">
 					<div style="height: 20%">
 						<div style="height: 20%; margin-bottom: 30px;">
-							<h1 style="text-align: center;">뉴런</h1>
+							<h1 style="text-align: center;">${projectTask.taskTitle }</h1>
 						</div>
 						<div
 							style="height: 80%; align-content: center; width: 900px; position: relative; left: 500px;">
 							<div class="progress" style="height: 30px;">
-								<div class="progress-bar" role="progressbar" style="width: 25%;"
-									aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+								<div class="progress-bar" role="progressbar" style="width: ${projectTask.taskProcessivity }%;"
+									aria-valuenow="${projectTask.taskProcessivity }" aria-valuemin="0" aria-valuemax="100">${projectTask.taskProcessivity }%</div>
 							</div>
 						</div>
 					</div>

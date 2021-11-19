@@ -21,7 +21,7 @@ public class Employee {
 	private int empExVac;
 	private String empSign;
 	private String empFileName;
-	private File empFileReName;
+	private String empFileReName;
 	private String deptName;
 	
 	public Employee() {
@@ -173,11 +173,11 @@ public class Employee {
 		this.empFileName = empFileName;
 	}
 
-	public File getEmpFileReName() {
+	public String getEmpFileReName() {
 		return empFileReName;
 	}
 
-	public void setEmpFileReName(File empFileReName) {
+	public void setEmpFileReName(String empFileReName) {
 		this.empFileReName = empFileReName;
 	}
 	

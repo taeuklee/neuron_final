@@ -8,7 +8,7 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>대표업무 등록</title>
+<title>세부사항 등록</title>
 <!-- base:css -->
 <link rel="stylesheet"
 	href="vendors/mdi/css/materialdesignicons.min.css">
@@ -82,35 +82,26 @@ form .btn {
 			<!-- partial -->
 			<div class="main-panel">
 				<div class="content-wrapper" id="contents">
-					<form action="insertMainWork.do?projectNo=${project.projectNo }" method="post">
-						<div style="height: 10%">
-							<h1>대표업무 제목</h1>
-							<div class="input-group mb-3">
-								<input type="text" class="form-control"
-									aria-label="Sizing example input"
-									aria-describedby="inputGroup-sizing-default"
-									placeholder="제목을 입력해 주세요" name="mainWorkName">
+					<form action="insertMainWork.do?projectNo=${project.projectNo }" method="post" id="taskForm1">
+						<div style="height: 90%" id="taskForm">
+							<div style="height: 100%;" id="taskInfo">
+								<h1>세부사항 제목</h1>
+								<button type="button" class="btn btn-primary btn-sm"
+									onclick="insertTask()" id="insertMaikWorkTask">추가</button>
+									<br><br>
+								<div class="input-group mb-3">
+									<input type="text" class="form-control"
+										aria-label="Sizing example input"
+										aria-describedby="inputGroup-sizing-default"
+										placeholder="제목을 입력해 주세요" name="taskName">
+								</div>
+									<button type="button" class="btn btn-primary btn-sm" onclick="insertTaskMember(this, 0)">팀원
+										할당</button>
+							<div
+								style="width: 50%; border: 1px solid #1e2b37; height: 500px; overflow: auto"
+								id="mainWorkMemberList0"></div>
 							</div>
 						</div>
-<!-- 						<div style="height: 80%" id="taskForm"> -->
-<!-- 							<div style="height: 100%;" id="taskInfo"> -->
-<!-- 								<h1>세부사항 제목</h1> -->
-<!-- 								<button type="button" class="btn btn-primary btn-sm" -->
-<!-- 									onclick="insertTask()" id="insertMaikWorkTask">추가</button> -->
-<!-- 									<br><br> -->
-<!-- 								<div class="input-group mb-3"> -->
-<!-- 									<input type="text" class="form-control" -->
-<!-- 										aria-label="Sizing example input" -->
-<!-- 										aria-describedby="inputGroup-sizing-default" -->
-<!-- 										placeholder="제목을 입력해 주세요" name="taskName"> -->
-<!-- 								</div> -->
-<!-- 									<button type="button" class="btn btn-primary btn-sm" onclick="insertTaskMember(this, 0)">팀원 -->
-<!-- 										할당</button> -->
-<!-- 							<div -->
-<!-- 								style="width: 50%; border: 1px solid #1e2b37; height: 500px; overflow: auto" -->
-<!-- 								id="mainWorkMemberList0"></div> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
 <!-- 						<input type="date" name="endTime"> -->
 						<div style="height: 10%">
 							<input class="btn btn-primary" type="submit" value="등록">
@@ -140,6 +131,8 @@ form .btn {
 			//var insertTask = document.getElementById('insertMaikWorkTask');
 			var taskInfo = document.getElementById('taskInfo');
 			var taskInfo1 = taskInfo.cloneNode();
+			var taskForm1 = document.getElementById('taskForm1');
+			var cloneTaskForm1 = taskForm1.cloneNode();
 // 			var taskInfo = "<div style=\"height: 30%;\" id=\"taskInfo\">";
 // 			taskInfo += "<h1>세부사항 제목</h1>";
 // 			taskInfo += "<button type=\"button\" class=\"btn btn-primary btn-sm\"
@@ -154,17 +147,22 @@ form .btn {
 // 			taskInfo += "</div>";
 // 			taskInfo += "</div>";
 			
-			taskInfo1.innerHTML +="<h1>세부사항 제목</h1>"
-			taskInfo1.innerHTML += "<button type='button' class='btn btn-primary btn-sm' value='삭제' onclick ='deleteTask(this)'>삭제</button>"
-			taskInfo1.innerHTML += "<div class='input-group mb-3'>"
-			taskInfo1.innerHTML += "<input type='text' class='form-control' placeholder='제목을 입력해주세요'aria-label='Sizing example input' aria-describedby='inputGroup-sizing-default' name='taskName' />"
-			taskInfo1.innerHTML += "<button type='button' class='btn btn-primary btn-sm' onclick='insertTaskMember(this,"+count+")'>팀원할당</button>"
-			taskInfo1.innerHTML += "</div>"
-			taskInfo1.innerHTML += "<div style='width: 50%; border: 1px solid #1e2b37; height: 500px; overflow: auto' id='mainWorkMemberList"+count+"'></div>"
-			task.innerHTML = taskInfo1.innerHTML
+			
+			cloneTaskForm1.innerHTML +="<div style='height: 90%' id='taskForm'>"
+			cloneTaskForm1.innerHTML +="<div style='height: 100%;' id='taskInfo'>"	
+			cloneTaskForm1.innerHTML +="<h1>세부사항 제목</h1>"
+			cloneTaskForm1.innerHTML += "<button type='button' class='btn btn-primary btn-sm' value='삭제' onclick ='deleteTask(this)'>삭제</button>"
+			cloneTaskForm1.innerHTML += "<div class='input-group mb-3'>"
+			cloneTaskForm1.innerHTML += "<input type='text' class='form-control' placeholder='제목을 입력해주세요'aria-label='Sizing example input' aria-describedby='inputGroup-sizing-default' name='taskName' />"
+			cloneTaskForm1.innerHTML += "<button type='button' class='btn btn-primary btn-sm' onclick='insertTaskMember(this,"+count+")'>팀원할당</button>"
+			cloneTaskForm1.innerHTML += "</div>"
+			cloneTaskForm1.innerHTML += "<div style='width: 50%; border: 1px solid #1e2b37; height: 500px; overflow: auto' id='mainWorkMemberList"+count+"'></div>"
+			cloneTaskForm1.innerHTML += "</div>"
+			cloneTaskForm1.innerHTML += "</div>"
+			task.innerHTML = cloneTaskForm1.innerHTML
 //			taskInfo1 += "<button type='button' valued='삭제' onclick='deleteTask(this)'>삭제</button>"
 			//taskInfo1.replaceChild(deleteTask, insertTask);
-		    document.getElementById('taskForm').appendChild(taskInfo1);
+		    document.getElementById('contents').appendChild(cloneTaskForm1);
 //		    document.getElementById('taskForm').appendChild(memberList1);
 			count +=1;
 		

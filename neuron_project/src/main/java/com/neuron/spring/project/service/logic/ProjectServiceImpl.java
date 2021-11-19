@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.neuron.spring.empCalendar.domain.EmpCalendar;
 import com.neuron.spring.project.domain.EmpProject;
 import com.neuron.spring.project.domain.Employee;
+import com.neuron.spring.project.domain.PageInfo;
 import com.neuron.spring.project.domain.Project;
 import com.neuron.spring.project.domain.ProjectCalendar;
 import com.neuron.spring.project.domain.ProjectMember;
@@ -90,14 +91,14 @@ public class ProjectServiceImpl implements ProjectService{
 	}
 
 	@Override
-	public List<ProjectMember> selectSearchMemberList(Map<String, Object> map) {
-		List<ProjectMember> memberList = store.selectSearchMemberList(map);
+	public List<ProjectMember> selectSearchMemberList(PageInfo pi) {
+		List<ProjectMember> memberList = store.selectSearchMemberList(pi);
 		return memberList;
 	}
 
 	@Override
-	public int getListCount() {
-		int totalCount = store.selectListCount();
+	public int getListCount(int projectNo) {
+		int totalCount = store.selectListCount(projectNo);
 		return totalCount;
 	}
 
@@ -171,6 +172,18 @@ public class ProjectServiceImpl implements ProjectService{
 	public int deleteMainWork(int projectNo) {
 		int result = store.deleteMainWork(projectNo);
 		return result;
+	}
+
+	@Override
+	public List<ProjectMember> selectMemberAllList(PageInfo pi) {
+		List<ProjectMember> pList = store.selectMemberAllList(pi);
+		return pList;
+	}
+
+	@Override
+	public int getSearchListCount(Map<String, Object> map) {
+		int totalCount = store.getSearchListCount(map);
+		return totalCount;
 	}
 
 

@@ -318,7 +318,7 @@
 										<tr>
 											<td>
 												<div class="user_icon">
-													<img src="images/img1.jpg" alt="">
+													<img src="/resources/euploadFiles/${master.empFileReName }" alt="">
 												</div> ${master.empName }
 											</td>
 											<td>${master.deptName }</td>
@@ -330,7 +330,7 @@
 											<tr>
 												<td>
 													<div class="user_icon">
-														<img src="images/img1.jpg" alt="">
+														<img src="/resources/euploadFiles/${memberList.empFileReName }" alt="">
 													</div> ${memberList.empName }
 												</td>
 												<td>${memberList.deptName }</td>
@@ -389,8 +389,7 @@
 										<c:if test="${pi.currentPage > 1 }">
 											<a href="${before }">[이전]</a>
 										</c:if>
-										<c:forEach var="p" begin="${pi.startNavi }"
-											end="${pi.endNavi }">
+										<c:forEach var="p" begin="${pi.startNavi }" end="${pi.endNavi }">
 											<c:url var="pagination" value="selectProjectMemberList.do?projectNo=${project.projectNo }">
 												<c:param name="page" value="${p }"></c:param>
 											</c:url>
@@ -517,8 +516,8 @@
 		}
 		
 		function updateMember(empNo, data) {
-			console.log(data.parentNode.previousSibling.previousSibling.firstChild.nextSibling)
-			var memberAuth = data.parentNode.previousSibling.previousSibling.firstChild.nextSibling.value;
+			console.log(data.parentNode.previousSibling.previousSibling.firstChild)
+			var memberAuth = data.parentNode.previousSibling.previousSibling.firstChild.value;
 			console.log(memberAuth);
 			$.ajax({
 				url:"updateProjectMember.do?projectNo=${project.projectNo}&empNo="+empNo,

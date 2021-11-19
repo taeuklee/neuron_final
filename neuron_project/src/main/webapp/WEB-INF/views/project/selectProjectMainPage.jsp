@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function() {
 					<div class="col-lg-2" style="border: 1px solid black; float: left">
 					<c:forEach items="${memberList }" var="memberList" begin="0" end="4">
 						<div class="card" style="width: 10rem; margin-bottom: 10px;">
-							<img src="..." class="card-img-top" alt="...">
+							<img src="/resources/euploadFiles/${memberList.empFileReName}" class="card-img-top" alt="...">
 							<div class="card-body">
 								<h4>${memberList.empName }</h4>
 							</div>

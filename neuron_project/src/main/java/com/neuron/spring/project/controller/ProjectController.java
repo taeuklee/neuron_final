@@ -36,6 +36,7 @@ import com.neuron.spring.project.domain.ProjectCalendar;
 import com.neuron.spring.project.domain.ProjectMember;
 import com.neuron.spring.project.domain.ProjectTask;
 import com.neuron.spring.project.domain.ProjectTaskDetail;
+import com.neuron.spring.project.domain.SearchPagination;
 import com.neuron.spring.project.service.ProjectService;
 import com.neuron.spring.project.service.logic.ProjectServiceImpl;
 
@@ -77,6 +78,11 @@ public class ProjectController {
 			return "fail";
 		}
 	}
+	
+	@RequestMapping(value="moveInsertTaskForm.do", method = RequestMethod.GET)
+	public String moveInsertTaskForm(@RequestParam(value="projectNo") int projectNo) {
+		return "project/insertTask";
+	}
 
 	@RequestMapping(value = "moveInsertMainWork.do", method = RequestMethod.GET)
 	public String moveInsertMainWork(@RequestParam(value = "projectNo") int projectNo) {
@@ -90,15 +96,17 @@ public class ProjectController {
 
 	@RequestMapping(value = "selectProjectMemberList.do", method = RequestMethod.GET)
 	public ModelAndView selectMemberList(@RequestParam(value = "projectNo") int projectNo, ModelAndView mv
-	// ,@RequestParam(value="page", required=false) Integer page
+	 ,@RequestParam(value="page", required=false) Integer page
 	) {
-		// int currentPage = (page != null) ? page : 1;
-		// int totalCount = service.getListCount();
-		// PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
-		List<ProjectMember> memberList = service.selectMemberList(projectNo);
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = service.getListCount(projectNo);
+		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
+		pi.setProjectNo(projectNo);
+		List<ProjectMember> memberList = service.selectMemberAllList(pi);
 		Project project = service.selectProject(projectNo);
 		int masterEmpNo = project.getProjectMaster();
 		Employee master = service.selectMaster(masterEmpNo);
+		mv.addObject("pi", pi);
 		mv.addObject("project", project);
 		mv.addObject("master", master);
 		mv.addObject("memberList", memberList);
@@ -107,21 +115,24 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "selectSearchMemberList.do", method = RequestMethod.GET)
-	public void selectSearchMemberList(@RequestParam(value = "projectNo") int projectNo,
-			@RequestParam(value = "searchText") String searchText, ModelAndView mv, HttpServletResponse response)
+	public ModelAndView selectSearchMemberList(@RequestParam(value = "projectNo") int projectNo,
+			@RequestParam(value = "searchText") String searchText, ModelAndView mv, HttpServletResponse response
+			 ,@RequestParam(value="page", required=false) Integer page)
 			throws JsonIOException, IOException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("projectNo", projectNo);
 		map.put("searchText", searchText);
-		List<ProjectMember> memberList = service.selectSearchMemberList(map);
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = service.getSearchListCount(map);
+		PageInfo pi = SearchPagination.getPageInfo(currentPage, totalCount);
+		pi.setSearchText(searchText);
+		pi.setProjectNo(projectNo);
+		List<ProjectMember> memberList = service.selectSearchMemberList(pi);
 		PrintWriter out = response.getWriter();
-		if (!memberList.isEmpty()) {
-			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-			gson.toJson(memberList, response.getWriter());
-		} else {
-			out.println("<script>alert('해당하는 팀원이 없습니다');</script>");
-			out.flush();
-		}
+		mv.addObject("memberList", memberList);
+		mv.addObject("pi", pi);
+		mv.setViewName("project/selectSearchProjectMember");
+		return mv;
 	}
 
 	@RequestMapping(value = "moveInviteMember.do", method = RequestMethod.GET)
@@ -281,22 +292,32 @@ public class ProjectController {
 		}
 	}
 
-	@RequestMapping(value = "insertInviteProjectSearchMemberList.do", method = RequestMethod.GET)
-	public String insertInviteProjectSearchMemberList(@RequestParam(value = "empNo") int empNo,
-			@RequestParam(value = "projectNo") int projectNo, @RequestParam(value = "searchText") String searchText) {
+	@RequestMapping(value = "insertInviteProjectSearchMemberList.do", method = RequestMethod.POST)
+	public void insertInviteProjectSearchMemberList(@RequestParam(value = "empNo") int empNo,
+			@RequestParam(value = "projectNo") int projectNo, @RequestParam(value = "searchText") String searchText
+			,HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("empNo", empNo);
 		map.put("projectNo", projectNo);
 		map.put("searchText", searchText);
 		List<Employee> eList = service.selectInviteList(map);
-		return "";
+		try {
+			Gson gson = new Gson();
+			gson.toJson(eList, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@RequestMapping(value = "inviteMember.do", method = RequestMethod.GET)
-	public String inviteMember(@RequestParam(value = "projectNo") int projectNo, HttpServletRequest request,
+	public void inviteMember(@RequestParam(value = "projectNo") int projectNo, HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		String[] empNoList = request.getParameterValues("empNo");
 		int[] empNoList2 = Arrays.stream(empNoList).mapToInt(Integer::parseInt).toArray();
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("projectNo", projectNo);
@@ -304,12 +325,12 @@ public class ProjectController {
 		int insertMemberResult = service.insertProjectMemberList(map);
 		if (insertMemberResult > 0) {
 			out.println("<script>alert('팀원 초대에 성공했습니다');</script>");
+			out.println("<script>window.close();</script>");
 			out.flush();
 		} else {
 			out.println("<script>alert('팀원 초대에 실패하였습니다');</script>");
 			out.flush();
 		}
-		return "";
 	}
 
 	@RequestMapping(value = "moveInsertProjectEvent.do", method = RequestMethod.GET)
@@ -326,11 +347,6 @@ public class ProjectController {
 			@RequestParam(value = "startTimeDetail") String startTimeDetail,
 			@RequestParam(value = "endTimeDetail") String endTimeDetail,
 			@RequestParam(value = "projectNo") int projectNo) {
-		System.out.println(eventTitle);
-		System.out.println(startTime);
-		System.out.println(endTime);
-		System.out.println(startTimeDetail);
-		System.out.println(endTimeDetail);
 		String eventStartTime = "";
 		String eventEndTime = "";
 		if (startTimeDetail.equals("")) {
@@ -343,8 +359,6 @@ public class ProjectController {
 		} else {
 			eventEndTime = endTime + "T" + endTimeDetail;
 		}
-		System.out.println(eventStartTime);
-		System.out.println(eventEndTime);
 		ProjectCalendar pCalendar = new ProjectCalendar();
 		pCalendar.setProjectCalendarEventTitle(eventTitle);
 		pCalendar.setProjectCalendarStartTime(eventStartTime);
@@ -546,41 +560,53 @@ public class ProjectController {
 	public String insertMainWork(@RequestParam(value = "projectNo") int projectNo,
 			@RequestParam(value = "mainWorkName") String mainWorkName, HttpServletRequest request,
 			HttpServletResponse response) {
-		String[] empNoList = request.getParameterValues("empNo");
-		int[] empNoList2 = Arrays.stream(empNoList).mapToInt(Integer::parseInt).toArray();
-		String[] taskList = request.getParameterValues("taskName");
-		System.out.println(projectNo);
-		System.out.println(mainWorkName);
-		for (int i = 0; i < empNoList2.length; i++) {
-			System.out.println("empNo:" + empNoList2[i]);
-		}
-		for (int i = 0; i < taskList.length; i++) {
-			System.out.println("세부사항 제목:" + taskList[i]);
-		}
-		int n = 16;
-		char[] chs = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
-				'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
-		Random rd = new Random();
-		String[] taskIdList = new String[taskList.length];
-		for (int j = 0; j < taskList.length; j++) {
-			StringBuilder sb = new StringBuilder();
-			for (int i = 0; i < n; i++) {
-				char ch = chs[rd.nextInt(chs.length)];
-				sb.append(ch);
-			}
-			taskIdList[j] = sb.toString();
-		}
+		//String[] empNoList = request.getParameterValues("empNo");
+		//int[] empNoList2 = Arrays.stream(empNoList).mapToInt(Integer::parseInt).toArray();
+		//String[] taskList = request.getParameterValues("taskName");
+		//System.out.println(projectNo);
+		//System.out.println(mainWorkName);
+//		for (int i = 0; i < empNoList2.length; i++) {
+//			System.out.println("empNo:" + empNoList2[i]);
+//		}
+//		for (int i = 0; i < taskList.length; i++) {
+//			System.out.println("세부사항 제목:" + taskList[i]);
+//		}
+//		int n = 16;
+//		char[] chs = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
+//				'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+//		Random rd = new Random();
+//		String[] taskIdList = new String[taskList.length];
+//		for (int j = 0; j < taskList.length; j++) {
+//			StringBuilder sb = new StringBuilder();
+//			for (int i = 0; i < n; i++) {
+//				char ch = chs[rd.nextInt(chs.length)];
+//				sb.append(ch);
+//			}
+//			taskIdList[j] = sb.toString();
+//		}
 		
-		for(int i =0; i<taskIdList.length; i++) {
-			System.out.println(taskIdList[i]);
+//		for(int i =0; i<taskIdList.length; i++) {
+//			System.out.println(taskIdList[i]);
+//		}
+		try {
+			response.setCharacterEncoding("utf-8");
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("projectNo", projectNo);
+			map.put("mainWorkName", mainWorkName);
+			int mainWorkResult = service.insertMainWork(map);
+			if(mainWorkResult > 0) {
+				out.println("<script>alert('대표 업무가 등록되었습니다.')</script>");
+			}else {
+				out.println("<script>alert('대표 업무 등록 실패')</script>");
+			}
+			//ProjectTask task = service.selectTask(projectNo);
+			//int taskNo = task.getTaskNo();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("projectNo", projectNo);
-//		map.put("mainWorkName", mainWorkName);
-//		int mainWorkResult = service.insertMainWork(map);
-//		ProjectTask task = service.selectTask(projectNo);
-//		int taskNo = task.getTaskNo();
-		return "";
+		return "project/selectProjectMainPage";
 	}
 	
 	
