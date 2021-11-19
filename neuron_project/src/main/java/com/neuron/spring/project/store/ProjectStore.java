@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.neuron.spring.project.domain.EmpProject;
 import com.neuron.spring.project.domain.Employee;
-import com.neuron.spring.project.domain.PageInfo;
 import com.neuron.spring.project.domain.Project;
 import com.neuron.spring.project.domain.ProjectCalendar;
 import com.neuron.spring.project.domain.ProjectMember;
@@ -35,9 +34,9 @@ public interface ProjectStore {
 
 	public List<ProjectCalendar> selectProjectCalendar(int projectNo);
 
-	public List<ProjectMember> selectSearchMemberList(PageInfo pi);
+	public List<ProjectMember> selectSearchMemberList(Map<String, Object> map);
 
-	public int selectListCount(int projectNo);
+	public int selectListCount();
 
 	public int deleteMemberList(Map<String, Object> map);
 
@@ -57,7 +56,9 @@ public interface ProjectStore {
 
 	public int deleteProjectRequest(int projectNo);
 
-	public List<ProjectMember> selectMemberAllList(PageInfo pi, int projectNo);
+	public int insertMainWork(Map<String, Object> map);
 
-	public int getSearchListCount(Map<String, Object> map);
+	public ProjectTask selectTask(int projectNo);
+
+	public int deleteMainWork(int projectNo);
 }

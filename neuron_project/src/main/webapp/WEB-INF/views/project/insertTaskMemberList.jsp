@@ -75,7 +75,7 @@ border-color:#1e2b37;
 			<form class="d-flex" onsubmit="return false">
 				<input class="form-control me-2" type="search" placeholder="팀원을 검색해주세요"
 					aria-label="Search" id="searchText" onkeyup="enterKeyup()">
-				<button class="btn btn-outline-success" type="submit"  onclick="insertProjectSearchMemberList()">Search</button>
+				<button class="btn btn-outline-success" type="submit"  onclick="insertProjectSearchMemberList();">Search</button>
 			</form>
 		</div>
 		<div style="height: 70%; width: 100%">
@@ -90,6 +90,7 @@ border-color:#1e2b37;
 		</div>
 	</div>
 	<script type="text/javascript">
+	var count = ${count};
 	function insertProjectSearchMemberList() {
 		var searchText = document.getElementById('searchText').value;
 		var memberList = document.getElementById('memberList')
@@ -180,9 +181,22 @@ border-color:#1e2b37;
 		}
 	}
 	
+	window.onload = function setMember() {
+		console.log(count);
+		var list = opener.document.getElementById('mainWorkMemberList'+count).innerHTML;
+		var member = document.getElementById('projectMember');
+		member.innerHTML += list;
+	}
+	
 	function insertTaskMember() {
+		//var count = ${count};
+		//var list = opener.document.getElementById('mainWorkMemberList').innerHTML;
 		var member = document.getElementById('projectMember')
-		opener.document.getElementById('mainWorkMemberList').append(member)
+		opener.document.getElementById('mainWorkMemberList' + count).innerHTML ="";
+		opener.document.getElementById('mainWorkMemberList' + count).append(member)
+// 		data.innerHTML = "";
+// 		data.append(member);
+		window.close();
 	}
 	
 	</script>

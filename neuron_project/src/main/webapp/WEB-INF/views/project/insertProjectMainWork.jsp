@@ -82,14 +82,14 @@ form .btn {
 			<!-- partial -->
 			<div class="main-panel">
 				<div class="content-wrapper" id="contents">
-					<form>
+					<form action="insertMainWork.do?projectNo=${project.projectNo }" method="post">
 						<div style="height: 10%">
 							<h1>대표업무 제목</h1>
 							<div class="input-group mb-3">
 								<input type="text" class="form-control"
 									aria-label="Sizing example input"
 									aria-describedby="inputGroup-sizing-default"
-									placeholder="제목을 입력해 주세요">
+									placeholder="제목을 입력해 주세요" name="mainWorkName">
 							</div>
 						</div>
 						<div style="height: 80%" id="taskForm">
@@ -102,13 +102,13 @@ form .btn {
 									<input type="text" class="form-control"
 										aria-label="Sizing example input"
 										aria-describedby="inputGroup-sizing-default"
-										placeholder="제목을 입력해 주세요">
+										placeholder="제목을 입력해 주세요" name="taskName">
 								</div>
-									<button type="button" class="btn btn-primary btn-sm" onclick="insertTaskMember()">팀원
+									<button type="button" class="btn btn-primary btn-sm" onclick="insertTaskMember(this, 0)">팀원
 										할당</button>
 							<div
-								style="width: 100%; border: 1px solid #1e2b37; height: 500px; overflow: auto"
-								id="mainWorkMemberList"></div>
+								style="width: 50%; border: 1px solid #1e2b37; height: 500px; overflow: auto"
+								id="mainWorkMemberList0"></div>
 							</div>
 						</div>
 <!-- 						<input type="date" name="endTime"> -->
@@ -129,10 +129,11 @@ form .btn {
 	<!-- container-scroller -->
 	<script>
 	
+		var count = 1;	
 		function insertTask() {
 			console.log("여기론오니")
 			var task = document.createElement('div');
-			var memberList = document.getElementById('mainWorkMemberList');
+			var memberList = document.getElementById('mainWorkMemberList0');
 			var memberList1 = memberList.cloneNode();
 			
 			//var deleteTask = document.createElement("<input type='button' value='삭제' onclick='deleteTask(this)'  id='deleteMainWorkTask'/>");
@@ -156,15 +157,16 @@ form .btn {
 			taskInfo1.innerHTML +="<h1>세부사항 제목</h1>"
 			taskInfo1.innerHTML += "<button type='button' class='btn btn-primary btn-sm' value='삭제' onclick ='deleteTask(this)'>삭제</button>"
 			taskInfo1.innerHTML += "<div class='input-group mb-3'>"
-			taskInfo1.innerHTML += "<input type='text' class='form-control' placeholder='제목을 입력해주세요'aria-label='Sizing example input' aria-describedby='inputGroup-sizing-default' />"
-			taskInfo1.innerHTML += "<button type='button' class='btn btn-primary btn-sm' onclick='insertTaskMember()'>팀원할당</button>"
+			taskInfo1.innerHTML += "<input type='text' class='form-control' placeholder='제목을 입력해주세요'aria-label='Sizing example input' aria-describedby='inputGroup-sizing-default' name='taskName' />"
+			taskInfo1.innerHTML += "<button type='button' class='btn btn-primary btn-sm' onclick='insertTaskMember(this,"+count+")'>팀원할당</button>"
 			taskInfo1.innerHTML += "</div>"
-			taskInfo1.innerHTML += "<div style='width: 100%; border: 1px solid #1e2b37; height: 500px; overflow: auto' id='mainWorkMemberList'></div>"
+			taskInfo1.innerHTML += "<div style='width: 50%; border: 1px solid #1e2b37; height: 500px; overflow: auto' id='mainWorkMemberList"+count+"'></div>"
 			task.innerHTML = taskInfo1.innerHTML
 //			taskInfo1 += "<button type='button' valued='삭제' onclick='deleteTask(this)'>삭제</button>"
 			//taskInfo1.replaceChild(deleteTask, insertTask);
 		    document.getElementById('taskForm').appendChild(taskInfo1);
 //		    document.getElementById('taskForm').appendChild(memberList1);
+			count +=1;
 		
 
 
@@ -185,11 +187,26 @@ form .btn {
 			
 		}
 		
-		function  insertTaskMember() {
-			var url = "moveTaskMember.do?projectNo=${project.projectNo}";
+		function deleteEmp(id) {
+			var grandParent = id.parentNode.parentNode.parentNode.parentNode.parentNode;
+			var parent = id.parentNode.parentNode.parentNode.parentNode;
+			var insertProjectForm = document.getElementById('insertProjectForm');
+			//var hidden = id.nextSibling;
+			//console.log(hidden);
+			grandParent.removeChild(parent);
+		}
+
+		function  insertTaskMember(data, divNum) {
+			//console.log(data.nextSibling.nextSibling)
+			//var list = data.nextSibling.nextSibling.innerHTML;
+			
+			var url = "moveTaskMember.do?projectNo=${project.projectNo}&count="+divNum;
 			var name = "팀원 할당";
 			var option = "width = 1000, height = 800, top = 300 , left = 650, location = no, toolbars = no, status = no, scrollbars = no, resizable = no";
-			window.open(url, name, option);
+			var page = window.open(url, name, option);
+			//page.document.getElementById('projectMember').append(list);
+			//page.insertTaskMember(list)
+			
 		}
 	</script>
 </body>

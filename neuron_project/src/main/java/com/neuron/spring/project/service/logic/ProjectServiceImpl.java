@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.neuron.spring.empCalendar.domain.EmpCalendar;
 import com.neuron.spring.project.domain.EmpProject;
 import com.neuron.spring.project.domain.Employee;
-import com.neuron.spring.project.domain.PageInfo;
 import com.neuron.spring.project.domain.Project;
 import com.neuron.spring.project.domain.ProjectCalendar;
 import com.neuron.spring.project.domain.ProjectMember;
@@ -91,14 +90,14 @@ public class ProjectServiceImpl implements ProjectService{
 	}
 
 	@Override
-	public List<ProjectMember> selectSearchMemberList(PageInfo pi) {
-		List<ProjectMember> memberList = store.selectSearchMemberList(pi);
+	public List<ProjectMember> selectSearchMemberList(Map<String, Object> map) {
+		List<ProjectMember> memberList = store.selectSearchMemberList(map);
 		return memberList;
 	}
 
 	@Override
-	public int getListCount(int projectNo) {
-		int totalCount = store.selectListCount(projectNo);
+	public int getListCount() {
+		int totalCount = store.selectListCount();
 		return totalCount;
 	}
 
@@ -157,15 +156,21 @@ public class ProjectServiceImpl implements ProjectService{
 	}
 
 	@Override
-	public List<ProjectMember> selectMemberAllList(PageInfo pi, int projectNo) {
-		List<ProjectMember> pList = store.selectMemberAllList(pi, projectNo);
-		return pList;
+	public int insertMainWork(Map<String, Object> map) {
+		int mainWorkResult = store.insertMainWork(map);
+		return mainWorkResult;
 	}
 
 	@Override
-	public int getListSearchCount(Map<String, Object> map) {
-		int totalCount = store.getSearchListCount(map);
-		return totalCount;
+	public ProjectTask selectTask(int projectNo) {
+		ProjectTask task = store.selectTask(projectNo);
+		return task;
+	}
+
+	@Override
+	public int deleteMainWork(int projectNo) {
+		int result = store.deleteMainWork(projectNo);
+		return result;
 	}
 
 

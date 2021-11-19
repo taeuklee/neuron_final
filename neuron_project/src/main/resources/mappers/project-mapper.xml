@@ -173,6 +173,11 @@ AND EMP.EMP_NO NOT IN ( SELECT EMP_NO FROM EMP_PROJECT WHERE PROJECT_NO = #{proj
 	SELECT COUNT(*) FROM EMP_PROJECT EPRO JOIN EMPLOYEE EMP ON (EPRO.EMP_NO = EMP.EMP_NO) JOIN DEPT DEPT ON (DEPT.DEPT_CODE = EMP.DEPT_CODE) WHERE PROJECT_NO =#{projectNo} AND EMP.EMP_NAME LIKE '%' || #{searchText} || '%'
 	</select>
 	
+	<!-- 프로젝트 대표업무 등록 이동할때 대표업무 유무체크 -->
+	<select id="selectTask" parameterType="_int" resultMap="ProjectTaskResultMap">
+	SELECT * FROM PROJECT_TASK WHERE PROJECT_NO = #{projectNo}
+ 	</select>
+	
 <!--     멤버등록 -->
 	<update id="insertProjectMemberList" parameterType="hashMap">
 		<foreach collection="empNoList" item="empNoList" index="index" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
@@ -204,12 +209,21 @@ AND EMP.EMP_NO NOT IN ( SELECT EMP_NO FROM EMP_PROJECT WHERE PROJECT_NO = #{proj
 	<delete id="deleteProjectEvent" parameterType="ProjectCalendar">
   		DELETE FROM PROJECT_CALENDAR WHERE CALENDAR_NO = #{projectCalendarNo} AND PROJECT_NO = #{projectNo}
   	</delete>
-	
+  	
+	<!-- 프로젝트 대표업무 삭제 -->
+	<delete id="deleteMainWork" parameterType="_int">
+	DELETE FROM PROJECT_TASK WHERE PROJECT_NO = #{projectNo}
+ 	</delete>
 	
 <!-- 	프로젝트등록 -->
 	<insert id="insertProjectRegister" parameterType="Project">
 		INSERT INTO PROJECT VALUES(SEQ_PRO_NO.NEXTVAL, #{projectTitle}, #{projectContents}, #{projectMaster}, DEFAULT, DEFAULT)
 	</insert>
+	
+	<!-- 프로젝트 대표업무 등록 -->
+	<insert id="insertMainWork" parameterType="hashMap">
+	INSERT INTO PROJECT_TASK VALUES(SEQ_TASK_NO.NEXTVAL, #{projectNo}, #{mainWorkName}, DEFAULT)
+	 </insert>
 	
 <!-- 	프로젝트 일정등록 -->
 	<insert id="insertProjectEvent" parameterType="ProjectCalendar">

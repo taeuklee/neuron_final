@@ -3,7 +3,6 @@ package com.neuron.spring.project.store.logic;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.object.StoredProcedure;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import com.neuron.spring.project.domain.EmpProject;
 import com.neuron.spring.project.domain.Employee;
-import com.neuron.spring.project.domain.PageInfo;
 import com.neuron.spring.project.domain.Project;
 import com.neuron.spring.project.domain.ProjectCalendar;
 import com.neuron.spring.project.domain.ProjectMember;
@@ -94,16 +92,14 @@ public class ProjectStroeLogic implements ProjectStore{
 	}
 
 	@Override
-	public List<ProjectMember> selectSearchMemberList(PageInfo pi) {
-		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
-		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		List<ProjectMember> memberList = sqlSession.selectList("projectMapper.selectSearchMemberList", pi, rowBounds);
+	public List<ProjectMember> selectSearchMemberList(Map<String, Object> map) {
+		List<ProjectMember> memberList = sqlSession.selectList("projectMapper.selectSearchMemberList", map);
 		return memberList;
 	}
 
 	@Override
-	public int selectListCount(int projectNo) {
-		int count = sqlSession.selectOne("projectMapper.selectListCount", projectNo);
+	public int selectListCount() {
+		int count = sqlSession.selectOne("projectMapper.selectListCount");
 		return count;
 	}
 
@@ -162,19 +158,21 @@ public class ProjectStroeLogic implements ProjectStore{
 	}
 
 	@Override
-	public List<ProjectMember> selectMemberAllList(PageInfo pi, int projectNo) {
-		pi.setProjectNo(projectNo);
-		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
-		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		List<ProjectMember> bList 
-			= sqlSession.selectList("projectMapper.selectMemberAllList", pi, rowBounds);
-		return bList;
+	public int insertMainWork(Map<String, Object> map) {
+		int mainWorkResult = sqlSession.insert("projectMapper.insertMainWork", map);
+		return mainWorkResult;
 	}
 
 	@Override
-	public int getSearchListCount(Map<String, Object> map) {
-		int totalCount = sqlSession.selectOne("projectMapper.searchListCount", map);
-		return totalCount;
+	public ProjectTask selectTask(int projectNo) {
+		ProjectTask task = sqlSession.selectOne("projectMapper.selectTask", projectNo);
+		return task;
+	}
+
+	@Override
+	public int deleteMainWork(int projectNo) {
+		int result = sqlSession.delete("projectMapper.deleteMainWork", projectNo);
+		return result;
 	}
 
 
