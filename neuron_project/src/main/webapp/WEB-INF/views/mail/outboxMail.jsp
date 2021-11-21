@@ -50,6 +50,28 @@
   <!-- Custom js for this page-->
   <script src="js/dashboard.js"></script>
   <!-- End custom js for this page-->
+  <script>
+		$(document).ready(function() {
+		$("#checkAll").click(function(){
+		    if( $("#checkAll").is(':checked') ){
+		      $("input[type=checkbox]").prop("checked", true);
+		    }else{
+		      $("input[type=checkbox]").prop("checked", false);
+		    }
+		});
+	
+		$("input[name=check]").click(function(){
+			var total = $("input[name=check]").length;
+			var checked = $("input[name=check]:checked").length;
+			
+			if(total != checked) 
+				$("#agreeAll").prop("checked",false);
+			else
+				$("#agreeAll").prop("checked",true);
+			
+		});
+		});
+	</script>
 </head>
 <body>
 	<div class="container-scroller">
@@ -65,7 +87,7 @@
 		          </div>
 		          <div class="mail-navi">
 		            <button>삭제</button>
-		            <button>전달</button> *2개이상 불가
+		            
 		          </div>
 		
 		          <div >
@@ -74,7 +96,6 @@
 		                <th id="col_1"><input type="checkbox" name="checkAll" id="checkAll"></th>
 		                <th id="col_3">수신인</th>
 		                <th id="col_4">제목</th>
-		                <th id="col_5">AttachIcon</th>
 		                <th id="col_6">날짜 및 시간</th>
 		                <th id="col_7">크기</th>
 		              </tr>  
@@ -87,19 +108,17 @@
 		                	<c:url var="mDetail" value="mailDetail.do">
 								<c:param name="mailNo" value="${mail.mailNo }"></c:param>
 							</c:url>
-							<a href="${mDetail }">${mail.mailTitle }</a></td>
-		                <td></td>
+							<c:if test="${!empty mail.mailFileName }"><a href="${mDetail }">${mail.mailTitle }</a> <i class="icon-paper-clip"></c:if>
+							<c:if test="${ empty mail.mailFileName }"><a href="${mDetail }">${mail.mailTitle }</a></c:if>
+						</td>
 		                <td><fmt:formatDate pattern="yyyy년 MM월 dd일 HH:mm:ss" value="${mail.sendTime }"/></td>
-		                <td></td>
+		                <td>${mail.mailFileSize }</td>
 		              </tr>
 		              </c:forEach>
 		            </table>
-		            
 		          </div>
-		        
 		        </div>  
 		      </div>
-		
 		</div>
 	</div>	
 </body>

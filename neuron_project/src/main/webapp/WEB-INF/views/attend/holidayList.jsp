@@ -51,6 +51,7 @@
   <!-- Custom js for this page-->
   <script src="js/dashboard.js"></script>
   <!-- End custom js for this page-->
+  
 </head>
 <body>
 	<div class="container-scroller">
@@ -63,7 +64,8 @@
 		            <h2>나의 휴가 내역</h2>
 		          </div>
 		          <div class="top-date" align="center">
-		             <h4> 2021년 </h4>
+		             <button id="previousYear"><</button> <span id="date"> </span> <button id="nextYear">></button> 
+		             <input type="hidden" id="holiYear" value="">
 		             <br><br>
 		          </div>
 		          <div class="row stat-cards">
@@ -73,13 +75,13 @@
 		                  <i data-feather="bar-chart-2" aria-hidden="true"></i>
 		                </div>
 		                <div class="stat-cards-info">
-		                  <p class="stat-cards-info__num">${employee.empVac }</p>
-		                  <p class="stat-cards-info__title">남은연가</p>
+		                  <p class="stat-cards-info__num">${empInfo.empVac }</p>
+		                  <p class="stat-cards-info__title">남은 연가</p>
 		                  <p class="stat-cards-info__progress">
 		                    <span class="stat-cards-info__profit success">
 		                      <i data-feather="trending-up" aria-hidden="true"></i>1
 		                    </span>
-		                    이번년에 사용한 총 연가
+		                    이번 년에 사용한 총 연가
 		                  </p>
 		                </div>
 		              </article>
@@ -96,7 +98,7 @@
 		                    <span class="stat-cards-info__profit success">
 		                      <i data-feather="trending-up" aria-hidden="true"></i>2
 		                    </span>
-		                    이번년에 사용한 총 병가
+		                    이번 년에 사용한 총 병가
 		                  </p>
 		                </div>
 		              </article>
@@ -108,20 +110,18 @@
 		                </div>
 		                <div class="stat-cards-info">
 		                  <p class="stat-cards-info__num">${employee.empExVac }</p>
-		                  <p class="stat-cards-info__title">기타휴가</p>
+		                  <p class="stat-cards-info__title">기타 휴가</p>
 		                  <p class="stat-cards-info__progress">
 		                    <span class="stat-cards-info__profit danger">
 		                      <i data-feather="trending-down" aria-hidden="true"></i>0
 		                    </span>
-		                    이번년에 사용한 기타휴가
+		                    이번 년에 사용한 기타휴가
 		                  </p>
 		                </div>
 		              </article>
 		            </div>
-		            
 		          </div>
 		          <div class="row">
-		            
 		            <div class="main-contents">
 		                <table class="main-table">
 		                  <thead>
@@ -134,14 +134,13 @@
 		                    </tr>
 		                  </thead>
 		                  <tbody>
-		                  
 		                  <c:forEach items="${dList }" var="document">
 		                    <tr>
 		                      <td><fmt:formatDate pattern="yyyy년 MM월 dd일" value="${document.dUpdateDate }"/></td>
-		                      <td>연차</td>    
-		                      <td>${document.vStartDate } ~ ${document.vEndDate }</td>
+		                      <td>${document.vacKind }</td>    
+		                      <td>${docOne.vStartDate } ~ ${docOne.vEndDate }</td>
 		                      <td>4일</td>
-		                      <td>${document.docReason }</td>
+		                      <td></td>
 		                    </tr>
 		                    </c:forEach>
 		                  </tbody>
@@ -149,11 +148,28 @@
 		            </div>
 		          </div>
 		        </div>
-		          
 		      </div>
-			
-			
 		</div>
 	</div>
+	<script>
+	  $(document).ready(function(){
+		  var now = new Date();
+		  var year = now.getFullYear();
+		  $("#date").text(year + "년");
+		  $("#holiYear").val(year);
+	  })
+	  $("#previousYear").click(function() {	
+	   		 var date1 = $("#date").text();
+	   		 var todayYear = date1.replace(/[^0-9]/g,'') - 1 ; 
+	   		 $("#date").text(todayYear + "년");
+	   		$("#holiYear").val(todayYear);
+	   	 });
+	  $("#nextYear").click(function() {	
+		  var date1 = $("#date").text();
+	   	   var todayYear = date1.replace(/[^0-9]/g,'') + 1; 
+	   		 $("#date").text(todayYear + "년");
+	   		$("#holiYear").val(todayYear);
+		 });
+  </script>
 </body>
 </html>

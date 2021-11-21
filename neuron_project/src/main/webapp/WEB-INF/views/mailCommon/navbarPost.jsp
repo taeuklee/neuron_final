@@ -31,7 +31,7 @@
         </ul>
         <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item dropdown d-lg-flex d-none">
-                <button type="button" class="btn btn-info font-weight-bold" onclick="location.href='/mailPost.do'">편지 보내기</button>
+                <button type="button" class="btn btn-info font-weight-bold" onclick="location.href='/inbox.do'">받은편지함</button>
             </li>
           <li class="nav-item dropdown d-flex">
             <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-toggle="dropdown">

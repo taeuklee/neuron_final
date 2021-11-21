@@ -13,7 +13,7 @@ public class Mail {
 	private Date readTime;
 	private String mailFileName;
 	private String mailFileRename;
-	private String mailFileSize;
+	private long mailFileSize;
 	private String mailFilePath;
 	private String readYn;
 	private String sStatus;
@@ -23,7 +23,7 @@ public class Mail {
 
 	public Mail(int mailNo, String mailTitle, String mailContents, String senderId, String receiverId,
 			String receiverId2, Date sendTime, Date readTime, String mailFileName, String mailFileRename,
-			String mailFileSize, String mailFilePath, String readYn, String sStatus, String rStatus) {
+			long mailFileSize, String mailFilePath, String readYn, String sStatus, String rStatus) {
 		super();
 		this.mailNo = mailNo;
 		this.mailTitle = mailTitle;
@@ -122,11 +122,11 @@ public class Mail {
 		this.mailFileRename = mailFileRename;
 	}
 
-	public String getMailFileSize() {
+	public long getMailFileSize() {
 		return mailFileSize;
 	}
 
-	public void setMailFileSize(String mailFileSize) {
+	public void setMailFileSize(long mailFileSize) {
 		this.mailFileSize = mailFileSize;
 	}
 
@@ -171,7 +171,5 @@ public class Mail {
 				+ ", sStatus=" + sStatus + ", rStatus=" + rStatus + "]";
 	}
 
-	
-	
 	
 }

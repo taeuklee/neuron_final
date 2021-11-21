@@ -41,9 +41,9 @@ public class MailController {
 		employee = (Employee)session.getAttribute("loginEmployee");
 		
 		int empNo= employee.getEmpNo();
-		String RecEmail = service.printOneEmail(empNo);
+		String recEmail = service.printOneEmail(empNo);
 		Mail mail = new Mail();
-		mail.setReceiverId(RecEmail);
+		mail.setReceiverId(recEmail);
 		
 		String email = mail.getReceiverId();
 		int currentPage = (page != null) ? page:1;
@@ -151,17 +151,18 @@ public class MailController {
 		Employee emp = new Employee();
 		emp = (Employee)session.getAttribute("loginEmployee");
 		
-//		int empNo = emp.getEmpNo();
-//		mail.setSenderId(empNo);
+		int empNo= emp.getEmpNo();
+		String sendEmail = service.printOneEmail(empNo);
+
+		mail.setSenderId(sendEmail);
 		
 		if(!uploadFile.getOriginalFilename().equals("")) {
 			String filename = saveFile(uploadFile, request);
 			if(filename != null) {
+				mail.setMailFileSize(uploadFile.getSize());
 				mail.setMailFileName(uploadFile.getOriginalFilename());
-//				mail.setMailFileRename(renameFilename);
 			}
 		}
-		
 		int result = service.registerMail(mail);
 		if(result > 0 ) {
 			return "redirect:inbox.do";
@@ -181,6 +182,8 @@ public class MailController {
 		}
 		String filename = uploadFile.getOriginalFilename();
 		String filePath = folder + "\\" + filename;
+		
+
 		
 		try {
 			uploadFile.transferTo(new File(filePath));

@@ -63,7 +63,8 @@
 		            <h2>나의 근태관리</h2>
 		          </div>
 		          <div class="top-date" align="center">
-		             <button><</button> 2021년 11월  <button>></button> 
+		             <button id="previousMonth"><</button> <span id="date"> </span> <button id="nextMonth">></button>
+		             <input type="hidden" id="attendYearMonth" value=""> 
 		             <br><br>
 		          </div>
 		          <div class="row stat-cards" id="stats">
@@ -75,7 +76,7 @@
 		                </div>
 		                <div class="stat-cards-info">
 		                  <p class="stat-cards-info__num">${attendance.countLate }</p>
-		                  <p class="stat-cards-info__title">이달 지각일</p>
+		                  <p class="stat-cards-info__title">이번 달 지각일</p>
 		                  <p class="stat-cards-info__progress">
 		                    <span class="stat-cards-info__profit success">
 		                      <i data-feather="trending-up" aria-hidden="true"></i>
@@ -92,7 +93,7 @@
 		                </div>
 		                <div class="stat-cards-info">
 		                  <p class="stat-cards-info__num"><span id="countAbs">${attendance.countAbs }</span></p>
-		                  <p class="stat-cards-info__title">이달 결근일</p>
+		                  <p class="stat-cards-info__title">이번 달 결근일</p>
 		                  <p class="stat-cards-info__progress">
 		                    <span class="stat-cards-info__profit success">
 		                      <i data-feather="trending-up" aria-hidden="true"></i>
@@ -109,19 +110,15 @@
 		                </div>
 		                <div class="stat-cards-info">
 		                  <p class="stat-cards-info__num">${attendance.count }</p>
-		                  <p class="stat-cards-info__title">이달 근무일</p>
+		                  <p class="stat-cards-info__title">이번 달 근무일</p>
 		                  <p class="stat-cards-info__progress">
 		                    <span class="stat-cards-info__profit success">
 		                      <i data-feather="trending-up" aria-hidden="true"></i>
 		                    </span>
-		                    
 		                  </p>
 		                </div>
 		              </article>
-		            
 		            </div>
-		            
-		         
 		          </div>
 		          <div class="row">
 		            <div class="col-lg-3">
@@ -178,17 +175,113 @@
 		            	  var hr = now.getHours();
 		            	  var min = now.getMinutes();
 		            	  var sec = now.getSeconds();
+		            	  var now = year + "- " + month ;
 		            	  var now1 = year + "/" + month + "/" + date; 
 		            	  var now2 = hr+ ":"+ min+ ":"+ sec;
 		            	  $(".box").text(now1);
 		            	  $(".top-cat-title").text(now1);
 		            	  $("#time").text(now2);
-		            	  
+		            	  $("#date").text(now);
 		              })
 		              
-// 		              $(document).ready(function){
+
+
+// 		            	  var today = new Date();
+// 						  var first = new Date(today.getFullYear(), today.getMonth(),1);
+// 						  var pageFirst = first
+// 						  var monthList = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+// 						  var pageYear;
+// // 		            	  var year = now.getFullYear();
+// // 		            	  var month = now.getMonth()+1;
+// // 		            	  var todaydt =  year + "년 " + month + "월";
+// // 		            	  $("#date").text(todaydt);
+// 							console.log(today);
+// 							console.log(first);
+		            	 $("#previousMonth").click(function() {	
+		            		 var date1 = new Date($("#date").text());
+		            		 console.log(date1);
+		            		 if(date1.getMonth() === 1){
+		            			 pageFirst = new Date(date1.getFullYear()-1, 12);
+		            			 first = pageFirst;
+		            		 }else{
+		            			 pageFirst = new Date(date1.getFullYear(),date1.getMonth()-1);
+		            			 first = pageFirst;
+		            		 }
+		            		 var year = first.getFullYear();
+		            		 var month = first.getMonth()+1;
+		            		 var now = year + "-" + month;
+		            		 
+		            		 $("#date").text(now);
+		            		 $("#attendYearMonth").val(now);
+		            	 });
+		            	 
+		            	 $("#nextMonth").click(function() {	
+		            		 var date1 = new Date($("#date").text());
+		            		 console.log(date1);
+		            		 if(date1.getMonth() === 12){
+		            			 pageFirst = new Date(date1.getFullYear()+1, 12);
+		            			 first = pageFirst;
+		            		 }else{
+		            			 pageFirst = new Date(date1.getFullYear(),date1.getMonth()+1);
+		            			 first = pageFirst;
+		            		 }
+		            		 var year = first.getFullYear();
+		            		 var month = first.getMonth()+1;
+		            		 var now = year + "-" + month;
+		            		 
+		            		 $("#date").text(now);
+		            		 $("#attendYearMonth").val(now);
+		            	 });
+		            	
+// 			              $("#previousMonth").click(function() {
+							  
+// 			            	 if(pageFirst.getMonth() === 1){
+// 			            	    pageFirst = new Date(first.getFullYear()-1, 12, 1);
+// 			            	     first = pageFirst;
+// // 							 today = new Date(today.getFullYear() + '년 ' + ((today.getMonth()+1) - 1) + "월");
+// 							 if(today.getMonth() === 1){
+// 								 today = new Date(today)
+// 							 }else{
+// 							        pageFirst = new Date(first.getFullYear(), first.getMonth()-1, 1);
+// 							        first = pageFirst;
+// 							    }
+// 							 }
+// 			            	 $("#previousMonth").click(function() {	 
+	// 			            var date = $("#date").fullCalendar("getMonth");
+	// 			            convertDate(date);
+	// 			            console.log(date);
+	// 						var date = $("#date").text();
+// 							var date1 = new Date($("#date").text());
+// 							$('#date').remove();
+// 							$('#date').text(date1.getFullYear() + '-' + ((date1.getMonth()+1) - 1));
+	// 						console.log(date);
+	// 						var date1 = date.getMonth() -1;
+	// 						console.log(date1);
+	// 						$('#date').append(date1.getFullYear() + '-' + (date1.getMonth() - 1));
+// 			            	 });
+// 			        	});
+			        // 오른쪽 버튼을 클릭하였을 경우
+// 			        $("#nextMonth").click(function() {
+// 			            var date = $("#date").fullCalendar("getDate");
+// 			            convertDate(date);
+// 			        });
+// 			    });
+			   
+// 			    // 받은 날짜값을 date 형태로 형변환 해주어야 한다.
+// 			    function convertDate(date) {
+// 			        var date = new Date(date);
+// 			        alert(date.yyyymmdd());
+
+// 		              $("#previousMonth").click(function(){
+// 		            	  var now = new Date();
+// 		            	  var year = now.getFullYear();
+// 		            	  var month = now.getMonth()+1;
+// 		            	  var date = now.getDate();
 		            	  
-// 		              }
+// 		            	  $("#date").append(year + '년 ' + (month - 1) + '월');		            	  
+// 		              });
+		            	  
+		            	  
 		              
 		              </script>
 		              <article class="white-block">
@@ -207,11 +300,11 @@
 		                      	퇴근시간: ${attendance.finishTime }
 		                      </div>
 		                  </li>
-		                  <li>
-		                      <div class="listTitle">
-		                      	주간 누적 근무시간: ${attendance.totalWorkhour }
-		                      </div>
-		                  </li>
+<!-- 		                  <li> -->
+<!-- 		                      <div class="listTitle"> -->
+<%-- 		                      	주간 누적 근무시간: ${attendance.totalWorkhour } --%>
+<!-- 		                      </div> -->
+<!-- 		                  </li> -->
 		                </ul>
 		                
 		              </article>

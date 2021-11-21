@@ -50,6 +50,28 @@
   <!-- Custom js for this page-->
   <script src="js/dashboard.js"></script>
   <!-- End custom js for this page-->
+  <script>
+		$(document).ready(function() {
+		$("#checkAll").click(function(){
+		    if( $("#checkAll").is(':checked') ){
+		      $("input[type=checkbox]").prop("checked", true);
+		    }else{
+		      $("input[type=checkbox]").prop("checked", false);
+		    }
+		});
+	
+		$("input[name=check]").click(function(){
+			var total = $("input[name=check]").length;
+			var checked = $("input[name=check]:checked").length;
+			
+			if(total != checked) 
+				$("#agreeAll").prop("checked",false);
+			else
+				$("#agreeAll").prop("checked",true);
+			
+		});
+		});
+	</script>
 </head>
 <body>
 	<div class="container-scroller">
@@ -65,7 +87,7 @@
 		          </div>
 		          <div class="mail-navi">
 		            <button>삭제</button>
-		            <button>전달</button>
+		            
 		          </div>
 		
 		          <div >
@@ -74,7 +96,6 @@
 		                <th id="col_1"><input type="checkbox" name="checkAll" id="checkAll"></th>
 		                <th id="col_3">수신인</th>
 		                <th id="col_4">제목</th>
-		                <th id="col_5">icon</th>
 		                <th id="col_6">수신시간</th>
 		                <th id="col_6-1">수신확인</th>
 		                <th id="col_7">크기</th>
@@ -83,11 +104,13 @@
 		              <tr>
 		                <td><input type="checkbox" name="" id=""></td>
 		                <td>${mail.senderId }</td>
-		                <td>${mail.mailTitle}</td>
-		                <td></td>
-<%-- 		                <td>${mail. }</td> --%>
+		                <td>
+		                	<c:if test="${!empty mail.mailFileName }">${mail.mailTitle }<i class="icon-paper-clip"></c:if>
+							<c:if test="${ empty mail.mailFileName }">${mail.mailTitle }</c:if>
+						</td>
 		                <td><fmt:formatDate pattern="yyyy년 MM월 dd일 HH:mm:ss" value="${mail.readTime }"/></td>
 		                <td>${mail.readYn }</td>
+		                <td>${mail.mailFileSize }</td>
 		              </tr>
 		              </c:forEach>
 		            </table>

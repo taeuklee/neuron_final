@@ -40,7 +40,7 @@
 	
 <!-- 	메일쓰기 -->
   	<insert id="postMail" parameterType="Mail">
-  		INSERT INTO MAIL VALUES(SEQ_MAILNUM.NEXTVAL, #{mailTitle } , #{mailContents }, #{senderId }, #{receiverId }, #{receiverId2 }, SYSDATE, NULL, DEFAULT, DEFAULT, DEFAULT)
+  		INSERT INTO MAIL VALUES(SEQ_MAILNUM.NEXTVAL, #{mailTitle } , #{mailContents }, #{senderId }, #{receiverId }, #{receiverId2 }, SYSDATE, NULL,#{mailFileName}, NULL, #{mailFileSize },NULL, DEFAULT, DEFAULT, DEFAULT)
   	</insert>
   	
 <!--   	메일 상세조회 -->
@@ -51,12 +51,12 @@
 <!-- 	받은메일 삭제 -->
 	<update id="deleteRecieveMail" parameterType="_int">
 		UPDATE MAIL SET R_STATUS = 'HIDE' WHERE MAIL_NO = #{mailNo} 
-<!-- 		AND RECEIVER_ID = #{empNo } -->
+
 	</update>
 <!-- 	보낸메일 삭제 -->
 	<update id="deleteSendMail" parameterType="_int">
 		UPDATE MAIL SET S_STATUS = 'HIDE' WHERE MAIL_NO = #{mailNo} 
-<!-- 		AND SENDER_ID = #{empNo } -->
+
 	</update>
 	
 <!-- 	수신상태 변경, 읽음  -->

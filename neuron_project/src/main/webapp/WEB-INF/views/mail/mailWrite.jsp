@@ -48,7 +48,40 @@
   <!-- Custom js for this page-->
   <script src="js/dashboard.js"></script>
   <!-- End custom js for this page-->
-  
+  <style>
+  .mail-top{
+    width:100%;
+    /* background-color: tomato; */
+    height:100%;
+}
+.addr_btn{
+    display:block;
+    float:right;
+}
+.mail-top th {
+    width:10%;
+}
+    
+.mail-top td {
+   
+    width:90%;    
+    border-bottom: 1px solid rgb(143, 141, 141);
+}
+#file td {
+    border-bottom: none;
+}
+.mt1{
+    width:80%;
+   
+    border:0;
+    cursor:text;
+    background-color: #f4f7fa;
+}
+.btn btn-info font-weight-bold{
+	text-align: center;
+	vertical-align: center;
+}
+  </style>
   <script>
             function openPop(){
               var popup = window.open('/addressbook.jsp', '주소록팝업','width=800px;, height=800px;');
@@ -70,29 +103,34 @@
 		          <div class="mail-content">
 		          <form action="mailPost.do" method="post" enctype="Multipart/form-data">
 		            <table class="mail-top" border="0">
-		            <input type="hidden" name="senderId"> 
+		            	<input type="hidden" name="senderId" value="${mail.senderId }"> 
 		              <tr>
 		                <th>받는사람</th>
-		                <td><input type="text" name="" class="mt1"><button class="addr_btn" target="_blank" onclick="openPop()">주소록</button></td>
+		                <td>
+		                	<input type="text" name="receiverId" class="mt1">
+		                	<button class="addr_btn" target="_blank" onclick="openPop()">주소록</button>
+		                </td>
 		                <!-- 엔터 누르면 블락 잡히는거 -->
 		              </tr>
 		              <tr>
 		                <th>참조</th>
-		                <td><input type="text" name="" class="mt1"><button class="addr_btn">주소록</button></td>
+		                <td><input type="text" name="receiverId2" class="mt1"><button class="addr_btn">주소록</button></td>
 		              </tr>
 		              <tr>
 		                <th>제목</th>
-		                <td></td>
+		                <td><input type="text" name="mailTitle" class="mt1"></td>
 		              </tr>
 		              <tr>
 		                <th>첨부파일</th>
 		                <td><input type="file" name="uploadFile"></td>
 		              </tr>
 		              <tr>
-						<th>내용</th>
-						<td><textarea rows="10" cols="173" name="mailContents"></textarea></td>
-					</tr>
+		                <th>내용</th>
+		                <td><textarea name="mailContents" id="" cols="160" rows="10"></textarea></td>
+			           </tr>
 		            </table>
+		            <input type="submit" class="btn btn-info font-weight-bold" value="보내기">
+		            <input type="reset" class="btn btn-info font-weight-bold" value="취소">
 		            </form>
 		          </div>
 		        </div>
