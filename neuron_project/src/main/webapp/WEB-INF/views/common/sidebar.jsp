@@ -30,7 +30,7 @@
 			</div>
 		</c:if>
 		<ul class="nav">
-			<li class="nav-item"><a class="nav-link" href="home.jsp"> <i
+			<li class="nav-item"><a class="nav-link" href="/home.do"> <i
 					class="icon-box menu-icon"></i> <span class="menu-title">Home</span>
 			</a></li>
 

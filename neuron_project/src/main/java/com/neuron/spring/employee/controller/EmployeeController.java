@@ -96,7 +96,7 @@ public class EmployeeController {
 		HttpSession session = request.getSession();
 		if(session != null) {
 			session.invalidate();
-			return "redirect:home.do";
+			return "redirect:index.jsp";
 		}else {
 			request.setAttribute("msg", "실패");
 			return "common/errorPage";
