@@ -26,7 +26,7 @@
 
   	<!-- 프로젝트 생성 승인 / 반려 처리 -->
   	<update id="adminOkUpdate" parameterType="Project2">
-	UPDATE PROJECT SET PROJECT_INSERT_REQUEST = #{permission} WHERE PROJECT_NO = #{projectNo }
+	UPDATE PROJECT SET PROJECT_INSERT_REQUEST = #{projectInsertRequest} WHERE PROJECT_NO = #{projectNo }
   	</update>
 
 	

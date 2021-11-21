@@ -88,6 +88,7 @@
 				<div class="content-wrapper" id="contents">
 				<div class="col-lg-12 grid-margin stretch-card">
 					<div class="card">
+					<form action="projectOk.do" method="post">
 					<input type="hidden" name="projectNo" value="${projectNo }">
 						<div class="card-body">
 							<br>
@@ -113,8 +114,7 @@
 								               <td>${project.projectContents }</td>
 								               <td>${project.projectMaster }</td>
 								               <td>
-							               		<select name="permission" class="form-control">
-							               			<option disabled seleted>처리</option>
+							               		<select name="projectInsertRequest" class="form-control">
 													<option value="Y">승인</option>
 													<option value="N">반려</option>
 												</select>
@@ -123,12 +123,12 @@
 								         </c:forEach>
 								         
 								</table>
-								<div class="proButtton" style="padding-left:95%;">
-								<br>
-								<a href="${pDelete }" class="btn btn-primary mr-2 modify">저장</a>
+								<div class="mt-3" style="padding-left: 45%;">
+									<input type="submit" class="btn btn-primary mr-2" value="저장">
 								</div>
 							</div>
 						</div>
+						</form>
 					</div>
 				</div>
 				<!-- partial:partials/_footer.html -->
