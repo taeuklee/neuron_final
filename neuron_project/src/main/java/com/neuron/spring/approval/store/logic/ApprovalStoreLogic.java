@@ -112,9 +112,11 @@ public class ApprovalStoreLogic implements ApprovalStore{
 		System.out.println("@@@@@@@@@@ test:"+ dataMap.getString("apprStateChk"));
 		if(dataMap.getString("apprStateChk").equals("Y")) {
 			sqlSession.update("approvalMapper.updateTransApprovalDoc",dataMap);
-			if(dataMap.getString("docStateChk").equals("최종완료")
+			if(dataMap.getString("docStateChk").equals("최종완료") 
 					&& dataMap.getString("documentKind").equals("휴가신청서")) {
 				sqlSession.update("employeeMapper.updateEmpVacation",dataMap);
+			}else {
+				return result;
 			}
 		}
 		
@@ -152,6 +154,11 @@ public class ApprovalStoreLogic implements ApprovalStore{
 		}
 			
 		return result;
+	}
+
+	@Override
+	public List<DataMap> selectMainPageDocList(int empNo) {
+		return sqlSession.selectList("approvalMapper.selectMainPageDocList", empNo);
 	}
 
 }

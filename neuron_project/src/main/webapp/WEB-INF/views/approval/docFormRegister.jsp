@@ -69,11 +69,14 @@
 			if(docGuVal == 'newContent'){
 				$("button[name='newContentBtn']").show();
 				$("input[name='contentName']").show();
+				$("input[name='contentName']").focus();
+				$("#titleName").html('');
 				CKEDITOR.instances.documentFormReg.setData("");
 			}else{
 				$("#titleName").html(docGuVal);
 				$("button[name='newContentBtn']").hide();
 				$("input[name='contentName']").hide();
+				$("input[name='contentName']").val('');
 				CKEDITOR.instances.documentFormReg.setData($("#" + docGuVal).html());
 			}
 		});
@@ -146,8 +149,8 @@
 								<input type="hidden" name="codeGubun">
 								<table class="table">
 									<tr>
-										<td width="100"><b>결재 구분</b></td>
-										<td><select id="docGu" name="docGubun">
+										<td width="150"><b style="font-size:large">결재 구분</b></td>
+										<td><select id="docGu" name="docGubun" style="height:33px; font-size:medium;">
 												<option selected disabled>선택하세요</option>
 												<c:forEach items="${code }" var="item">
 													<c:if test="${item.codeName ne '휴가신청서' }">
@@ -156,9 +159,10 @@
 												</c:forEach>
 												<option value="newContent">신규등록</option>
 											</select>
-											<input name="contentName" type="text" style="display: none;" />
-											<button name="newContentBtn" type="button" onclick="fn_newContent();" style="display: none;">제목 입력</button>
-											<button name="newContentBtn2" type="button" onclick="fn_save();">등록/수정</button>
+											<input name="contentName" type="text" size="35" placeholder="신규등록할 문서 제목을 입력해주세요" style="display: none; line-height:25px" />
+											<button name="newContentBtn" class="button" type="button" onclick="fn_newContent();" style="display: none; height:25px">제목 입력</button>
+											
+											<button name="newContentBtn2"class="btn btn-warning" type="button" onclick="fn_save();" style="float:right" >등록/수정</button>
 											<div id="contentArea" style="display: none;">
 												<c:forEach items="${code }" var="item">
 													<div id="${item.codeName }">${item.codeContents }</div>

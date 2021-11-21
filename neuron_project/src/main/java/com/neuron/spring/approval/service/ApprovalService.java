@@ -25,7 +25,9 @@ public interface ApprovalService {
 	 * @param pi
 	 * @return List
 	 */
-	public List<DataMap> printMyAllDocList(PageInfo pi,Map empNo);
+	public List<DataMap> printMyAllDocList(PageInfo pi, Map empNo);
+	
+	public List<DataMap> printMainPageDocList(int empNo);
 	
 	public List<Map<String, Object>> codeInfo(Map<String,String> param);
 	

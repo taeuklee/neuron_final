@@ -32,7 +32,7 @@
           <li class="nav-item dropdown d-flex mr-4 ">
             <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center" id="notificationDropdown" href="#" data-toggle="dropdown">
               <c:if test="${not empty sessionScope.loginEmployee }">
-              <a class="dropdown-item preview-item"  onclick="location.href='logout.do';">
+              <a class="dropdown-item preview-item"  onclick="location.href='/logout.do';">
                   <i class="icon-inbox"></i> Logout
               </a>
               </c:if>

@@ -115,6 +115,11 @@ public class ApprovalServiceImpl implements ApprovalService{
 	public int documentRegisterProcess(DataMap map) {
 		return store.documentRegisterProcess(map);
 	}
+
+	@Override
+	public List<DataMap> printMainPageDocList(int empNo) {
+		return store.selectMainPageDocList(empNo);
+	}
 	
 	
 }

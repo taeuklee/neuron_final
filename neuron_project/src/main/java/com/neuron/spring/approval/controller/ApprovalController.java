@@ -86,6 +86,9 @@ public class ApprovalController {
 		}else if(path.equals("documentCompleteListView")) {
 			paramMap.put("gubun","complete");
 			totalCount = service.getListCount(paramMap);
+		}else if(path.equals("documentWithdrawListView")) {
+			paramMap.put("gubun", "withdraw");
+			totalCount = service.getListCount(paramMap);
 		}
 		
 		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);

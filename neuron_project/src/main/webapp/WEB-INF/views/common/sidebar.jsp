@@ -96,15 +96,15 @@
 								<li class="nav-item"><a class="nav-link"
 									onclick="location:href='/approval/myDocumentListView.do';">결재요청함</a></li>
 								<li class="nav-item"><a class="nav-link"
-									href="#">임시저장함</a></li>
+									href="#">회수문서함</a></li>
 							</ul></li>
 						<li class="nav-item" align="center"><i class="menu-arrow"></i><span
 							style="font-size: large; color: #F9D955;">결재</span>
-							<ul style="list-style: none">
+							<ul style="list-style: none;cursor: pointer;">
 								<li class="nav-item"><a class="nav-link"
 									onclick="location:href='/approval/documentWaitListView.do';">결재대기함</a></li>
 								<li class="nav-item"><a class="nav-link"
-									onclick="location:href='#'">결재진행함</a></li>
+									onclick="location:href='/approval/documentProgressListView.do'">결재진행함</a></li>
 								<li class="nav-item"><a class="nav-link" 
 									onclick="location:href='/approval/documentRejectListView.do';">반려문서함</a></li>
 								<li class="nav-item"><a class="nav-link" 
@@ -128,7 +128,7 @@
 						<i class="menu-arrow"></i>
 				</a>
 					<div class="collapse" id="menu6">
-						<ul class="nav flex-column sub-menu">
+						<ul class="nav flex-column sub-menu" style="cursor: pointer;">
 							<li class="nav-item"><a class="nav-link"
 								onclick="location.href='/enrollView.do'">사원 등록</a></li>
 							<li class="nav-item"><a class="nav-link"
@@ -141,7 +141,7 @@
 						<i class="menu-arrow"></i>
 				</a>
 					<div class="collapse" id="menu7">
-						<ul class="nav flex-column sub-menu">
+						<ul class="nav flex-column sub-menu" style="cursor: pointer;">
 							<li class="nav-item"><a class="nav-link"
 								onclick="location.href='/deptListView.do'">부서 조회</a></li>
 							<li class="nav-item"><a class="nav-link"
@@ -154,7 +154,7 @@
 						<i class="menu-arrow"></i>
 				</a>
 					<div class="collapse" id="menu8">
-						<ul class="nav flex-column sub-menu">
+						<ul class="nav flex-column sub-menu" style="cursor: pointer;">
 							<li class="nav-item"><a class="nav-link"
 								onclick="location:href='/proListView.do';">리스트 조회</a></li>
 							<li class="nav-item"><a class="nav-link"

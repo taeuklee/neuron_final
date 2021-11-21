@@ -47,4 +47,6 @@ public interface ApprovalStore {
 	public int updateDocWithDraw(DataMap map);
 	
 	public int documentRegisterProcess(DataMap map);
+	
+	public List<DataMap> selectMainPageDocList(int empNo);
 }

@@ -89,8 +89,7 @@
         <div class="content-wrapper" id="contents">
 			<div class="row">
 			  <div class="col-sm-12 mb-4 mb-xl-0">
-			    <h4 class="font-weight-bold text-dark">Hi, welcome back!</h4>
-			    <p class="font-weight-normal mb-2 text-muted">APRIL 1, 2019</p>
+			    <h4 class="font-weight-bold" style="color:#1914089c;">안녕하세요 Neuron입니다.</h4>
 			  </div>
 			</div>
 			<div class="row mt-3">
@@ -99,7 +98,7 @@
 		        <div class="col-sm-12 grid-margin stretch-card">
 		            <div class="card">
 		              <div class="card-body">
-		                  <p class="card-title">user01 님의 근태</p>
+		                  <p class="card-title">${loginEmployee.empName }님의 근태</p>
 		                  <h4 class="h1-dateClock"></h4>
 		                  <h1 class="h1-clock" style="color:#fcb41d;"></h1>
 		                  <h4 class="text-dark font-weight-bold mb-2">
@@ -163,8 +162,45 @@
             <div class="col-md-6 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">전자결재</h4>
-                  
+					<h4 class="card-title">전자결재</h4>
+					<c:if test="${not empty dList }">
+					<p class="card-description" style="color:#E0553E; float:left;">
+						회원님의 결재 대기중인 파일이 남아있습니다.
+					</p>
+					</c:if>
+					<c:if test="${empty dList }">
+					<p class="card-description" style="color:#118BF5; float:left;">
+						회원님의 결재 대기중인 문서가 비어있습니다.
+					</p>
+					</c:if>
+					<a href="/approval/documentWaitListView.do" style="float:right; padding-right: 28px;">더보기</a>
+					<div class="table-responsive">
+					<table class="table table-hover">
+						<thead>
+							<tr align="center">
+								<th width="20">No</th>
+								<th width="200">문서종류</th>
+								<th width="100">기안자</th>
+								<th width="200">기안일</th>
+								<th width="100">문서상태</th>
+							</tr>
+						</thead>
+						<tbody>
+						<c:forEach items="${dList }" var="dOne">
+							<c:url var="dDetail" value="documentDatail.do">
+								<c:param name="documentNo" value="${dOne.documentNo }"></c:param>
+							</c:url>
+							<tr onclick="location.href='/${dDetail }'" align="center" style="cursor:pointer; color:#blue;">
+								<th>${dOne.documentNo }</th>
+								<th>${dOne.documentKind }</th>
+								<th>${dOne.empName } ${dOne.empJob}</th>
+								<th>${dOne.dCreateDate }</th>
+								<th>${dOne.documentStatus}</th>
+							</tr>
+						</c:forEach>
+						</tbody>
+					</table>
+					</div>
                 </div>
               </div>
             </div>
