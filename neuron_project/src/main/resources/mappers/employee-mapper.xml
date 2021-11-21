@@ -36,7 +36,7 @@
  	<resultMap type="Dept" id="deptResultMap">
  		<id property="deptCode" column="DEPT_CODE"/>
  		<result property="deptName" column="DEPT_NAME"/>
- 	</resultMap>
+ 	</resultMap>  
  	
  	 <resultMap type="DeptTeam" id="dtResultMap">
  		<id property="deptCode" column="DEPT_CODE"/>
@@ -96,16 +96,19 @@
  	 	SELECT * FROM DEPT
   	 </select>  
  	 
+ 	 <!-- 사원 등록 -->
  	 <insert id="insertEmp" parameterType="Employee">
  		INSERT INTO EMPLOYEE VALUES (SEQ_EMPNUM.NEXTVAL, #{deptCode}, #{teamCode}, #{empId}, #{empPwd}, 
  		#{empName}, #{empBirth}, #{empPhone}, #{empJob}, #{empEmail}, #{empSubEmail}, 
         #{empExnum}, #{empState},NULL, NULL, NULL, NULL, #{empFileName}, #{empFileReName}, #{empMaster}) 
  	 </insert>
  	 
+ 	 <!-- 개인 정보 수정 -->
  	  <update id="updateEmpInfo" parameterType="Employee">
   		UPDATE EMPLOYEE SET EMP_PWD = #{empPwd}, EMP_PHONE = #{empPhone}, EMP_SUBEMAIL = #{empSubEmail} WHERE EMP_ID = #{empId }
   	</update>
   	
+  	<!-- 관리자 -> 사원 정보 수정 -->
   	 <update id="updateEmpAdmin" parameterType="Employee">
   		UPDATE EMPLOYEE SET DEPT_CODE = #{deptCode}, TEAM_CODE = #{teamCode}, 
   		EMP_JOB = #{empJob}, EMP_EXNUM = #{empExnum}, EMP_STATE = #{empState}, EMP_MASTER = #{empMaster } WHERE EMP_ID = #{empId }

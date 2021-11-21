@@ -19,8 +19,8 @@ public class DeptStoreLogic implements DeptStore{
 	private SqlSession sqlSession;
 
 	@Override
-	public List<DeptAdmin> selectAllDept(String master) {
-		List<DeptAdmin> daList = sqlSession.selectList("deptMapper.selectDeptAdminAll", master);
+	public List<DeptAdmin> selectAllDept() {
+		List<DeptAdmin> daList = sqlSession.selectList("deptMapper.selectDeptAdminAll");
 		return daList;
 	}
 
@@ -30,8 +30,8 @@ public class DeptStoreLogic implements DeptStore{
 	}
 
 	@Override
-	public DeptAdmin selectOneDept(String deptCode) {
-		DeptAdmin deptAdmin = sqlSession.selectOne("deptMapper.selectOneDept", deptCode);
+	public DeptAdmin selectOneDept(String teamCode) {
+		DeptAdmin deptAdmin = sqlSession.selectOne("deptMapper.selectOneDept", teamCode);
 		return deptAdmin;
 	}
 	
@@ -42,10 +42,18 @@ public class DeptStoreLogic implements DeptStore{
 	}
 
 	@Override
+	public int teamModify(DeptAdmin deptAdmin) {
+		int result = sqlSession.update("deptMapper.teamModify", deptAdmin);
+		return result;
+	}
+	
+	@Override
 	public int deptRemove(String deptCode) {
 		int result = sqlSession.delete("deptMapper.deptRemove", deptCode);
 		return result;
 	}
+
+
 
 
 

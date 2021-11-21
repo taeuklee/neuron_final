@@ -12,7 +12,7 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Neuron : 부서 조회</title>
+<title>Neuron : 부서 수정</title>
 <!-- base:css -->
 <link rel="stylesheet"
 	href="vendors/mdi/css/materialdesignicons.min.css">
@@ -91,135 +91,97 @@
 							<div class="card-body">
 								<br>
 								<h3 class="card-title">부서 수정</h3>
-								<form action="deptUpdate.do" method="post">
-								<br>
-								<br>
-								<br>
-								<div class="row">
-								<div class="col-md-6 grid-margin stretch-card">
-										<div class="card">
-											<div class="card-body">
-												<h4 class="card-title">부서 및 팀 코드표</h4>
-												<div class="table-responsive">
-													<table class="table">
-														<thead>
-															<tr>
-																<th>부서 코드</th>
-																<th>부서명</th>
-																<th>팀 코드</th>
-																<th>팀명</th>
-															</tr>
-														</thead>
-														<tbody>
-															<tr>
-																<td>A1</td>
-																<td>경영지원부</td>
-																<td>A11</td>
-																<td>인사팀</td>
-															</tr>
-															<tr>
-																<td>A1</td>
-																<td>경영지원부</td>
-																<td>A12</td>
-																<td>총무팀</td>
-															</tr>
-															<tr>
-																<td>B1</td>
-																<td>개발부</td>
-																<td>B11</td>
-																<td>개발1팀</td>
-															</tr>
-															<tr>
-																<td>B1</td>
-																<td>개발부</td>
-																<td>B12</td>
-																<td>개발2팀</td>
-															</tr>
-															<tr>
-																<td>C1</td>
-																<td>마케팅부</td>
-																<td>C11</td>
-																<td>마케팅팀</td>
-															</tr>
-															<tr>
-																<td>C1</td>
-																<td>마케팅부</td>
-																<td>C12</td>
-																<td>영업팀</td>
-															</tr>
-															<tr>
-																<td>D1</td>
-																<td>고객지원부</td>
-																<td>D12</td>
-																<td>A/S팀</td>
-															</tr>
-															<tr>
-																<td>Z1</td>
-																<td>임원</td>
-																<td>Z11</td>
-																<td>대표이사</td>
-															</tr>
-															<tr>
-																<td>Z1</td>
-																<td>임원</td>
-																<td>Z12</td>
-																<td>부사장</td>
-															</tr>
-															<tr>
-																<td>Z1</td>
-																<td>임원</td>
-																<td>Z13</td>
-																<td>상무</td>
-															</tr>
-														</tbody>
-													</table>
+								<form action="deptModify.do" method="post">
+									<br> <br> <br>
+									<div class="row">
+										<div class="col-md-6 grid-margin stretch-card">
+											<div class="card">
+												<div class="card-body">
+													<h4 class="card-title">부서 및 팀 코드표</h4>
+													<div class="table-responsive">
+														<table class="table table-bordered">
+															<thead>
+																<tr>
+																	<th>부서코드</th>
+																	<th>부서명</th>
+																	<th>팀코드</th>
+																	<th>팀명</th>
+																</tr>
+															</thead>
+															<tbody>
+																<c:forEach items="${ daList }" var="deptAdmin">
+																	<tr>
+																		<td>${deptAdmin.deptCode }</td>
+																		<td>${deptAdmin.deptName }</td>
+																		<td>${deptAdmin.teamCode }</td>
+																		<td>${deptAdmin.teamName }</td>
+																	</tr>
+																</c:forEach>
+															</tbody>
+														</table>
+													</div>
 												</div>
 											</div>
 										</div>
-									</div>
-								
-								<div class="col-md-6 grid-margin stretch-card">
-									<div class="card">
-										<div class="card-body">
-										<form action="deptModify.do" class="forms-sample" method="post">
-							 				<input type="hidden" name="teamCode" value="${deptAdmin.deptCode }">
-												<div class="form-group">
-													<label>부서코드</label> 
-													<input type="text" class="form-control" value="${deptAdmin.deptCode }" name="deptCode" aria-label="Username">
+
+										<div class="col-md-6 grid-margin stretch-card">
+											<div class="card">
+												<div class="card-body">
+													<form action="deptModify.do" class="forms-sample"
+														method="post">
+														<input type="hidden" name="teamCode"
+															value="${deptAdmin.deptCode }">
+														<div class="form-group">
+															<label>부서코드</label> <input type="text"
+																class="form-control" value="${deptAdmin.deptCode }"
+																name="deptCode" aria-label="Username" readonly>
+														</div>
+														<div class="form-group">
+															<label>부서명</label> <input type="text"
+																class="form-control form-control-lg"
+																value="${deptAdmin.deptName }" name="deptName"
+																aria-label="Username">
+														</div>
+														<div class="col-sm-9" style="margin-left: 85%;">
+															<input type="submit" class="btn btn-primary mr-2"
+																value="수정" />
+														</div>
+													</form>
+													<form action="teamModify.do" class="forms-sample"
+														method="post">
+														<div class="form-group">
+															<label>팀 코드</label> <input type="text"
+																class="form-control" value="${deptAdmin.teamCode }"
+																placeholder="팀 코드" name="teamCode" aria-label="Username"
+																readonly>
+														</div>
+														<div class="form-group">
+															<label>팀명</label> <input type="text" class="form-control"
+																value="${deptAdmin.teamName }" placeholder="팀명"
+																name="teamName" aria-label="Username">
+														</div>
+														<div class="col-sm-9" style="margin-left: 85%;">
+															<input type="submit" class="btn btn-primary mr-2"
+																value="수정" />
+														</div>
+													</form>
 												</div>
-												<div class="form-group">
-													<label>부서명</label> 
-													<input type="text" class="form-control form-control-lg" value="${deptAdmin.deptName }" name="deptName" aria-label="Username">
-												</div>
-												<div class="form-group">
-													<label>팀 코드</label> 
-													<input type="text" class="form-control" value="${deptAdmin.teamCode }" placeholder="팀 코드" name="teamName" aria-label="Username">
-												</div>
-												<div class="form-group">
-													<label>팀명</label> 
-													<input type="text" class="form-control" value="${deptAdmin.teamName }" placeholder="팀명" name="teamCode" aria-label="Username">
-												</div>
-												<div class="col-sm-9" style="margin-left: 85%;">
-													<input type="submit" class="btn btn-primary mr-2" value="수정" />
-												</div>
-											</form>
+											</div>
 										</div>
-									</div>
-								</div>
 								</form>
-								</div>
 							</div>
 						</div>
 					</div>
-					<!-- partial:partials/_footer.html -->
-					<footer class="footer" id="footer"></footer>
-					<!-- partial -->
 				</div>
-				<!-- main-panel ends -->
+				<!-- partial:partials/_footer.html -->
+				<footer class="footer" id="footer"></footer>
+				<!-- partial -->
 			</div>
-			<!-- page-body-wrapper ends -->
+			<!-- main-panel ends -->
 		</div>
-		<!-- container-scroller -->
+		<!-- page-body-wrapper ends -->
+	</div>
+	<!-- container-scroller -->
 </body>
 
 </html>

@@ -29,6 +29,7 @@
 		<typeAlias type="com.neuron.spring.dept.domain.DeptAdmin" alias="DeptAdmin"/>
 		<typeAlias type="com.neuron.spring.mail.domain.Mail" alias="Mail"/>
 		<typeAlias type="com.neuron.spring.employee.domain.DeptTeam" alias="DeptTeam"/>
+		<typeAlias type="com.neuron.spring.admin.project.domain.Project" alias="Project2"/>
 		
 	</typeAliases>
 	
@@ -41,6 +42,7 @@
 		<mapper resource="mappers/notice-mapper.xml" />
 		<mapper resource="mappers/dept-mapper.xml" />
 		<mapper resource="mappers/mail-mapper.xml" />
+		<mapper resource="mappers/adproject-mapper.xml" />
 	</mappers>
 </configuration>
 <!-- 		<typeAlias type="com.neuron.spring.approval.domain.DocumentFile" alias="DocumentFile"/> -->

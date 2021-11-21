@@ -8,15 +8,17 @@ import com.neuron.spring.dept.domain.Team;
 
 public interface DeptStore {
 
-	List<DeptAdmin> selectAllDept(String master);
+	List<DeptAdmin> selectAllDept();
 
 	int deptRegister(DeptAdmin deptAdmin);
 
+	DeptAdmin selectOneDept(String deptCode);
+
 	int deptModify(DeptAdmin deptAdmin);
+	
+	int teamModify(DeptAdmin deptAdmin);
 
 	int deptRemove(String deptCode);
-
-	DeptAdmin selectOneDept(String deptCode);
 
 
 }

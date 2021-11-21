@@ -154,7 +154,7 @@
 						   		 			<a href="${pagination }">[${p }]</a>&nbsp;
 						   		 		</c:if>
 						   		 	</c:forEach>
-						   		 	<c:url var="after" value="empListView.do">
+						   		 	<c:url var="after" value="noticeListView.do">
 						   		 		<c:param name="page" value="${pi.currentPage +1 }"></c:param>
 						   		 	</c:url>
 						   		 	<c:if test="${pi.currentPage >= pi.maxPage }">

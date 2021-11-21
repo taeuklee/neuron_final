@@ -27,6 +27,7 @@ public class EmployeeSerivceImpl implements EmployeeService{
 		Employee eOne = store.selectEmp(empOne);
 		return eOne;
 	}
+	
 
 	@Override
 	public int registerEmp(Employee employee) {
@@ -83,6 +84,8 @@ public class EmployeeSerivceImpl implements EmployeeService{
 		List<DeptTeam> dtList = store.selectAllDtList();
 		return dtList;
 	}
+
+
 
 //	@Override
 //	public void sendEmail(Employee employee, String div) throws Exception {

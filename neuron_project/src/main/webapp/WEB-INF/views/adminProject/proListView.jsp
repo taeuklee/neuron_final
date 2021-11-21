@@ -88,6 +88,7 @@
 				<div class="content-wrapper" id="contents">
 				<div class="col-lg-12 grid-margin stretch-card">
 					<div class="card">
+					<input type="hidden" name="projectNo" value="${projectNo }">
 						<div class="card-body">
 							<br>
 							<h3 class="card-title">프로젝트 리스트</h3>
@@ -99,19 +100,19 @@
 									<thead>
 										<tr>
 											<th>No</th>
-											<th>프로젝트명</th>
+											<th>프로젝트 명</th>
+											<th>프로젝트 내용</th>
 											<th>책임자</th>
 										</tr>
 									</thead>
-								        <!--  <c:forEach items="${ nList }" var="notice"> -->
+								          <c:forEach items="${ pList }" var="project"> 
 								            <tr align="center">
-								               <td>1</td>
-								               <td>
-								                  <a href="#">뉴런</a>
-								               </td>
-								               <td>박보검</td>
+								               <td>${project.projectNo }</td>
+								               <td>${project.projectTitle }</td>
+								               <td>${project.projectContents }</td>
+								               <td>${project.projectMaster }</td>
 								            </tr>
-								        <!-- </c:forEach> -->
+								        </c:forEach>
 								</table>
 							</div>
 						</div>
