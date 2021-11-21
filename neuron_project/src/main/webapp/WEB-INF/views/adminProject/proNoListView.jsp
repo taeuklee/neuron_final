@@ -88,6 +88,7 @@
 				<div class="content-wrapper" id="contents">
 				<div class="col-lg-12 grid-margin stretch-card">
 					<div class="card">
+					<form action="projectDelete.do" method="post">
 					<input type="hidden" name="projectNo" value="${projectNo }">
 						<div class="card-body">
 							<br>
@@ -121,6 +122,7 @@
 								</table>	
 							</div>
 						</div>
+						</form>
 					</div>
 				</div>
 				<!-- partial:partials/_footer.html -->

@@ -68,11 +68,9 @@ public class AdminProContoller {
 			, Model model
 			, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-
 		try {
 			int result = service.adminOkUpdate(project);
 			if(result > 0) {
-				
 				return "redirect:proOkListView.do";
 			}else {
 				model.addAttribute("msg", "승인 처리 실패!");
