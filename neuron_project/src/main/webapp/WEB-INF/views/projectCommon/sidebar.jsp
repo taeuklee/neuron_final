@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -69,11 +69,16 @@
 					<ul class="nav flex-column sub-menu">
 						<li class="nav-item"><b1>대표업무</b1></li>
 						<li class="nav-item"><a class="nav-link" href="#"
-							onclick="location.href='selectProjectMainWork.do?projectNo=${project.projectNo}'">대표업무
+							onclick="moveSelectMainWork()">대표업무
 								조회</a></li>
+						<c:if test="${loginEmployee.empNo eq project.projectMaster }">
 						<li class="nav-item"><a class="nav-link" href="#"
-							onclick="moveInsertMainWork()">대표업무
-								등록</a></li>
+							onclick="moveInsertMainWork()">대표업무 등록</a></li>
+						<li class="nav-item"><a class="nav-link" href="#"
+							onclick="moveInsertTask()">세부사항 등록</a></li>
+						<li class="nav-item"><a class="nav-link" href="#"
+							onclick="moveUpdateTask()">세부사항 수정</a></li>
+						</c:if>
 						<li class="nav-item"><b1>팀원</b1></li>
 						<li class="nav-item"><a class="nav-link" href="#"
 							onclick="location.href='selectProjectMemberList.do?projectNo=${project.projectNo}'">팀원목록</a></li>
@@ -104,29 +109,67 @@
 					class="icon-file menu-icon"></i> <span class="menu-title">공지사항</span>
 			</a></li>
 			<c:if test="${loginEmployee.empNo eq master.empNo }">
-				<li class="nav-item"><a class="nav-link" href="#" onclick="location.href='deleteProject.do?projectNo=${project.projectNo}'"> <i
-						class="icon-file menu-icon"></i> <span class="menu-title">프로젝트
-							삭제요청</span></a></li>
+				<li class="nav-item"><a class="nav-link" href="#"
+					onclick="location.href='deleteProject.do?projectNo=${project.projectNo}'">
+						<i class="icon-file menu-icon"></i> <span class="menu-title">프로젝트
+							삭제요청</span>
+				</a></li>
 			</c:if>
 		</ul>
 	</nav>
 	<script>
-	
-	function moveInsertMainWork() {
-		$.ajax({
-			url:"moveInsertMainWorkForm.do?projectNo=${project.projectNo}",
-			type:"get",
-			success:function(data){
-				if(data=="success"){
-					location.href="moveInsertMainWork.do?projectNo=${project.projectNo}";
-				}else{
-					alert("이미 대표업무가 등록되어 있습니다.")
-				}
-			},error:function(){
-				
-			}
-		})
-	}
+		function moveInsertMainWork() {
+			$.ajax({
+						url : "moveInsertMainWorkForm.do?projectNo=${project.projectNo}",
+						type : "get",
+						success : function(data) {
+							if (data == "success") {
+								location.href = "moveInsertMainWork.do?projectNo=${project.projectNo}";
+							} else {
+								alert("이미 대표업무가 등록되어 있습니다.")
+							}
+						},
+						error : function() {
+
+						}
+					})
+		}
+		
+		function moveInsertTask() {
+			$.ajax({
+						url : "moveInsertMainWorkForm.do?projectNo=${project.projectNo}",
+						type : "get",
+						success : function(data) {
+							if (data == "success") {
+								alert("대표업무가 등록되어 있지 않습니다.")
+							} else {
+								location.href = "moveInsertTaskForm.do?projectNo=${project.projectNo}";
+							}
+						},
+						error : function() {
+
+						}
+					})
+					
+		}
+		
+		function moveSelectMainWork() {
+			$.ajax({
+						url : "moveInsertMainWorkForm.do?projectNo=${project.projectNo}",
+						type : "get",
+						success : function(data) {
+							if (data == "success") {
+								alert("대표업무가 등록되어 있지 않습니다.")
+							} else {
+								location.href="selectProjectMainWork.do?projectNo=${project.projectNo}";
+							}
+						},
+						error : function() {
+
+						}
+					})
+					
+		}
 	
 	</script>
 </body>

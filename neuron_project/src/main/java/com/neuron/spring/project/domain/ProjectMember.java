@@ -7,6 +7,7 @@ public class ProjectMember {
 	private String empName;
 	private String deptName;
 	private String empJob;
+	private String empFileReName;
 	private String empAuth;
 	
 	public ProjectMember() {
@@ -62,12 +63,27 @@ public class ProjectMember {
 		this.projectNo = projectNo;
 	}
 
+	public String getEmpFileReName() {
+		return empFileReName;
+	}
+
+	public void setEmpFileReName(String empFileReName) {
+		this.empFileReName = empFileReName;
+	}
+
 	@Override
 	public String toString() {
 		return "ProjectMember [empNo=" + empNo + ", projectNo=" + projectNo + ", empName=" + empName + ", deptName="
-				+ deptName + ", empJob=" + empJob + ", empAuth=" + empAuth + "]";
+				+ deptName + ", empJob=" + empJob + ", empFileReName=" + empFileReName + ", empAuth=" + empAuth + "]";
 	}
+	
+	
+	
 
+	
+
+
+	
 
 	
 

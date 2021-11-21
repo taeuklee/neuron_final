@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 import com.neuron.spring.empCalendar.domain.EmpCalendar;
 import com.neuron.spring.project.domain.EmpProject;
 import com.neuron.spring.project.domain.Employee;
+import com.neuron.spring.project.domain.PageInfo;
 import com.neuron.spring.project.domain.Project;
 import com.neuron.spring.project.domain.ProjectCalendar;
 import com.neuron.spring.project.domain.ProjectMember;
 import com.neuron.spring.project.domain.ProjectTask;
+import com.neuron.spring.project.domain.ProjectTaskDetail;
 import com.neuron.spring.project.service.ProjectService;
 import com.neuron.spring.project.store.ProjectStore;
 
@@ -90,14 +92,14 @@ public class ProjectServiceImpl implements ProjectService{
 	}
 
 	@Override
-	public List<ProjectMember> selectSearchMemberList(Map<String, Object> map) {
-		List<ProjectMember> memberList = store.selectSearchMemberList(map);
+	public List<ProjectMember> selectSearchMemberList(PageInfo pi) {
+		List<ProjectMember> memberList = store.selectSearchMemberList(pi);
 		return memberList;
 	}
 
 	@Override
-	public int getListCount() {
-		int totalCount = store.selectListCount();
+	public int getListCount(int projectNo) {
+		int totalCount = store.selectListCount(projectNo);
 		return totalCount;
 	}
 
@@ -170,6 +172,72 @@ public class ProjectServiceImpl implements ProjectService{
 	@Override
 	public int deleteMainWork(int projectNo) {
 		int result = store.deleteMainWork(projectNo);
+		return result;
+	}
+
+	@Override
+	public List<ProjectMember> selectMemberAllList(PageInfo pi) {
+		List<ProjectMember> pList = store.selectMemberAllList(pi);
+		return pList;
+	}
+
+	@Override
+	public int getSearchListCount(Map<String, Object> map) {
+		int totalCount = store.getSearchListCount(map);
+		return totalCount;
+	}
+
+	@Override
+	public int insertProjectTaskDetail(Map<String, Object> map) {
+		int result = store.insertProjectTaskDetail(map);
+		return result;
+	}
+
+	@Override
+	public List<ProjectTaskDetail> selectProjectTaskDetail(Map<String, Object> map) {
+		List<ProjectTaskDetail> taskDetail = store.selectProjectTaskDetail(map);
+		return taskDetail;
+	}
+
+	@Override
+	public int taskDetailTotalCount(int taskDetailCountNo) {
+		int taskDetailTotalCount = store.selectTaskTotalCount(taskDetailCountNo);
+		return taskDetailTotalCount;
+	}
+
+	@Override
+	public int taskDetailCompleteCount(Map<String, Object> countMap) {
+		int taskDetailCompleteCount = store.selectTaskComepleteCount(countMap);
+		return taskDetailCompleteCount;
+	}
+
+	@Override
+	public List<ProjectMember> selectTaskMemberList(Map<String, Object> map) {
+		List<ProjectMember> memberList = store.selectTaskMemberList(map);
+		return memberList;
+	}
+
+	@Override
+	public int successDetailTask(Map<String, Object> map) {
+		int result = store.successDetailTask(map);
+		return result;
+	}
+
+	@Override
+	public int taskTotalCount(Map<String, Object> map) {
+		int result = store.selectMainWorkTotalCount(map);
+		return result;
+	}
+
+	@Override
+	public int mainWorkDetailCompleteCount(Map<String, Object> map) {
+		int result = store.selectMainWorkCompleteCount(map);
+		return result;
+	}
+
+	@Override
+	public int updateMainWorkProcessivity(Map<String, Object> map) {
+		int result = store.updateMainWorkProcessivity(map);
 		return result;
 	}
 

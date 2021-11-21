@@ -319,7 +319,7 @@
 											<tr>
 												<td>
 													<div class="user_icon">
-														<img src="images/img1.jpg" alt="">
+														<img src="/resources/euploadFiles/${memberList.empFileReName }" alt="">
 													</div> ${memberList.empName }
 												</td>
 												<td>${memberList.deptName }</td>
@@ -418,6 +418,7 @@
 	</div>
 	<!-- container-scroller -->
 	<script type="text/javascript">
+	
 		function inviteMember() {
 
 			var url = "moveInviteMember.do?projectNo=${projectNo}";

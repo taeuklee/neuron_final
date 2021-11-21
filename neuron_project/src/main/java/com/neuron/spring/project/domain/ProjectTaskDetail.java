@@ -8,6 +8,7 @@ public class ProjectTaskDetail {
 	private String taskDetailId;
 	private String taskDetailSucccess;
 	private String taskDetailTitle;
+	private int taskDetailProcessivity;
 	
 	public ProjectTaskDetail() {
 		
@@ -61,13 +62,24 @@ public class ProjectTaskDetail {
 		this.taskDetailTitle = taskDetailTitle;
 	}
 
+	public int getTaskDetailProcessivity() {
+		return taskDetailProcessivity;
+	}
+
+	public void setTaskDetailProcessivity(int taskDetailProcessivity) {
+		this.taskDetailProcessivity = taskDetailProcessivity;
+	}
+
 	@Override
 	public String toString() {
 		return "ProjectTaskDetail [taskDetailNo=" + taskDetailNo + ", empNo=" + empNo + ", taskNo=" + taskNo
 				+ ", taskDetailId=" + taskDetailId + ", taskDetailSucccess=" + taskDetailSucccess + ", taskDetailTitle="
-				+ taskDetailTitle + "]";
+				+ taskDetailTitle + ", taskDetailProcessivity=" + taskDetailProcessivity + "]";
 	}
 	
+	
+	
+
 	
 
 }
