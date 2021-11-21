@@ -81,21 +81,70 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
+	function fn_print(){
+		var target = "printPop";
+		window.open('', target, "width=800, height=800");
+		$("input[name='bodyContents']").val($("#printArea").html());
+		$("#printForm").submit();
+		
+	}
+	
+	function fn_withdraw(){
+		var docNo = $("#documentNo").val();
+		alert(docNo);
+		var check = confirm('정말 회수 하시겠습니까?');
+		if(check){
+			$.ajax({
+				url : "/documentWithDraw.do",
+				type : "post",
+				data : 
+					{
+					"documentNo" : docNo, // 문서 번호 
+					}
+				,
+				success: function(data){
+					if(data == "success"){
+						alert("회수 완료!");
+						location.reload();
+					}else{
+						alert("결재처리 실패!");
+					}
+				},
+				error : function(){
+					alert("ajax 실패");
+				}
+			});
+		}
+		
+	}
+	
 	function fn_appr(type){
 		var apprOpinion = prompt("결재의견");
 		var docNo = $("#documentNo").val();
 		var approvalType = $("#approvalType").val();
+		var documentKind = '<c:out value="${docOne.documentKind }"/>';
+		var empNo = '<c:out value="${empInfo.EMP_NO }"/>';
+		var vacKind = '<c:out value="${docOne.vacationKind }"/>'
+		var start = '<c:out value="${docOne. vacationStartDate}"/>';
+		var end = '<c:out value="${docOne. vacationEndDate}"/>';
+		var day =  (new Date(end).getTime() - new Date(start).getTime())/1000/60/60/24 +1;
 		if(apprOpinion){
 			alert("승인");
 			$.ajax({
 				url : "/transApproval.do",
 				type : "post",
-				data : {
+				data : 
+					{
 					"apprOpinion" : apprOpinion, // 결재의견
 					"apprStatus" : type, // 승인 or 반려 체크 
 					"documentNo" : docNo, // 문서 번호 
-					"approvalType" : approvalType // 합의 or 결재
-				},
+					"approvalType" : approvalType, // 합의 or 결재
+					"documentKind": documentKind,
+					"day" : day,
+					"vacKind" : vacKind,
+					"wtEmpNo" : empNo
+					}
+				,
 				success: function(data){
 					if(data == "success"){
 						alert("결재처리 완료!");
@@ -111,7 +160,7 @@
 		}else if(apprOpinion == null){
 			alert("취소");
 		}else{
-			alert("글자입력해")
+			alert("글자를 입력하세요")
 		}
 		
 
@@ -136,262 +185,249 @@
 					<div class="col-lg-12">
 						<h1 class="page-header">결재문 조회</h1>
 					</div>
-					<div class="col-lg-6 grid-margin stretch-card"
-						style="max-width: 100%;">
-					<div class="card">
-						<div id="btnBar" class="template-demo">
-						&nbsp;
-						&nbsp;
-						&nbsp;
-						&nbsp;
-						&nbsp;
-						&nbsp;
-						&nbsp;
-						&nbsp;
-						&nbsp;
-						&nbsp;
-						&nbsp;
-						&nbsp;
-						<c:if test="${sessionScope.loginEmployee.empNo eq docOne.documentWriterNo and docOne.withdrowChk eq 'N' }">
-							<button class="btn btn-inverse-light btn-fw">회수</button>
-						</c:if>
-							<button class="btn btn-inverse-light btn-fw">인쇄</button>
-						<c:forEach items="${aList }" var="aOne">
-						<c:if test="${sessionScope.loginEmployee.empNo eq aOne.empNo  }">
-							<c:if test="${docOne.documentStatus eq '합의대기' and aOne.approvalType eq '합의' and aOne.approvalStatus eq '대기'}">
-								<button class="btn btn-inverse-light btn-fw" onclick="fn_appr('Y');">승인</button>
-								<button class="btn btn-inverse-light btn-fw" onclick="fn_appr('N');">반려</button>
-							</c:if>
-							<c:if test="${docOne.documentStatus eq '결재대기' and aOne.approvalType eq '결재'}">
-								<button class="btn btn-inverse-light btn-fw" onclick="fn_appr('Y');">승인</button>
-								<button class="btn btn-inverse-light btn-fw" onclick="fn_appr('N');">반려</button>
-							</c:if>
-						</c:if>
-						</c:forEach>
-							<button class="btn btn-inverse-light btn-fw">목록</button>
-						</div>
-						<div style="display:grid;  border: 0.5px solid #989b9c78; margin:auto; justify-items: stretch; justify-content: space-evenly;margin-top: 20px; margin-bottom: 40px;">
-							<!-- 문서 정보 불러오는부분 -->
-							<div>
-								<h1 id="titleName" align='center' style='padding:70px 0 40px 0'>${docOne.documentKind }</h1>
-								<table style="display: inline-flex; position: relative; float: left; left: 10%;">
-									<tbody id="infoTable">
-									<tr>
-		    							<td style='background: rgb(221, 221, 221); width:100px; padding: 5px; border: 1px solid black; height: 35.5px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;'>
-		    								문서번호
-		    							</td>
-		    							<td style='background: rgb(255, 255, 255); width:150px; border-width:1px 1px; border-style:  solid solid; border-color: currentColor black black; padding: 5px; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;' colspan='3' class='dext_table_border_t'>
-		    								No. ${docOne.docNo }
-		    							</td>
-	    							</tr>
-									
-									<tr>
-		    							<td style='background: rgb(221, 221, 221); width:100px; padding: 5px; border: 1px solid black; height: 35.5px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;'>
-		    								소속
-		    							</td>
-		    							<td style='background: rgb(255, 255, 255); width:150px; border-width:1px 1px; border-style:  solid solid; border-color: currentColor black black; padding: 5px; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;' colspan='3' class='dext_table_border_t'>
-		    								${empInfo.TEAM_NAME }
-		    							</td>
-	    							</tr>
-	    							
-	    							<tr>
-		    							<td style='background: rgb(221, 221, 221); width:100px; padding: 5px; border: 1px solid black; height: 35.5px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;'>
-		    								직책
-		    							</td>
-		    							<td style='background: rgb(255, 255, 255); width:150px; border-width:1px 1px; border-style:  solid solid; border-color: currentColor black black; padding: 5px; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;' colspan='3' class='dext_table_border_t'>
-		    								${empInfo.EMP_JOB }
-		    							</td>
-	    							</tr>
-	    							
-	    							<tr>
-		    							<td style='background: rgb(221, 221, 221); width:100px; padding: 5px; border: 1px solid black; height: 35.5px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;'>
-		    								성명
-		    							</td>
-		    							<td style='background: rgb(255, 255, 255); width:150px; border-width:1px 1px; border-style:  solid solid; border-color: currentColor black black; padding: 5px; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;' colspan='3' class='dext_table_border_t'>
-		    								${empInfo.EMP_NAME }
-		    							</td>
-		    						</tr>
-									</tbody>
-								</table>
-								<table border="1" style="display:inline-flex; position:relative; float: right; right: 10%;">
-									<tbody id="apprTable">
-										<tr id='apprLine1'>
-		    								<td id='apprLine1-def'style='width:20px; background: rgb(221, 221, 221);' rowspan='4'>신청</td><td id='apprLine1-def' style='width:80px; height:21px; text-align:center'>${empInfo.EMP_JOB }</td>
-		    								<c:forEach items="${aList }" var="aOne" varStatus="status">
-		    									<c:if test="${aOne.approvalType eq '합의' }">
-		    										<td id='apprLine1-def'style='width:20px; background: rgb(221, 221, 221);' rowspan='4'>합의</td><td id='apprLine1-def' style='width:80px; height:21px; text-align:center'>${aOne.empJob }</td>
-		    									</c:if>
-		    								</c:forEach>
-		    								<c:forEach items="${aList }" var="aOne" varStatus="status">
-		    									<c:if test="${aOne.approvalType eq '결재' }">
-		    										<td id='apprLine1-def'style='width:20px; background: rgb(221, 221, 221);' rowspan='4'>결재</td><td id='apprLine1-def' style='width:80px; height:21px; text-align:center'>${aOne.empJob }</td>
-		    									</c:if>
-		    								</c:forEach>
-		    							</tr>
-		    							<tr id='apprLine2'>
-		    								<td id='apprLine2-def' rowspan='2' style='height:90px; text-align:center'>${empInfo.EMP_NAME }</td>
-		    								<c:forEach items="${aList }" var="aOne" varStatus="status">
-		    									<c:if test="${aOne.approvalType eq '합의' }">
-		    										<td id='apprLine2-def' rowspan='2' style='height:90px; text-align:center'>
-		    										<c:if test="${aOne.approvalStatus eq '승인' }">
-		    											<img src="/images/approval.png" width="60px">
-		    										</c:if>
-		    										<c:if test="${aOne.approvalStatus eq '반려' }">
-		    											<img src="/images/reject.png" width="60px">
-		    										</c:if>
-		    											${aOne.empName }
-		    										</td>
-		    									</c:if>
-		    								</c:forEach>
-		    								<c:forEach items="${aList }" var="aOne" varStatus="status">
-		    									<c:if test="${aOne.approvalType eq '결재' }">
-		    										<td id='apprLine2-def' rowspan='2' style='height:90px; text-align:center'>
-		    										<c:if test="${aOne.approvalStatus eq '승인' }">
-		    											<img src="/images/approval.png" width="60px">
-		    										</c:if>
-		    										<c:if test="${aOne.approvalStatus eq '반려' }">
-		    											<img src="/images/reject.png" width="60px">
-		    										</c:if>
-		    											${aOne.empName }
-		    										</td>
-		    									</c:if>
-		    								</c:forEach>
-		    							</tr>
-		    							<tr></tr>
-		    							<tr id='apprLine3'>
-		    								<td id='apprLine3-def' style='height:28px;text-align:center'>${docOne.dCreateDate }</td>
-		    								<c:forEach items="${aList }" var="aOne" varStatus="status">
-		    									<c:if test="${aOne.approvalType eq '합의' }">
-		    										<td id='apprLine3-def' style='height:28px;text-align:center'>${aOne.approvalEnddate }</td>
-		    									</c:if>
-		    								</c:forEach>
-		    								<c:forEach items="${aList }" var="aOne" varStatus="status">
-		    									<c:if test="${aOne.approvalType eq '결재' }">
-		    										<td id='apprLine3-def' style='height:28px;text-align:center'>${aOne.approvalEnddate }</td>
-		    									</c:if>
-		    								</c:forEach>
-		    							</tr>
-									</tbody>
-								</table>
-							</div>
-							<!-- 문서 내용 불러오는부분 -->
-							<c:if test="${docOne.documentKind eq '휴가신청서'}">
-							<div id="vacationArea" style="padding:0 100px 50px 100px;">
-								<table
-									style="border: 0px solid rgb(0, 0, 0); width: 800px; font-family: malgun gothic, dotum, arial, tahoma; margin-top: 10px; border-collapse: collapse;">
-									<!-- 품의서 -->
-									<colgroup>
-										<col width="200">
-										<col width="350">
-										<col width="200">
-										<col width="200">
-									</colgroup>
-									<tbody>
-										<tr>
-											<td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
-												휴가종류
-											</td>
-											<td style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;" colspan="3">
-												${docOne.vacationKind }
-											</td>
-										</tr>
-										<tr>
-											<td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
-
-												휴가기간</td>
-											<td style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; vertical-align: middle;">
-												${docOne.vStartDate }
-												~
-												${docOne.vEndDate }
-											</td>
-											<td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
-
-												잔여일</td>
-											<td id="잔여일" style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; vertical-align: middle;">
-												<c:if test="${docOne.vacationKind eq '연차' }">
-													${empInfo.EMP_VAC}
-												</c:if>
-												<c:if test="${docOne.vacationKind eq '병가' }">
-													${empInfo.EMP_MED}
-												</c:if>
-												<c:if test="${docOne.vacationKind eq '기타' }">
-													${empInfo.EMP_EXVAC}
-												</c:if>
-											</td>
-										</tr>
-										<tr>
-											<td
-												style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
-
-												휴가사유</td>
-											<td
-												style="background: rgb(255, 255, 255); border-width: medium 1px 1px; border-style: none solid solid; border-color: currentColor black black; padding: 5px; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;"
-												colspan="3" class="dext_table_border_t">
-												${docOne.documnetReason }
-											</td>
-										</tr>
-										<tr>
-											<td
-												style="border-width: medium 1px 1px; border-style: none solid solid; border-color: currentColor black black; padding: 5px; height: 100px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; vertical-align: middle; background-color: rgb(255, 255, 255);"
-												colspan="4" class="dext_table_border_t"><span
-												style="font-weight: bold; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">휴가기준
-													제 13조에 의거 휴가를 신청하오니 허락하여 주시기 바랍니다.</span></td>
-										</tr>
-									</tbody>
-								</table>
-								<p
-									style="font-family: &amp; quot; 맑은 고딕&amp;quot;; font-size: 10pt; line-height: 20px; margin-top: 0px; margin-bottom: 0px;">
-									<br>
-								</p>
-								</div>
-							</c:if>
-							<c:if test="${docOne.documentKind ne '휴가신청서'}">
-							<div align="center" style="padding:0 100px 50px 100px;">
-								${docOne.documentContents }
-							</div>
-							</c:if>
-						</div>
-						<div class="col-lg-12">
-							<form action="">
-								<input type="hidden" id="documentNo" name="documentNo" value="${docOne.documentNo }" >
-							</form>
-							
-							<table class="table table-bordered">
-								<tr>
-									<th>순번</th>
-									<th>합의/결재자</th>
-									<th>결재구분</th>
-									<th>진행현황</th>
-									<th>결재일시</th>
-									<th>결재의견</th>
-								</tr>
-								<c:forEach items="${aList }" var="aOne" varStatus="status">
-								<tr>
-									<td>
-										<c:if test="${aOne.empNo eq sessionScope.loginEmployee.empNo }">
-											<input type="hidden" id = "approvalType" name = "approvalType" value="${aOne.approvalType }">
-										</c:if>
-										${status.count }
-									</td>
-									<td>${aOne.empName } ${aOne.empJob } (${aOne.teamName })</td>
-									<td>${aOne.approvalType }</td>
-									<td>${aOne.approvalStatus }</td>
-									<td>${aOne.approvalEnddate }</td>
-									<td>${aOne.approvalOpinion }</td>
-								</tr>
+					<div class="col-lg-6 grid-margin stretch-card" style="max-width: 100%;">
+						<div id="printArea" class="card">
+							<div class="card">
+								<div id="btnBar" class="template-demo" align="right">
+								&nbsp;
+								&nbsp;
+								&nbsp;
+								&nbsp;
+								&nbsp;
+								&nbsp;
+								&nbsp;
+								&nbsp;
+								&nbsp;
+								&nbsp;
+								&nbsp;
+								&nbsp;
+								<c:if test="${sessionScope.loginEmployee.empNo eq docOne.documentWriterNo and docOne.withdrowChk eq 'N' }">
+									<button class="btn btn-inverse-light btn-fw" onclick="fn_withdraw();">회수</button>
+								</c:if>
+									<button class="btn btn-inverse-light btn-fw" onclick="fn_print();">인쇄</button>
+								<c:forEach items="${aList }" var="aOne">
+								<c:if test="${sessionScope.loginEmployee.empNo eq aOne.empNo  }">
+									<c:if test="${docOne.documentStatus eq '합의대기' and aOne.approvalType eq '합의' and aOne.approvalStatus eq '대기'}">
+										<button class="btn btn-inverse-light btn-fw" onclick="fn_appr('Y');">승인</button>
+										<button class="btn btn-inverse-light btn-fw" onclick="fn_appr('N');">반려</button>
+									</c:if>
+									<c:if test="${docOne.documentStatus eq '결재대기' and aOne.approvalType eq '결재'}">
+										<button class="btn btn-inverse-light btn-fw" onclick="fn_appr('Y');">승인</button>
+										<button class="btn btn-inverse-light btn-fw" onclick="fn_appr('N');">반려</button>
+									</c:if>
+								</c:if>
 								</c:forEach>
-								
-							</table>
+									<button class="btn btn-inverse-light btn-fw" onclick="javascript: void history.back();">목록</button>
+								</div>
+								<div style="display:grid;  border: 0.5px solid #989b9c78; margin:auto; justify-items: stretch; justify-content: space-evenly;margin-top: 20px; margin-bottom: 40px;">
+									<!-- 문서 정보 불러오는부분 -->
+									<div>
+										<h1 id="titleName" align='center' style='padding:70px 0 40px 0'>${docOne.documentKind }</h1>
+										<table style="display: inline-flex; position: relative; float: left; left: 10%;">
+											<tbody id="infoTable">
+											<tr>
+				    							<td style='background: rgb(221, 221, 221); width:100px; padding: 5px; border: 1px solid black; height: 35.5px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;'>
+				    								문서번호
+				    							</td>
+				    							<td style='background: rgb(255, 255, 255); width:150px; border-width:1px 1px; border-style:  solid solid; border-color: currentColor black black; padding: 5px; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;' colspan='3' class='dext_table_border_t'>
+				    								No. ${docOne.docNo }
+				    							</td>
+			    							</tr>
+											
+											<tr>
+				    							<td style='background: rgb(221, 221, 221); width:100px; padding: 5px; border: 1px solid black; height: 35.5px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;'>
+				    								소속
+				    							</td>
+				    							<td style='background: rgb(255, 255, 255); width:150px; border-width:1px 1px; border-style:  solid solid; border-color: currentColor black black; padding: 5px; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;' colspan='3' class='dext_table_border_t'>
+				    								${empInfo.TEAM_NAME }
+				    							</td>
+			    							</tr>
+			    							
+			    							<tr>
+				    							<td style='background: rgb(221, 221, 221); width:100px; padding: 5px; border: 1px solid black; height: 35.5px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;'>
+				    								직책
+				    							</td>
+				    							<td style='background: rgb(255, 255, 255); width:150px; border-width:1px 1px; border-style:  solid solid; border-color: currentColor black black; padding: 5px; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;' colspan='3' class='dext_table_border_t'>
+				    								${empInfo.EMP_JOB }
+				    							</td>
+			    							</tr>
+			    							
+			    							<tr>
+				    							<td style='background: rgb(221, 221, 221); width:100px; padding: 5px; border: 1px solid black; height: 35.5px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;'>
+				    								성명
+				    							</td>
+				    							<td style='background: rgb(255, 255, 255); width:150px; border-width:1px 1px; border-style:  solid solid; border-color: currentColor black black; padding: 5px; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;' colspan='3' class='dext_table_border_t'>
+				    								${empInfo.EMP_NAME }
+				    							</td>
+				    						</tr>
+											</tbody>
+										</table>
+										<table border="1" style="display:inline-flex; position:relative; float: right; right: 10%;">
+											<tbody id="apprTable">
+												<tr id='apprLine1'>
+				    								<td id='apprLine1-def'style='width:20px; background: rgb(221, 221, 221);' rowspan='4'>신청</td><td id='apprLine1-def' style='width:80px; height:21px; text-align:center'>${empInfo.EMP_JOB }</td>
+				    								<c:forEach items="${aList }" var="aOne" varStatus="status">
+				    									<c:if test="${aOne.approvalType eq '합의' }">
+				    										<td id='apprLine1-def'style='width:20px; background: rgb(221, 221, 221);' rowspan='4'>합의</td><td id='apprLine1-def' style='width:80px; height:21px; text-align:center'>${aOne.empJob }</td>
+				    									</c:if>
+				    								</c:forEach>
+				    								<c:forEach items="${aList }" var="aOne" varStatus="status">
+				    									<c:if test="${aOne.approvalType eq '결재' }">
+				    										<td id='apprLine1-def'style='width:20px; background: rgb(221, 221, 221);' rowspan='4'>결재</td><td id='apprLine1-def' style='width:80px; height:21px; text-align:center'>${aOne.empJob }</td>
+				    									</c:if>
+				    								</c:forEach>
+				    							</tr>
+				    							<tr id='apprLine2'>
+				    								<td id='apprLine2-def' rowspan='2' style='height:90px; text-align:center'>${empInfo.EMP_NAME }</td>
+				    								<c:forEach items="${aList }" var="aOne" varStatus="status">
+				    									<c:if test="${aOne.approvalType eq '합의' }">
+				    										<td id='apprLine2-def' rowspan='2' style='height:90px; text-align:center'>
+				    										<c:if test="${aOne.approvalStatus eq '승인' }">
+				    											<img src="/images/approval.png" width="60px">
+				    										</c:if>
+				    										<c:if test="${aOne.approvalStatus eq '반려' }">
+				    											<img src="/images/reject.png" width="60px">
+				    										</c:if>
+				    											${aOne.empName }
+				    										</td>
+				    									</c:if>
+				    								</c:forEach>
+				    								<c:forEach items="${aList }" var="aOne" varStatus="status">
+				    									<c:if test="${aOne.approvalType eq '결재' }">
+				    										<td id='apprLine2-def' rowspan='2' style='height:90px; text-align:center'>
+				    										<c:if test="${aOne.approvalStatus eq '승인' }">
+				    											<img src="/images/approval.png" width="60px">
+				    										</c:if>
+				    										<c:if test="${aOne.approvalStatus eq '반려' }">
+				    											<img src="/images/reject.png" width="60px">
+				    										</c:if>
+				    											${aOne.empName }
+				    										</td>
+				    									</c:if>
+				    								</c:forEach>
+				    							</tr>
+				    							<tr></tr>
+				    							<tr id='apprLine3'>
+				    								<td id='apprLine3-def' style='height:28px;text-align:center'>${docOne.dCreateDate }</td>
+				    								<c:forEach items="${aList }" var="aOne" varStatus="status">
+				    									<c:if test="${aOne.approvalType eq '합의' }">
+				    										<td id='apprLine3-def' style='height:28px;text-align:center'>${aOne.approvalEnddate }</td>
+				    									</c:if>
+				    								</c:forEach>
+				    								<c:forEach items="${aList }" var="aOne" varStatus="status">
+				    									<c:if test="${aOne.approvalType eq '결재' }">
+				    										<td id='apprLine3-def' style='height:28px;text-align:center'>${aOne.approvalEnddate }</td>
+				    									</c:if>
+				    								</c:forEach>
+				    							</tr>
+											</tbody>
+										</table>
+									</div>
+									<!-- 문서 내용 불러오는부분 -->
+									<c:if test="${docOne.documentKind eq '휴가신청서'}">
+									<div id="vacationArea" style="padding:0 100px 50px 100px;">
+										<table
+											style="border: 0px solid rgb(0, 0, 0); width: 800px; font-family: malgun gothic, dotum, arial, tahoma; margin-top: 10px; border-collapse: collapse;">
+											<!-- 품의서 -->
+											<colgroup>
+												<col width="200">
+												<col width="350">
+												<col width="200">
+												<col width="200">
+											</colgroup>
+											<tbody>
+												<tr>
+													<td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
+														휴가종류
+													</td>
+													<td style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;" colspan="3">
+														${docOne.vacationKind }
+													</td>
+												</tr>
+												<tr>
+													<td style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
+		
+														휴가기간</td>
+													<td style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; vertical-align: middle;"  colspan="3">
+														${docOne.vStartDate }
+														~
+														${docOne.vEndDate }
+													</td>
+													
+												</tr>
+												<tr>
+													<td
+														style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
+		
+														휴가사유</td>
+													<td
+														style="background: rgb(255, 255, 255); border-width: medium 1px 1px; border-style: none solid solid; border-color: currentColor black black; padding: 5px; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;"
+														colspan="3" class="dext_table_border_t">
+														${docOne.documnetReason }
+													</td>
+												</tr>
+												<tr>
+													<td
+														style="border-width: medium 1px 1px; border-style: none solid solid; border-color: currentColor black black; padding: 5px; height: 100px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; vertical-align: middle; background-color: rgb(255, 255, 255);"
+														colspan="4" class="dext_table_border_t"><span
+														style="font-weight: bold; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">휴가기준
+															제 13조에 의거 휴가를 신청하오니 허락하여 주시기 바랍니다.</span></td>
+												</tr>
+											</tbody>
+										</table>
+										<p style="font-family: &amp; quot; 맑은 고딕&amp;quot;; font-size: 10pt; line-height: 20px; margin-top: 0px; margin-bottom: 0px;"><br></p>
+									</div>
+									</c:if>
+									<c:if test="${docOne.documentKind ne '휴가신청서'}">
+									<div align="center" style="padding:0 100px 50px 100px;">
+										${docOne.documentContents }
+									</div>
+									</c:if>
+								</div>
+								<div class="col-lg-12">
+									<form action="">
+										<input type="hidden" id="documentNo" name="documentNo" value="${docOne.documentNo }" >
+									</form>
+									
+									<table class="table table-bordered">
+										<tr>
+											<th>순번</th>
+											<th>합의/결재자</th>
+											<th>결재구분</th>
+											<th>진행현황</th>
+											<th>결재일시</th>
+											<th>결재의견</th>
+										</tr>
+										<c:forEach items="${aList }" var="aOne" varStatus="status">
+										<tr>
+											<td>
+												<c:if test="${aOne.empNo eq sessionScope.loginEmployee.empNo }">
+													<input type="hidden" id = "approvalType" name = "approvalType" value="${aOne.approvalType }">
+												</c:if>
+												${status.count }
+											</td>
+											<td>${aOne.empName } ${aOne.empJob } (${aOne.teamName })</td>
+											<td>${aOne.approvalType }</td>
+											<td>${aOne.approvalStatus }</td>
+											<td>${aOne.approvalEnddate }</td>
+											<td>${aOne.approvalOpinion }</td>
+										</tr>
+										</c:forEach>
+										
+									</table>
+								</div>
+								<br><br><br>
+							</div>
 						</div>
-						<br><br><br>
-					</div>
 					</div>
 				</div>	
 			</div>
 			<!-- page-body-wrapper ends -->
 		</div>
 	</div>
-
+	<form action="/documentPrint.do" method="post" id="printForm" target="printPop">
+		<input name="bodyContents" type="hidden">	
+	</form>
 </body>
 
 </html>

@@ -40,8 +40,29 @@
 						$("#headerNav").load("/partials/_navbar.html");
 						$("#sidebar").load("/partials/_sidebar.html");
 						
+						$('#vacationStartDate').change(function(){
+							if((new Date().getFullYear()+"-"+(new Date().getMonth()+1)+"-"+ new Date().getDate())>$('#vacationStartDate').val()){
+								alert("오늘 이전날짜는 선택할 수 없습니다.");
+								$('#vacationStartDate').val('');
+								return;
+							}
+						});
 						$('#vacationEndDate').change(function(){
-							alert($('#vacationEndDate').val());
+							var endDate = $('#vacationEndDate').val();
+							var startDate = $('#vacationStartDate').val()
+							if(startDate==null || startDate ==''){
+								alert("시작값을 선택하세요");
+								$('#vacationEndDate').val('');
+								return;
+							}
+							
+							if(endDate>startDate){
+								
+							}else{
+								alert("날짜를 다시선택하세요");
+								$('#vacationEndDate').val('');
+								$('#vacationStartDate').val('');
+							}
 						});
 						
 						$('#vacationGubun').change(function() {
@@ -129,6 +150,22 @@
 	function fnSubmit() {
 		if($('#docGu option:selected').val() != '휴가신청서'){
 			$("input[name=docContents]").attr('value', $("#cotentsArea").html());			
+		}else{
+// 			잔여일과 비교하기 위한 추가값
+			var date = (new Date($('#vacationEndDate').val()).getTime() - new Date($('#vacationStartDate').val()).getTime())/1000/60/60/24 +1;
+			
+			var check;
+			if($('#vacationGubun option:selected').val() == '연차'){
+				check = '<c:out value="${emp.empVac}"/>'
+			}else if(vacGuVal == '병가'){
+				check = '<c:out value="${emp.empMed}"/>'
+			}else if(vacGuVal == '기타'){
+				check = '<c:out value="${emp.empExVac}"/>'
+			}
+			if((check-date)<0){
+				alert("휴가 잔여일이 부족합니다. 날짜를 다시 선택하세요");
+				return;
+			}
 		}
 		var empIdList = [];
 		$("input[name='empId1']").each(function() {
@@ -297,12 +334,10 @@
 												<c:forEach items="${code }" var="item">
 													<option value="${item.codeName }">${item.codeName }</option>
 												</c:forEach>
-										</select>
+											</select>
 											<div id="contentArea" style="display: none;">
 												<c:forEach items="${code }" var="item">
 													<div id="${item.codeName }">${item.codeContents }</div>
-													<c:if test="${item.codeId eq 'A' }">
-													</c:if>
 												</c:forEach>
 											</div></td>
 									</tr>
@@ -347,11 +382,9 @@
 								<br>
 
 
-								<div
-									style="display: grid; border: 0.5px solid #989b9c78; margin: auto; justify-items: stretch; justify-content: space-evenly; margin-top: 20px; margin-bottom: 40px;">
+								<div style="display: grid; border: 0.5px solid #989b9c78; margin: auto; justify-items: stretch; justify-content: space-evenly; margin-top: 20px; margin-bottom: 40px;">
 									<div>
-										<h1 id="titleName" align='center'
-											style="padding: 70px 0 40px 0;"></h1>
+										<h1 id="titleName" align='center'style="padding: 70px 0 40px 0;"></h1>
 										<table
 											style="display: inline-flex; position: relative; float: left;">
 											<tbody id="infoTable">

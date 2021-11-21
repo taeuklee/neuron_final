@@ -97,14 +97,12 @@
 									<td>
 										<span>기안일 : </span> <input type="date" name="startDt" value="${rMap.startDt }" /> ~ <input type="date" name ="endDt" value="${rMap.endDt }" />
 									
-										<span>문서형태 : </span> 
+										<span>문서양식 : </span> 
 										<select name="docGubun">
-											<option value="none" hidden>=== 선택 ===</option>
 											<option value="all">전체</option>
-											<option value="none">휴가신청서</option>
-											<option value="none">업무보고서</option>
-											<option value="none">지출결의서</option>
-											<option value="none">회의록</option>
+											<c:forEach items="${code }" var="item">
+												<option value="${item.codeName }"<c:if test="${rMap.docGubun eq item.codeName }">selected</c:if>>${item.codeName }</option>
+											</c:forEach>
 										</select>
 										<button>검색</button>
 									</td>
@@ -129,6 +127,7 @@
 											<tr align="center">
 												<th width="20">No</th>
 												<th width="200">문서종류</th>
+												<th width="100">기안자</th>
 												<th width="200">기안일</th>
 												<th width="200">완료일</th>
 												<th width="100">문서상태</th>
@@ -137,28 +136,29 @@
 										<tbody>
 										<c:forEach items="${dList }" var="dOne" varStatus="count">
 											<c:url var="dDetail" value="documentDatail.do">
-												<c:param name="documentNo" value="${dOne.docNo }"></c:param>
+												<c:param name="documentNo" value="${dOne.documentNo }"></c:param>
 											</c:url>
 											<tr align="center" style="cursor:pointer; color:#blue;">
-												<td onclick="location.href='/${dDetail }'">${dOne.docNo }</td>
-												<td onclick="location.href='/${dDetail }'">${dOne.docKind }</td>
+												<td onclick="location.href='/${dDetail }'">${dOne.documentNo }</td>
+												<td onclick="location.href='/${dDetail }'">${dOne.documentKind }</td>
+												<td onclick="location.href='/${dDetail }'">${dOne.empName }</td>
 												<td onclick="location.href='/${dDetail }'">${dOne.dCreateDate }</td>
-												<c:if test="${dOne.docStatus eq '최종완료' or dOne.docStatus eq '반려'}">
+												<c:if test="${dOne.documentStatus eq '최종완료' or dOne.documentStatus eq '반려'}">
 													<td onclick="location.href='/${dDetail }'">${dOne.dUpdateDate }</td>												
 												</c:if>
-												<c:if test="${dOne.docStatus eq '합의대기' or dOne.docStatus eq '결재대기'}">
+												<c:if test="${dOne.documentStatus eq '합의대기' or dOne.documentStatus eq '결재대기'}">
 													<td onclick="location.href='/${dDetail }'"></td>												
 												</c:if>
 												<td>
 													<button class="question" id="que-${count.count }">
-														<span>${dOne.docStatus }</span><span id="que-${count.count }-toggle">+</span>
+														<span>${dOne.documentStatus }</span><span id="que-${count.count }-toggle">+</span>
 													</button>
 												</td>
 											</tr>
 											<tr>
 												<td colspan="5" style="padding: 5px">
 													<div class="answer" id="ans-${count.count }">
-														<input type="hidden" id="docNo-${count.count }" value="${dOne.docNo }">
+														<input type="hidden" id="docNo-${count.count }" value="${dOne.documentNo }">
 														<table class="table table-bordered"align="center" border="1">
 															<thead align="center">
 																<tr>
@@ -228,15 +228,6 @@
 	</div>
 	<!-- container-scroller -->
 	<script>
-// 	<tr>
-// 		<th>순번</th>
-// 		<th>합의/결재자</th>
-// 		<th>결재유형</th>
-// 		<th>결재내역</th>
-// 		<th>배정일시</th>
-// 		<th>결재일시</th>
-// 		<th>결재의견</th>
-// 	</tr>
 	    const items = document.querySelectorAll('.question');
 	    function openCloseAnswer() {
 	      const answerId = this.id.replace('que', 'ans');

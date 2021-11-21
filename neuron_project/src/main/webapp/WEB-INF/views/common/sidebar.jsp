@@ -109,7 +109,8 @@
 									onclick="location:href='/approval/documentRejectListView.do';">반려문서함</a></li>
 								<li class="nav-item"><a class="nav-link" 
 									onclick="location:href='/approval/documentCompleteListView.do';">완료문서함</a></li>
-							</ul></li>
+							</ul>
+						</li>
 					</ul>
 				</div></li>
 
@@ -118,6 +119,9 @@
 					class="icon-file menu-icon"></i> <span class="menu-title">공지사항</span>
 			</a></li>
 			<c:if test="${loginEmployee.empId eq 'admin' }">
+			<!-- 문서양식 등록하는 메뉴 추가했습니다 -->
+				<li class="nav-item"><a class="nav-link" href="#menu2" onclick="location:href='/docFormRegister.do';"> <i
+					class="icon-box menu-icon"></i> <span class="menu-title">문서양식등록</span></a></li>
 				<li class="nav-item"><a class="nav-link" data-toggle="collapse"
 					href="#menu6" aria-expanded="false" aria-controls="menu6"> <i
 						class="icon-disc menu-icon"></i> <span class="menu-title">사원 관리</span>

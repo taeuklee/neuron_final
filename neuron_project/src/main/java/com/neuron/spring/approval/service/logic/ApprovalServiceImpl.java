@@ -24,8 +24,8 @@ public class ApprovalServiceImpl implements ApprovalService{
 	private ApprovalStore store;
 
 	@Override
-	public List<Document> printMyAllDocList(PageInfo pi, Map docWriterNo) {
-		List<Document> dList = store.selectMyAllDoc(pi, docWriterNo);
+	public List<DataMap> printMyAllDocList(PageInfo pi, Map docWriterNo) {
+		List<DataMap> dList = store.selectMyAllDoc(pi, docWriterNo);
 		return dList;
 	}
 
@@ -104,6 +104,16 @@ public class ApprovalServiceImpl implements ApprovalService{
 	@Override
 	public Map<String, Object> printOneByTeam(String teamCode){
 		return store.selectOneByTeam(teamCode);
+	}
+
+	@Override
+	public int updateDocWithDraw(DataMap map) {
+		return store.updateDocWithDraw(map);
+	}
+
+	@Override
+	public int documentRegisterProcess(DataMap map) {
+		return store.documentRegisterProcess(map);
 	}
 	
 	

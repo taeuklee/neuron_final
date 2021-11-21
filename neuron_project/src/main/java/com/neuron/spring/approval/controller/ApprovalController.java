@@ -61,11 +61,11 @@ public class ApprovalController {
 		if(session.getAttribute("loginEmployee") != null) {
 			emp = (Employee)session.getAttribute("loginEmployee");
 		}
-		int docWriterNo = emp.getEmpNo(); // 사원번호		
+		int loginEmpNo = emp.getEmpNo(); // 사원번호		
 		int currentPage = (page != null) ? page : 1;
 		int totalCount = 0;
 		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("empNo", docWriterNo);
+		paramMap.put("empNo", loginEmpNo);
 		paramMap.put("startDt", resolver.getString("startDt"));
 		paramMap.put("endDt", resolver.getString("endDt"));
 		paramMap.put("docGubun", resolver.getString("docGubun"));
@@ -77,13 +77,24 @@ public class ApprovalController {
 		}else if(path.equals("documentWaitListView")) {
 			paramMap.put("gubun","wait");
 			totalCount = service.getListCount(paramMap);
-		}else if(path.equals("documentWaitListView")) {
-			
+		}else if(path.equals("documentProgressListView")) {
+			paramMap.put("gubun","progress");
+			totalCount = service.getListCount(paramMap);
+		}else if(path.equals("documentRejectListView")) {
+			paramMap.put("gubun","reject");
+			totalCount = service.getListCount(paramMap);
+		}else if(path.equals("documentCompleteListView")) {
+			paramMap.put("gubun","complete");
+			totalCount = service.getListCount(paramMap);
 		}
 		
 		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
-		List<Document> dList = service.printMyAllDocList(pi,paramMap);
+		List<DataMap> dList = service.printMyAllDocList(pi,paramMap);
+		List<CodeInfo> code = service.printCodeInfo();
+		
 		mv.addObject("rMap", resolver.getMap());
+		mv.addObject("code", code);
+		
 		if(!dList.isEmpty()) {
 			mv.addObject("dList",dList);
 			mv.addObject("pi",pi);
@@ -226,26 +237,19 @@ public class ApprovalController {
 		return mv;
 	}
 	
-	//결재 처리 view페이지 
-	@RequestMapping(value="/transApproveView.do")
-	public ModelAndView transApprove(ModelAndView mv, HttpSession session){
-		mv.setViewName("/approval/transApproveView");
-		return mv;
-	}
-	
 	//결재 처리 update 처리 
 	@ResponseBody
 	@RequestMapping(value="/transApproval.do")
 	public String transApproval(RequestResolver resolver ,HttpSession session, HttpServletRequest request) {
 		int result = 0;
-		System.out.println(resolver.getString("approvalType"));
-		System.out.println(resolver.getMap().toString());
 		session = request.getSession();
 		Employee emp = new Employee();
 		if(session.getAttribute("loginEmployee") != null) {
 			emp = (Employee)session.getAttribute("loginEmployee");
 		}
 		resolver.put("empNo", emp.getEmpNo());
+		
+		//승인인지 반려인지 
 		if(resolver.getString("apprStatus").equals("Y")) {
 			result = service.updateTransApproval(resolver.getMap());
 		}else {
@@ -259,14 +263,45 @@ public class ApprovalController {
 			return "fail";
 		}
 	}
-	
-	
-	
-	//문서리스트 검색
-	public String DocumentSearchList(ApprovalSearch search, Model model) {
-		return "";
+	// 문서양식 추가 처리부분
+	@RequestMapping(value="/documentRegisterProcess.do")
+	public ModelAndView documentRegisterProcess(RequestResolver resolver, ModelAndView mv) {
+		resolver.getMap();
+		int result = service.documentRegisterProcess(resolver.getMap());
+		
+		mv.setViewName("/approval/myDocumentListView");
+		return mv;
 	}
 	
+	//문서양식 추가 view
+	@RequestMapping(value="/docFormRegister.do")
+	public ModelAndView docFormRegister(ModelAndView mv) {
+		List<CodeInfo> code = service.printCodeInfo();
+		mv.addObject("code", code);
+		mv.setViewName("/approval/docFormRegister");
+		return mv;
+	}
+	
+	//결재 회수처리 
+	@RequestMapping(value="/documentWithDraw.do")
+	public String documentWithDraw(RequestResolver resolver,HttpSession session, HttpServletRequest request ) {
+		int result = service.updateDocWithDraw(resolver.getMap());
+		System.out.println(resolver.getInt("documentNo"));
+		
+		if(result>0) {
+			return "success";
+		}else {
+			return "fail";			
+		}
+	}
+	
+	//인쇄 상세 페이지 return
+	@RequestMapping(value="/documentPrint.do")
+	public ModelAndView documentPrint(RequestResolver resolver, ModelAndView mv) {
+		mv.addObject("bodyContents", resolver.getString("bodyContents"));
+		mv.setViewName("/approval/documentPrint");
+		return mv;
+	}
 	
 	
 	//파일관리

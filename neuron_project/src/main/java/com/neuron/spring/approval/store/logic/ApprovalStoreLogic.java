@@ -26,10 +26,10 @@ public class ApprovalStoreLogic implements ApprovalStore{
 
 
 	@Override
-	public List<Document> selectMyAllDoc(PageInfo pi, Map empNo) {
+	public List<DataMap> selectMyAllDoc(PageInfo pi, Map empNo) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit()); 
-		List<Document> bList = sqlSession.selectList("approvalMapper.selectAllList", empNo, rowBounds);
+		List<DataMap> bList = sqlSession.selectList("approvalMapper.selectAllList", empNo, rowBounds);
 		return bList;
 	}
 
@@ -112,7 +112,12 @@ public class ApprovalStoreLogic implements ApprovalStore{
 		System.out.println("@@@@@@@@@@ test:"+ dataMap.getString("apprStateChk"));
 		if(dataMap.getString("apprStateChk").equals("Y")) {
 			sqlSession.update("approvalMapper.updateTransApprovalDoc",dataMap);
+			if(dataMap.getString("docStateChk").equals("최종완료")
+					&& dataMap.getString("documentKind").equals("휴가신청서")) {
+				sqlSession.update("employeeMapper.updateEmpVacation",dataMap);
+			}
 		}
+		
 		return result;
 	}
 
@@ -130,6 +135,23 @@ public class ApprovalStoreLogic implements ApprovalStore{
 	@Override
 	public  Map<String, Object> selectOneByEmp(int empNo) {
 		return sqlSession.selectOne("employeeMapper.selectEmpJoinTeam",empNo);
+	}
+
+	@Override
+	public int updateDocWithDraw(DataMap map) {
+		return sqlSession.update("approvalMapper.updateDocWithDraw", map);
+	}
+
+	@Override
+	public int documentRegisterProcess(DataMap map) {
+		int result = 0;
+		if(map.getString("codeGubun").equals("newCode")) {
+			result = sqlSession.insert("approvalMapper.insertCodeInfo",map);
+		}else {
+			result = sqlSession.update("approvalMapper.updateCodInfo", map);
+		}
+			
+		return result;
 	}
 
 }

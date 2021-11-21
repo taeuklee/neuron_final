@@ -48,6 +48,25 @@
 	   <result property="signFileNo" column="FILE_NO"/>
   	</resultMap>
   	
+  	<update id="updateCodInfo" parameterType="com.neuron.spring.util.DataMap">
+  		update code_info
+  		set code_contents = #{documentFormReg, jdbcType=VARCHAR}
+  		where code_name = #{codeId, jdbcType=VARCHAR}
+  	</update>
+  	
+  	<insert id="insertCodeInfo" parameterType="com.neuron.spring.util.DataMap">
+	  	<selectKey keyProperty="sortOrdr" resultType="int" order="BEFORE">
+			SELECT nvl(max(sort_ordr), 0) + 1 from code_info
+		</selectKey>
+  		insert into code_info values(
+  			#{groupCodeId, jdbcType=VARCHAR},
+  			#{codeId, jdbcType=VARCHAR},
+  			#{codeId, jdbcType=VARCHAR},
+  			#{documentFormReg, jdbcType=VARCHAR},
+  			#{sortOrdr, jdbcType=BIGINT}
+  		)
+  	</insert>
+  	
   	<select id="selectCodeInfoOne" resultType="map" parameterType="map">
   		select * 
   		from code_info 
@@ -62,23 +81,20 @@
   		ORDER BY SORT_ORDR
   	</select>
   	
+  	
+  	
   	<select id="selectCodeInfo" resultMap="CodeInfoResultMap">
   		select * from code_info ORDER BY SORT_ORDR
   	</select>
   	
-<!--   	<select id="selectWaitApprDoc"> -->
-<!-- 		select *  -->
-<!-- 		from DOCUMENT join approval using(document_no) -->
-<!-- 		where approval_status = '대기' and approval.emp_no = 2 -->
-<!--   	</select> -->
-  	
   	<!-- 내가 작성한 리스트 -->
-  	<select id="selectAllList" parameterType="map" resultMap="DocResultMap">
-  		select a.* 
-  		from document a
+  	<select id="selectAllList" parameterType="map" resultType="com.neuron.spring.util.DataMap">
+  		select a.* ,e.emp_name 
+  		from document a left join employee e on(A.document_writer_no = e.emp_no)
   		<where>
   			<if test="gubun == 'myWrite'">
-	 	 		and a.DOCUMENT_WRITER_NO = #{empNo}  		
+	 	 		and a.DOCUMENT_WRITER_NO = #{empNo} 
+	 	 		and a.document_status not in ('반려','최종완료','회수') 		
   			</if>
   			<if test="gubun == 'wait'">
   				and document_no in ( select document_no
@@ -86,12 +102,33 @@
 								where emp_no = #{empNo})
 				and document_status like '%대기%'
   			</if>
+  			<if test="gubun == 'progress'">
+  				and a.document_status not in ('반려','최종완료','회수')
+  				and ( a.DOCUMENT_NO in ( select document_no
+								from approval 
+								where emp_no = #{empNo})
+  				or a.DOCUMENT_WRITER_NO = #{empNo})
+  			</if>
+  			<if test="gubun == 'reject'">
+  				and a.document_status = '반려'
+  				  				and ( a.DOCUMENT_NO in ( select document_no
+								from approval 
+								where emp_no = #{empNo})
+  				or a.DOCUMENT_WRITER_NO = #{empNo})
+  			</if>
+  			<if test="gubun == 'complete'">
+  				and a.document_status = '최종완료'
+  				  				and ( a.DOCUMENT_NO in ( select document_no
+								from approval 
+								where emp_no = #{empNo})
+  				or a.DOCUMENT_WRITER_NO = #{empNo})
+  			</if>
   			<if test="startDt != null and startDt != '' and endDt != null and endDt != '' ">
   				and to_char(D_CREATE_DATE, 'yyyyMMdd') between replace(#{startDt,jdbcType=VARCHAR}, '-', '') and replace(#{endDt,jdbcType=VARCHAR}, '-', '') 
   			</if>
-<!--   			<if test="docGubun != null and docGubun != '' "> -->
-
-<!--   			</if> -->
+  			<if test="docGubun != null and docGubun != '' and docGubun != 'all' ">
+				and a.DOCUMENT_KIND = #{docGubun }
+  			</if>
   		</where> 
   		order by a.DOCUMENT_NO DESC
   	</select>
@@ -196,6 +233,19 @@
   		<if test='apprStatus == "N"'>
   			DOCUMENT_STATUS = '반려', D_UPDATE_DATE = SYSDATE 
   		</if>
+  		</set>
+  		WHERE DOCUMENT_NO = #{documentNo,jdbcType=BIGINT}
+  		<selectKey keyProperty="docStateChk" resultType="string" order="AFTER">
+  			select document_status
+			from document
+			where DOCUMENT_NO = #{documentNo,jdbcType=BIGINT} and document_status = '최종완료'
+  		</selectKey>
+  	</update>
+  	
+  	<update id="updateDocWithDraw" parameterType="com.neuron.spring.util.DataMap">
+  		UPDATE DOCUMENT
+  		<set>
+  			DOCUMENT_STATUS = '회수', D_UPDATE_DATE = SYSDATE  
   		</set>
   		WHERE DOCUMENT_NO = #{documentNo,jdbcType=BIGINT}
   	</update>

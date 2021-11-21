@@ -122,4 +122,22 @@
 	<select id="selectOneEmail" parameterType="_int" resultType="string">
 		SELECT EMP_EMAIL FROM EMPLOYEE WHERE EMP_NO = #{empNo}
 	</select>
+	
+	<update id="updateEmpVacation" parameterType="com.neuron.spring.util.DataMap">
+		update employee
+		<set>
+			<if test='vacKind == "연차"'>
+			emp_vac = #{day }
+			</if>
+			<if test='vacKind == "병가"'>
+			emp_med = #{day }
+			</if>
+			<if test='vacKind == "기타"'>
+			emp_exvac = #{day }
+			</if>
+		</set>
+		where emp_no = #{wtEmpNo }
+	
+	</update>
+	
  </mapper>

@@ -91,20 +91,18 @@
 					<div class="col-lg-6 grid-margin stretch-card"
 						style="max-width: 100%;">
 					<div class="card">
-						<form action="">
+						<form action="/approval/myDocumentListView.do">
 							<table id="search">
 								<tr>
 									<td>
-										<span>기안일 : </span> <input type="date"> ~ <input type="date">
+										<span>기안일 : </span> <input type="date" name="startDt" value="${rMap.startDt }" /> ~ <input type="date" name ="endDt" value="${rMap.endDt }" />
 									
-										<span>문서형태 : </span> 
-										<select>
-											<option value="none" hidden>=== 선택 ===</option>
+										<span>문서양식 : </span> 
+										<select name="docGubun">
 											<option value="all">전체</option>
-											<option value="none">휴가신청서</option>
-											<option value="none">업무보고서</option>
-											<option value="none">지출결의서</option>
-											<option value="none">회의록</option>
+											<c:forEach items="${code }" var="item">
+												<option value="${item.codeName }"<c:if test="${rMap.docGubun eq item.codeName }">selected</c:if>>${item.codeName }</option>
+											</c:forEach>
 										</select>
 										<button>검색</button>
 									</td>
@@ -118,7 +116,7 @@
 						style="max-width: 100%;">
 						<div class="card">
 							<div class="card-body">
-								<h4 class="card-title" style="float:left">내 결재문서 조회 </h4>
+								<h4 class="card-title" style="float:left">결재 대기중인 문서 조회 </h4>
 								<button type="button" onclick="location.href='/documentWriteView.do';"
 									class="btn btn-outline btn-primary pull-right">
 									<i class="fa fa-edit fa-fw"></i> 결재요청
@@ -129,6 +127,7 @@
 											<tr align="center">
 												<th width="20">No</th>
 												<th width="200">문서종류</th>
+												<th width="100">기안자</th>
 												<th width="200">기안일</th>
 												<th width="200">완료일</th>
 												<th width="100">문서상태</th>
@@ -137,28 +136,29 @@
 										<tbody>
 										<c:forEach items="${dList }" var="dOne" varStatus="count">
 											<c:url var="dDetail" value="documentDatail.do">
-												<c:param name="documentNo" value="${dOne.docNo }"></c:param>
+												<c:param name="documentNo" value="${dOne.documentNo }"></c:param>
 											</c:url>
 											<tr align="center" style="cursor:pointer; color:#blue;">
-												<td onclick="location.href='/${dDetail }'">${dOne.docNo }</td>
-												<td onclick="location.href='/${dDetail }'">${dOne.docKind }</td>
+												<td onclick="location.href='/${dDetail }'">${dOne.documentNo }</td>
+												<td onclick="location.href='/${dDetail }'">${dOne.documentKind }</td>
+												<td onclick="location.href='/${dDetail }'">${dOne.empName }</td>
 												<td onclick="location.href='/${dDetail }'">${dOne.dCreateDate }</td>
-												<c:if test="${dOne.docStatus eq '결재완료'}">
-												<td onclick="location.href='/${dDetail }'">${dOne.dUpdateDate }</td>												
+												<c:if test="${dOne.documentStatus eq '최종완료' or dOne.documentStatus eq '반려'}">
+													<td onclick="location.href='/${dDetail }'">${dOne.dUpdateDate }</td>												
 												</c:if>
-												<c:if test="${dOne.docStatus ne '결재완료'}">
-												<td onclick="location.href='/${dDetail }'"></td>												
+												<c:if test="${dOne.documentStatus eq '합의대기' or dOne.documentStatus eq '결재대기'}">
+													<td onclick="location.href='/${dDetail }'"></td>												
 												</c:if>
 												<td>
 													<button class="question" id="que-${count.count }">
-														<span>${dOne.docStatus }</span><span id="que-${count.count }-toggle">+</span>
+														<span>${dOne.documentStatus }</span><span id="que-${count.count }-toggle">+</span>
 													</button>
 												</td>
 											</tr>
 											<tr>
 												<td colspan="5" style="padding: 5px">
 													<div class="answer" id="ans-${count.count }">
-														<input type="hidden" id="docNo-${count.count }" value="${dOne.docNo }">
+														<input type="hidden" id="docNo-${count.count }" value="${dOne.documentNo }">
 														<table class="table table-bordered"align="center" border="1">
 															<thead align="center">
 																<tr>
@@ -181,13 +181,13 @@
 										<!-- 페이징 처리 -->
 										<tr align="center" height="20">
 									         <td colspan="6">
-									         <c:url var="before" value="/approval/list1.do">
+									         <c:url var="before" value="/approval/documentWaitListView.do">
 									            <c:param name="page" value="${pi.currentPage - 1 }"></c:param>
 									         </c:url>
-									         <c:url var="after" value="/approval/list1.do">
+									         <c:url var="after" value="/approval/documentWaitListView.do">
 									            <c:param name="page" value="${pi.currentPage + 1 }"></c:param>         
 									         </c:url>
-									         <c:url var="pagination" value="/approval/list1.do">
+									         <c:url var="pagination" value="/approval/documentWaitListView.do">
 									            <c:param name="page" value="${p }"></c:param>
 									         </c:url>
 									            <c:if test="${pi.currentPage <=1 }">
@@ -234,6 +234,7 @@
 	      var docId = this.id.replace("que","docNo");
 	      var docNo = $('#'+docId).val();
 	      var tbody = this.id.replace("que","tbody");
+	      
 		  $.ajax({
 			  url : "/apprList.do",
 			  type : "get",

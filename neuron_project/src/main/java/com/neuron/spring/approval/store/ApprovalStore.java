@@ -16,7 +16,7 @@ import com.neuron.spring.util.DataMap;
 public interface ApprovalStore {
 	public int selectListCount(int empNo);
 	public int selectListCount(Map param);
-	public List<Document> selectMyAllDoc(PageInfo pi, Map empNo);
+	public List<DataMap> selectMyAllDoc(PageInfo pi, Map empNo);
 	
 	public  List<Map<String, Object>> selectCodeInfo(Map<String,String> param);
 	
@@ -43,4 +43,8 @@ public interface ApprovalStore {
 	public int rejectTransApproval(DataMap dataMap);
 	
 	public Map<String, Object> selectOneByTeam(String teamCode);
+	
+	public int updateDocWithDraw(DataMap map);
+	
+	public int documentRegisterProcess(DataMap map);
 }
