@@ -16,6 +16,7 @@ import com.neuron.spring.project.domain.Project;
 import com.neuron.spring.project.domain.ProjectCalendar;
 import com.neuron.spring.project.domain.ProjectMember;
 import com.neuron.spring.project.domain.ProjectTask;
+import com.neuron.spring.project.domain.ProjectTaskDetail;
 import com.neuron.spring.project.store.ProjectStore;
 
 
@@ -191,6 +192,60 @@ public class ProjectStroeLogic implements ProjectStore{
 	public int getSearchListCount(Map<String, Object> map) {
 		int totalCount = sqlSession.selectOne("projectMapper.searchListCount", map);
 		return totalCount;
+	}
+
+	@Override
+	public int insertProjectTaskDetail(Map<String, Object> map) {
+		int result = sqlSession.insert("projectMapper.insertTaskDetail", map);
+		return result;
+	}
+
+	@Override
+	public List<ProjectTaskDetail> selectProjectTaskDetail(Map<String, Object> map) {
+		List<ProjectTaskDetail> taskDetail = sqlSession.selectList("projectMapper.selectTaskDetail", map);
+		return taskDetail;
+	}
+
+	@Override
+	public int selectTaskTotalCount(int taskDetailCountNo) {
+		int totalCount = sqlSession.selectOne("projectMapper.selectTaskDetailTotalCount", taskDetailCountNo);
+		return totalCount;
+	}
+
+	@Override
+	public int selectTaskComepleteCount(Map<String, Object> countMap) {
+		int totalCount = sqlSession.selectOne("projectMapper.selectTaskDetailCompleteCount", countMap);
+		return totalCount;
+	}
+
+	@Override
+	public List<ProjectMember> selectTaskMemberList(Map<String, Object> map) {
+		List<ProjectMember> memberList = sqlSession.selectList("projectMapper.selectTaskDetailMemberList", map);
+		return memberList;
+	}
+
+	@Override
+	public int successDetailTask(Map<String, Object> map) {
+		int result = sqlSession.update("projectMapper.successDetailTask", map);
+		return result;
+	}
+
+	@Override
+	public int selectMainWorkTotalCount(Map<String, Object> map) {
+		int result = sqlSession.selectOne("projectMapper.selectMainWorkTotalCount", map);
+		return result;
+	}
+
+	@Override
+	public int selectMainWorkCompleteCount(Map<String, Object> map) {
+		int result = sqlSession.selectOne("projectMapper.selectMainWorkCompleteCount", map);
+		return result;
+	}
+
+	@Override
+	public int updateMainWorkProcessivity(Map<String, Object> map) {
+		int result = sqlSession.update("projectMapper.updateMainWorkProcessivity", map);
+		return result;
 	}
 
 

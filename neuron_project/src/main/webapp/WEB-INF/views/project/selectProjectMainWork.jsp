@@ -224,115 +224,33 @@
 								</div>
 							</div>
 							<div class="panel-body table-responsive" style="height: 100%;">
-								<table class="table" style="height: 100%;">
+								<table class="table" style="height: 100%;text-align: center">
 									<thead>
-										<tr>
+										<tr style="text-align: center">
 											<th>세부사항 이름</th>
 											<th>진행도</th>
 											<th>팀원목록</th>
 										</tr>
 									</thead>
 									<tbody>
+									<c:forEach items="${taskDetail }" var="taskDetail">
 										<tr>
-											<td>Aenean sodales in lorem</td>
+											<td>${taskDetail.taskDetailTitle }</td>
 											<td>
-												<div class="progress">
+												<div class="progress" style="height: 15px;">
 													<div class="progress-bar" role="progressbar"
-														aria-valuenow="2" aria-valuemin="0" aria-valuemax="100"
-														style="width: 80%;">
-														<span> 80%</span>
+														aria-valuenow="${taskDetail.taskDetailProcessivity}" aria-valuemin="0" aria-valuemax="100"
+														style="width: ${taskDetail.taskDetailProcessivity}%;">
+														<span> ${taskDetail.taskDetailProcessivity}%</span>
 													</div>
 												</div>
 											</td>
 											<td>
-												<ul class="action-list">
-													<li><a href="#" class="btn btn-primary"><i
-															class="fa fa-pencil-alt"></i></a></li>
-													<li><a href="#" class="btn btn-danger"><i
-															class="fa fa-trash"></i></a></li>
-												</ul>
+												<button class="btn btn-primary" onclick="selectTaskDetailMemberList(this)">목록보기</button>
+												<input type="hidden" value="${taskDetail.taskDetailNo }" name="taskDetailNo">
 											</td>
 										</tr>
-										<tr>
-											<td>placerat nibh ligula</td>
-											<td>
-												<div class="progress">
-													<div class="progress-bar" role="progressbar"
-														aria-valuenow="2" aria-valuemin="0" aria-valuemax="100"
-														style="width: 50%;">
-														<span> 50%</span>
-													</div>
-												</div>
-											</td>
-											<td>
-												<ul class="action-list">
-													<li><a href="#" class="btn btn-primary"><i
-															class="fa fa-pencil-alt"></i></a></li>
-													<li><a href="#" class="btn btn-danger"><i
-															class="fa fa-trash"></i></a></li>
-												</ul>
-											</td>
-										</tr>
-										<tr>
-											<td>non feugiat lectus justo</td>
-											<td>
-												<div class="progress">
-													<div class="progress-bar" role="progressbar"
-														aria-valuenow="2" aria-valuemin="0" aria-valuemax="100"
-														style="width: 90%;">
-														<span> 90%</span>
-													</div>
-												</div>
-											</td>
-											<td>
-												<ul class="action-list">
-													<li><a href="#" class="btn btn-primary"><i
-															class="fa fa-pencil-alt"></i></a></li>
-													<li><a href="#" class="btn btn-danger"><i
-															class="fa fa-trash"></i></a></li>
-												</ul>
-											</td>
-										</tr>
-										<tr>
-											<td>risus et egestas faucibus</td>
-											<td>
-												<div class="progress">
-													<div class="progress-bar" role="progressbar"
-														aria-valuenow="2" aria-valuemin="0" aria-valuemax="100"
-														style="width: 20%;">
-														<span> 20%</span>
-													</div>
-												</div>
-											</td>
-											<td>
-												<ul class="action-list">
-													<li><a href="#" class="btn btn-primary"><i
-															class="fa fa-pencil-alt"></i></a></li>
-													<li><a href="#" class="btn btn-danger"><i
-															class="fa fa-trash"></i></a></li>
-												</ul>
-											</td>
-										</tr>
-										<tr>
-											<td>Phasellus lobortis nisl nec</td>
-											<td>
-												<div class="progress">
-													<div class="progress-bar" role="progressbar"
-														aria-valuenow="2" aria-valuemin="0" aria-valuemax="100"
-														style="width: 60%;">
-														<span>60%</span>
-													</div>
-												</div>
-											</td>
-											<td>
-												<ul class="action-list">
-													<li><a href="#" class="btn btn-primary"><i
-															class="fa fa-pencil-alt"></i></a></li>
-													<li><a href="#" class="btn btn-danger"><i
-															class="fa fa-trash"></i></a></li>
-												</ul>
-											</td>
-										</tr>
+									</c:forEach>
 									</tbody>
 								</table>
 							</div>
@@ -351,6 +269,20 @@
 		<!-- page-body-wrapper ends -->
 	</div>
 	<!-- container-scroller -->
+	
+	<script>
+	
+		function selectTaskDetailMemberList(data) {
+			
+			var taskDetailNo = data.nextSibling.nextSibling.value;
+			console.log(taskDetailNo);
+			var taskNo = ${projectTask.taskNo}
+			var url = "moveTaskMemberList.do?taskNo=${projectTask.taskNo}&taskDetailNo="+taskDetailNo;
+			var name = "팀원 목록";
+			var option = "width = 800, height = 800, top = 300 , left = 650, location = no, toolbars = no, status = no, scrollbars = no, resizable = no";
+			var page = window.open(url, name, option);
+		}
+	</script>
 </body>
 
 </html>

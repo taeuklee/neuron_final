@@ -63,7 +63,32 @@ public class ProjectController {
 			,ModelAndView mv
 			) {
 		ProjectTask task = service.selectTask(projectNo);
+		int taskNo = task.getTaskNo();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("taskNo", taskNo);
+		map.put("projectNo", projectNo);
+		List<ProjectTaskDetail> taskDetail = service.selectProjectTaskDetail(map);
+		for(int i = 0;i<taskDetail.size();i++) {
+			ProjectTaskDetail taskDetail1 = taskDetail.get(i);
+			int taskDetailCountNo = taskDetail1.getTaskDetailNo();
+			int taskDetailTotalCount = service.taskDetailTotalCount(taskDetailCountNo);
+			String complete = "Y";
+			Map<String, Object> countMap = new HashMap<String, Object>();
+			countMap.put("taskDetailCountNo", taskDetailCountNo);
+			countMap.put("complete", complete);
+			int taskDetailCompleteCount = service.taskDetailCompleteCount(countMap);
+			int taskDetailProcessivity = 0;
+			if(taskDetailCompleteCount>0) {
+				if(100*(taskDetailCompleteCount/taskDetailTotalCount)>0) {				
+					taskDetailProcessivity = Math.round(100*(taskDetailTotalCount/taskDetailCompleteCount));
+				}else {
+					taskDetailProcessivity = 0;
+				}
+			}
+			taskDetail1.setTaskDetailProcessivity(taskDetailProcessivity);		
+		}
 		mv.addObject("projectTask", task);
+		mv.addObject("taskDetail", taskDetail);
 		mv.setViewName("project/selectProjectMainWork");
 		return mv;
 	}
@@ -617,4 +642,95 @@ public class ProjectController {
 		int result = service.deleteMainWork(projectNo);
 		return "project/selectProjectMainPage";
 	}
+	
+	
+//	@ResponseBody
+	@RequestMapping(value="insertTask.do", method=RequestMethod.POST)
+	public ModelAndView insertTask(
+			@RequestParam(value="projectNo") int projectNo
+			,@RequestParam(value="taskName") String taskName
+			,HttpServletRequest request
+			,ModelAndView mv
+			) {
+		String[] empNoList = request.getParameterValues("empNo");
+		int[] empNoList2 = Arrays.stream(empNoList).mapToInt(Integer::parseInt).toArray();
+		System.out.println(taskName);
+		System.out.println(projectNo);
+		for (int i = 0; i < empNoList2.length; i++) {
+			System.out.println("empNo:" + empNoList2[i]);
+		}
+		
+		
+		int n = 16;
+		char[] chs = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
+				'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+		Random rd = new Random();
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < n; i++) {
+				char ch = chs[rd.nextInt(chs.length)];
+				sb.append(ch);
+		}
+		String taskId = sb.toString();
+		ProjectTask task = service.selectProjectTask(projectNo);
+		int taskNo = task.getTaskNo();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("projectNo", projectNo);
+		map.put("taskName", taskName);
+		map.put("taskNo", taskNo);
+		map.put("empNoList", empNoList2);
+		map.put("taskId", taskId);
+		int result = service.insertProjectTaskDetail(map);
+		mv.setViewName("project/selectProjectMainPage");
+		return mv;
+		
+	}
+	
+	@RequestMapping(value="moveTaskMemberList.do", method=RequestMethod.GET)
+	public ModelAndView taskDetailMemberList(
+			@RequestParam(value="taskNo") int taskNo
+			,@RequestParam(value="taskDetailNo") int taskDetailNo
+			,ModelAndView mv) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("taskNo", taskNo);
+		map.put("taskDetailNo", taskDetailNo);
+		List<ProjectMember> memberList = service.selectTaskMemberList(map);
+		mv.addObject("taskNo", taskNo);
+		mv.addObject("memberList", memberList);
+		mv.setViewName("project/taskDetailMemberList");
+		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="successDetailTask.do", method=RequestMethod.POST)
+	public String successDetailTask(
+			@RequestParam(value="taskNo") int taskNo
+			,@RequestParam(value="empNo") int empNo
+			,@RequestParam(value="projectNo") int projectNo
+			) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		String complete = "Y";
+		map.put("complete", complete);
+		map.put("taskNo", taskNo);
+		map.put("empNo", empNo);
+		map.put("projectNo", projectNo);
+		int result = service.successDetailTask(map);
+		if(result > 0) {
+			int mainWorkTotalCount = service.taskTotalCount(map);
+			int mainWorkTaskCompleteCount = service.mainWorkDetailCompleteCount(map);
+			int mainWorkProcessivity = 0;
+			if(mainWorkTaskCompleteCount > 0) {
+				mainWorkProcessivity = Math.round(100*(mainWorkTaskCompleteCount/mainWorkTotalCount));
+			}
+			map.put("mainWorkProcessivity", mainWorkProcessivity);
+			int mainWorkUpdate = service.updateMainWorkProcessivity(map);
+			if(mainWorkUpdate > 0) {
+				return "success";
+			}else {
+				return "fail";				
+			}
+		}else {
+			return "fail";
+		}
+	}
+	
 }

@@ -82,31 +82,32 @@ form .btn {
 			<!-- partial -->
 			<div class="main-panel">
 				<div class="content-wrapper" id="contents">
-					<form action="insertMainWork.do?projectNo=${project.projectNo }" method="post" id="taskForm1">
-						<div style="height: 90%" id="taskForm">
+					<form action="insertTask.do?projectNo=${project.projectNo}" method="post" id="taskForm">
+						<div style="height: 90%" id="taskForm2">
 							<div style="height: 100%;" id="taskInfo">
 								<h1>세부사항 제목</h1>
 								<button type="button" class="btn btn-primary btn-sm"
-									onclick="insertTask()" id="insertMaikWorkTask">추가</button>
+									onclick="insertTask()" id="insertMaikWorkTask">추가</button>									
+									<input class="btn btn-primary btn-sm" type="submit" value="등록" onclick="insertMainWorkTask(this)">
 									<br><br>
 								<div class="input-group mb-3">
 									<input type="text" class="form-control"
 										aria-label="Sizing example input"
 										aria-describedby="inputGroup-sizing-default"
-										placeholder="제목을 입력해 주세요" name="taskName">
+										placeholder="제목을 입력해 주세요" name="taskName" id="taskName">
 								</div>
 									<button type="button" class="btn btn-primary btn-sm" onclick="insertTaskMember(this, 0)">팀원
 										할당</button>
 							<div
-								style="width: 50%; border: 1px solid #1e2b37; height: 500px; overflow: auto"
+								style="width: 50%; border: 1px solid #1e2b37; height: 500px; overflow: auto;margin-bottom: 20px;"
 								id="mainWorkMemberList0"></div>
 							</div>
 						</div>
 <!-- 						<input type="date" name="endTime"> -->
-						<div style="height: 10%">
-							<input class="btn btn-primary" type="submit" value="등록">
-							<input class="btn btn-primary" type="reset" value="취소">
-						</div>
+<!-- 						<div style="height: 10%"> -->
+<!-- 							<input class="btn btn-primary" type="submit" value="등록"> -->
+<!-- 							<input class="btn btn-primary" type="reset" value="취소"> -->
+<!-- 						</div> -->
 					</form>
 				</div>
 				<!-- partial:partials/_footer.html -->
@@ -131,8 +132,8 @@ form .btn {
 			//var insertTask = document.getElementById('insertMaikWorkTask');
 			var taskInfo = document.getElementById('taskInfo');
 			var taskInfo1 = taskInfo.cloneNode();
-			var taskForm1 = document.getElementById('taskForm1');
-			var cloneTaskForm1 = taskForm1.cloneNode();
+			var taskForm = document.getElementById('taskForm');
+			var taskForm1 = taskForm.cloneNode();
 // 			var taskInfo = "<div style=\"height: 30%;\" id=\"taskInfo\">";
 // 			taskInfo += "<h1>세부사항 제목</h1>";
 // 			taskInfo += "<button type=\"button\" class=\"btn btn-primary btn-sm\"
@@ -146,23 +147,25 @@ form .btn {
 // 			할당</button>";
 // 			taskInfo += "</div>";
 // 			taskInfo += "</div>";
-			
-			
-			cloneTaskForm1.innerHTML +="<div style='height: 90%' id='taskForm'>"
-			cloneTaskForm1.innerHTML +="<div style='height: 100%;' id='taskInfo'>"	
-			cloneTaskForm1.innerHTML +="<h1>세부사항 제목</h1>"
-			cloneTaskForm1.innerHTML += "<button type='button' class='btn btn-primary btn-sm' value='삭제' onclick ='deleteTask(this)'>삭제</button>"
-			cloneTaskForm1.innerHTML += "<div class='input-group mb-3'>"
-			cloneTaskForm1.innerHTML += "<input type='text' class='form-control' placeholder='제목을 입력해주세요'aria-label='Sizing example input' aria-describedby='inputGroup-sizing-default' name='taskName' />"
-			cloneTaskForm1.innerHTML += "<button type='button' class='btn btn-primary btn-sm' onclick='insertTaskMember(this,"+count+")'>팀원할당</button>"
-			cloneTaskForm1.innerHTML += "</div>"
-			cloneTaskForm1.innerHTML += "<div style='width: 50%; border: 1px solid #1e2b37; height: 500px; overflow: auto' id='mainWorkMemberList"+count+"'></div>"
-			cloneTaskForm1.innerHTML += "</div>"
-			cloneTaskForm1.innerHTML += "</div>"
-			task.innerHTML = cloneTaskForm1.innerHTML
+			console.log(taskForm1);
+			taskForm1.innerHTML += "<div style='height: 90%' id='taskForm2'>"
+			taskForm1.innerHTML += "<div style='height: 100%;' id='taskInfo'>"
+			taskForm1.innerHTML +="<h1>세부사항 제목</h1>"
+			taskForm1.innerHTML += "<button type='button' class='btn btn-primary btn-sm' value='삭제' onclick ='deleteTask(this)'>삭제</button>&nbsp"
+			taskForm1.innerHTML += "<input class='btn btn-primary btn-sm' type='submit' value='등록' onclick='insertMainWorkTask(this)'>"
+			taskForm1.innerHTML += "<div class='input-group mb-3'>"
+			taskForm1.innerHTML += "<input type='text' class='form-control' placeholder='제목을 입력해주세요'aria-label='Sizing example input' aria-describedby='inputGroup-sizing-default' name='taskName' />"
+			taskForm1.innerHTML += "<button type='button' class='btn btn-primary btn-sm' onclick='insertTaskMember(this,"+count+")'>팀원할당</button>"
+			taskForm1.innerHTML += "</div>"
+			taskForm1.innerHTML += "<div style='width: 50%; border: 1px solid #1e2b37; height: 500px; overflow: auto; margin-bottom:20px;' id='mainWorkMemberList"+count+"'></div>"
+			taskForm1.innerHTML += "</div>"
+			taskForm1.innerHTML += "</div>"
+			console.log(taskForm1);
+			task.appendChild(taskForm1);
+			console.log(task);
 //			taskInfo1 += "<button type='button' valued='삭제' onclick='deleteTask(this)'>삭제</button>"
 			//taskInfo1.replaceChild(deleteTask, insertTask);
-		    document.getElementById('contents').appendChild(cloneTaskForm1);
+		    document.getElementById('contents').appendChild(task);
 //		    document.getElementById('taskForm').appendChild(memberList1);
 			count +=1;
 		
@@ -205,6 +208,34 @@ form .btn {
 			//page.document.getElementById('projectMember').append(list);
 			//page.insertTaskMember(list)
 			
+		}
+		
+		function insertMainWorkTask(id){
+ 			var memberList = id.parentNode.lastChild.previousSibling;
+ 			console.log(memberList.children);
+ 			var taskName = id.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.firstChild.nextSibling.value;
+ 			console.log(taskName);
+ 			var empNo = document.getElementsByName("empNo").value;
+// 			console.log();
+// 			var formData = $('#taskForm').serialize("empNo");
+// 			console.log(formData);
+			$.ajax({
+				url:"insertTask.do?projectNo=${project.projectNo}",
+				type:"post",
+				data:{
+					"taskName":taskName,
+					"empNo":empNo
+				},
+				success: function(data){
+					if(data=="success"){
+						alert("통신 성공");
+					}else{
+						alert("통신은 성공~")
+					}
+				},error:function(){
+					
+				}
+			})
 		}
 	</script>
 </body>

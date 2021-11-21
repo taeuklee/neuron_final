@@ -179,10 +179,10 @@ document.addEventListener('DOMContentLoaded', function() {
 								<h1>등록된 대표업무가 없습니다.</h1>
 							</c:if>
 							<c:if test="${not empty projectTask.taskTitle }">
-								<h1>${projectTask.taskTitle }</h1>
+								<a href="selectProjectMainWork.do?projectNo=${project.projectNo}"><h1 onclick="location.href='selectProjectMainWork.do?projectNo=${project.projectNo}'">${projectTask.taskTitle }</h1></a>
 								<div class="progress" style="height: 20px;">
 									<div class="progress-bar" role="progressbar"
-										style="width: 70%;" aria-valuenow="${projectTask.taskProcessivity }" aria-valuemin="0"
+										style="width: ${projectTask.taskProcessivity }%;" aria-valuenow="${projectTask.taskProcessivity }" aria-valuemin="0"
 										aria-valuemax="100">${projectTask.taskProcessivity }%</div>
 								</div>
 							</c:if>
@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function() {
 							<div class="card mb-3" style="max-width: 540px;">
 								<div class="row g-0">
 									<div class="col-md-4">
-										<img src="..." class="img-fluid rounded-start" alt="...">
+										<img src="/resources/euploadFiles/${master.empFileReName}" class="img-fluid rounded-start" alt="..." style="height: 100%; width: 100%">
 									</div>
 									<div class="col-md-8">
 										<div class="card-body">

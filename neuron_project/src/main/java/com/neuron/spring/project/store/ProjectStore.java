@@ -10,6 +10,7 @@ import com.neuron.spring.project.domain.Project;
 import com.neuron.spring.project.domain.ProjectCalendar;
 import com.neuron.spring.project.domain.ProjectMember;
 import com.neuron.spring.project.domain.ProjectTask;
+import com.neuron.spring.project.domain.ProjectTaskDetail;
 
 public interface ProjectStore {
 
@@ -66,4 +67,22 @@ public interface ProjectStore {
 	public List<ProjectMember> selectMemberAllList(PageInfo pi);
 
 	public int getSearchListCount(Map<String, Object> map);
+
+	public int insertProjectTaskDetail(Map<String, Object> map);
+
+	public List<ProjectTaskDetail> selectProjectTaskDetail(Map<String, Object> map);
+
+	public int selectTaskTotalCount(int taskDetailCountNo);
+
+	public int selectTaskComepleteCount(Map<String, Object> countMap);
+
+	public List<ProjectMember> selectTaskMemberList(Map<String, Object> map);
+
+	public int successDetailTask(Map<String, Object> map);
+
+	public int selectMainWorkTotalCount(Map<String, Object> map);
+
+	public int selectMainWorkCompleteCount(Map<String, Object> map);
+
+	public int updateMainWorkProcessivity(Map<String, Object> map);
 }

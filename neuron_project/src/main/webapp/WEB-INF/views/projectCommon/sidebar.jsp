@@ -71,12 +71,14 @@
 						<li class="nav-item"><a class="nav-link" href="#"
 							onclick="moveSelectMainWork()">대표업무
 								조회</a></li>
+						<c:if test="${loginEmployee.empNo eq project.projectMaster }">
 						<li class="nav-item"><a class="nav-link" href="#"
 							onclick="moveInsertMainWork()">대표업무 등록</a></li>
 						<li class="nav-item"><a class="nav-link" href="#"
 							onclick="moveInsertTask()">세부사항 등록</a></li>
 						<li class="nav-item"><a class="nav-link" href="#"
 							onclick="moveUpdateTask()">세부사항 수정</a></li>
+						</c:if>
 						<li class="nav-item"><b1>팀원</b1></li>
 						<li class="nav-item"><a class="nav-link" href="#"
 							onclick="location.href='selectProjectMemberList.do?projectNo=${project.projectNo}'">팀원목록</a></li>

@@ -47,6 +47,15 @@
   		<result property="taskProcessivity" column="TASK_PROCESSIVITY"/>
   	</resultMap>
   	
+  	<resultMap type="ProjectTaskDetail" id="ProjectTaskDetailResultMap">
+  		<id property="taskDetailNo" column="TASK_DETAIL_NO"/>
+  		<result property="empNo" column="EMP_NO"/>
+  		<result property="taskNo" column="TASK_NO"/>
+  		<result property="taskDetailId" column="TASK_DETAIL_ID"/>
+  		<result property="taskDetailSucccess" column="TASK_DETAIL_SUCCESS"/>
+  		<result property="taskDetailTitle" column="TASK_DETAIL_TITLE"/>
+  	</resultMap>
+  	
   	
   	 	<resultMap type="Employee2" id="employeeResultMap">
  		<id property="empNo" column="EMP_NO"/>
@@ -178,6 +187,40 @@ AND EMP.EMP_NO NOT IN ( SELECT EMP_NO FROM EMP_PROJECT WHERE PROJECT_NO = #{proj
 	<select id="selectTask" parameterType="_int" resultMap="ProjectTaskResultMap">
 	SELECT * FROM PROJECT_TASK WHERE PROJECT_NO = #{projectNo}
  	</select>
+ 	
+<!--  	대표업무 세부사항 찾기 -->
+	<select id="selectTaskDetail" parameterType="hashMap" resultMap="ProjectTaskDetailResultMap">
+		SELECT DISTINCT TASK_DETAIL_NO,TASK_NO,TASK_DETAIL_ID,TASK_DETAIL_TITLE FROM PROJECT_TASK_DETAIL WHERE TASK_NO = #{taskNo}
+	</select>
+	
+<!-- 	대표업무 세부사항 팀원리스트 -->
+	<select id="selectTaskDetailMemberList" parameterType="hashMap" resultMap="ProjectMemberResultMap">
+		SELECT TASK.EMP_NO,EMP.EMP_JOB,EMP.EMP_NAME,DEPT.DEPT_NAME,EMP.EMP_FILERENAME
+ 		FROM PROJECT_TASK_DETAIL TASK 
+		JOIN EMPLOYEE EMP ON (EMP.EMP_NO = TASK.EMP_NO)
+		JOIN DEPT DEPT ON (EMP.DEPT_CODE = DEPT.DEPT_CODE)
+		WHERE TASK_DETAIL_NO = #{taskDetailNo} AND TASK_NO = #{taskNo}
+	</select>
+	
+<!-- 	세부사항 토탈 카운트(진행도 계산떄문) -->
+	<select id="selectTaskDetailTotalCount" parameterType="_int" resultType="_int">
+		SELECT COUNT(*) FROM PROJECT_TASK_DETAIL WHERE TASK_DETAIL_NO =#{taskDetailCountNo}
+	</select>
+	
+<!-- 	대표업무 세부사항 총 카운트 -->
+	<select id="selectMainWorkTotalCount" parameterType="hashMap" resultType="_int">
+		SELECT COUNT(*) FROM PROJECT_TASK_DETAIL WHERE TASK_NO = #{taskNo}
+	</select>
+	
+<!-- 	대표업무 세부사항 완료한 인원 카운트 -->
+	<select id="selectMainWorkCompleteCount" parameterType="hashMap" resultType="_int">
+		SELECT COUNT(*) FROM PROJECT_TASK_DETAIL WHERE TASK_NO = #{taskNo} AND TASK_DETAIL_SUCCESS = #{complete}
+	</select>
+	
+<!-- 	세부사항 완료한 인원 카운트 -->
+	<select id="selectTaskDetailCompleteCount" parameterType="hashmap" resultType="_int">
+		SELECT COUNT(*) FROM PROJECT_TASK_DETAIL WHERE TASK_DETAIL_NO = #{taskDetailCountNo} AND TASK_DETAIL_SUCCESS = #{complete}
+	</select>
 	
 <!--     멤버등록 -->
 	<update id="insertProjectMemberList" parameterType="hashMap">
@@ -186,9 +229,22 @@ AND EMP.EMP_NO NOT IN ( SELECT EMP_NO FROM EMP_PROJECT WHERE PROJECT_NO = #{proj
 		</foreach>
 	</update>
 	
+<!-- 	세부사항 등록 -->
+	<update id="insertTaskDetail" parameterType="hashMap">
+		<foreach collection="empNoList" item="empNoList" index="index" separator="" open="INSERT ALL" close="SELECT * FROM DUAL">
+			INTO PROJECT_TASK_DETAIL(TASK_DETAIL_NO,EMP_NO,TASK_NO,TASK_DETAIL_ID,TASK_DETAIL_SUCCESS,TASK_DETAIL_TITLE) 
+			VALUES(SEQ_TASK_DETAIL_NO.NEXTVAL,#{empNoList},#{taskNo},#{taskId},DEFAULT,#{taskName})
+		</foreach>
+	</update>
+	
 <!-- 	프로젝트 팀원 권한 수정 -->
 	<update id="updateProjectMember" parameterType="hashMap">
 		UPDATE EMP_PROJECT SET EMP_PROJECT_AUTH = #{memberAuth} WHERE EMP_NO = #{empNo} AND PROJECT_NO = #{projectNo}	
+	</update>
+	
+<!-- 	대표업무 진행도 변경 -->
+	<update id="updateMainWorkProcessivity" parameterType="hashMap">
+		UPDATE PROJECT_TASK SET TASK_PROCESSIVITY = #{mainWorkProcessivity} WHERE TASK_NO = #{taskNo} AND PROJECT_NO = #{projectNo}
 	</update>
 
 <!-- 	프로젝트 일정 수정 -->
@@ -199,6 +255,11 @@ AND EMP.EMP_NO NOT IN ( SELECT EMP_NO FROM EMP_PROJECT WHERE PROJECT_NO = #{proj
 <!--   	프로젝트 삭제 요청 -->
 	<update id="deleteProjectRequest" parameterType="_int">
 		UPDATE PROJECT SET PROJECT_DELETE_REQUEST = 'Y' WHERE PROJECT_NO = #{projectNo} 
+	</update>
+	
+<!-- 	세부사항 상태변경 -->
+	<update id="successDetailTask" parameterType="hashMap">
+		UPDATE PROJECT_TASK_DETAIL SET TASK_DETAIL_SUCCESS =#{complete} WHERE TASK_NO = #{taskNo} AND EMP_NO = #{empNo}
 	</update>
 	
 <!-- 	팀원추방 -->
