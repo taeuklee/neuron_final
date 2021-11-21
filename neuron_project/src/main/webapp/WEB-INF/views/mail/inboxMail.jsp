@@ -87,10 +87,8 @@
 		          </div>
 		          <div class="mail-navi">
 		            <button>삭제</button>
-		           
 		          </div>
-		
-		          <div >
+		          <div class="card">
 		            <table class="mail-table">
 		              <tr>
 		                <th id="col_1"><input type="checkbox" name="checkAlli" id="checkAll"></th>
@@ -118,7 +116,7 @@
 						</td>
 		               
 		                <td><fmt:formatDate pattern="yyyy년 MM월 dd일 HH:mm:ss" value="${mail.sendTime }"/></td>
-		                <td>${mail.mailFileSize }</td>
+		                <td>${mail.mailFileSize } bytes</td>
 		              </tr>
 		              </c:forEach>
 		            </table>

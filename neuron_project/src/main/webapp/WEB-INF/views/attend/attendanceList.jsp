@@ -129,13 +129,8 @@
 		                  </div>
 		                	<div id="time"></div> 
 		                  <div align="center" id="attend_btn">
-<%-- 			                  <c:if test="${attendance.startTime eq null}">  --%>
 			                  	<input type="submit" id="startWork" value="출근">
-			                  
-<%-- 			                  </c:if> --%>
-<%-- 			                  <c:if test="${attendance.startTime ne null }"> --%>
 			                   	<button id="finishWork">퇴근</button>
-<%-- 			                  </c:if> --%>
 		                  </div>
 		                  <br>
 		              </article>
@@ -231,6 +226,7 @@
 		            		 
 		            		 $("#date").text(now);
 		            		 $("#attendYearMonth").val(now);
+		            		 
 		            	 });
 		            	
 // 			              $("#previousMonth").click(function() {

@@ -90,7 +90,7 @@
 		            
 		          </div>
 		
-		          <div >
+		          <div class="card">
 		            <table class="mail-table">
 		              <tr>
 		                <th id="col_1"><input type="checkbox" name="checkAll" id="checkAll"></th>

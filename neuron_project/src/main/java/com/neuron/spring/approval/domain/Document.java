@@ -106,7 +106,6 @@ public class Document {
 		this.docWriter = docWriter;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Document [docNo=" + docNo + ", docWriterNo=" + docWriterNo + ", docKind=" + docKind + ", docContents="

@@ -122,4 +122,7 @@
 	<select id="selectOneEmail" parameterType="_int" resultType="string">
 		SELECT EMP_EMAIL FROM EMPLOYEE WHERE EMP_NO = #{empNo}
 	</select>
+	<select id="selectEmpAll" resultMap="employeeResultMap">
+		SELECT * FROM EMPLOYEE WHERE EMP_NO = #{empNo }
+	</select>
  </mapper>

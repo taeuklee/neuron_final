@@ -65,9 +65,10 @@
 		          </div>
 		          <div class="top-date" align="center">
 		             <button id="previousYear"><</button> <span id="date"> </span> <button id="nextYear">></button> 
-		             <input type="hidden" id="holiYear" value="">
+		             <input type="hidden" id="holiYear" name="year" value="">
 		             <br><br>
 		          </div>
+		          <c:forEach items="${eList }" var="employee">
 		          <div class="row stat-cards">
 		            <div class="col-md-6 col-xl-3">
 		              <article class="stat-cards-item">
@@ -75,8 +76,8 @@
 		                  <i data-feather="bar-chart-2" aria-hidden="true"></i>
 		                </div>
 		                <div class="stat-cards-info">
-		                  <p class="stat-cards-info__num">${empInfo.empVac }</p>
-		                  <p class="stat-cards-info__title">남은 연가</p>
+		                  <p class="stat-cards-info__num">남은 연가</p>
+		                  <p class="stat-cards-info__title">${employee.empVac }</p>
 		                  <p class="stat-cards-info__progress">
 		                    <span class="stat-cards-info__profit success">
 		                      <i data-feather="trending-up" aria-hidden="true"></i>1
@@ -120,6 +121,7 @@
 		                </div>
 		              </article>
 		            </div>
+		            </c:forEach>
 		          </div>
 		          <div class="row">
 		            <div class="main-contents">
@@ -138,9 +140,9 @@
 		                    <tr>
 		                      <td><fmt:formatDate pattern="yyyy년 MM월 dd일" value="${document.dUpdateDate }"/></td>
 		                      <td>${document.vacKind }</td>    
-		                      <td>${docOne.vStartDate } ~ ${docOne.vEndDate }</td>
-		                      <td>4일</td>
+		                      <td>${document.vStartDate } ~ ${document.vEndDate }</td>
 		                      <td></td>
+		                      <td>${document.docReason }</td>
 		                    </tr>
 		                    </c:forEach>
 		                  </tbody>
