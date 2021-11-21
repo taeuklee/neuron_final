@@ -1,5 +1,7 @@
 package com.neuron.spring.mail.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,9 +41,9 @@ public class MailController {
 		employee = (Employee)session.getAttribute("loginEmployee");
 		
 		int empNo= employee.getEmpNo();
-		String RecEmail = service.printOneEmail(empNo);
+		String recEmail = service.printOneEmail(empNo);
 		Mail mail = new Mail();
-		mail.setReceiverId(RecEmail);
+		mail.setReceiverId(recEmail);
 		
 		String email = mail.getReceiverId();
 		int currentPage = (page != null) ? page:1;
@@ -149,17 +151,18 @@ public class MailController {
 		Employee emp = new Employee();
 		emp = (Employee)session.getAttribute("loginEmployee");
 		
-//		int empNo = emp.getEmpNo();
-//		mail.setSenderId(empNo);
+		int empNo= emp.getEmpNo();
+		String sendEmail = service.printOneEmail(empNo);
+
+		mail.setSenderId(sendEmail);
 		
-//		if(!uploadFile.getOriginalFilename().equals("")) {
-//			String renameFilename = saveFile(uploadFile, request);
-//			if(renameFilename != null) {
-//				mail.setMailFileName(uploadFile.getOriginalFilename());
-//				mail.setMailFileRename(renameFilename);
-//			}
-//		}
-		
+		if(!uploadFile.getOriginalFilename().equals("")) {
+			String filename = saveFile(uploadFile, request);
+			if(filename != null) {
+				mail.setMailFileSize(uploadFile.getSize());
+				mail.setMailFileName(uploadFile.getOriginalFilename());
+			}
+		}
 		int result = service.registerMail(mail);
 		if(result > 0 ) {
 			return "redirect:inbox.do";
@@ -169,6 +172,32 @@ public class MailController {
 		}
 	}
 	
+	private String saveFile(MultipartFile uploadFile, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\muploadFiles";
+		
+		File folder = new File(savePath);
+		if(!folder.exists()) {
+			folder.mkdir();
+		}
+		String filename = uploadFile.getOriginalFilename();
+		String filePath = folder + "\\" + filename;
+		
+
+		
+		try {
+			uploadFile.transferTo(new File(filePath));
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return filename;
+	}
+
 	@RequestMapping(value="mailDetail.do", method=RequestMethod.GET)
 	public ModelAndView mailDetail(
 			ModelAndView mv

@@ -50,10 +50,32 @@
   <!-- Custom js for this page-->
   <script src="js/dashboard.js"></script>
   <!-- End custom js for this page-->
+  <script>
+		$(document).ready(function() {
+		$("#checkAll").click(function(){
+		    if( $("#checkAll").is(':checked') ){
+		      $("input[type=checkbox]").prop("checked", true);
+		    }else{
+		      $("input[type=checkbox]").prop("checked", false);
+		    }
+		});
+	
+		$("input[name=check]").click(function(){
+			var total = $("input[name=check]").length;
+			var checked = $("input[name=check]:checked").length;
+			
+			if(total != checked) 
+				$("#agreeAll").prop("checked",false);
+			else
+				$("#agreeAll").prop("checked",true);
+			
+		});
+		});
+	</script>
 </head>
 <body>
 	<div class="container-scroller">
-		<jsp:include page="../common/navbar.jsp"></jsp:include>
+		<jsp:include page="../mailCommon/navbar.jsp"></jsp:include>
 		<div class="container-fluid page-body-wrapper">
 			<jsp:include page="../common/sidebar.jsp"></jsp:include>
 			
@@ -65,36 +87,36 @@
 		          </div>
 		          <div class="mail-navi">
 		            <button>삭제</button>
-		            <button>전달</button> *2개이상 불가
-		            <button>읽음표시</button>
-		            안읽은 메일 11개
 		          </div>
-		
-		          <div >
+		          <div class="card">
 		            <table class="mail-table">
 		              <tr>
-		                <th id="col_1"><input type="checkbox" name="checkAll" id="checkAll"></th>
-		                <th id="col_2">icon</th>
+		                <th id="col_1"><input type="checkbox" name="checkAlli" id="checkAll"></th>
+		                <th id="col_2"></th>
 		                <th id="col_3">발신인</th>
 		                <th id="col_4">제목</th>
-		                <th id="col_5">icon</th>
 		                <th id="col_6">날짜 및 시간</th>
 		                <th id="col_7">크기</th>
 		              </tr>  
 		              <c:forEach items="${mList }" var="mail">
 		              <tr>
 		                <td><input type="checkbox" name="" id=""></td>
-		                <td></td>
+		                <td>
+		                	<c:if test="${mail.readYn eq '읽지않음' }"><i class="icon-mail"></c:if>
+		                	<c:if test="${mail.readYn eq '읽음' }"><i class="icon-archive"></c:if>
+		                </td>
 		                <td>${mail.senderId }</td>
 		                <td id="read">
 			                <c:url var="mDetail" value="mailDetail.do">
 								<c:param name="mailNo" value="${mail.mailNo }"></c:param>
 							</c:url>
-							<a href="${mDetail }">${mail.mailTitle }</a>
+							<c:if test="${!empty mail.mailFileName }"><a href="${mDetail }">${mail.mailTitle }</a> <i class="icon-paper-clip"></c:if>
+							<c:if test="${ empty mail.mailFileName }"><a href="${mDetail }">${mail.mailTitle }</a></c:if>
+							
 						</td>
-		                <td></td>
+		               
 		                <td><fmt:formatDate pattern="yyyy년 MM월 dd일 HH:mm:ss" value="${mail.sendTime }"/></td>
-		                <td></td>
+		                <td>${mail.mailFileSize } bytes</td>
 		              </tr>
 		              </c:forEach>
 		            </table>

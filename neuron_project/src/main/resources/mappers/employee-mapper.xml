@@ -137,7 +137,9 @@
 			</if>
 		</set>
 		where emp_no = #{wtEmpNo }
-	
 	</update>
 	
+	<select id="selectEmpAll" resultMap="employeeResultMap">
+		SELECT * FROM EMPLOYEE WHERE EMP_NO = #{empNo }
+	</select>
  </mapper>

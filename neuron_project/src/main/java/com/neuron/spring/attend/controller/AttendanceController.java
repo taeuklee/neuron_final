@@ -131,7 +131,15 @@ public class AttendanceController {
 		int min = LocalDateTime.now().getMinute();
 		int sec = LocalDateTime.now().getSecond();
 		String finishTime = hr+ ":" + min + ":" + sec;
-		attend.setFinishTime(finishTime);
+		
+		String finish = attend.getFinishTime();
+		
+		if(finish.isEmpty() ) {
+			attend.setFinishTime(finishTime);
+		}else {
+			model.addAttribute("msg", "퇴근시간 등록 실패!");
+			return "common/errorPage";
+		}
 		
 		try {
 			Date date1  = new SimpleDateFormat("HH:mm:ss").parse(startTime);

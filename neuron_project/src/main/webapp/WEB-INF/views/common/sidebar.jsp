@@ -41,7 +41,7 @@
 			</a>
 				<div class="collapse" id="menu1">
 					<ul class="nav flex-column sub-menu">
-						<li class="nav-item"><a class="nav-link" onclick="location.href='/attendanceList.do'">나의 근태
+						<li class="nav-item"><a class="nav-link" href="#" onclick="location.href='/attendanceList.do'">나의 근태
 								내역</a></li>
 						<li class="nav-item"><a class="nav-link" href="#" onclick="location.href='/holidayList.do'">나의 휴가
 								내역</a></li>
@@ -56,14 +56,14 @@
 
 			<li class="nav-item"><a class="nav-link" data-toggle="collapse"
 				href="#menu3" aria-expanded="false" aria-controls="menu3"> <i
-					class="icon-disc menu-icon"></i> <span class="menu-title">메일</span>
+					class="icon-disc menu-icon"></i> <span class="menu-title" >메일</span>
 					<i class="menu-arrow"></i>
 			</a>
 				<div class="collapse" id="menu3">
 					<ul class="nav flex-column sub-menu">
-						<li class="nav-item"><a class="nav-link" href="#">받은 메일함</a></li>
-						<li class="nav-item"><a class="nav-link" href="#">보낸 메일함</a></li>
-						<li class="nav-item"><a class="nav-link" href="#">수신확인</a></li>
+						<li class="nav-item"><a class="nav-link" href="#" onclick="location:href='/inbox.do';">받은 메일함</a></li>
+						<li class="nav-item"><a class="nav-link" href="#" onclick="location:href='/outbox.do';">보낸 메일함</a></li>
+						<li class="nav-item"><a class="nav-link" href="#" onclick="location:href='/checkOutbox.do';">수신확인</a></li>
 					</ul>
 				</div></li>
 

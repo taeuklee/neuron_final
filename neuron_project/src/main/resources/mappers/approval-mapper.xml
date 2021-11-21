@@ -252,10 +252,10 @@
   	
 <!--   	holiday용 -->
   	<select id="selectHlistCount" resultType="_int">
-		SELECT COUNT(*) FROM DOCUMENT WHERE DOCUMENT_WRITER_NO = #{empNo} 
+		SELECT COUNT(*) FROM DOCUMENT WHERE DOCUMENT_WRITER_NO = #{empNo} AND DOCUMENT_KIND = '휴가신청서' AND DOCUMENT_STATUS = '최종완료'
 	</select>
 
  	 <select id="selectAllHlist" resultMap="DocResultMap">
-		SELECT * FROM DOCUMENT WHERE DOCUMENT_WRITER_NO = #{empNo} ORDER BY DOCUMENT_NO DESC
+		SELECT * FROM DOCUMENT WHERE DOCUMENT_WRITER_NO = #{empNo} AND DOCUMENT_KIND = '휴가신청서' AND DOCUMENT_STATUS = '최종완료' ORDER BY DOCUMENT_NO DESC
 	</select>
   </mapper>

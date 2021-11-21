@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.neuron.spring.approval.domain.Document;
 import com.neuron.spring.attend.domain.Attendance;
 import com.neuron.spring.attend.domain.PageInfo;
+import com.neuron.spring.employee.domain.Employee;
 import com.neuron.spring.holiday.store.HolidayStore;
 
 @Repository
@@ -18,17 +19,6 @@ public class HolidayStoreLogic implements HolidayStore{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
-//	@Override
-//	public int selectListCount() {
-//		int count = sqlSession.selectOne("attendanceMapper.selectListCount"); 
-//		return count;
-//	}
-//
-//	@Override
-//	public List<Attendance> selectAll() {
-//		List<Attendance> dList = sqlSession.selectList("attendanceMapper.selectAllList");
-//		return dList;
-//	}
 
 	@Override
 	public int selectListCount(int empNo) {
@@ -42,6 +32,12 @@ public class HolidayStoreLogic implements HolidayStore{
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		List<Document> dList = sqlSession.selectList("approvalMapper.selectAllHlist", empNo, rowBounds);
 		return dList;
+	}
+
+	@Override
+	public List<Employee> selectEmpAll(int empNo) {
+		List<Employee> eList = sqlSession.selectList("employeeMapper.selectEmpAll", empNo);
+		return eList;
 	}
 
 

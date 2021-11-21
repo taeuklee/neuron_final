@@ -56,7 +56,7 @@
 </head>
 <body>
 	<div class="container-scroller">
-		<jsp:include page="../common/navbar.jsp"></jsp:include>
+		<jsp:include page="../mailCommon/navbar.jsp"></jsp:include>
 		<div class="container-fluid page-body-wrapper">
 			<jsp:include page="../common/sidebar.jsp"></jsp:include>
 			
@@ -64,33 +64,32 @@
 		        <div class="content-wrapper">
 		          <div class="detail-header">
 		            <button>답장</button>
-		            <button>전체답장</button>
-		            <button>전달</button>
-		            <button>삭제</button>
+		            <button onclick="/mailDelete.do">삭제</button>
 		          </div>  
 		          <div class="detail-top">
 		            
 		            <div class="detail-title">
 		              <br>
-		              <h2>  안녕하세요~  </h2>
+		              <h2>  ${mail.mailTitle }  </h2>
 		            </div>
 		            <br>
 		            <div class="detail-Info">
 		              <table>
 		                <tr>
 		                  <th>보낸사람: ${mail.senderId }  </th>
-		                  <td></td>
 		                </tr>
 		                <tr>
 		                  <th>받는사람: ${mail.receiverId }</th>
-		                  <td></td>
 		                </tr>
 		                <tr>
 		                  <th>참조: ${mail.receiverId2 }</th>
-		                  <td></td>
+		                </tr>
+		                <tr>
+		                	<th>첨부파일 : ${mail.mailFileName }</th>
 		                </tr>
 		              </table>
 		              <hr>
+		             
 		            </div>
 		          </div>
 		          <div class="detail-contents">
