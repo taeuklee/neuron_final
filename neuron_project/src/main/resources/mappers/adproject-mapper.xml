@@ -4,25 +4,40 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="adprojectMapper">
  
-    <resultMap type="Project" id="ProjectResultMap">
+    <resultMap type="Project2" id="projectResultMap">
 	   <id property="projectNo" column="PROJECT_NO"/>
 	   <result property="projectTitle" column="PROJECT_TITLE"/>
 	   <result property="projectContents" column="PROJECT_CONTENTS"/>
 	   <result property="projectMaster" column="PROJECT_MASTER"/>
+	   <result property="projectInsertRequest" column="PROJECT_INSERT_REQUEST"/>
+	    <result property="projectDeleteRequest" column="PROJECT_DELETE_REQUEST"/>
   	</resultMap>
   	
   	<!-- 프로젝트 전체 리스트 출력 -->
+  	<select id="selectAllProject"  resultMap="projectResultMap">
+  	 SELECT * FROM PROJECT
+  	</select>
 
  
    	<!-- 프로젝트 생성 요청 리스트 출력 -->
-   	
+   	<select id="selectOkProject"  resultMap="projectResultMap">
+  	 SELECT * FROM PROJECT WHERE PROJECT_INSERT_REQUEST = #{key }
+  	</select>
 
   	<!-- 프로젝트 생성 승인 / 반려 처리 -->
+  	<update id="adminOkUpdate" parameterType="Project2">
+	UPDATE PROJECT SET PROJECT_INSERT_REQUEST = #{permission} WHERE PROJECT_NO = #{projectNo }
+  	</update>
 
 	
 	<!-- 프로젝트 삭제 요청 리스트 -->
-
+   	<select id="selectNoProject"  resultMap="projectResultMap">
+  	 SELECT * FROM PROJECT WHERE PROJECT_DELETE_REQUEST = #{key }
+  	</select>
 	
-	<!-- 프로젝트 삭제 요청 처리 -->
+	<!-- 프로젝트 삭제 -->
+	<delete id="removeProject" parameterType="_int">
+  	DELETE FROM PROJECT WHERE PROJECT_NO = #{projectNo }
+  	</delete>
  
   </mapper>

@@ -88,6 +88,7 @@
 				<div class="content-wrapper" id="contents">
 				<div class="col-lg-12 grid-margin stretch-card">
 					<div class="card">
+					<input type="hidden" name="projectNo" value="${projectNo }">
 						<div class="card-body">
 							<br>
 							<h3 class="card-title">프로젝트 승인 요청</h3>
@@ -100,23 +101,32 @@
 										<tr>
 											<th>No</th>
 											<th>프로젝트명</th>
+											<th>프로젝트 내용</th>
 											<th>책임자</th>
-											<th>승인</th>
-											<th>반려</th>
+											<th>처리</th>
 										</tr>
 									</thead>
-								        <!--  <c:forEach items="${ nList }" var="notice"> -->
+								        <c:forEach items="${ pList }" var="project"> 
 								            <tr align="center">
-								               <td>1</td>
+								               <td>${project.projectNo }</td>
+								               <td>${project.projectTitle }</td>
+								               <td>${project.projectContents }</td>
+								               <td>${project.projectMaster }</td>
 								               <td>
-								                  <a href="#">뉴런</a>
-								               </td>
-								               <td>박보검</td>
-								               <td><input type="submit">승인</button></td>
-								               <td><input type="submit">반려</button></td>
+							               		<select name="permission" class="form-control">
+							               			<option disabled seleted>처리</option>
+													<option value="Y">승인</option>
+													<option value="N">반려</option>
+												</select>
+												</td>
 								            </tr>
-								        <!-- </c:forEach> -->
+								         </c:forEach>
+								         
 								</table>
+								<div class="proButtton" style="padding-left:95%;">
+								<br>
+								<a href="${pDelete }" class="btn btn-primary mr-2 modify">저장</a>
+								</div>
 							</div>
 						</div>
 					</div>

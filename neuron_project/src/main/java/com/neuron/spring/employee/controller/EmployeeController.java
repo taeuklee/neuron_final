@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.neuron.spring.dept.domain.DeptAdmin;
 import com.neuron.spring.employee.domain.DeptTeam;
@@ -46,7 +47,30 @@ public class EmployeeController {
 
 
 	
-	// 로그인
+	//로그인 처리
+//	@RequestMapping(value="/login.do", method=RequestMethod.POST)
+//	public String employeeLogin(HttpServletRequest request) {
+//		String empId = request.getParameter("emp-id");
+//		String empPwd  = request.getParameter("emp-pwd");
+//				
+//		Employee empOne = new Employee();
+//		empOne.setEmpId(empId);
+//		empOne.setEmpPwd(empPwd);
+//		
+//		try {
+//		Employee loginEmployee = service.loginEmp(empOne);
+//		if(loginEmployee != null) {
+//			HttpSession session = request.getSession();
+//			session.setAttribute("loginEmployee", loginEmployee);
+//		}
+//			return "redirect:home.do";
+//		}catch(Exception e) {
+//			request.setAttribute("msg", e.toString());
+//			return "common/errorPage";
+//				}
+//		
+//		}
+		
 	@RequestMapping(value="/login.do", method=RequestMethod.POST)
 	public String employeeLogin(HttpServletRequest request) {
 		String empId = request.getParameter("emp-id");
@@ -55,18 +79,14 @@ public class EmployeeController {
 		Employee empOne = new Employee();
 		empOne.setEmpId(empId);
 		empOne.setEmpPwd(empPwd);
-		
-		try {
-		Employee loginEmployee = service.loginEmp(empOne);
+		Employee  loginEmployee = service.loginEmp(empOne);
 		if(loginEmployee != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("loginEmployee", loginEmployee);
-		}
 			return "redirect:home.do";
-		}catch(Exception e) {
-			request.setAttribute("msg", e.toString());
-			return "common/errorPage";
-				}
+		}else {
+			return "/loginFail";
+		}
 		
 		}
 	

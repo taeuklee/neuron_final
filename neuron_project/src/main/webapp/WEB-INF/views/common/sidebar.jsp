@@ -152,9 +152,9 @@
 					<div class="collapse" id="menu8">
 						<ul class="nav flex-column sub-menu">
 							<li class="nav-item"><a class="nav-link"
-								onclick="location:href='/projectListView.do';">리스트 조회</a></li>
+								onclick="location:href='/proListView.do';">리스트 조회</a></li>
 							<li class="nav-item"><a class="nav-link"
-								onclick="location:href='/proOKListView.do';">생성 요청</a></li>
+								onclick="location:href='/proOkListView.do';">생성 요청</a></li>
 							<li class="nav-item"><a class="nav-link"
 								onclick="location:href='/proNoListView.do';">삭제 요청</a></li>
 						</ul>

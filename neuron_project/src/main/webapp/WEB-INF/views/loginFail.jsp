@@ -31,36 +31,13 @@
               </div>
               <h4>안녕하세요, 뉴런입니다.</h4>
               <h6 class="font-weight-light">Welcome to Neuron</h6>
-              <form action="/login.do" method="post">
-                <div class="form-group">
-                  <label for="exampleInputEmail">ID</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend bg-transparent">
-                      <span class="input-group-text bg-transparent border-right-0">
-                        <i class="mdi mdi-account-outline text-primary"></i>
-                      </span>
-                    </div>
-                    <input type="text" class="form-control form-control-lg border-left-0" name="emp-id" placeholder="ID">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputPassword">Password</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend bg-transparent">
-                      <span class="input-group-text bg-transparent border-right-0">
-                        <i class="mdi mdi-lock-outline text-primary"></i>
-                      </span>
-                    </div>
-                    <input type="password" class="form-control form-control-lg border-left-0" name="emp-pwd" placeholder="Password">                        
-                  </div>
-                </div>
-                <div class="my-2 d-flex justify-content-between align-items-center">
-                  <a href="#" class="auth-link text-black">Find Password</a>
-                </div>
+                <br>
+                <p color="red"> 로그인에 실패했습니다. </p>
+                <p color="red"> 아이디와 비밀번호를 확인해주세요 </p>
+                <br>
                 <div class="my-3">
-                  <input type="submit" class="btn btn-primary mr-2" value="Login">
+                  <button onclick="location.href='index.jsp';">로그인 페이지로 이동</button>
                 </div>
-              </form>
             </div>
           </div>
           <div class="col-lg-6 login-half-bg d-flex flex-row">
