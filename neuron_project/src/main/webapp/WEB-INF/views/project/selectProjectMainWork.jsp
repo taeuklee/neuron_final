@@ -201,12 +201,12 @@
 			<!-- partial -->
 			<div class="main-panel">
 				<div class="content-wrapper" id="contents">
-					<div style="height: 20%">
+					<div style="height: 20%; text-align: center">
 						<div style="height: 20%; margin-bottom: 30px;">
 							<h1 style="text-align: center;">${projectTask.taskTitle }</h1>
 						</div>
 						<div
-							style="height: 80%; align-content: center; width: 900px; position: relative; left: 500px;">
+							style="height: 80%; text-align: center; width: 1100px;position:relative; left: 25%;">
 							<div class="progress" style="height: 30px;">
 								<div class="progress-bar" role="progressbar" style="width: ${projectTask.taskProcessivity }%;"
 									aria-valuenow="${projectTask.taskProcessivity }" aria-valuemin="0" aria-valuemax="100">${projectTask.taskProcessivity }%</div>
@@ -230,6 +230,9 @@
 											<th>세부사항 이름</th>
 											<th>진행도</th>
 											<th>팀원목록</th>
+											<c:if test="${loginEmployee.empNo eq project.projectMaster}">
+											<th>액션</th>
+											</c:if>
 										</tr>
 									</thead>
 									<tbody>
@@ -249,6 +252,14 @@
 												<button class="btn btn-primary" onclick="selectTaskDetailMemberList(this)">목록보기</button>
 												<input type="hidden" value="${taskDetail.taskDetailNo }" name="taskDetailNo">
 											</td>
+											<c:if test="${loginEmployee.empNo eq project.projectMaster}">
+											<td>
+												<button class="btn btn-primary" onclick="moveUpdateTaskDetail(this)">수정</button>
+												<input type="hidden" value="${taskDetail.taskDetailNo }" name="taskDetailNo">
+												<button class="btn btn-danger" onclick="deleteTaskDetail(this)">삭제</button>
+												<input type="hidden" value="${taskDetail.taskDetailNo }" name="taskDetailNo">
+											</td>
+											</c:if>
 										</tr>
 									</c:forEach>
 									</tbody>
@@ -273,7 +284,7 @@
 	<script>
 	
 		function selectTaskDetailMemberList(data) {
-			
+			console.log("여기론오니")
 			var taskDetailNo = data.nextSibling.nextSibling.value;
 			console.log(taskDetailNo);
 			var taskNo = ${projectTask.taskNo}
@@ -281,6 +292,36 @@
 			var name = "팀원 목록";
 			var option = "width = 800, height = 800, top = 300 , left = 650, location = no, toolbars = no, status = no, scrollbars = no, resizable = no";
 			var page = window.open(url, name, option);
+		}
+		
+		function moveUpdateTaskDetail(data) {
+			console.log("여기론오니")
+			var taskDetailNo = data.nextSibling.nextSibling.value;
+			console.log(taskDetailNo);
+			var taskNo = ${projectTask.taskNo}
+			var url = "moveUpdateTaskDetail.do?taskNo=${projectTask.taskNo}&projectNo=${project.projectNo}&taskDetailNo="+taskDetailNo;
+			var name = "팀원 목록";
+			var option = "width = 1000, height = 800, top = 300 , left = 650, location = no, toolbars = no, status = no, scrollbars = no, resizable = no";
+			var page = window.open(url, name, option);
+			
+		}
+		
+		function deleteTaskDetail(data) {
+			var taskDetailNo = data.nextSibling.nextSibling.value;
+			var taskNo = ${projectTask.taskNo}
+			$.ajax({
+				url:"deleteTaskDetail.do?taskNo=${projectTask.taskNo}&projectNo=${project.projectNo}&taskDetailNo="+taskDetailNo,
+				type:"get",
+				success:function(data2){
+					if(data2=="success"){
+						alert("세부사항 삭제 성공했습니다.")
+						location.reload();
+					}
+				},error:function(){
+					alert("통신실패");
+				}
+				
+			})
 		}
 	</script>
 </body>

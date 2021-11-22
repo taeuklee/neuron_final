@@ -171,16 +171,16 @@ document.addEventListener('DOMContentLoaded', function() {
 			<div class="main-panel">
 				<div class="content-wrapper" id="contents">
 					<div class="col-lg-10" style="float: left">
-						<div style="height: 10%; margin-bottom: 30px;">
+						<div style="height: 10%; margin-bottom: 30px;text-align: center">
 							<h1>${project.projectTitle}</h1>
 						</div>
-						<div style="height: 20%; margin-bottom: 30px;">
+						<div style="height: 20%; margin-bottom: 30px;text-align: center">
 							<c:if test="${ empty projectTask.taskTitle}">
 								<h1>등록된 대표업무가 없습니다.</h1>
 							</c:if>
 							<c:if test="${not empty projectTask.taskTitle }">
 								<a href="selectProjectMainWork.do?projectNo=${project.projectNo}"><h1 onclick="location.href='selectProjectMainWork.do?projectNo=${project.projectNo}'">${projectTask.taskTitle }</h1></a>
-								<div class="progress" style="height: 20px;">
+								<div class="progress" style="height: 20px;position: relative;left:3%;">
 									<div class="progress-bar" role="progressbar"
 										style="width: ${projectTask.taskProcessivity }%;" aria-valuenow="${projectTask.taskProcessivity }" aria-valuemin="0"
 										aria-valuemax="100">${projectTask.taskProcessivity }%</div>
@@ -188,7 +188,8 @@ document.addEventListener('DOMContentLoaded', function() {
 							</c:if>
 						</div>
 						<div style="height: 20%; margin-bottom: 30px;">
-							<div class="card mb-3" style="max-width: 540px;">
+							<h3 style="text-align: center">책임자</h3>
+							<div class="card mb-3" style="max-width: 540px;position: relative;left: 35%;">
 								<div class="row g-0">
 									<div class="col-md-4">
 										<img src="/resources/euploadFiles/${master.empFileReName}" class="img-fluid rounded-start" alt="..." style="height: 100%; width: 100%">
@@ -205,15 +206,16 @@ document.addEventListener('DOMContentLoaded', function() {
 								</div>
 							</div>
 						</div>
-						<button type="button" class="btn" onclick="moveInsertProjectEvent()" id="insertEvent">일정추가</button>
-						<div id='calendar' style="height: 50%; margin-bottom: 10px;"></div>
+						<button type="button" class="btn" onclick="moveInsertProjectEvent()" id="insertEvent"style="position:relative;left:4%;">일정추가</button>
+						<div id='calendar' style="height: 50%;position:relative;left:4%; margin-bottom: 10px;"></div>
 					</div>
-					<div class="col-lg-2" style="border: 1px solid black; float: left">
+					<div class="col-lg-2" style="float: left;">
+					<h3 style="text-align: center;">팀원 목록</h3>
 					<c:forEach items="${memberList }" var="memberList" begin="0" end="4">
-						<div class="card" style="width: 10rem; margin-bottom: 10px;">
+						<div class="card" style="width: 10rem; margin-bottom: 10px;position: relative;left:30%;">
 							<img src="/resources/euploadFiles/${memberList.empFileReName}" class="card-img-top" alt="...">
 							<div class="card-body">
-								<h4>${memberList.empName }</h4>
+								<h4 style="text-align: center">${memberList.empName }</h4>
 							</div>
 						</div>
 					</c:forEach>
@@ -242,7 +244,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- 							</div> -->
 <!-- 						</div> -->
 						<div>
-							<button onclick="moveMemberList()">더보기</button>
+							<button style="position: relative;left:42%;"class="btn btn-primary" onclick="moveMemberList()">더보기</button>
 						</div>
 					</div>
 				</div>
