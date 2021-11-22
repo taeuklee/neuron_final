@@ -79,12 +79,15 @@ public class ProjectController {
 			int taskDetailCompleteCount = service.taskDetailCompleteCount(countMap);
 			int taskDetailProcessivity = 0;
 			if(taskDetailCompleteCount>0) {
-				if(100*(taskDetailCompleteCount/taskDetailTotalCount)>0) {				
-					taskDetailProcessivity = Math.round(100*(taskDetailTotalCount/taskDetailCompleteCount));
-				}else {
+				System.out.println("계산:" + taskDetailCompleteCount/taskDetailTotalCount);
+				System.out.println("계산결과:"+(100*taskDetailCompleteCount)/taskDetailTotalCount);
+				taskDetailProcessivity = Math.round((100*taskDetailCompleteCount)/taskDetailTotalCount);				
+			}else {				
 					taskDetailProcessivity = 0;
-				}
 			}
+			System.out.println("세부사항 총 팀원수"+taskDetailTotalCount);
+			System.out.println("성공한 팀원수"+taskDetailCompleteCount);
+			System.out.println("진행도"+taskDetailProcessivity);
 			taskDetail1.setTaskDetailProcessivity(taskDetailProcessivity);		
 		}
 		mv.addObject("projectTask", task);
@@ -582,7 +585,7 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "insertMainWork.do", method = RequestMethod.POST)
-	public String insertMainWork(@RequestParam(value = "projectNo") int projectNo,
+	public void insertMainWork(@RequestParam(value = "projectNo") int projectNo,
 			@RequestParam(value = "mainWorkName") String mainWorkName, HttpServletRequest request,
 			HttpServletResponse response) {
 		//String[] empNoList = request.getParameterValues("empNo");
@@ -622,36 +625,53 @@ public class ProjectController {
 			map.put("mainWorkName", mainWorkName);
 			int mainWorkResult = service.insertMainWork(map);
 			if(mainWorkResult > 0) {
-				out.println("<script>alert('대표 업무가 등록되었습니다.')</script>");
+				out.println("<script>");
+				out.println("alert('대표 업무가 등록되었습니다.')");
+				out.println("location.href='selectProjectDetail.do?projectNo="+projectNo+"'");
+				out.println("</script>");
+//				out.println("<script>location.href='selectProjectDetail.do?projectNo='"+projectNo+"</script>");
+				//return "";
 			}else {
 				out.println("<script>alert('대표 업무 등록 실패')</script>");
+				//return "";
 			}
 			//ProjectTask task = service.selectTask(projectNo);
 			//int taskNo = task.getTaskNo();
 		} catch (IOException e) {
 			e.printStackTrace();
+			//return "";
 		}
-		return "project/selectProjectMainPage";
+		//return "redirect:selectProjectDetail.do?projectNo="+projectNo;
 	}
 	
 	
-	@RequestMapping(value="deleteProjectMainWork.do", method=RequestMethod.GET)
+	@ResponseBody
+	@RequestMapping(value="deleteProjectMainWork.do", method=RequestMethod.POST)
 	public String deleteProjectMainWork(
 			@RequestParam(value="projectNo") int projectNo
+			,@RequestParam(value="taskNo") int taskNo
 			) {
-		int result = service.deleteMainWork(projectNo);
-		return "project/selectProjectMainPage";
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("projectNo", projectNo);
+		map.put("taskNo", taskNo);
+		int result = service.deleteMainWork(map);
+		if(result > 0) {
+			return "success";
+		}else {
+			return "fail";
+		}
 	}
 	
 	
 //	@ResponseBody
 	@RequestMapping(value="insertTask.do", method=RequestMethod.POST)
-	public ModelAndView insertTask(
+	public void insertTask(
 			@RequestParam(value="projectNo") int projectNo
 			,@RequestParam(value="taskName") String taskName
 			,HttpServletRequest request
 			,ModelAndView mv
-			) {
+			,HttpServletResponse response
+			) throws IOException {
 		String[] empNoList = request.getParameterValues("empNo");
 		int[] empNoList2 = Arrays.stream(empNoList).mapToInt(Integer::parseInt).toArray();
 		System.out.println(taskName);
@@ -679,9 +699,39 @@ public class ProjectController {
 		map.put("taskNo", taskNo);
 		map.put("empNoList", empNoList2);
 		map.put("taskId", taskId);
+		String complete = "Y";
+		map.put("complete", complete);
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
 		int result = service.insertProjectTaskDetail(map);
-		mv.setViewName("project/selectProjectMainPage");
-		return mv;
+		int taskCount = service.taskTotalCount(map);
+		if(result > 0) {
+			int mainWorkTotalCount = service.taskTotalCount(map);
+			int mainWorkTaskCompleteCount = service.mainWorkDetailCompleteCount(map);
+			int mainWorkProcessivity = 0;
+			if(mainWorkTaskCompleteCount > 0) {
+				mainWorkProcessivity = Math.round((100*mainWorkTaskCompleteCount)/mainWorkTotalCount);
+			}
+			map.put("mainWorkProcessivity", mainWorkProcessivity);
+			int mainWorkUpdate = service.updateMainWorkProcessivity(map);
+			if(mainWorkUpdate > 0) {
+				out.println("<script>");
+				out.println("alert('세부업무가 등록되었습니다.')");
+				out.println("location.href='selectProjectDetail.do?projectNo="+projectNo+"'");
+				out.println("</script>");
+				//return "redirect:selectProjectDetail.do?projectNo="+projectNo;
+			}else {
+				out.println("<script>alert('세부 사항 등록이 실패하였습니다.')</script>");	
+				out.flush();
+				//return "common/errorPage";				
+			}
+		}else {
+			out.println("<script>alert('세부 사항 등록이 실패하였습니다.');");	
+			out.flush();
+			//return "common/errorPage";
+		}
+		//mv.setViewName("project/selectProjectMainPage");
 		
 	}
 	
@@ -694,8 +744,13 @@ public class ProjectController {
 		map.put("taskNo", taskNo);
 		map.put("taskDetailNo", taskDetailNo);
 		List<ProjectMember> memberList = service.selectTaskMemberList(map);
+		String complete = "Y";
+		String progress = "N";
+		mv.addObject("complete", complete);
+		mv.addObject("progress", progress);
 		mv.addObject("taskNo", taskNo);
 		mv.addObject("memberList", memberList);
+		mv.addObject("taskDetailNo", taskDetailNo);
 		mv.setViewName("project/taskDetailMemberList");
 		return mv;
 	}
@@ -706,6 +761,7 @@ public class ProjectController {
 			@RequestParam(value="taskNo") int taskNo
 			,@RequestParam(value="empNo") int empNo
 			,@RequestParam(value="projectNo") int projectNo
+			,@RequestParam(value="taskDetailNo") int taskDetailNo
 			) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		String complete = "Y";
@@ -713,13 +769,14 @@ public class ProjectController {
 		map.put("taskNo", taskNo);
 		map.put("empNo", empNo);
 		map.put("projectNo", projectNo);
+		map.put("taskDetailNo", taskDetailNo);
 		int result = service.successDetailTask(map);
 		if(result > 0) {
 			int mainWorkTotalCount = service.taskTotalCount(map);
 			int mainWorkTaskCompleteCount = service.mainWorkDetailCompleteCount(map);
 			int mainWorkProcessivity = 0;
 			if(mainWorkTaskCompleteCount > 0) {
-				mainWorkProcessivity = Math.round(100*(mainWorkTaskCompleteCount/mainWorkTotalCount));
+				mainWorkProcessivity = Math.round((100*mainWorkTaskCompleteCount)/mainWorkTotalCount);
 			}
 			map.put("mainWorkProcessivity", mainWorkProcessivity);
 			int mainWorkUpdate = service.updateMainWorkProcessivity(map);
@@ -733,4 +790,147 @@ public class ProjectController {
 		}
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="deleteTaskDetail.do", method=RequestMethod.GET)
+	public String deleteTaskDetail(
+			@RequestParam(value="taskNo") int taskNo
+			,@RequestParam(value="taskDetailNo") int taskDetailNo
+			,@RequestParam(value="projectNo") int projectNo
+			) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("taskNo", taskNo);
+		map.put("taskDetailNo", taskDetailNo);
+		map.put("projectNo", projectNo);
+		String complete = "Y";
+		map.put("complete", complete);
+		int result = service.deleteTaskDetail(map);
+		if(result > 0) {
+			int mainWorkTotalCount = service.taskTotalCount(map);
+			int mainWorkTaskCompleteCount = service.mainWorkDetailCompleteCount(map);
+			int mainWorkProcessivity = 0;
+			if(mainWorkTaskCompleteCount > 0) {
+				mainWorkProcessivity = Math.round((100*mainWorkTaskCompleteCount)/mainWorkTotalCount);
+			}
+			map.put("mainWorkProcessivity", mainWorkProcessivity);
+			int mainWorkUpdate = service.updateMainWorkProcessivity(map);
+			if(mainWorkUpdate > 0) {
+				return "success";
+			}else {
+				return "fail";				
+			}
+		}else {
+			return "fail";
+		}
+	}
+	
+	
+	@RequestMapping(value="moveUpdateTaskDetail.do", method = RequestMethod.GET)
+	public ModelAndView moveUpdateTaskDetail(
+			@RequestParam(value="taskNo") int taskNo
+			,@RequestParam(value="taskDetailNo") int taskDetailNo
+			,@RequestParam(value="projectNo") int projectNo
+			,ModelAndView mv
+			) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("taskNo", taskNo);
+		map.put("taskDetailNo", taskDetailNo);
+		map.put("projectNo", projectNo);
+		ProjectTaskDetail taskDetail = service.selectTaskDetail(map);
+		if(taskDetail != null) {
+			List<ProjectMember> memberList = service.selectTaskMemberList(map);
+			mv.addObject("taskDetail", taskDetail);
+			mv.addObject("memberList", memberList);
+			mv.setViewName("project/updateTask");
+		}
+		return mv;
+	}
+	
+	@RequestMapping(value="updateTask.do", method = RequestMethod.POST)
+	public void updateTask(
+			@RequestParam(value="projectNo") int projectNo
+			,@RequestParam(value="taskNo") int taskNo
+			,@RequestParam(value="taskDetailNo") int taskDetailNo
+			,@RequestParam(value="taskName") String taskName
+			,HttpServletRequest request
+			,HttpServletResponse response
+			) throws IOException {
+		String[] empNoList = request.getParameterValues("empNo");
+		int[] empNoList2 = Arrays.stream(empNoList).mapToInt(Integer::parseInt).toArray();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("projectNo", projectNo);
+		map.put("taskNo", taskNo);
+		map.put("taskDetailNo", taskDetailNo);
+		map.put("taskName", taskName);
+		map.put("empNoList", empNoList2);
+		String complete = "Y";
+		map.put("complete", complete);
+		int n = 16;
+		char[] chs = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
+				'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+		Random rd = new Random();
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < n; i++) {
+				char ch = chs[rd.nextInt(chs.length)];
+				sb.append(ch);
+		}
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		String taskId = sb.toString();
+		map.put("taskId", taskId);
+		int result = service.deleteTaskDetail(map);
+		if(result  > 0) {
+			int result1 = service.insertProjectTaskDetail(map);
+			int mainWorkTotalCount = service.taskTotalCount(map);
+			int mainWorkTaskCompleteCount = service.mainWorkDetailCompleteCount(map);
+			int mainWorkProcessivity = 0;
+			if(mainWorkTaskCompleteCount > 0) {
+				mainWorkProcessivity = Math.round((100*mainWorkTaskCompleteCount)/mainWorkTotalCount);
+			}
+			map.put("mainWorkProcessivity", mainWorkProcessivity);
+			int mainWorkUpdate = service.updateMainWorkProcessivity(map);
+			if(mainWorkUpdate > 0) {
+				out.println("<script>window.opener.location.reload();</script>");
+				out.println("<script>alert('수정이 완료되었습니다')</script>");
+				out.println("<script>window.close();</script>");
+				//return "redirect:selectProjectMainWork.do?projectNo"+projectNo;
+			}else {
+				out.println("<script>alert('오류가 발생했습니다')</script>");
+				//return "fail";				
+			}
+		}
+		//return "common/errorPage";
+	}
+	
+	@RequestMapping(value="selectDetailMainWork.do", method = RequestMethod.GET)
+	public ModelAndView moveDetailMainWork(
+			@RequestParam(value="projectNo") int projectNo
+			,ModelAndView mv
+			) {
+		ProjectTask task = service.selectTask(projectNo);
+		mv.addObject("projectNo", projectNo);
+		mv.addObject("projectTask", task);
+		mv.setViewName("project/detailMainWork");
+		return mv;		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="updateMainWork.do", method = RequestMethod.POST)
+	public String updateMainWork(
+			@RequestParam(value="projectNo") int projectNo
+			,@RequestParam(value="taskNo") int taskNo
+			,@RequestParam(value="taskTitle") String taskTitle
+			) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("projectNo", projectNo);
+		map.put("taskNo", taskNo);
+		map.put("taskTitle", taskTitle);
+		int result = service.updateMainWork(map);
+		if(result>0) {			
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
+		
 }

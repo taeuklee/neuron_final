@@ -9,6 +9,7 @@ public class ProjectMember {
 	private String empJob;
 	private String empFileReName;
 	private String empAuth;
+	private String taskDetailSuccess;
 	
 	public ProjectMember() {
 		
@@ -71,14 +72,25 @@ public class ProjectMember {
 		this.empFileReName = empFileReName;
 	}
 
+	
+	
+	public String getTaskDetailSuccess() {
+		return taskDetailSuccess;
+	}
+
+	public void setTaskDetailSuccess(String taskDetailSuccess) {
+		this.taskDetailSuccess = taskDetailSuccess;
+	}
+
 	@Override
 	public String toString() {
 		return "ProjectMember [empNo=" + empNo + ", projectNo=" + projectNo + ", empName=" + empName + ", deptName="
-				+ deptName + ", empJob=" + empJob + ", empFileReName=" + empFileReName + ", empAuth=" + empAuth + "]";
+				+ deptName + ", empJob=" + empJob + ", empFileReName=" + empFileReName + ", empAuth=" + empAuth
+				+ ", taskDetailSuccess=" + taskDetailSuccess + "]";
 	}
+
 	
-	
-	
+		
 
 	
 

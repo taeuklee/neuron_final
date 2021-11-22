@@ -170,8 +170,8 @@ public class ProjectServiceImpl implements ProjectService{
 	}
 
 	@Override
-	public int deleteMainWork(int projectNo) {
-		int result = store.deleteMainWork(projectNo);
+	public int deleteMainWork(Map<String, Object> map) {
+		int result = store.deleteMainWork(map);
 		return result;
 	}
 
@@ -238,6 +238,24 @@ public class ProjectServiceImpl implements ProjectService{
 	@Override
 	public int updateMainWorkProcessivity(Map<String, Object> map) {
 		int result = store.updateMainWorkProcessivity(map);
+		return result;
+	}
+
+	@Override
+	public int deleteTaskDetail(Map<String, Object> map) {
+		int result = store.deleteTaskDetail(map);
+		return result;
+	}
+
+	@Override
+	public ProjectTaskDetail selectTaskDetail(Map<String, Object> map) {
+		ProjectTaskDetail taskDetail = store.selectTaskDetail(map);
+		return taskDetail;
+	}
+
+	@Override
+	public int updateMainWork(Map<String, Object> map) {
+		int result = store.updateMainWork(map);
 		return result;
 	}
 

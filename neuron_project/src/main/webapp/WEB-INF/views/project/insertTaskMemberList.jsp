@@ -121,7 +121,7 @@ border-color:#1e2b37;
 						$div1.append($div2)
 						$div3 = $("	<div class='col-md-4' style'float:left;'>")
 						$div2.append($div3)
-						$imgArea = $div3.append("<img src='/resources/euploadFiles/"+data[i].empFileReName+"' class='img-fluid rounded-start' alt='이미지영역'>")
+						$imgArea = $div3.append("<img src='/resources/euploadFiles/"+data[i].empFileReName+"' class='img-fluid rounded-start' style='height:100%;width:100%' alt='이미지영역'>")
 						$div4 = $("<div class='col-md-8'>")
 						$div2.append($div4)
 						$div5 = $("	<div class='card-body'>")
@@ -192,7 +192,7 @@ border-color:#1e2b37;
 		//var count = ${count};
 		//var list = opener.document.getElementById('mainWorkMemberList').innerHTML;
 		var member = document.getElementById('projectMember')
-		opener.document.getElementById('mainWorkMemberList' + count).innerHTML ="";
+		//opener.document.getElementById('mainWorkMemberList' + count).innerHTML ="";
 		opener.document.getElementById('mainWorkMemberList' + count).append(member)
 // 		data.innerHTML = "";
 // 		data.append(member);

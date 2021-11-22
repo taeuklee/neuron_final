@@ -175,8 +175,8 @@ public class ProjectStroeLogic implements ProjectStore{
 	}
 
 	@Override
-	public int deleteMainWork(int projectNo) {
-		int result = sqlSession.delete("projectMapper.deleteMainWork", projectNo);
+	public int deleteMainWork(Map<String, Object> map) {
+		int result = sqlSession.delete("projectMapper.deleteMainWork", map);
 		return result;
 	}
 
@@ -245,6 +245,24 @@ public class ProjectStroeLogic implements ProjectStore{
 	@Override
 	public int updateMainWorkProcessivity(Map<String, Object> map) {
 		int result = sqlSession.update("projectMapper.updateMainWorkProcessivity", map);
+		return result;
+	}
+
+	@Override
+	public int deleteTaskDetail(Map<String, Object> map) {
+		int result = sqlSession.delete("projectMapper.deleteTaskDetail", map);
+		return result;
+	}
+
+	@Override
+	public ProjectTaskDetail selectTaskDetail(Map<String, Object> map) {
+		ProjectTaskDetail taskDetail = sqlSession.selectOne("projectMapper.selectProjectTaskDetail", map);
+		return taskDetail;
+	}
+
+	@Override
+	public int updateMainWork(Map<String, Object> map) {
+		int result = sqlSession.update("projectMapper.updateMainWork", map);
 		return result;
 	}
 

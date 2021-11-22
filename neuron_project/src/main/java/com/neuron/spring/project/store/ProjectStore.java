@@ -62,7 +62,7 @@ public interface ProjectStore {
 
 	public ProjectTask selectTask(int projectNo);
 
-	public int deleteMainWork(int projectNo);
+	public int deleteMainWork(Map<String, Object> map);
 
 	public List<ProjectMember> selectMemberAllList(PageInfo pi);
 
@@ -85,4 +85,10 @@ public interface ProjectStore {
 	public int selectMainWorkCompleteCount(Map<String, Object> map);
 
 	public int updateMainWorkProcessivity(Map<String, Object> map);
+
+	public int deleteTaskDetail(Map<String, Object> map);
+
+	public ProjectTaskDetail selectTaskDetail(Map<String, Object> map);
+
+	public int updateMainWork(Map<String, Object> map);
 }

@@ -82,8 +82,24 @@ form .btn {
         <p class="card-text">${memberList.deptName}</p>
         <p class="card-text">${memberList.empJob}<small class="text-muted"></small></p>
         <c:if test="${loginEmployee.empNo eq memberList.empNo}">
+        <c:if test="${memberList.taskDetailSuccess eq progress}">
         <button class="btn btn-primary" onclick="successDetailTask(this)">완료</button>
+        </c:if>
+        <c:if test="${memberList.taskDetailSuccess eq complete}">
+        <h4>이미 완료하셨습니다</h4>
+        </c:if>
         <input type="hidden" value="${memberList.empNo}" name="empNo">
+        <input type="hidden" value="${taskDetailNo }" name="taskDetailNo">
+        </c:if>
+        <c:if test="${loginEmployee.empNo ne memberList.empNo}">
+        <c:if test="${memberList.taskDetailSuccess eq progress}">
+        <h4>진행중입니다</h4>
+        </c:if>
+        <c:if test="${memberList.taskDetailSuccess eq complete}">
+        <h4>완료</h4>
+        </c:if>
+        <input type="hidden" value="${memberList.empNo}" name="empNo">
+        <input type="hidden" value="${taskDetailNo }" name="taskDetailNo">
         </c:if>
       </div>
     </div>
@@ -95,15 +111,19 @@ form .btn {
 	function successDetailTask(data) {
 		console.log(data.nextSibling.nextSibling.value)
 		var empNo = data.nextSibling.nextSibling.value;
+		var taskDetailNo = data.nextSibling.nextSibling.nextSibling.nextSibling.value;
 		$.ajax({
 			url:"successDetailTask.do?taskNo=${taskNo}&projectNo=${project.projectNo}",
 			type:"post",
 			data:{
-				"empNo":empNo
+				"empNo":empNo,
+				"taskDetailNo":taskDetailNo
 			},
 			success:function(data){
 				if(data =="success"){
 					alert("완료 체크되었습니다")
+					window.opener.location.reload();
+					window.close();
 				}else{
 					alert("오류가 발생했습니다")
 				}
