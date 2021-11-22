@@ -152,8 +152,8 @@
 													<select name="teamCode" class="form-control">
 														<option value="A11">인사팀</option>
 														<option value="A12">총무팀</option>
-														<option value="B11">개발 1팀</option>
-														<option value="B12">개발 2팀</option>
+														<option value="B11">개발 A팀</option>
+														<option value="B12">개발 B팀</option>
 														<option value="C11">마케팅팀</option>
 														<option value="C12">영업팀</option>
 														<option value="D11">A/S팀</option>
@@ -257,7 +257,6 @@
 			</div>
 		</div>
 		<!-- partial:partials/_footer.html -->
-		<footer class="footer" id="footer"></footer>
 		<!-- partial -->
 	</div>
 	<!-- main-panel ends -->

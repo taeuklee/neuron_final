@@ -59,6 +59,12 @@
 </style>
 <!-- base:js -->
 <script src="vendors/base/vendor.bundle.base.js"></script>
+<script>
+	function fu_submit(){
+		var a =  $("#projectInsertRequest").val();
+		alert(a);
+	}
+</script>
 <!-- endinject -->
 <!-- Plugin js for this page-->
 <!-- End plugin js for this page-->
@@ -88,8 +94,6 @@
 				<div class="content-wrapper" id="contents">
 				<div class="col-lg-12 grid-margin stretch-card">
 					<div class="card">
-					<form action="projectOk.do" method="post">
-					<input type="hidden" name="projectNo" value="${project.projectNo }">
 						<div class="card-body">
 							<br>
 							<h3 class="card-title">프로젝트 승인 요청</h3>
@@ -104,25 +108,29 @@
 											<th>프로젝트명</th>
 											<th>프로젝트 내용</th>
 											<th>책임자</th>
-											<th>처리</th>
+											<th>요청</th>
 										</tr>
 									</thead>
 								        <c:forEach items="${ pList }" var="project"> 
+								        <form action="projectOk.do" method="post">
+								        <input type="hidden" name="projectNo" value="${project.projectNo }">
 								            <tr align="center">
 								               <td>${project.projectNo }</td>
 								               <td>${project.projectTitle }</td>
 								               <td>${project.projectContents }</td>
 								               <td>${project.projectMaster }</td>
-								               <c:url var="pAdmit" value="projectOk.do">
-													<c:param name="projectDeleteRequest" value="${project.projectNo }"></c:param>
-												</c:url>
-												<td><a href="${pAdmit }" class="btn btn-primary mr-2 modify">승인</a></td>
+								               <td>
+							               		<select id = "projectInsertRequest" name="projectInsertRequest" class="form-control">
+													<option value="Y">승인</option>
+													<option value="N">반려</option>
+												</select>
+												</td>
+												<td><button type="submit"  class="btn btn-primary mr-2">처리</button></td>
 								            </tr>
-								           
+								          </form>
 								         </c:forEach>
 								</table>
 							</div>
-							 </form>
 						</div>
 					</div>
 				</div>

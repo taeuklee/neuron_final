@@ -6,7 +6,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Regal Admin</title>
+  <title>Neuron</title>
   <!-- base:css -->
   <link rel="stylesheet" href="../../vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="../../vendors/feather/feather.css">
@@ -54,9 +54,7 @@
                     <input type="password" class="form-control form-control-lg border-left-0" name="emp-pwd" placeholder="Password">                        
                   </div>
                 </div>
-                <div class="my-2 d-flex justify-content-between align-items-center">
-                  <a href="/findPwd.jsp" class="auth-link text-black">Find Password</a>
-                </div>
+                
                 <div class="my-3">
                   <input type="submit" class="btn btn-primary mr-2" value="Login">
                 </div>

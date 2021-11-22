@@ -60,7 +60,7 @@ public class AdminProContoller {
 		
 	}
 	
-	//승인 or 반려 처리
+	//승인처리
 	@RequestMapping(value="projectOk.do", method=RequestMethod.POST)
 	public String adminOkUpdate(
 			@RequestParam("projectNo") int projectNo
@@ -71,6 +71,7 @@ public class AdminProContoller {
 		Project project = new Project();
 		project.setProjectNo(projectNo);
 		project.setProjectInsertRequest(projectInsertRequest);
+		System.out.println(projectInsertRequest);
 		try {
 			int result = service.adminOkUpdate(project);
 			if(result > 0) {

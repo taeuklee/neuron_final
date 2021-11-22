@@ -16,16 +16,13 @@ public class MainStoreLogic implements MainStore{
 	private SqlSession sqlSession;
 
 	@Override
-	public List<Notice> selectAllMainNotice() {
-		List<Notice> nList = sqlSession.selectList("noticeMapper.selectAllMainNotice");
+	public List<Notice> selectAllMainNotice(String key) {
+		System.out.println("step1");
+		List<Notice> nList = sqlSession.selectList("noticeMapper1.selectAllMainNotice", key);
 		return nList;
 	}
 
-	@Override
-	public Notice selectEmgNotice(String key) {
-		Notice notice = sqlSession.selectOne("noticeMapper.selectEmgNotice", key);
-		return notice;
-	}
+
 
 
 

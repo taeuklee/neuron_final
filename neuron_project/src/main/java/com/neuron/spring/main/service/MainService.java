@@ -6,9 +6,9 @@ import com.neuron.spring.main.domain.Notice;
 
 public interface MainService {
 
-	List<Notice> printAll();
+	List<Notice> printAll(String key);
 
-	Notice printOne(String key);
+
 
 
 }

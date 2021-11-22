@@ -39,6 +39,7 @@
     $(document).ready(function(){
       $("#headerNav").load("partials/_navbar.html");
       $("#sidebar").load("partials/_sidebar.html");
+      $("#footer").load("partials/_footer.html");
     });
   </script>
 <style>
@@ -109,7 +110,14 @@
 								  <div class="col-md-12 grid-margin stretch-card">
 									<div class="card">
 										<div class="card-body">
-											 <b>첨부파일</b>&nbsp&nbsp ${notice.noticeFilePath}
+											 <b>첨부파일</b>&nbsp&nbsp 
+											 <c:if test="${ not empty notice.noticeFilePath }">
+											 <img src="/resources/noUploadFiles/${notice.noticeFilePath}"
+													style="width: 250px; height: 250px;">
+											</c:if>
+											<c:if test="${ empty noticeFilePath }">
+											 <p>첨부 파일이 없습니다</p>
+											</c:if>			
 										</div>
 									</div>
 								</div> 
@@ -144,7 +152,6 @@
 					</div>
 				</div>
 				<!-- partial:partials/_footer.html -->
-				<footer class="footer" id="footer"></footer>
 				<!-- partial -->
 			</div>
 			<!-- main-panel ends -->
@@ -152,7 +159,17 @@
 		<!-- page-body-wrapper ends -->
 	</div>
 	<!-- container-scroller -->
-
+<script>
+	  $("#fileImg").change(function(){
+	   if(this.files && this.files[0]) {
+	    var reader = new FileReader;
+	    reader.onload = function(data) {
+	     $(".row img").attr("src", data.target.result);        
+	    }
+	    reader.readAsDataURL(this.files[0]);
+	   }
+	  });
+	 </script>
 </body>
 
 </html>

@@ -11097,34 +11097,34 @@ fieldset:disabled .ajax-upload-dragdrop a.ajax-file-upload,
 
 .btn-info {
   color: #fff;
-  background-color: #3794fc;
-  border-color: #3794fc;
+  background-color: #FFCD4A;
+  border-color: #FFCD4A;
 }
 
 .btn-info:hover {
   color: #fff;
-  background-color: #1180fb;
-  border-color: #0579fb;
+  background-color: #FFCD4A;
+  border-color: #FFCD4A;
 }
 
 .btn-info:focus, .btn-info.focus {
   color: #fff;
-  background-color: #1180fb;
-  border-color: #0579fb;
+  background-color: #FFCD4A;
+  border-color: #FFCD4A;
   box-shadow: 0 0 0 0.2rem rgba(85, 164, 252, 0.5);
 }
 
 .btn-info.disabled, .btn-info:disabled {
   color: #fff;
-  background-color: #3794fc;
-  border-color: #3794fc;
+  background-color: #FFCD4A;
+  border-color: #FFCD4A;
 }
 
 .btn-info:not(:disabled):not(.disabled):active, .btn-info:not(:disabled):not(.disabled).active,
 .show > .btn-info.dropdown-toggle {
   color: #fff;
-  background-color: #0579fb;
-  border-color: #0473f0;
+  background-color: #FFCD4A;
+  border-color: #FFCD4A;
 }
 
 .btn-info:not(:disabled):not(.disabled):active:focus, .btn-info:not(:disabled):not(.disabled).active:focus,
@@ -21596,7 +21596,7 @@ dl li {
 /* === Landing screens === */
 /* Auth */
 .auth .login-half-bg {
-  background: url("../images/auth/login-bg.jpg");
+  background: url("../images/auth/login-bg.jpg"); 
   background-size: cover;
 }
 

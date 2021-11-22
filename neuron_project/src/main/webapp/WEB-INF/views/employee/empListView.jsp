@@ -141,7 +141,7 @@
 											</c:forEach>
 										</tbody>
 										<tr align="center" height="20">
-									   		<td colspan="6">
+									   		<td colspan="7">
 									   			<!-- 이전 페이지 보기 -->
 									   			<c:url var="before" value="empListView.do">
 									   				<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
@@ -183,7 +183,6 @@
 			</div>
 		</div>
 		<!-- partial:partials/_footer.html -->
-		<footer class="footer" id="footer"></footer>
 		<!-- partial -->
 	</div>
 	<!-- main-panel ends -->

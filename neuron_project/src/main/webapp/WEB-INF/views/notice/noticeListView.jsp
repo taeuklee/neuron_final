@@ -128,9 +128,9 @@
 								            </tr>
 								         </c:forEach>
 								      </c:if>
-								</table>
-								<tr align="center" height="20">
-						   		<td colspan="6">
+
+								<tr align="center" height="20" >
+						   		<td colspan="5" > 
 						   			<!-- 이전 페이지 보기 -->
 						   			<c:url var="before" value="noticeListView.do">
 						   				<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
@@ -163,12 +163,12 @@
 						   		 	</c:if>
 						   		</td>
 						   	</tr>
+							</table>
 							</div>
 						</div>
 					</div>
 				</div>
 				<!-- partial:partials/_footer.html -->
-				<footer class="footer" id="footer"></footer>
 				<!-- partial -->
 			</div>
 			<!-- main-panel ends -->

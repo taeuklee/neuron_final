@@ -6,9 +6,9 @@ import com.neuron.spring.main.domain.Notice;
 
 public interface MainStore {
 
-	List<Notice> selectAllMainNotice();
+	List<Notice> selectAllMainNotice(String key);
 
-	Notice selectEmgNotice(String key);
+
 
 	
 
