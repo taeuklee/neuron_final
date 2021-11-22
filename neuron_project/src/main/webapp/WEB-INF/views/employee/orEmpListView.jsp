@@ -39,6 +39,7 @@
 	$(document).ready(function() {
 		$("#headerNav").load("partials/_navbar.html");
 		$("#sidebar").load("partials/_sidebar.html");
+	     $("#footer").load("/partials/_footer.html");
 	});
 </script>
 <style>
@@ -142,8 +143,7 @@
 								</div>
 							</c:forEach>
 						</div>
-						<tr align="center" height="20">
-							<td colspan="6">
+						<div class="info" style="padding-left:40%;">
 								<!-- 이전 페이지 보기 --> <c:url var="before" value="orEmpListView.do">
 									<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
 								</c:url> <c:if test="${pi.currentPage <= 1 }">
@@ -168,8 +168,7 @@
 									   		 	</c:if> <c:if test="${pi.currentPage < pi.maxPage }">
 									<a href="${after }">[다음]</a>
 								</c:if>
-							</td>
-						</tr>
+						 </div>
 					</div>
 				</div>
 			</div>
@@ -177,7 +176,8 @@
 	</div>
 	</div>
 	<!-- partial:partials/_footer.html -->
-	<footer class="footer" id="footer"></footer>
+	</footer>
+
 	<!-- partial -->
 	</div>
 	<!-- main-panel ends -->

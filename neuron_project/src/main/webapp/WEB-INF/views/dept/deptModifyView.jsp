@@ -174,7 +174,6 @@
 					</div>
 				</div>
 				<!-- partial:partials/_footer.html -->
-				<footer class="footer" id="footer"></footer>
 				<!-- partial -->
 			</div>
 			<!-- main-panel ends -->

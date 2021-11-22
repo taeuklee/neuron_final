@@ -24,11 +24,13 @@
                 <span class="input-group-text" id="search">
                 </span>
               </div>
-              <input type="text" class="form-control" placeholder="notice" aria-label="search" aria-describedby="search">
             </div>
           </li>
         </ul>
         <ul class="navbar-nav navbar-nav-right">
+        	<li class="nav-item dropdown d-lg-flex d-none">
+                <button type="button" class="btn btn-info font-weight-bold" onclick="location.href='createProject.do'">+ New Project</button>
+            </li>
           <li class="nav-item dropdown d-flex mr-4 ">
             <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center" id="notificationDropdown" href="#" data-toggle="dropdown">
               <c:if test="${not empty sessionScope.loginEmployee }">

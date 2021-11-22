@@ -16,15 +16,9 @@ public class MainServiceImpl implements MainService{
 	private MainStore store;
 
 	@Override
-	public List<Notice> printAll() {
-		List<Notice> nList = store.selectAllMainNotice();
+	public List<Notice> printAll(String key) {
+		List<Notice> nList = store.selectAllMainNotice(key);
 		return nList;
-	}
-
-	@Override
-	public Notice printOne(String key) {
-		Notice notice = store.selectEmgNotice(key);
-		return notice;
 	}
 
 

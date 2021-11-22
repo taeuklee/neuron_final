@@ -25,7 +25,8 @@ public class MainController {
 	@RequestMapping(value="mainNoticeList.do", method=RequestMethod.GET)
 	public String ShowNoticeList(Model model) {
 		try {
-			List<Notice> nList = service.printAll();
+			String key = "Y";
+			List<Notice> nList = service.printAll(key);
 			if(!nList.isEmpty()) {
 				model.addAttribute("nList",nList);
 			}else {
@@ -38,27 +39,6 @@ public class MainController {
 		}
 	}
 	
-	
-	// 긴급 알림 공지 띄우기
-//	@RequestMapping(value="mainEmgNotice.do", method=RequestMethod.GET)
-//	public String ShowMainEmgNotice(@RequestParam("noticeCategory") String key, Model model) {
-//		try {
-//			String key = 'Y';
-//			Notice notice = service.printOne(key);
-//			if(notice != null) {
-//				model.addAttribute("notice", notice);
-//				return "/home";
-//			}else {
-//				model.addAttribute("msg", "상세조회 실패");
-//				return "common/errorPage";
-//			}
-//			
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//			model.addAttribute("msg", "상세조회 실패");
-//			return "common/errorPage";		
-//		}
-//
-//	}
+
 }
 	

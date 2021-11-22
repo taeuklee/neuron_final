@@ -13,6 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.neuron.spring.approval.service.ApprovalService;
 import com.neuron.spring.employee.domain.Employee;
+import com.neuron.spring.main.domain.Notice;
+import com.neuron.spring.main.service.MainService;
 import com.neuron.spring.util.DataMap;
 
 /**
@@ -22,7 +24,8 @@ import com.neuron.spring.util.DataMap;
 public class HomeController {
 	@Autowired
 	private ApprovalService service;
-	
+	@Autowired
+	private MainService mService;
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -33,9 +36,11 @@ public class HomeController {
 		if(session.getAttribute("loginEmployee") != null) {
 			emp = (Employee)session.getAttribute("loginEmployee");
 		}
-		
+		String key = "Y";
+		List<Notice> nList = mService.printAll(key);
 		List<DataMap> dList = service.printMainPageDocList(emp.getEmpNo());
 		
+		mv.addObject("nList",nList);
 		mv.addObject("dList", dList);
 		mv.setViewName("home");
 		return mv;
