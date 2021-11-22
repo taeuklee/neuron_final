@@ -230,7 +230,7 @@
 				    								문서번호
 				    							</td>
 				    							<td style='background: rgb(255, 255, 255); width:150px; border-width:1px 1px; border-style:  solid solid; border-color: currentColor black black; padding: 5px; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;' colspan='3' class='dext_table_border_t'>
-				    								No. ${docOne.docNo }
+				    								No. ${docOne.documentNo }
 				    							</td>
 			    							</tr>
 											

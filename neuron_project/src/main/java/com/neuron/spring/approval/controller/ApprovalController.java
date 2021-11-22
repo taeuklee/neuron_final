@@ -159,6 +159,7 @@ public class ApprovalController {
 		// json으로 결재자 배열 변환
 		resolver.put("empIdList",JsonConverter.getObjectList(resolver.getString("empIdList"), DataMap.class));
 		//1. 결재문서 데이터 생성
+		
 		int documentNo = service.registerDocument(resolver.getMap());//현재 resolver에는 결재문서 데이터와 결재자들의 데이터가 담겨있음.
 
 		

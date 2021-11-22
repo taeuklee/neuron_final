@@ -202,15 +202,16 @@
 	</selectKey>
 	</insert>
 	
+	<insert id="insertAppr" parameterType="com.neuron.spring.util.DataMap">
+		INSERT INTO approval 
+  		VALUES(SEQ_APPR.NEXTVAL,#{documentNo,jdbcType=BIGINT }, #{approvalEmpNo, jdbcType=BIGINT },#{approvalType, jdbcType=VARCHAR },'대기',NULL,SYSDATE,NULL,NULL)
+	</insert>
+	
 	<insert id="insertDocumentFile" parameterType="DocumentFile">
 		INSERT INTO DOC_FILE 
   		VALUES(SEQ_DOC_FILE.NEXTVAL,1,#{documentNo},#{fileName},#{fileRename},#{fileSize},'문서')
 	</insert>
 	
-	<insert id="insertAppr" parameterType="com.neuron.spring.util.DataMap">
-		INSERT INTO approval 
-  		VALUES(SEQ_APPR.NEXTVAL,#{documentNo,jdbcType=BIGINT }, #{approvalEmpNo, jdbcType=BIGINT },#{approvalType, jdbcType=VARCHAR },'대기',NULL,SYSDATE,NULL,NULL)
-	</insert>
 	
 	<select id="selectApproval" parameterType="com.neuron.spring.util.DataMap" resultType="com.neuron.spring.util.DataMap">
 		SELECT a.*,b.emp_name,b.emp_job,c.team_name

@@ -92,12 +92,14 @@ public class ApprovalStoreLogic implements ApprovalStore{
 		sqlSession.insert("approvalMapper.insertDocument",dataMap);
 		//JSON배열 파싱하여 결재자 리스트 리턴
 		List<DataMap> list = (List<DataMap>) dataMap.get("empIdList");
+		System.out.println(list.size());
 		for(DataMap tmp : list) {
 			String empIdArr = tmp.getString("empId");
 			dataMap.put("approvalEmpNo", empIdArr.split(":")[0]);
 			dataMap.put("approvalType", empIdArr.split(":")[4]);
 			sqlSession.insert("approvalMapper.insertAppr", dataMap);
 		}
+		
 		DocumentFile file = (DocumentFile)dataMap.get("docFile");
 		if(file.getFileName() != null || "".equals(file.getFileName())) {
 			file.setDocumentNo(dataMap.getInt("documentNo"));
