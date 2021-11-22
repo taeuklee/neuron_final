@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+        <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +9,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>home</title>
+  <link rel="stylesheet" href="../../css/inboxMail.css">
   <!-- base:css -->
   <link rel="stylesheet" href="/vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="/vendors/feather/feather.css">
@@ -168,7 +170,6 @@
 								</table>
 						</div>
 		              </div>
-		                
 		            </div>
 		          </div>
 		    </div>
@@ -176,16 +177,39 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">메일</h4>
-                  <p class="card-description">
-                    Add tags <code>&lt;h1&gt;</code> to <code>&lt;h6&gt;</code> or class <code>.h1</code> to <code>.h6</code>
-                  </p>
                   <div class="template-demo">
-                    <h1>h1. Heading</h1>
-                    <h2>h2. Heading</h2>
-                    <h3>h3. Heading</h3>
-                    <h4>h4. Heading</h4>
-                    <h5>h5. Heading</h5>
-                    <h6>h6. Heading</h6>
+                    <table class="mail-table">
+		              <tr>
+		                <th id="col_2"></th>
+		                <th id="col_3">발신인</th>
+		                <th id="col_4">제목</th>
+		                <th id="col_6">날짜 및 시간</th>
+		                <th id="col_7">크기</th>
+		              </tr>  
+		              <c:if test="${empty mList }">
+		                  	<tr>
+		                  		<td colspan="6" align="center"> 안읽은 메일이 없습니다. </td>
+		                  	</tr>
+		              </c:if>
+		              <c:forEach items="${mList }" var="mail">
+		              <tr>
+		                <td>
+		                	<c:if test="${mail.readYn eq '읽지않음' }"><i class="icon-mail"></c:if>
+		                </td>
+		                <td>${mail.senderId }</td>
+		                <td id="read">
+			                <c:url var="mDetail" value="mailDetail.do">
+								<c:param name="mailNo" value="${mail.mailNo }"></c:param>
+							</c:url>
+							<c:if test="${!empty mail.mailFileName }"><a href="${mDetail }">${mail.mailTitle }</a><i class="icon-paper-clip"></c:if>
+							<c:if test="${ empty mail.mailFileName }"><a href="${mDetail }">${mail.mailTitle }</a></c:if>
+						</td>
+		                <td><fmt:formatDate pattern="yyyy년 MM월 dd일 HH:mm:ss" value="${mail.sendTime }"/></td>
+		                <td>${mail.mailFileSize } bytes</td>
+		              </tr>
+		              </c:forEach>
+		              
+		            </table>
                   </div>
                 </div>
               </div>

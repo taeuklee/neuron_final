@@ -82,4 +82,8 @@
 		UPDATE MAIL SET READ_YN = '읽음', READ_TIME = SYSDATE WHERE MAIL_NO = #{mailNo} 
 	</update>
 	
+<!-- 	메인페이지용  -->
+	<select id="selectMainMailList" resultMap ="mailResultMap">
+		SELECT * FROM MAIL WHERE RECEIVER_ID = #{email } AND READ_YN = '읽지않음'
+	</select>
   </mapper>

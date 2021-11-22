@@ -53,6 +53,8 @@
 	  .content-wrapper{
 	    background-color: #ffff;
 		}
+		.detail-header{
+		float:left;}
   </style>
   <script>
 //   	function reply(){
@@ -61,7 +63,9 @@
 	$(document).ready(function(){
 		var preUrl = document.referrer;
 		console.log("이전 Url: " + preUrl);
-		
+		if(preUrl == 'http://localhost:9999/outbox.do'){
+			$('.detail-header').hide();
+		}
 	})
 // 	$('#deletea').click(function(){
 // 		if(preUrl == 'http://localhost:9999/inbox.do'){
@@ -91,9 +95,8 @@
 		        <div class="content-wrapper">
 		        <form action="mailReplyView.do" method="get">
 		          <div class="detail-header">
-<!-- 		            <button onclick="reply()">답장</button> -->
-					<input type="text" name ="mailNo" value="${mail.mailNo }">
-					<input type="submit" value="답장">
+					<input type="hidden" name ="mailNo" value="${mail.mailNo }">
+					<button type="submit">답장</button> 
 		          </div>
 		          </form> 
 		            <button id="deletea" onclick="deleteYo()">삭제</button>

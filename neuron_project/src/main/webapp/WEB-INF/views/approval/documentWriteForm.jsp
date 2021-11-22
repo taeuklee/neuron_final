@@ -230,9 +230,7 @@
 						+ oneEmp.split(":")[3] + " /></td>";
 				html += "</tr>";
 				$("#approvalGubun").append(html);
-				$("#apprLine1")
-						.append(
-								"<td style='width:20px; background: rgb(221, 221, 221);' rowspan='4'>합의</td><td style='width:80px; height:21px; text-align:center'>"
+				$("#apprLine1").append("<td style='width:20px; background: rgb(221, 221, 221);' rowspan='4'>합의</td><td style='width:80px; height:21px; text-align:center'>"
 										+ oneEmp.split(":")[1] + "</td>");
 				$("#apprLine2").append(
 						"<td rowspan='2' style='height:90px; text-align:center'>"

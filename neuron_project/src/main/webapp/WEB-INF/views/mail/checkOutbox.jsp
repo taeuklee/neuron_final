@@ -76,6 +76,13 @@
 		th {
 			background-color : yellow;
 		}
+		table td{
+  		border-bottom: 1px solid rgb(240, 240, 240);
+  	}
+  	a { 
+  		color:black;
+  	}
+  	a:visited{color: black;}
 	</style>
 </head>
 <body>

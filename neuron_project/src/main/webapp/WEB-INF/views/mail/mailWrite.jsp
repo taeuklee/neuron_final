@@ -81,6 +81,9 @@
 	text-align: center;
 	vertical-align: center;
 }
+.write-footer{
+	text-align:center;
+}
   </style>
   <script>
             function openPop(){
@@ -128,8 +131,11 @@
 		                <td><textarea name="mailContents" id="" cols="160" rows="10"></textarea></td>
 			           </tr>
 		            </table>
-		            <input type="submit" class="btn btn-info font-weight-bold" value="보내기">
-		            <input type="reset" class="btn btn-info font-weight-bold" onclick="/inbox.do" value="취소">
+		            <div class="write-footer">
+		            <br><br>
+			            <input type="submit" class="btn btn-info font-weight-bold" value="보내기">
+			            <input type="reset" class="btn btn-info font-weight-bold" onclick="/inbox.do" value="취소">
+		            </div>
 		            </form>
 		          </div>
 		        </div>

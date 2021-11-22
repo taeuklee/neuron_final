@@ -17,24 +17,24 @@
   	
   </resultMap>
   <select id="selectListCountAbs" resultType="_int">
-    SELECT COUNT(*) "COUNTABS" FROM ATTENDANCE WHERE EMP_NO = 1 AND DIVISION= '결근'
+    SELECT COUNT(*) "COUNTABS" FROM ATTENDANCE WHERE EMP_NO = #{empNo } AND DIVISION= '결근'
    </select>
    <select id="selectListCountLate" resultType="_int">
   	SELECT COUNT(*) "COUNTLATE" FROM ATTENDANCE WHERE EMP_NO = #{empNo } AND DIVISION= '지각'
   	</select>
   	<select id="selectListCountNor" resultType="_int">
-    SELECT COUNT(*) "COUNT" FROM ATTENDANCE WHERE EMP_NO = 1 AND DIVISION= '정상'
+    SELECT COUNT(*) "COUNT" FROM ATTENDANCE WHERE EMP_NO = #{empNo } AND DIVISION= '정상'
     </select>
   <select id="selectListCount" resultType="_int">
 		SELECT COUNT(*) FROM ATTENDANCE WHERE EMP_NO = #{empNo} AND EXTRACT(MONTH FROM ATTEND_DATE) = EXTRACT(MONTH FROM SYSDATE)
 	</select>
 
   <select id="selectAllList" resultMap="attendResultMap">
-		SELECT * FROM ATTENDANCE WHERE EMP_NO = #{empNo}  AND EXTRACT(MONTH FROM ATTEND_DATE) = EXTRACT(MONTH FROM SYSDATE) ORDER BY ATTEND_NO DESC
+		SELECT * FROM ATTENDANCE WHERE EMP_NO = #{empNo}  AND EXTRACT(MONTH FROM ATTEND_DATE) = EXTRACT(MONTH FROM SYSDATE) ORDER BY ATTEND_DATE DESC
 	</select>
 	
 	<select id="checkDate" resultType="_int">
-		SELECT COUNT(*) FROM ATTENDANCE WHERE EMP_NO = #{empNo } AND ATTEND_DATE = SYSDATE
+		SELECT COUNT(*) FROM ATTENDANCE WHERE EMP_NO = #{empNo } AND TO_CHAR(ATTEND_DATE,'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
 	</select>
 <!--   출근시간, 퇴근시간 입력 -->
   <insert id="putTime">
