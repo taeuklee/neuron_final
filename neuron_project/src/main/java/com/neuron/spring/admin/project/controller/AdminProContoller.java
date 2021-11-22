@@ -63,11 +63,14 @@ public class AdminProContoller {
 	//승인 or 반려 처리
 	@RequestMapping(value="projectOk.do", method=RequestMethod.POST)
 	public String adminOkUpdate(
-			@ModelAttribute Project project
+			@RequestParam("projectNo") int projectNo
 			, @RequestParam("projectInsertRequest") String projectInsertRequest
 			, Model model
 			, HttpServletRequest request) {
 		HttpSession session = request.getSession();
+		Project project = new Project();
+		project.setProjectNo(projectNo);
+		project.setProjectInsertRequest(projectInsertRequest);
 		try {
 			int result = service.adminOkUpdate(project);
 			if(result > 0) {

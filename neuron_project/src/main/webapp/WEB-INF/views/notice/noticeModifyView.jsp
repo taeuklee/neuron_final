@@ -104,10 +104,10 @@
 									<label for="exampleInputName1"><b>작성자</b></label> 
 									<input type="text" class="form-control" id="exampleInputName1" name="noticeWriter" value="${loginEmployee.empId}" readonly>
 								</div>
-								<div class="form-group">
+								 <div class="form-group">
 									<label for="exampleInputName1"><b>첨부파일</b></label> 
 									<input type="file" class="form-control" id="exampleInputName1" name="reloadFile">${notice.noticeFilePath}
-								</div>
+								</div> 
 									<div class="col-md-6">
 											<div class="form-group row">
 												<label class="col-sm-3 col-form-label">긴급공지</label>

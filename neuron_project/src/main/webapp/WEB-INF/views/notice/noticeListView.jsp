@@ -105,7 +105,6 @@
 											<th>No</th>
 											<th>제목</th>
 											<th>작성자</th>
-											<th>조회수</th>
 											<th>작성일</th>
 										</tr>
 									</thead>
@@ -125,7 +124,6 @@
 								                  <a href="${ nDetail }">${ notice.noticeTitle }</a>
 								               </td>
 								               <td>${ notice.noticeWriter }</td>
-								               <td>${ notice.noticeHits }</td>
 								               <td>${ notice.regDate }</td>
 								            </tr>
 								         </c:forEach>
