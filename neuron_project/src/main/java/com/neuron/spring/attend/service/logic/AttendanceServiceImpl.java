@@ -10,6 +10,7 @@ import com.neuron.spring.attend.domain.PageInfo;
 import com.neuron.spring.attend.domain.Search;
 import com.neuron.spring.attend.service.AttendanceService;
 import com.neuron.spring.attend.store.AttendanceStore;
+import com.neuron.spring.employee.domain.Employee;
 
 @Service
 public class AttendanceServiceImpl implements AttendanceService{
@@ -71,6 +72,25 @@ public class AttendanceServiceImpl implements AttendanceService{
 		List<Attendance> aList = store.searchList(search);
 		return aList;
 	}
+
+	@Override
+	public int checkDateOne(int empNo) {
+		int result = store.checkDate(empNo);
+		return result;
+	}
+
+	@Override
+	public int getListCount() {
+		int result = store.selectListCount();
+		return result;
+	}
+
+	@Override
+	public List<Employee> printAllEmpList(PageInfo pi) {
+		List<Employee> eList = store.selectAllEmpList(pi);
+		return eList;
+	}
+
 
 
 

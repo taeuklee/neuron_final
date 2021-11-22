@@ -84,7 +84,7 @@
   </style>
   <script>
             function openPop(){
-              var popup = window.open('/addressbook.do', '주소록팝업','width=1000px;, height=800px;');
+              var popup = window.open('/addressbook.do', '주소록팝업','width=800px;, height=800px;');
             }
    </script>
 </head>
@@ -93,6 +93,7 @@
 		<jsp:include page="../mailCommon/navbarPost.jsp"></jsp:include>
 		<div class="container-fluid page-body-wrapper">
 			<jsp:include page="../common/sidebar.jsp"></jsp:include>
+			
 			<div class="main-panel">
 		        <div class="content-wrapper">
 		          <div class="top-title">
@@ -100,24 +101,24 @@
 		          </div>
 		          <br><br>
 		          <div class="mail-content">
-		          <form action="mailPost.do" method="post" enctype="Multipart/form-data">
+		          <form action="mailReply.do" method="post" enctype="Multipart/form-data">
 		            <table class="mail-top" border="0">
-		            	<input type="hidden" name="senderId" value="${mail.senderId }"> 
+		            	<input type="hidden" name="senderId" value="${mail.receiverId }"> 
 		              <tr>
 		                <th>받는사람</th>
 		                <td>
-		                	<input type="text" name="receiverId" class="mt1">
+		                	<input type="text" name="receiverId" class="mt1" value="${mail.senderId }">
 		                	<button class="addr_btn" target="_blank" onclick="openPop()">주소록</button>
 		                </td>
 		                <!-- 엔터 누르면 블락 잡히는거 -->
 		              </tr>
 		              <tr>
 		                <th>참조</th>
-		                <td><input type="text" name="receiverId2" class="mt1"><button class="addr_btn">주소록</button></td>
+		                <td><input type="text" name="receiverId2" class="mt1" ><button class="addr_btn">주소록</button></td>
 		              </tr>
 		              <tr>
 		                <th>제목</th>
-		                <td><input type="text" name="mailTitle" class="mt1"></td>
+		                <td><input type="text" name="mailTitle" class="mt1" value="Re : ${mail.mailTitle }"></td>
 		              </tr>
 		              <tr>
 		                <th>첨부파일</th>
@@ -125,7 +126,16 @@
 		              </tr>
 		              <tr>
 		                <th>내용</th>
-		                <td><textarea name="mailContents" id="" cols="160" rows="10"></textarea></td>
+		                <td><textarea name="mailContents" id="" cols="160" rows="10" >
+		                -------- 원본메일 --------<br>
+				                  보낸사람: ${mail.senderId }<br>
+						받는사람: ${mail.receiverId }<br>
+						날짜: ${mail.sendTime }<br>
+						제목: ${mail.mailTitle }<br><br>
+						${mail.mailContents }
+						
+		                </textarea>
+		                </td>
 			           </tr>
 		            </table>
 		            <input type="submit" class="btn btn-info font-weight-bold" value="보내기">

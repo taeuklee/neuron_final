@@ -11,6 +11,7 @@ import com.neuron.spring.attend.domain.Attendance;
 import com.neuron.spring.attend.domain.PageInfo;
 import com.neuron.spring.attend.domain.Search;
 import com.neuron.spring.attend.store.AttendanceStore;
+import com.neuron.spring.employee.domain.Employee;
 
 @Repository
 public class AttendanceStoreLogic implements AttendanceStore{
@@ -72,6 +73,27 @@ public class AttendanceStoreLogic implements AttendanceStore{
 	public List<Attendance> searchList(Search search) {
 		List<Attendance> aList = sqlSession.selectList("attendanceMapper.searchList", search);
 		return aList;
+	}
+
+	@Override
+	public int checkDate(int empNo) {
+		int result = sqlSession.selectOne("attendanceMapper.checkDate", empNo);
+		return result;
+	}
+
+	@Override
+	public int selectListCount() {
+		int result = sqlSession.selectOne("attendanceMapper.selectListCount");
+		return result;
+	}
+
+	@Override
+	public List<Employee> selectAllEmpList(PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		List<Employee> eList 
+			= sqlSession.selectList("employeeMapper.selectAllEmpList", pi, rowBounds);
+		return eList;
 	}
 
 

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,6 +22,7 @@ import com.neuron.spring.attend.domain.PageInfo;
 import com.neuron.spring.attend.domain.Pagination;
 import com.neuron.spring.employee.domain.Employee;
 import com.neuron.spring.mail.domain.Mail;
+import com.neuron.spring.mail.domain.Search;
 import com.neuron.spring.mail.service.MailService;
 
 @Controller
@@ -132,8 +134,6 @@ public class MailController {
 	return mv;
 	} 
 	
-	
-	
 	@RequestMapping(value="mailWriteView.do", method=RequestMethod.GET)
 	public String mailWriteView() {
 		return "mail/mailWrite";
@@ -182,9 +182,6 @@ public class MailController {
 		}
 		String filename = uploadFile.getOriginalFilename();
 		String filePath = folder + "\\" + filename;
-		
-
-		
 		try {
 			uploadFile.transferTo(new File(filePath));
 		} catch (IllegalStateException e) {
@@ -214,40 +211,159 @@ public class MailController {
 		}
 		return mv;
 	} 
-	@RequestMapping(value="InboxMailDelete.do", method=RequestMethod.GET)
+	@ResponseBody
+	@RequestMapping(value="InboxMailDelete.do", method=RequestMethod.POST)
 	public String InboxMailDelete(
 			Model model
-			,@RequestParam("mailNo") int mailNo
-//			,@RequestParam("fileName") String fileRename
+			,@RequestParam(value="choiceOne") List<String> choice
 			,HttpServletRequest request) {
-		int result = service.removeReceiveMail(mailNo);
-		if(result > 0 ) {
-			return "redirect:inbox";
+		int result = 0;
+		for(int i =0; i<choice.size(); i++) {
+			result = service.removeReceiveMail(choice.get(i));
+		}
+		if(result > 0) {
+			return "success";
 		}else {
-			model.addAttribute("msg", "게시글 삭제 실패");
-			return "common/errorPage";
+			return "fail";
+		}
+		
+	}
+	@ResponseBody
+	@RequestMapping(value="OutboxMailDelete.do", method=RequestMethod.POST)
+	public String OutboxMailDelete(
+			Model model
+			,@RequestParam(value="choiceOne") List<String> choice
+			,HttpServletRequest request) {
+		int result = 0;
+		for(int i =0; i<choice.size(); i++) {
+			result = service.removeSendMail(choice.get(i));
+		}
+		if(result > 0) {
+			return "success";
+		}else {
+			return "fail";
 		}
 	}
 	
-	@RequestMapping(value="OutboxMailDelete.do", method=RequestMethod.GET)
-	public String OutboxMailDelete(
-			Model model
-			,@RequestParam("mailNo") int mailNo
-//			,@RequestParam("fileName") String fileRename
-			,HttpServletRequest request) {
-		int result = service.removeReceiveMail(mailNo);
-		if(result > 0 ) {
-			return "redirect:outbox";
+	@RequestMapping(value="addressbook.do", method=RequestMethod.GET)
+	public ModelAndView findEmpList(
+			ModelAndView mv
+			,@RequestParam(value="page", required=false) Integer page
+			,Model model) {
+		int currentPage = (page != null) ? page:1;
+		int totalCount = service.getListCount();
+		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
+		List<Employee> eList = service.printAllEmpList(pi);
+		if(!eList.isEmpty()) {
+			mv.addObject("eList", eList);
+			mv.addObject("pi", pi);
+			mv.addObject("totalCount", totalCount);
+			mv.setViewName("mail/addressbook");
 		}else {
-			model.addAttribute("msg", "게시글 삭제 실패");
-			return "common/errorPage";
+			mv.addObject("msg", "게시글 전체조회 실패");
+			mv.setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+//	@RequestMapping(value="addressSearch.do", method=RequestMethod.GET)
+//	public String addressSearch(
+//			@ModelAttribute Search search
+//			,Model model) {
+//		List<Employee> searchList = service.printSearchEmpAll(search);
+//		if(!searchList.isEmpty()) {
+//			model.addAttribute("eList",	searchList);
+//			model.addAttribute("search", search);
+//			return "mail/searchAddressbook";
+//		}else {
+//			model.addAttribute("msg", "검색 실패");
+//			return "common/errorPage";
+//		}
+//	}
+	@RequestMapping(value="addressSearch.do", method=RequestMethod.GET)
+	public ModelAndView searchAddressbook(
+			ModelAndView mv
+			,@ModelAttribute Search search
+			,@RequestParam(value="page", required=false) Integer page) {
+			int currentPage = (page != null) ? page : 1; // 첫 페이지 1로 지정
+			int totalCount = service.getListCount();
+			PageInfo pi = Pagination.getPageInfo(currentPage, totalCount); // 페이지 얼마나 출력할지 몇개 출력할지를 페이지네이션에서 정해서 가져옴
+			List<Employee> eList = service.printSearchEmpAll(pi, search);
+			if(!eList.isEmpty()) {
+				mv.addObject("eList", eList);
+				mv.addObject("pi", pi);
+				mv.setViewName("employee/searchAddressbook");
+			}else {
+				mv.addObject("msg", "전체조회 실패");
+				mv.setViewName("common/errorPage");
+			}
+		return mv;
+	}
+	
+	@RequestMapping(value="mailSearch.do", method=RequestMethod.GET)
+	public String mailSearch(
+			@ModelAttribute Search search
+			,Model model
+			,@RequestParam(value="page", required=false) Integer page) {
+		int currentPage = (page != null) ? page : 1; // 첫 페이지 1로 지정
+		int totalCount = service.getListCount();
+		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount); // 페이지 얼마나 출력할지 몇개 출력할지를 페이지네이션에서 정해서 가져옴
+		
+		List<Mail> searchList = service.printmSearchAll(pi, search);
+		if(!searchList.isEmpty()) {
+			model.addAttribute("mList",	searchList);
+			model.addAttribute("search", search);
+			return "mail/inboxMail";
+		}else {
+			return "mail/inboxMail";
 		}
 	}
-//	
-//	@RequestMapping(value="addressBook.do", method=RequestMethod.GET)
-//	public ModelAndView addressBook(
-//			ModelAndView mv
-//			,) {
-//		
-//	}
+	
+	
+	
+	@RequestMapping(value="mailReplyView.do", method=RequestMethod.GET)
+	public ModelAndView mailReplyView(
+			ModelAndView mv
+			,@RequestParam("mailNo") int mailNo) {
+		Mail mail = service.printOne(mailNo);
+		if(mail != null) {
+			int result = service.updateMail(mailNo);
+			mv.addObject("mail", mail);
+			mv.setViewName("mail/mailReply");
+		}
+		return mv;
+	}
+	@RequestMapping(value="mailReply.do", method=RequestMethod.POST)
+	public String mailReply(
+			@ModelAttribute Mail mail
+			,@RequestParam(value="uploadFile", required=false) MultipartFile uploadFile
+			,HttpServletRequest request
+			,HttpSession session
+			,Model model) {
+		    
+		session = request.getSession();
+		Employee emp = new Employee();
+		emp = (Employee)session.getAttribute("loginEmployee");
+		
+		int empNo= emp.getEmpNo();
+		String sendEmail = service.printOneEmail(empNo);
+
+		mail.setSenderId(sendEmail);
+		
+				if(!uploadFile.getOriginalFilename().equals("")) {
+				String filename = saveFile(uploadFile, request);
+				if(filename != null) {
+					mail.setMailFileSize(uploadFile.getSize());
+					mail.setMailFileName(uploadFile.getOriginalFilename());
+				}
+			}
+			int result1 = service.registerMail(mail);
+			if(result1 > 0 ) {
+				return "redirect:inbox.do";
+			} else {
+				model.addAttribute("msg", "게시글 등록 실패");
+				return "common/errorPage";
+			}
+	}
+
 }
