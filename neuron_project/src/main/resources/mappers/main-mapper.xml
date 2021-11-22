@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="noticeMapper">
+   <resultMap type="Notice2" id="mainNoticeResultMap">
+	<id property="noticeNo" column="NOTICE_NO"/>
+  	<result property="noticeTitle" column="NOTICE_TITLE"/>
+  	<result property="noticeContents" column="NOTICE_CONTENTS"/>
+  	<result property="noticeWriter" column="NOTICE_WRITER"/>
+  	<result property="noticeFilePath" column="NOTICE_FILE_PATH"/>
+  	<result property="regDate" column="REG_DATE"/>
+  	<result property="noticeHits" column="NOTICE_HITS"/>
+  	<result property="noticeCategory" column="NOTICE_CATEGORY"/>	
+  	</resultMap>
+  	
+  <!-- 공지사항 리스트 -->
+  <select id="selectAllMainNotice" resultMap="mainNoticeResultMap">
+  	SELECT * FROM NOTICE ORDER BY NOTICE_NO DESC
+  </select>
+  
+  <!-- 긴급공지 출력 -->
+<!--    <select id="selectOneNotice" parameterType="string"  resultMap="noticeResultMap">
+  	SELECT * FROM NOTICE WHERE NOTICE_NO = #{nId}
+  	</select>   -->
+  
+  </mapper>

@@ -106,13 +106,13 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-md-12 grid-margin stretch-card">
+								  <div class="col-md-12 grid-margin stretch-card">
 									<div class="card">
 										<div class="card-body">
 											 <b>첨부파일</b>&nbsp&nbsp ${notice.noticeFilePath}
 										</div>
 									</div>
-								</div>
+								</div> 
 								<div class="col-md-12 grid-margin stretch-card">
 									<div class="card">
 										<div class="card-body">

@@ -89,7 +89,7 @@
 				<div class="col-lg-12 grid-margin stretch-card">
 					<div class="card">
 					<form action="projectOk.do" method="post">
-					<input type="hidden" name="projectNo" value="${projectNo }">
+					<input type="hidden" name="projectNo" value="${project.projectNo }">
 						<div class="card-body">
 							<br>
 							<h3 class="card-title">프로젝트 승인 요청</h3>
@@ -113,22 +113,17 @@
 								               <td>${project.projectTitle }</td>
 								               <td>${project.projectContents }</td>
 								               <td>${project.projectMaster }</td>
-								               <td>
-							               		<select name="projectInsertRequest" class="form-control">
-													<option value="Y">승인</option>
-													<option value="N">반려</option>
-												</select>
-												</td>
+								               <c:url var="pAdmit" value="projectOk.do">
+													<c:param name="projectDeleteRequest" value="${project.projectNo }"></c:param>
+												</c:url>
+												<td><a href="${pAdmit }" class="btn btn-primary mr-2 modify">승인</a></td>
 								            </tr>
+								           
 								         </c:forEach>
-								         
 								</table>
-								<div class="mt-3" style="padding-left: 45%;">
-									<input type="submit" class="btn btn-primary mr-2" value="저장">
-								</div>
 							</div>
+							 </form>
 						</div>
-						</form>
 					</div>
 				</div>
 				<!-- partial:partials/_footer.html -->

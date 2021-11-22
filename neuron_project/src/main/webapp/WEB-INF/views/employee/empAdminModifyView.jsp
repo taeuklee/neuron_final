@@ -128,6 +128,7 @@
 											</div>
 										</div>
 									</div>
+																		
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group row">
@@ -138,6 +139,7 @@
 														<option value="B1">개발부</option>
 														<option value="C1">영업부</option>
 														<option value="D1">고객지원부</option>
+														<option value="Q1">미래전략부</option>
 														<option value="Z1">임원</option>
 													</select>
 												</div>
@@ -155,6 +157,7 @@
 														<option value="C11">마케팅팀</option>
 														<option value="C12">영업팀</option>
 														<option value="D11">A/S팀</option>
+														<option value="Q11">TF팀</option>
 														<option value="Z11">대표</option>
 														<option value="Z12">부사장</option>
 														<option value="Z13">상무</option>

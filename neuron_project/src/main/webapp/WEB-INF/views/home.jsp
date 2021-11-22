@@ -132,11 +132,43 @@
 		              <h4 class="card-title">공지사항</h4>
 		              <div class="row">
 		                <div class="col-lg-5">
-		                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit amet cumque cupiditate</p>
 		                </div>
 		              </div>
 		              <div class="row">
-		                  ㅇㅇ
+		              <div class="table-responsive pt-3">
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th>No</th>
+											<th>제목</th>
+											<th>작성자</th>
+											<th>조회수</th>
+											<th>작성일</th>
+										</tr>
+									</thead>
+									<c:if test="${ empty nList }">
+							         	<tr>
+							            	<td colspan="5" align="center">등록된 공지사항이 없습니다.</td>
+							         	</tr>
+							     	 </c:if>
+								      <c:if test="${ not empty nList }">
+								         <c:forEach items="${ nList }" var="notice">
+								            <tr align="center">
+								               <td>${ notice.noticeNo }</td>
+								               <td>
+								                  <c:url var="nDetail" value="noticeDetailView.do">
+								                     <c:param name="noticeNo" value="${ notice.noticeNo }"></c:param>
+								                  </c:url>
+								                  <a href="${ nDetail }">${ notice.noticeTitle }</a>
+								               </td>
+								               <td>${ notice.noticeWriter }</td>
+								               <td>${ notice.noticeHits }</td>
+								               <td>${ notice.regDate }</td>
+								            </tr>
+								         </c:forEach>
+								      </c:if>
+								</table>
+						</div>
 		              </div>
 		                
 		            </div>
