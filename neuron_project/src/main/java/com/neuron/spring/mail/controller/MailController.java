@@ -366,4 +366,36 @@ public class MailController {
 			}
 	}
 
+	@RequestMapping(value="showHomeMail.do", method=RequestMethod.GET)
+	public ModelAndView showHomeMail(
+			ModelAndView mv
+			,HttpServletRequest request
+			,HttpSession session
+			,@RequestParam(value="page", required=false) Integer page) {
+		
+		session = request.getSession();
+		Employee employee = new Employee();
+		employee = (Employee)session.getAttribute("loginEmployee");
+		
+		int empNo= employee.getEmpNo();
+		String recEmail = service.printOneEmail(empNo);
+		Mail mail = new Mail();
+		mail.setReceiverId(recEmail);
+		
+		String email = mail.getReceiverId();
+		int currentPage = (page != null) ? page:1;
+		int totalCount = service.getListCount(email);
+		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
+		
+		List<Mail> mList = service.printAll(pi,email);
+		if(!mList.isEmpty()) {
+			mv.addObject("mList", mList);
+			mv.addObject("pi", pi);
+			mv.setViewName("/home");
+		}else {
+			mv.addObject("msg", "게시글 전체조회 실패");
+			mv.setViewName("common/errorPage");
+		}
+		return mv;
+	}
 }

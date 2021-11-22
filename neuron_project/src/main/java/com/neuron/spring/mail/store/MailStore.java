@@ -38,6 +38,7 @@ public interface MailStore {
 	public List<Employee> selectAll(PageInfo pi);
 	public int selectListCount();
 	public List<Mail> selectmSearchAll(PageInfo pi,Search search);
+	public List<Mail> selectMainMailList(String email);
 
 }
 

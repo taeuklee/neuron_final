@@ -153,9 +153,6 @@
       <if test="searchCondition.toString() == 'name'">
          WHERE EMP_NAME LIKE '%' || #{searchValue } || '%'
       </if>
-      <if test="searchCondition.toString() == 'deptcode'">
-         WHERE DEPT_CODE LIKE '%' || #{searchValue } || '%'
-      </if>
       <if test="searchCondition.toString() == 'empEmail">
       	 WHERE EMP_EMAIL LIKE '%' || #{searchValue } || '%' 
       </if>
@@ -164,12 +161,12 @@
       </if>
       <if test="searchCondition.toString() == 'all'">
          WHERE EMP_NAME LIKE '%' || #{searchValue } || '%'
-         OR WHERE DEPT_CODE LIKE '%' || #{searchValue } || '%'
-         OR WHERE EMP_EMAIL LIKE '%' || #{searchValue } || '%' 
-         OR WHERE EMP_PHONE LIKE '%' || #{searchValue } || '%' 
+         OR EMP_EMAIL LIKE '%' || #{searchValue } || '%' 
+         OR EMP_PHONE LIKE '%' || #{searchValue } || '%' 
       </if>
       ORDER BY EMP_NO ASC
    </select>
+   
 	<select id="selectAllEmpList" resultMap="employeeResultMap">
 		SELECT * FROM EMPLOYEE WHERE EMP_STATE = '재직'
 	</select>

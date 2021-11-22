@@ -293,7 +293,7 @@
   .main-table th{
     font-weight: 500;
     border-bottom: 1.2px solid #dadbe4;
-    background-color: #8dd870;
+    background-color: yellow;
     
   }
   .main-table td{
@@ -329,6 +329,12 @@
   	text-decoration:none;
   	}
   }
+  th{
+  	background-color: yellow;
+  }
+  table td{
+  		border-bottom: 1px solid rgb(240, 240, 240);
+  	}
   </style>
 </head>
 <body>
@@ -343,7 +349,7 @@
 		            <h2>나의 근태관리</h2>
 		          </div>
 		          <div class="top-date" align="center">
-		             <button id="previousMonth"><</button> <span id="date"> </span> <button id="nextMonth">></button>
+		             <h2><span id="date"> </span></h2>
 		             <input type="hidden" id="attendYearMonth" value=""> 
 		             <br><br>
 		          </div>
@@ -521,7 +527,7 @@
 		            	  var hr = now.getHours();
 		            	  var min = now.getMinutes();
 		            	  var sec = now.getSeconds();
-		            	  var now = year + "- " + month ;
+		            	  var now = year + "년 " + month  + "월";
 		            	  var now1 = year + "/" + month + "/" + date; 
 		            	  var now2 = hr+ ":"+ min+ ":"+ sec;
 		            	  $(".box").text(now1);

@@ -43,6 +43,8 @@ public interface MailService {
 
 	public List<Mail> printmSearchAll(PageInfo pi,Search search);
 
+	public List<Mail> printMainMailList(String email);
+
 
 
 }

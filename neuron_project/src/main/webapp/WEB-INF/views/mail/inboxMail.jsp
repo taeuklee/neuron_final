@@ -55,16 +55,24 @@
 	  width:100%;
   }
   	.mail-delete{
-  		width:75%;
+  		width:20%;
 		float:left;
   	}
   	.mail-search{
-  		width:25%;
+  		width:80%;
 		float:right;
+		text-align:right;
   	}
   	th {
 			background-color : yellow;
 		}
+		table td{
+  		border-bottom: 1px solid rgb(240, 240, 240);
+  	}
+  	a { 
+  		color:black;
+  	}
+  	a:visited{color: black;}
   	
   </style>
 </head>

@@ -7,8 +7,6 @@
 <head>
 <meta charset="UTF-8">
 <title>나의 휴가내역</title>
-
- 
   <!-- base:css -->
   <link rel="stylesheet" href="vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="vendors/feather/feather.css">
@@ -296,11 +294,12 @@
   .main-table th{
     font-weight: 500;
     border-bottom: 1.2px solid #dadbe4;
-    background-color: #cdcfcc;
+    background-color: yellow;
     
   }
   .main-table td{
     background-color: #FFFFFF;
+    border-bottom: 1px solid rgb(240, 240, 240);
   }
   /* .table-detail {
     border-bottom-color: transparent;
@@ -324,9 +323,9 @@
 		            <h2>나의 휴가 내역</h2>
 		          </div>
 		          <div class="top-date" align="center">
-		             <button class="yearBtn" id="previousYear"><</button>
-		             <span id="date"> </span> 
-		             <button class="yearBtn" id="nextYear">></button>
+		             <h2>
+		             <span id="date"> </span>
+		             </h2> 
 		             <input type="hidden" id="holiYear" name="year" value="">
 		             <br><br>
 		          </div>
@@ -339,7 +338,7 @@
 		                </div>
 		                <div class="stat-cards-info">
 		                  <p class="stat-cards-info__num">${employee.empVac }</p>
-		                  <p class="stat-cards-info__title">남은 연가</p>
+		                  <p class="stat-cards-info__title">이번 년 남은 연가</p>
 		                </div>
 		              </article>
 		            </div>
@@ -350,7 +349,7 @@
 		                </div>
 		                <div class="stat-cards-info">
 		                  <p class="stat-cards-info__num">${employee.empMed }</p>
-		                  <p class="stat-cards-info__title">남은 병가</p>
+		                  <p class="stat-cards-info__title">이번 년 남은 병가</p>
 		                </div>
 		              </article>
 		            </div>
@@ -361,7 +360,7 @@
 		                </div>
 		                <div class="stat-cards-info">
 		                  <p class="stat-cards-info__num">${employee.empExVac }</p>
-		                  <p class="stat-cards-info__title">기타 휴가</p>
+		                  <p class="stat-cards-info__title">이번 년 사용한 기타 휴가</p>
 		                </div>
 		              </article>
 		            </div>
@@ -378,6 +377,7 @@
 		                      <th>휴가사용기간</th>
 		                      <th>휴가일수</th>
 		                      <th>내용</th>
+		                      <th>휴가신청서</th>
 		                    </tr>
 		                  </thead>
 		                  <tbody>
@@ -389,7 +389,13 @@
 		                      <input type="hidden" id="vSDate" value="${document.vStartDate }">
 		                      <input type="hidden" id="vEDate" value="${document.vEndDate }">
 		                      <td id="dateDiff"></td>
-		                      <td>${document.docReason }</td>
+		                      <td>
+<%-- 		                      <c:url var="dDetail" value="documentDatail.do"> --%>
+<%-- 								<c:param name="docNo" value="${document.documentNo }"></c:param> --%>
+<%-- 							</c:url> --%>
+<%-- 							<a href="${dDetail }">${doc.docKind }</a> --%>
+		                    </td>
+		                      <td>
 		                    </tr>
 		                    </c:forEach>
 		                    <tr align="center" height="20">			

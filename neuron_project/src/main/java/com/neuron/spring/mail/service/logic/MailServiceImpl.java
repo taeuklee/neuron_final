@@ -152,6 +152,13 @@ public class MailServiceImpl implements MailService{
 	}
 
 
+	@Override
+	public List<Mail> printMainMailList(String email) {
+		List<Mail> mList = store.selectMainMailList(email);
+		return mList;
+	}
+
+
 	
 
 }

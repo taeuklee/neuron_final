@@ -103,7 +103,6 @@ table{
   </style>
 </head>
 <body>
-	
 			<div class="main">
 		      <div class="addrTitle"><br><h2>주소록</h2></div>
 		      <br><br>
@@ -114,7 +113,6 @@ table{
 		          <option value="name"<c:if test="${search.searchCondition == 'name' }">selected</c:if>>이름</option>
 				  <option value="empEmail"<c:if test="${search.searchCondition == 'empEmail' }">selected</c:if>>이메일</option>
 		          <option value="empPhone"<c:if test="${search.searchCondition == 'empPhone' }">selected</c:if>>전화번호</option>
-		          <option value="deptcode"<c:if test="${search.searchCondition == 'deptcode' }">selected</c:if>>부서코드</option>
 		        </select>
 		        <input type="search" name="searchValue" value="${search.searchValue }" id="">
 		        <input type="submit" value="검색">

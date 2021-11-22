@@ -102,7 +102,7 @@ public class MailStoreLogic implements MailStore{
 	public List<Employee> selectAllEmpList(PageInfo pi) {
 		int offset = (pi.getCurrentPage() - 1 ) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		List<Employee> eList = sqlSession.selectList("employeeMapper.selectSearchEmpAll", pi, rowBounds);
+		List<Employee> eList = sqlSession.selectList("employeeMapper.selectAllEmpList", pi, rowBounds);
 		return eList;
 	}
 
@@ -145,6 +145,12 @@ public class MailStoreLogic implements MailStore{
 		int offset = (pi.getCurrentPage() - 1 ) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		List<Mail> mList = sqlSession.selectList("mailMapper.selectmSearchAll", search, rowBounds);
+		return mList;
+	}
+
+	@Override
+	public List<Mail> selectMainMailList(String email) {
+		List<Mail> mList = sqlSession.selectList("mailMapper.selectMainMailList", email);
 		return mList;
 	}
 
