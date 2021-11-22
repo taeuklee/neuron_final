@@ -51,11 +51,11 @@ public class ProjectController {
 		return "project/insertProjectForm";
 	}
 
-	@RequestMapping(value = "selectProjectMain.do", method = RequestMethod.GET)
-	public String selectProjectMain(
-			) {
-		return "project/selectProjectMainPage";
-	}
+//	@RequestMapping(value = "selectProjectMain.do", method = RequestMethod.GET)
+//	public String selectProjectMain(
+//			) {
+//		return "project/selectProjectMainPage";
+//	}
 
 	@RequestMapping(value = "selectProjectMainWork.do", method = RequestMethod.GET)
 	public ModelAndView selectProjectMainWork(
@@ -97,7 +97,7 @@ public class ProjectController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "moveInsertMainWorkForm.do", method = RequestMethod.GET)
+	@RequestMapping(value = "checkMainWork.do", method = RequestMethod.GET)
 	public String moveInsertMainWorkForm(@RequestParam(value = "projectNo") int projectNo) {
 		ProjectTask task = service.selectTask(projectNo);
 		if (task == null) {
@@ -117,10 +117,10 @@ public class ProjectController {
 		return "project/insertProjectMainWork";
 	}
 
-	@RequestMapping(value = "moveUpdateMainWorkForm.do", method = RequestMethod.GET)
-	public String moveUpdateMainWorkForm() {
-		return "project/updateProjectMainWork";
-	}
+//	@RequestMapping(value = "moveUpdateMainWorkForm.do", method = RequestMethod.GET)
+//	public String moveUpdateMainWorkForm() {
+//		return "project/updateProjectMainWork";
+//	}
 
 	@RequestMapping(value = "selectProjectMemberList.do", method = RequestMethod.GET)
 	public ModelAndView selectMemberList(@RequestParam(value = "projectNo") int projectNo, ModelAndView mv
