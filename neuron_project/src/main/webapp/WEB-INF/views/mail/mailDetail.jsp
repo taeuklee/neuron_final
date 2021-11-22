@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,19 +54,49 @@
 	    background-color: #ffff;
 		}
   </style>
+  <script>
+//   	function reply(){
+//   		location.href="mailReply.do?maiNo=${mail.mailNo}";
+//   	}
+	$(document).ready(function(){
+		var preUrl = document.referrer;
+		console.log("이전 Url: " + preUrl);
+		
+	})
+// 	$('#deletea').click(function(){
+// 		if(preUrl == 'http://localhost:9999/inbox.do'){
+// 			location.href="InboxMailDelete.do";
+// 		}else{
+// 			location.href="OutboxMailDelete.do";
+// 		}
+// 	}) 
+	function deleteYo(){
+		var mailNo = "<c:out value='${mail.mailNo}'/>";
+		if(preUrl = 'http://localhost:9999/inbox.do'){
+			location.href="InboxMailDelete.do?mailNo="+mailNo;
+		}else{
+			location.href="OutboxMailDelete.do?mailNo="+mailNo;
+		}
+	}
+	
+	
+  </script>
 </head>
 <body>
 	<div class="container-scroller">
 		<jsp:include page="../mailCommon/navbar.jsp"></jsp:include>
 		<div class="container-fluid page-body-wrapper">
 			<jsp:include page="../common/sidebar.jsp"></jsp:include>
-			
 			<div class="main-panel">
 		        <div class="content-wrapper">
+		        <form action="mailReplyView.do" method="get">
 		          <div class="detail-header">
-		            <button>답장</button>
-		            <button onclick="/mailDelete.do">삭제</button>
-		          </div>  
+<!-- 		            <button onclick="reply()">답장</button> -->
+					<input type="text" name ="mailNo" value="${mail.mailNo }">
+					<input type="submit" value="답장">
+		          </div>
+		          </form> 
+		            <button id="deletea" onclick="deleteYo()">삭제</button>
 		          <div class="detail-top">
 		            
 		            <div class="detail-title">
@@ -93,10 +124,10 @@
 		            </div>
 		          </div>
 		          <div class="detail-contents">
-		            안녕하세요~ test
+		             ${mail.mailContents }
 		          </div>
 		        </div>
-      </div>
+     		 </div>
 		
 		</div>
 	</div>	

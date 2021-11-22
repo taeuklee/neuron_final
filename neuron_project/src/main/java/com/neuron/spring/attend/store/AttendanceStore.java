@@ -5,6 +5,7 @@ import java.util.List;
 import com.neuron.spring.attend.domain.Attendance;
 import com.neuron.spring.attend.domain.PageInfo;
 import com.neuron.spring.attend.domain.Search;
+import com.neuron.spring.employee.domain.Employee;
 
 public interface AttendanceStore {
 
@@ -25,6 +26,12 @@ public interface AttendanceStore {
 	public int selectListCountNor(int empNo);
 
 	public List<Attendance> searchList(Search search);
+
+	public int checkDate(int empNo);
+
+	public int selectListCount();
+
+	public List<Employee> selectAllEmpList(PageInfo pi);
 
 
 }

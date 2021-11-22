@@ -16,6 +16,7 @@
 	   <result property="vStartDate" column="VACATION_START_DATE"/>
 	   <result property="vEndDate" column="VACATION_END_DATE"/>
 		<result property="vacKind" column="VACATION_KIND"/>
+		<result property="presentYear" column="PRESENT_YEAR"/>
   	</resultMap>
   	
   	 <resultMap type="DocumentFile" id="DocFileResultMap">
@@ -258,4 +259,8 @@
  	 <select id="selectAllHlist" resultMap="DocResultMap">
 		SELECT * FROM DOCUMENT WHERE DOCUMENT_WRITER_NO = #{empNo} AND DOCUMENT_KIND = '휴가신청서' AND DOCUMENT_STATUS = '최종완료' ORDER BY DOCUMENT_NO DESC
 	</select>
+	<select id="selectAllYList" resultMap="DocResultMap">
+		SELECT * FROM DOCUMENT WHERE DOCUMENT_WRITER_NO = #{empNo} AND EXTRACT(YEAR FROM VACATION_START_DATE) = PRESENT_YEAR
+	</select>
+	
   </mapper>

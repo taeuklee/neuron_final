@@ -33,6 +33,9 @@
 		SELECT * FROM ATTENDANCE WHERE EMP_NO = #{empNo}  AND EXTRACT(MONTH FROM ATTEND_DATE) = EXTRACT(MONTH FROM SYSDATE) ORDER BY ATTEND_NO DESC
 	</select>
 	
+	<select id="checkDate" resultType="_int">
+		SELECT COUNT(*) FROM ATTENDANCE WHERE EMP_NO = #{empNo } AND ATTEND_DATE = SYSDATE
+	</select>
 <!--   출근시간, 퇴근시간 입력 -->
   <insert id="putTime">
   		INSERT INTO ATTENDANCE VALUES(SEQ_ATTENDNUM.NEXTVAL, #{empNo }, SYSDATE, #{startTime }, #{finishTime }, #{totalWorkhour }, #{division }, #{note } )

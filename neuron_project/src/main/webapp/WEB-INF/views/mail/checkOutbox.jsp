@@ -72,6 +72,11 @@
 		});
 		});
 	</script>
+	<style>
+		th {
+			background-color : yellow;
+		}
+	</style>
 </head>
 <body>
 	<div class="container-scroller">
@@ -86,8 +91,6 @@
 		            <br><br>
 		          </div>
 		          <div class="mail-navi">
-		            <button>삭제</button>
-		            
 		          </div>
 					<br>
 		          <div class="card">
@@ -110,9 +113,42 @@
 						</td>
 		                <td><fmt:formatDate pattern="yyyy년 MM월 dd일 HH:mm:ss" value="${mail.readTime }"/></td>
 		                <td>${mail.readYn }</td>
-		                <td>${mail.mailFileSize }</td>
+		                <td>${mail.mailFileSize }bytes</td>
 		              </tr>
 		              </c:forEach>
+		              <tr align="center" height="20">			
+								<td colspan="6">
+									<c:url var="before" value="holidayList.do">
+										<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
+									</c:url>
+									<c:if test="${pi.currentPage <= 1 }">
+										[이전]
+									</c:if>
+									<c:if test="${pi.currentPage > 1 }">
+										<a href="${before }">[이전]</a>
+									</c:if>
+									<c:forEach var="p" begin="${pi.startNavi }" end="${pi.endNavi }">
+										<c:url var="pagination" value="holidayList.do">
+											<c:param name="page" value="${p }"></c:param>
+										</c:url>
+										<c:if test="${p eq pi.currentPage }">
+											<font color="red" size="4">[${p }]</font>
+										</c:if>
+										<c:if test="${p ne pi.currentPage }">
+											<a href="${pagination }">${p }</a>&nbsp;					
+										</c:if>
+									</c:forEach>
+									<c:url var="after" value="holidayList.do">
+										<c:param name="page" value="${pi.currentPage + 1 }"></c:param>
+									</c:url>
+									<c:if test="${pi.currentPage >= pi.maxPage }">
+										[다음]
+									</c:if>
+									<c:if test="${pi.currentPage < pi.maxPage }">
+										<a href="${after }">[다음]</a>
+									</c:if>
+								</td>
+							</tr>
 		            </table>
 		          </div>
 		        </div>  

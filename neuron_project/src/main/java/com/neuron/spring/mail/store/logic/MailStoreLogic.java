@@ -8,7 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.neuron.spring.attend.domain.PageInfo;
+import com.neuron.spring.employee.domain.Dept;
+import com.neuron.spring.employee.domain.Employee;
+import com.neuron.spring.employee.domain.Team;
 import com.neuron.spring.mail.domain.Mail;
+import com.neuron.spring.mail.domain.Search;
 import com.neuron.spring.mail.store.MailStore;
 
 @Repository
@@ -77,13 +81,13 @@ public class MailStoreLogic implements MailStore{
 	}
 
 	@Override
-	public int deleteReceiveMail(int mailNo) {
+	public int deleteReceiveMail(String mailNo) {
 		int result = sqlSession.delete("mailMapper.deleteRecieveMail", mailNo);
 		return result;
 	}
 
 	@Override
-	public int deleteSendMail(int mailNo) {
+	public int deleteSendMail(String mailNo) {
 		int result = sqlSession.delete("mailMapper.deleteSendMail", mailNo);
 		return result;
 	}
@@ -92,6 +96,56 @@ public class MailStoreLogic implements MailStore{
 	public int addMail(int mailNo) {
 		int result = sqlSession.update("mailMapper.addMail", mailNo);
 		return result;
+	}
+
+	@Override
+	public List<Employee> selectAllEmpList(PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1 ) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		List<Employee> eList = sqlSession.selectList("employeeMapper.selectSearchEmpAll", pi, rowBounds);
+		return eList;
+	}
+
+	@Override
+	public List<Team> selectAllTeamList() {
+		List<Team> tList = sqlSession.selectList("deptMapper.selectAllTeam");
+		return tList;
+	}
+
+	@Override
+	public List<Dept> selectAllDeptList() {
+		List<Dept> dList = sqlSession.selectList("deptMapper.selectAllDept");
+		return dList;
+	}
+
+	@Override
+	public List<Employee> selectSearchEmpAll(PageInfo pi,Search search) {
+		int offset = (pi.getCurrentPage() - 1 ) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		List<Employee> eList = sqlSession.selectList("employeeMapper.selectSearchEmpAll", search, rowBounds);
+		return eList;
+	}
+
+	@Override
+	public List<Employee> selectAll(PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1 ) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		List<Employee> eList = sqlSession.selectList("employeeMapper.selectAllList", pi, rowBounds);
+		return eList;
+	}
+
+	@Override
+	public int selectListCount() {
+		int count = sqlSession.selectOne("employeeMapper.selectListCount");
+		return count;
+	}
+
+	@Override
+	public List<Mail> selectmSearchAll(PageInfo pi,Search search) {
+		int offset = (pi.getCurrentPage() - 1 ) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		List<Mail> mList = sqlSession.selectList("mailMapper.selectmSearchAll", search, rowBounds);
+		return mList;
 	}
 
 	

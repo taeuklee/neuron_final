@@ -49,16 +49,34 @@
 	</select>
 <!-- 	메일 삭제 -->
 <!-- 	받은메일 삭제 -->
-	<update id="deleteRecieveMail" parameterType="_int">
+	<update id="deleteRecieveMail" parameterType="string">
 		UPDATE MAIL SET R_STATUS = 'HIDE' WHERE MAIL_NO = #{mailNo} 
 
 	</update>
 <!-- 	보낸메일 삭제 -->
-	<update id="deleteSendMail" parameterType="_int">
+	<update id="deleteSendMail" parameterType="string">
 		UPDATE MAIL SET S_STATUS = 'HIDE' WHERE MAIL_NO = #{mailNo} 
 
 	</update>
 	
+	 <select id="selectmSearchAll" resultMap="mailResultMap">
+	      SELECT * FROM MAIL
+	      <if test="searchCondition.toString() == 'mailTitle'">
+	         WHERE MAIL_TITLE LIKE '%' || #{searchValue } || '%'
+	      </if>
+	      <if test="searchCondition.toString() == 'mailContents'">
+	         WHERE MAIL_CONTENTS LIKE '%' || #{searchValue } || '%'
+	      </if>
+	      <if test="searchCondition.toString() == 'senderId'">
+	         WHERE SENDER_ID LIKE '%' || #{searchValue } || '%'
+	      </if>
+	      <if test="searchCondition.toString() == 'all'">
+			WHERE MAIL_TITLE LIKE '%' || #{searchValue } || '%'
+			OR MAIL_CONTENTS LIKE '%' || #{searchValue } || '%'
+			OR SENDER_ID LIKE '%' || #{searchValue } || '%'
+		</if>
+	      ORDER BY MAIL_NO ASC
+	   </select>
 <!-- 	수신상태 변경, 읽음  -->
 	<update id="addMail" parameterType="_int">
 		UPDATE MAIL SET READ_YN = '읽음', READ_TIME = SYSDATE WHERE MAIL_NO = #{mailNo} 
