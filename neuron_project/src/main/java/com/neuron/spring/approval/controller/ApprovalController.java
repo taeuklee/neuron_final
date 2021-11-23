@@ -59,6 +59,8 @@ public class ApprovalController {
 		Employee emp = new Employee();
 		if(session.getAttribute("loginEmployee") != null) {
 			emp = (Employee)session.getAttribute("loginEmployee");
+		}else {
+			mv.setViewName("redirect:/home.do");
 		}
 		int loginEmpNo = emp.getEmpNo(); // 사원번호		
 		int currentPage = (page != null) ? page : 1;
@@ -145,6 +147,7 @@ public class ApprovalController {
 		if(session.getAttribute("loginEmployee") != null) {
 			emp = (Employee)session.getAttribute("loginEmployee");
 		}
+		
 		if(!uploadFile.getOriginalFilename().equals("")) {
 			String renameFileName = saveFile(uploadFile,request);
 			if(renameFileName!=null) {

@@ -87,8 +87,7 @@ public class EmployeeController {
 		}else {
 			return "/loginFail";
 		}
-		
-		}
+	}
 	
 	// 로그아웃
 	@RequestMapping(value="/logout.do", method=RequestMethod.GET)

@@ -1,8 +1,11 @@
 package com.neuron.spring;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,18 +38,28 @@ public class HomeController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
+	@SuppressWarnings("unused")
 	@RequestMapping(value = "/home.do", method = RequestMethod.GET)
-	public ModelAndView home(ModelAndView mv ,HttpServletRequest request, HttpSession session) {
+	public ModelAndView home(ModelAndView mv ,HttpServletRequest request, HttpSession session,HttpServletResponse response) {
 		session = request.getSession();
 		Employee emp = new Employee();
 		if(session.getAttribute("loginEmployee") != null) {
 			emp = (Employee)session.getAttribute("loginEmployee");
+		}else {		
+			try {
+				request.getRequestDispatcher("/index.jsp").forward(request, response);
+			} catch (ServletException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
+		
+
 		String key = "Y";
 		List<Notice> nList = mainService.printAll(key);
 		int empNo= emp.getEmpNo();
 		String recEmail = mailService.printOneEmail(empNo);
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@" + recEmail);
 		Mail mail = new Mail();
 		mail.setReceiverId(recEmail);
 		String email = mail.getReceiverId();
