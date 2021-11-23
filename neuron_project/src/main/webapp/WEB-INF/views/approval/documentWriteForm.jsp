@@ -378,9 +378,11 @@
 								<hr>
 								<br>
 								<br>
-
-
+								
+								<input type="file" name="uploadFile">
+							
 								<div style="display: grid; border: 0.5px solid #989b9c78; margin: auto; justify-items: stretch; justify-content: space-evenly; margin-top: 20px; margin-bottom: 40px;">
+									<button type="button" class="btn btn-secondary" style="position: absolute; padding: 10px; right: 24%;margin: 10px;" onclick="fnSubmit();">제출</button>
 									<div>
 										<h1 id="titleName" align='center'style="padding: 70px 0 40px 0;"></h1>
 										<table
@@ -461,15 +463,7 @@
 											<br>
 										</p>
 									</div>
-
-
 								</div>
-								<br>
-								<br>
-								<br>
-								<hr>
-								<input type="file" name="uploadFile">
-								<button type="button" class="btn" onclick="fnSubmit();">제출</button>
 							</form>
 						</div>
 					</div>

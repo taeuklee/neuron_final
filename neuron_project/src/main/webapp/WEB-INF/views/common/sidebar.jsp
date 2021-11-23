@@ -22,7 +22,7 @@
 
 			<div class="user-profile">
 				<div class="user-image">
-					<a href="#" onclick="location.href='empInfo.do'"><img
+					<a href="#" onclick="location.href='/empInfo.do'"><img
 						src="/resources/euploadFiles/${loginEmployee.empFileReName}"></a>
 				</div>
 				<div class="emp-name">${loginEmployee.empName}</div>
@@ -78,7 +78,7 @@
 				</div></li>
 
 			<li class="nav-item"><a class="nav-link"
-				href="moveSelectMemberCalendar.do?empNo=${loginEmployee.empNo }">
+				href="/moveSelectMemberCalendar.do?empNo=${loginEmployee.empNo }">
 					<i class="icon-file menu-icon"></i> <span class="menu-title">일정
 						관리</span>
 			</a></li>
@@ -96,7 +96,7 @@
 								<li class="nav-item"><a class="nav-link"
 									onclick="location:href='/approval/myDocumentListView.do';">결재요청함</a></li>
 								<li class="nav-item"><a class="nav-link"
-									href="#">회수문서함</a></li>
+									onclick="location:href='/approval/documentWithdrawListView.do';">회수문서함</a></li>
 							</ul></li>
 						<li class="nav-item" align="center"><i class="menu-arrow"></i><span
 							style="font-size: large; color: #F9D955;">결재</span>
@@ -170,7 +170,7 @@
 	<script>
 			window.onload = function() {
 				$.ajax({
-					url : "selectProjectList.do?empNo=${loginEmployee.empNo}",
+					url : "/selectProjectList.do?empNo=${loginEmployee.empNo}",
 					type : "get",
 					dataType:"json",
 					async:false,
@@ -190,7 +190,7 @@
 				});
 				
 				$.ajax({
-					url : "selectMemberProjectList.do?empNo=${loginEmployee.empNo}",
+					url : "/selectMemberProjectList.do?empNo=${loginEmployee.empNo}",
 					type : "get",
 					dataType:"json",
 					async:false,
@@ -216,7 +216,7 @@
 			
 			function selectProjectDetail(projectNo) {
 				console.log(projectNo)
-				location.href ='selectProjectDetail.do?projectNo='+projectNo	
+				location.href ='/selectProjectDetail.do?projectNo='+projectNo	
 			}
       </script>
 </body>

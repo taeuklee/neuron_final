@@ -109,9 +109,6 @@
 					}else{
 						alert("결재처리 실패!");
 					}
-				},
-				error : function(){
-					alert("ajax 실패");
 				}
 			});
 		}

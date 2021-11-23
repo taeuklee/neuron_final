@@ -2,307 +2,355 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  <mapper namespace="approvalMapper">
-  
-    <resultMap type="Document" id="DocResultMap">
-	   <id property="docNo" column="DOCUMENT_NO"/>
-	   <result property="docWriterNo" column="DOCUMENT_WRITER_NO"/>
-	   <result property="docKind" column="DOCUMENT_KIND"/>
-	   <result property="docContents" column="DOCUMENT_CONTENTS"/>
-	   <result property="docStatus" column="DOCUMENT_STATUS"/>
-	   <result property="docReason" column="DOCUMNET_REASON"/>
-	   <result property="dCreateDate" column="D_CREATE_DATE"/>
-	   <result property="dUpdateDate" column="D_UPDATE_DATE"/>
-	   <result property="vStartDate" column="VACATION_START_DATE"/>
-	   <result property="vEndDate" column="VACATION_END_DATE"/>
-		<result property="vacKind" column="VACATION_KIND"/>
-		<result property="presentYear" column="PRESENT_YEAR"/>
-  	</resultMap>
-  	
-  	 <resultMap type="DocumentFile" id="DocFileResultMap">
-	   <id property="fileNo" column="FILE_NO"/>
-	   <id property="fileOrder" column="FILE_ORDER"/>
-	   <result property="documentNo" column="DOCUMENT_NO"/>
-	   <result property="fileName" column="FILE_NAME"/>
-	   <result property="fileRename" column="FILE_RENAME"/>
-	   <result property="fileSize" column="FILE_SIZE"/>
-	   <result property="filePath" column="FILE_PATH"/>
-	   <result property="fileKind" column="FILE_KIND"/>
-  	</resultMap>
-  	
-  	 <resultMap type="CodeInfo" id="CodeInfoResultMap">
-	   <id property="groupCodeId" column="GROUP_CODE_ID"/>
-	   <result property="codeId" column="CODE_ID"/>
-	   <result property="codeName" column="CODE_NAME"/>
-	   <result property="codeContents" column="CODE_CONTENTS"/>
-  	</resultMap>
-  	
-  	<resultMap type="Approval" id="ApprResultMap">
-	   <id property="approvalNo" column="APPROVAL_NO"/>
-	   <result property="documentNo" column="DOCUMENT_NO"/>
-	   <result property="approvalEmpNo" column="EMP_NO"/>
-	   <result property="approvalType" column="APPROVAL_TYPE"/>
-	   <result property="approvalStatus" column="APPROVAL_STATUS"/>
-	   <result property="approvalOpinion" column="APPROVAL_OPINION"/>
-	   <result property="approvalStartDate" column="APPROVAL_STARTDATE"/>
-	   <result property="approvalEndDate" column="APPROVAL_ENDDATE"/>
-	   <result property="signFileNo" column="FILE_NO"/>
-  	</resultMap>
-  	
-  	<update id="updateCodInfo" parameterType="com.neuron.spring.util.DataMap">
-  		update code_info
-  		set code_contents = #{documentFormReg, jdbcType=VARCHAR}
-  		where code_name = #{codeId, jdbcType=VARCHAR}
-  	</update>
-  	
-  	<insert id="insertCodeInfo" parameterType="com.neuron.spring.util.DataMap">
-	  	<selectKey keyProperty="sortOrdr" resultType="int" order="BEFORE">
+<mapper namespace="approvalMapper">
+
+	<resultMap type="Document" id="DocResultMap">
+		<id property="docNo" column="DOCUMENT_NO" />
+		<result property="docWriterNo" column="DOCUMENT_WRITER_NO" />
+		<result property="docKind" column="DOCUMENT_KIND" />
+		<result property="docContents" column="DOCUMENT_CONTENTS" />
+		<result property="docStatus" column="DOCUMENT_STATUS" />
+		<result property="docReason" column="DOCUMNET_REASON" />
+		<result property="dCreateDate" column="D_CREATE_DATE" />
+		<result property="dUpdateDate" column="D_UPDATE_DATE" />
+		<result property="vStartDate" column="VACATION_START_DATE" />
+		<result property="vEndDate" column="VACATION_END_DATE" />
+		<result property="vacKind" column="VACATION_KIND" />
+		<result property="presentYear" column="PRESENT_YEAR" />
+	</resultMap>
+
+	<resultMap type="DocumentFile" id="DocFileResultMap">
+		<id property="fileNo" column="FILE_NO" />
+		<id property="fileOrder" column="FILE_ORDER" />
+		<result property="documentNo" column="DOCUMENT_NO" />
+		<result property="fileName" column="FILE_NAME" />
+		<result property="fileRename" column="FILE_RENAME" />
+		<result property="fileSize" column="FILE_SIZE" />
+		<result property="filePath" column="FILE_PATH" />
+		<result property="fileKind" column="FILE_KIND" />
+	</resultMap>
+
+	<resultMap type="CodeInfo" id="CodeInfoResultMap">
+		<id property="groupCodeId" column="GROUP_CODE_ID" />
+		<result property="codeId" column="CODE_ID" />
+		<result property="codeName" column="CODE_NAME" />
+		<result property="codeContents" column="CODE_CONTENTS" />
+	</resultMap>
+
+	<resultMap type="Approval" id="ApprResultMap">
+		<id property="approvalNo" column="APPROVAL_NO" />
+		<result property="documentNo" column="DOCUMENT_NO" />
+		<result property="approvalEmpNo" column="EMP_NO" />
+		<result property="approvalType" column="APPROVAL_TYPE" />
+		<result property="approvalStatus" column="APPROVAL_STATUS" />
+		<result property="approvalOpinion" column="APPROVAL_OPINION" />
+		<result property="approvalStartDate"
+			column="APPROVAL_STARTDATE" />
+		<result property="approvalEndDate" column="APPROVAL_ENDDATE" />
+		<result property="signFileNo" column="FILE_NO" />
+	</resultMap>
+
+	<update id="updateCodInfo"
+		parameterType="com.neuron.spring.util.DataMap">
+		update code_info
+		set code_contents = #{documentFormReg, jdbcType=VARCHAR}
+		where code_name = #{codeId, jdbcType=VARCHAR}
+	</update>
+
+	<insert id="insertCodeInfo"
+		parameterType="com.neuron.spring.util.DataMap">
+		<selectKey keyProperty="sortOrdr" resultType="int"
+			order="BEFORE">
 			SELECT nvl(max(sort_ordr), 0) + 1 from code_info
 		</selectKey>
-  		insert into code_info values(
-  			#{groupCodeId, jdbcType=VARCHAR},
-  			#{codeId, jdbcType=VARCHAR},
-  			#{codeId, jdbcType=VARCHAR},
-  			#{documentFormReg, jdbcType=VARCHAR},
-  			#{sortOrdr, jdbcType=BIGINT}
-  		)
-  	</insert>
-  	
-  	<select id="selectCodeInfoOne" resultType="map" parameterType="map">
-  		select * 
-  		from code_info 
-  		<where>
-  			<if test="group_code_id != '' and group_code_id != null">
-  				and group_code_id = #{group_code_id}
-  			</if>
-  			<if test="code_id != '' and code_id != null">
-  				and code_id = #{code_id}
-  			</if>
-  		</where>
-  		ORDER BY SORT_ORDR
-  	</select>
-  	
-  	
-  	
-  	<select id="selectCodeInfo" resultMap="CodeInfoResultMap">
-  		select * from code_info ORDER BY SORT_ORDR
-  	</select>
-  	
-  	<!-- 내가 작성한 리스트 -->
-  	<select id="selectAllList" parameterType="map" resultType="com.neuron.spring.util.DataMap">
-  		select a.* ,e.emp_name 
-  		from document a left join employee e on(A.document_writer_no = e.emp_no)
-  		<where>
-  			<if test="gubun == 'myWrite'">
-	 	 		and a.DOCUMENT_WRITER_NO = #{empNo} 
-	 	 		and a.document_status not in ('반려','최종완료','회수') 		
-  			</if>
-  			<if test="gubun == 'wait'">
-	  			and document_no in ( select document_no
-									from approval 
-									where emp_no = #{empNo}
-									and approval_status = '대기')
+		insert into code_info values(
+		#{groupCodeId, jdbcType=VARCHAR},
+		#{codeId, jdbcType=VARCHAR},
+		#{codeId, jdbcType=VARCHAR},
+		#{documentFormReg, jdbcType=VARCHAR},
+		#{sortOrdr, jdbcType=BIGINT}
+		)
+	</insert>
+
+	<select id="selectCodeInfoOne" resultType="map"
+		parameterType="map">
+		select *
+		from code_info
+		<where>
+			<if test="group_code_id != '' and group_code_id != null">
+				and group_code_id = #{group_code_id}
+			</if>
+			<if test="code_id != '' and code_id != null">
+				and code_id = #{code_id}
+			</if>
+		</where>
+		ORDER BY SORT_ORDR
+	</select>
+
+
+
+	<select id="selectCodeInfo" resultMap="CodeInfoResultMap">
+		select * from code_info ORDER BY SORT_ORDR
+	</select>
+
+	<!-- 내가 작성한 리스트 -->
+	<select id="selectAllList" parameterType="map"
+		resultType="com.neuron.spring.util.DataMap">
+		select a.* ,e.emp_name
+		from document a left join employee e on(A.document_writer_no = e.emp_no)
+		<where>
+			<if test="gubun == 'myWrite'">
+				and a.DOCUMENT_WRITER_NO = #{empNo}
+				and a.document_status not in ('반려','최종완료','회수')
+			</if>
+			<if test="gubun == 'wait'">
+				and document_no in ( select document_no
+				from approval
+				where emp_no = #{empNo}
+				and approval_status = '대기')
 				and document_status like '%대기%'
-  			</if>
-  			<if test="gubun == 'progress'">
-  				and a.document_status not in ('반려','최종완료','회수')
-  				and ( a.DOCUMENT_NO in ( select document_no
-								from approval 
-								where emp_no = #{empNo})
-  				or a.DOCUMENT_WRITER_NO = #{empNo})
-  			</if>
-  			<if test="gubun == 'reject'">
-  				and a.document_status = '반려'
-  				  				and ( a.DOCUMENT_NO in ( select document_no
-								from approval 
-								where emp_no = #{empNo})
-  				or a.DOCUMENT_WRITER_NO = #{empNo})
-  			</if>
-  			<if test="gubun == 'complete'">
-  				and a.document_status = '최종완료'
-  				  				and ( a.DOCUMENT_NO in ( select document_no
-								from approval 
-								where emp_no = #{empNo})
-  				or a.DOCUMENT_WRITER_NO = #{empNo})
-  			</if>
-  			<if test="startDt != null and startDt != '' and endDt != null and endDt != '' ">
-  				and to_char(D_CREATE_DATE, 'yyyyMMdd') between replace(#{startDt,jdbcType=VARCHAR}, '-', '') and replace(#{endDt,jdbcType=VARCHAR}, '-', '') 
-  			</if>
-  			<if test="docGubun != null and docGubun != '' and docGubun != 'all' ">
+			</if>
+			<if test="gubun == 'progress'">
+				and a.document_status not in ('반려','최종완료','회수')
+				and ( a.DOCUMENT_NO in ( select document_no
+				from approval
+				where emp_no = #{empNo})
+				or a.DOCUMENT_WRITER_NO = #{empNo})
+			</if>
+			<if test="gubun == 'reject'">
+				and a.document_status = '반려'
+				and ( a.DOCUMENT_NO in ( select document_no
+				from approval
+				where emp_no = #{empNo})
+				or a.DOCUMENT_WRITER_NO = #{empNo})
+			</if>
+			<if test="gubun == 'complete'">
+				and a.document_status = '최종완료'
+				and ( a.DOCUMENT_NO in ( select document_no
+				from approval
+				where emp_no = #{empNo})
+				or a.DOCUMENT_WRITER_NO = #{empNo})
+			</if>
+			<if
+				test="startDt != null and startDt != '' and endDt != null and endDt != '' ">
+				and to_char(D_CREATE_DATE, 'yyyyMMdd') between
+				replace(#{startDt,jdbcType=VARCHAR}, '-', '') and
+				replace(#{endDt,jdbcType=VARCHAR}, '-', '')
+			</if>
+			<if
+				test="docGubun != null and docGubun != '' and docGubun != 'all' ">
 				and a.DOCUMENT_KIND = #{docGubun }
-  			</if>
-  			<if test="gubun =='withdraw'">
-  				and a.DOCUMENT_WRITER_NO = #{empNo})
-  				and a.document_status ='회수'
-  			</if>
-  		</where> 
-  		order by a.DOCUMENT_NO DESC
-  	</select>
-  	
-	<!--   	전체 리스트 갯수 -->
-  	<select id="selectListCount" parameterType="map" resultType="_int">
-  		select count(*) 
-  		from document a
-  		<where>
-  			<if test="gubun == 'myWrite'">
-	 	 		and a.DOCUMENT_WRITER_NO = #{empNo} 
-	 	 		and a.document_status not in ('반려','최종완료','회수') 		
-  			</if>
-  			<if test="gubun == 'wait'">
-	  			and document_no in ( select document_no
-									from approval 
-									where emp_no = #{empNo}
-									and approval_status = '대기')
+			</if>
+			<if test="gubun =='withdraw'">
+				and a.DOCUMENT_WRITER_NO = #{empNo}
+				and a.document_status ='회수'
+			</if>
+		</where>
+		order by a.DOCUMENT_NO DESC
+	</select>
+
+	<!-- 전체 리스트 갯수 -->
+	<select id="selectListCount" parameterType="map"
+		resultType="_int">
+		select count(*)
+		from document a
+		<where>
+			<if test="gubun == 'myWrite'">
+				and a.DOCUMENT_WRITER_NO = #{empNo}
+				and a.document_status not in ('반려','최종완료','회수')
+			</if>
+			<if test="gubun == 'wait'">
+				and document_no in ( select document_no
+				from approval
+				where emp_no = #{empNo}
+				and approval_status = '대기')
 				and document_status like '%대기%'
-  			</if>
-  			<if test="gubun == 'progress'">
-  				and a.document_status not in ('반려','최종완료','회수')
-  				and ( a.DOCUMENT_NO in ( select document_no
-								from approval 
-								where emp_no = #{empNo})
-  				or a.DOCUMENT_WRITER_NO = #{empNo})
-  			</if>
-  			<if test="gubun == 'reject'">
-  				and a.document_status = '반려'
-  				  				and ( a.DOCUMENT_NO in ( select document_no
-								from approval 
-								where emp_no = #{empNo})
-  				or a.DOCUMENT_WRITER_NO = #{empNo})
-  			</if>
-  			<if test="gubun == 'complete'">
-  				and a.document_status = '최종완료'
-  				  				and ( a.DOCUMENT_NO in ( select document_no
-								from approval 
-								where emp_no = #{empNo})
-  				or a.DOCUMENT_WRITER_NO = #{empNo})
-  			</if>
-  			<if test="gubun =='withdraw'">
-  				and a.DOCUMENT_WRITER_NO = #{empNo})
-  				and a.document_status ='회수'
-  			</if>
-  		</where> 
-  	</select>
-  	
-  	<!-- 결재문 등록 -->
-  	<insert id="insertDocument" parameterType="com.neuron.spring.util.DataMap">
-  		INSERT INTO DOCUMENT 
-  		VALUES
-  		(SEQ_DOCUMENT.NEXTVAL,#{documentWriterNo,jdbcType=BIGINT },#{docGubun,jdbcType=VARCHAR},#{docContents,jdbcType=CLOB},
-  		case #{apprCheck, jdbcType=VARCHAR } when 'Y' then '합의대기' else '결재대기' end
-  		,
-  		<if test='docGubun=="휴가신청서"'>
-  			#{documentReason,jdbcType=VARCHAR},SYSDATE,SYSDATE,#{vacationStartDate,jdbcType=DATE},#{vacationEndDate,jdbcType=DATE},#{vacationGubun,jdbcType=VARCHAR})
-  		</if>
-  		<if test='docGubun!="휴가신청서"'>
-	  		null,SYSDATE,SYSDATE,NULL,NULL,NULL)
-  		</if>
-	
-	<selectKey keyProperty="documentNo" resultType="int" order="AFTER">
-		SELECT MAX(DOCUMENT_NO) FROM DOCUMENT
-	</selectKey>
+			</if>
+			<if test="gubun == 'progress'">
+				and a.document_status not in ('반려','최종완료','회수')
+				and ( a.DOCUMENT_NO in ( select document_no
+				from approval
+				where emp_no = #{empNo})
+				or a.DOCUMENT_WRITER_NO = #{empNo})
+			</if>
+			<if test="gubun == 'reject'">
+				and a.document_status = '반려'
+				and ( a.DOCUMENT_NO in ( select document_no
+				from approval
+				where emp_no = #{empNo})
+				or a.DOCUMENT_WRITER_NO = #{empNo})
+			</if>
+			<if test="gubun == 'complete'">
+				and a.document_status = '최종완료'
+				and ( a.DOCUMENT_NO in ( select document_no
+				from approval
+				where emp_no = #{empNo})
+				or a.DOCUMENT_WRITER_NO = #{empNo})
+			</if>
+			<if test="gubun =='withdraw'">
+				and a.DOCUMENT_WRITER_NO = #{empNo}
+				and a.document_status ='회수'
+			</if>
+		</where>
+	</select>
+
+	<!-- 결재문 등록 -->
+	<insert id="insertDocument"
+		parameterType="com.neuron.spring.util.DataMap">
+		INSERT INTO DOCUMENT
+		VALUES
+		(SEQ_DOCUMENT.NEXTVAL,#{documentWriterNo,jdbcType=BIGINT },#{docGubun,jdbcType=VARCHAR},#{docContents,jdbcType=CLOB},
+		case #{apprCheck, jdbcType=VARCHAR } when 'Y' then '합의대기' else '결재대기' end
+		,
+		<if test='docGubun=="휴가신청서"'>
+			#{documentReason,jdbcType=VARCHAR},SYSDATE,SYSDATE,#{vacationStartDate,jdbcType=DATE},#{vacationEndDate,jdbcType=DATE},#{vacationGubun,jdbcType=VARCHAR})
+		</if>
+		<if test='docGubun!="휴가신청서"'>
+			null,SYSDATE,SYSDATE,NULL,NULL,NULL)
+		</if>
+
+		<selectKey keyProperty="documentNo" resultType="int"
+			order="AFTER">
+			SELECT MAX(DOCUMENT_NO) FROM DOCUMENT
+		</selectKey>
 	</insert>
-	
-	<insert id="insertAppr" parameterType="com.neuron.spring.util.DataMap">
-		INSERT INTO approval 
-  		VALUES(SEQ_APPR.NEXTVAL,#{documentNo,jdbcType=BIGINT }, #{approvalEmpNo, jdbcType=BIGINT },#{approvalType, jdbcType=VARCHAR },'대기',NULL,SYSDATE,NULL,NULL)
+
+	<insert id="insertAppr"
+		parameterType="com.neuron.spring.util.DataMap">
+		INSERT INTO approval
+		VALUES(SEQ_APPR.NEXTVAL,#{documentNo,jdbcType=BIGINT },
+		#{approvalEmpNo, jdbcType=BIGINT },#{approvalType, jdbcType=VARCHAR
+		},'대기',NULL,SYSDATE,NULL,NULL)
 	</insert>
-	
+
 	<insert id="insertDocumentFile" parameterType="DocumentFile">
-		INSERT INTO DOC_FILE 
-  		VALUES(SEQ_DOC_FILE.NEXTVAL,1,#{documentNo},#{fileName},#{fileRename},#{fileSize},'문서')
+		INSERT INTO
+		DOC_FILE
+		VALUES(SEQ_DOC_FILE.NEXTVAL,1,#{documentNo},#{fileName},#{fileRename},#{fileSize},#{fileRename},'문서')
 	</insert>
-	
-	
-	<select id="selectApproval" parameterType="com.neuron.spring.util.DataMap" resultType="com.neuron.spring.util.DataMap">
+
+
+	<select id="selectApproval"
+		parameterType="com.neuron.spring.util.DataMap"
+		resultType="com.neuron.spring.util.DataMap">
 		SELECT a.*,b.emp_name,b.emp_job,c.team_name
 		FROM approval a
-        left join employee b on a.emp_no=b.emp_no
-        left join team c on b.team_code = c.team_code
-		WHERE a.DOCUMENT_NO =  #{documentNo,jdbcType=BIGINT }
+		left join employee b on a.emp_no=b.emp_no
+		left join team c on b.team_code = c.team_code
+		WHERE a.DOCUMENT_NO =
+		#{documentNo,jdbcType=BIGINT }
 		order by A.APPROVAL_TYPE DESC
 	</select>
-  	
-  	<select id="selectDocOne" parameterType="com.neuron.spring.util.DataMap" resultType="com.neuron.spring.util.DataMap">
-  		SELECT CASE WHEN (SELECT COUNT(*) FROM approval WHERE DOCUMENT_NO = A.DOCUMENT_NO AND approval_status != '대기') > 0 THEN 'Y' ELSE 'N' END withDrow_Chk, A.* 
+
+	<select id="selectDocOne"
+		parameterType="com.neuron.spring.util.DataMap"
+		resultType="com.neuron.spring.util.DataMap">
+		SELECT CASE WHEN (SELECT COUNT(*) FROM approval WHERE DOCUMENT_NO =
+		A.DOCUMENT_NO AND approval_status != '대기') > 0 THEN 'Y' ELSE 'N' END
+		withDrow_Chk, A.*
 		FROM DOCUMENT A
 		WHERE document_no =#{documentNo,jdbcType=BIGINT }
-  	</select>
-  	
-  	<update id="updateTransApproval" parameterType="com.neuron.spring.util.DataMap">
-  		UPDATE APPROVAL 
-  		SET APPROVAL_STATUS = '승인', approval_opinion=#{apprOpinion,jdbcType=VARCHAR}, APPROVAL_ENDDATE = SYSDATE
-		WHERE DOCUMENT_NO = #{documentNo,jdbcType=BIGINT} AND EMP_NO = #{empNo,jdbcType=BIGINT}
-		<selectKey keyProperty="apprStateChk" resultType="string" order="AFTER">
-			SELECT 
-			CASE WHEN 
-			    COUNT(*) = SUM(CASE WHEN APPROVAL_STATUS ='승인' THEN 1 ELSE 0 END) 
-			    THEN 'Y' 
-			    ELSE 'N'
-			    END CHK
+	</select>
+
+	<update id="updateTransApproval"
+		parameterType="com.neuron.spring.util.DataMap">
+		UPDATE APPROVAL
+		SET APPROVAL_STATUS = '승인',
+		approval_opinion=#{apprOpinion,jdbcType=VARCHAR}, APPROVAL_ENDDATE =
+		SYSDATE
+		WHERE DOCUMENT_NO = #{documentNo,jdbcType=BIGINT} AND EMP_NO =
+		#{empNo,jdbcType=BIGINT}
+		<selectKey keyProperty="apprStateChk" resultType="string"
+			order="AFTER">
+			SELECT
+			CASE WHEN
+			COUNT(*) = SUM(CASE WHEN APPROVAL_STATUS ='승인' THEN 1 ELSE 0 END)
+			THEN 'Y'
+			ELSE 'N'
+			END CHK
 			FROM APPROVAL
 			<where>
-					DOCUMENT_NO = #{documentNo,jdbcType=BIGINT} AND
-					APPROVAL_TYPE in (select approval_type from approval
-                    					where document_no = #{documentNo,jdbcType=BIGINT}  and  EMP_NO = #{empNo,jdbcType=BIGINT})
+				DOCUMENT_NO = #{documentNo,jdbcType=BIGINT} AND
+				APPROVAL_TYPE in (select approval_type from approval
+				where document_no = #{documentNo,jdbcType=BIGINT} and EMP_NO =
+				#{empNo,jdbcType=BIGINT})
 			</where>
 		</selectKey>
-  	</update>
-  	
-  	<update id="rejectTransApproval" parameterType="com.neuron.spring.util.DataMap">
-  		UPDATE APPROVAL 
-  		SET APPROVAL_STATUS = '반려', approval_opinion=#{apprOpinion,jdbcType=VARCHAR}, APPROVAL_ENDDATE = SYSDATE
-		WHERE DOCUMENT_NO = #{documentNo,jdbcType=BIGINT} AND EMP_NO = #{empNo,jdbcType=BIGINT}
-  	</update>
-  	
-  	<update id="updateTransApprovalDoc" parameterType="com.neuron.spring.util.DataMap">
-  		UPDATE DOCUMENT 
-  		<set>
-  		<if test='approvalType == "합의" and apprStatus == "Y"'>
-	  		DOCUMENT_STATUS = '결재대기', D_UPDATE_DATE = SYSDATE 
-  		</if>
-  		<if test='approvalType == "결재" and apprStatus == "Y"'>
-  			DOCUMENT_STATUS = '최종완료', D_UPDATE_DATE = SYSDATE 
-  		</if>
-  		<if test='apprStatus == "N"'>
-  			DOCUMENT_STATUS = '반려', D_UPDATE_DATE = SYSDATE 
-  		</if>
-  		</set>
-  		WHERE DOCUMENT_NO = #{documentNo,jdbcType=BIGINT}
-  		<selectKey keyProperty="docStateChk" resultType="string" order="AFTER">
-  			select document_status
+	</update>
+
+	<update id="rejectTransApproval"
+		parameterType="com.neuron.spring.util.DataMap">
+		UPDATE APPROVAL
+		SET APPROVAL_STATUS = '반려',
+		approval_opinion=#{apprOpinion,jdbcType=VARCHAR}, APPROVAL_ENDDATE =
+		SYSDATE
+		WHERE DOCUMENT_NO = #{documentNo,jdbcType=BIGINT} AND EMP_NO =
+		#{empNo,jdbcType=BIGINT}
+	</update>
+
+	<update id="updateTransApprovalDoc"
+		parameterType="com.neuron.spring.util.DataMap">
+		UPDATE DOCUMENT
+		<set>
+			<if test='approvalType == "합의" and apprStatus == "Y"'>
+				DOCUMENT_STATUS = '결재대기', D_UPDATE_DATE = SYSDATE
+			</if>
+			<if test='approvalType == "결재" and apprStatus == "Y"'>
+				DOCUMENT_STATUS = '최종완료', D_UPDATE_DATE = SYSDATE
+			</if>
+			<if test='apprStatus == "N"'>
+				DOCUMENT_STATUS = '반려', D_UPDATE_DATE = SYSDATE
+			</if>
+		</set>
+		WHERE DOCUMENT_NO = #{documentNo,jdbcType=BIGINT}
+		<selectKey keyProperty="docStateChk" resultType="string"
+			order="AFTER">
+			select document_status
 			from document
-			where DOCUMENT_NO = #{documentNo,jdbcType=BIGINT}
-  		</selectKey>
-  	</update>
-  	
-  	<update id="updateDocWithDraw" parameterType="com.neuron.spring.util.DataMap">
-  		UPDATE DOCUMENT
-  		<set>
-  			DOCUMENT_STATUS = '회수', D_UPDATE_DATE = SYSDATE  
-  		</set>
-  		WHERE DOCUMENT_NO = #{documentNo,jdbcType=BIGINT}
-  	</update>
-  	
-<!--   	holiday용 -->
-  	<select id="selectHlistCount" resultType="_int">
-		SELECT COUNT(*) FROM DOCUMENT WHERE DOCUMENT_WRITER_NO = #{empNo} AND DOCUMENT_KIND = '휴가신청서' AND DOCUMENT_STATUS = '최종완료' AND EXTRACT(YEAR FROM VACATION_START_DATE) = EXTRACT(YEAR FROM SYSDATE)
+			where DOCUMENT_NO =
+			#{documentNo,jdbcType=BIGINT}
+		</selectKey>
+	</update>
+
+	<update id="updateDocWithDraw"
+		parameterType="com.neuron.spring.util.DataMap">
+		UPDATE DOCUMENT
+		<set>
+			DOCUMENT_STATUS = '회수', D_UPDATE_DATE = SYSDATE
+		</set>
+		WHERE DOCUMENT_NO = #{documentNo,jdbcType=BIGINT}
+	</update>
+
+	<!-- holiday용 -->
+	<select id="selectHlistCount" resultType="_int">
+		SELECT COUNT(*) FROM
+		DOCUMENT WHERE DOCUMENT_WRITER_NO = #{empNo} AND DOCUMENT_KIND =
+		'휴가신청서' AND DOCUMENT_STATUS = '최종완료' AND EXTRACT(YEAR FROM
+		VACATION_START_DATE) = EXTRACT(YEAR FROM SYSDATE)
 	</select>
 
- 	 <select id="selectAllHlist" resultMap="DocResultMap">
-		SELECT * FROM DOCUMENT WHERE DOCUMENT_WRITER_NO = #{empNo} AND DOCUMENT_KIND = '휴가신청서' AND DOCUMENT_STATUS = '최종완료' AND EXTRACT(YEAR FROM VACATION_START_DATE) = EXTRACT(YEAR FROM SYSDATE) ORDER BY DOCUMENT_NO DESC
+	<select id="selectAllHlist" resultMap="DocResultMap">
+		SELECT * FROM DOCUMENT
+		WHERE DOCUMENT_WRITER_NO = #{empNo} AND DOCUMENT_KIND = '휴가신청서' AND
+		DOCUMENT_STATUS = '최종완료' AND EXTRACT(YEAR FROM VACATION_START_DATE) =
+		EXTRACT(YEAR FROM SYSDATE) ORDER BY DOCUMENT_NO DESC
 	</select>
 
-	
+
 	<!-- 메인페이지 -->
-	<select id="selectMainPageDocList" parameterType="_int" resultType="com.neuron.spring.util.DataMap">
-		SELECT D.*, E.EMP_NAME, E.emp_job 
+	<select id="selectMainPageDocList" parameterType="_int"
+		resultType="com.neuron.spring.util.DataMap">
+		SELECT D.*, E.EMP_NAME, E.emp_job
 		FROM DOCUMENT D JOIN EMPLOYEE E ON(D.document_writer_no = E.EMP_NO)
 		WHERE
-		    DOCUMENT_NO IN (SELECT DOCUMENT_NO FROM approval WHERE EMP_NO = #{empNo}
-		    AND approval.approval_status = '대기')
-		    AND DOCUMENT_STATUS LIKE '%대기%'
-		    AND ROWNUM <![CDATA[<]]> 6
+		DOCUMENT_NO IN (SELECT DOCUMENT_NO FROM approval WHERE EMP_NO =
+		#{empNo}
+		AND approval.approval_status = '대기')
+		AND DOCUMENT_STATUS LIKE '%대기%'
+		AND ROWNUM <![CDATA[<]]>
+		6
+		order by d.document_no DESC
 	</select>
 
 
-  </mapper>
+</mapper>
