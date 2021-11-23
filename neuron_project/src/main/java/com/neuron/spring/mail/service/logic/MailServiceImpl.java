@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.neuron.spring.attend.domain.PageInfo;
+import com.neuron.spring.mail.domain.PageInfo;
 import com.neuron.spring.employee.domain.Dept;
 import com.neuron.spring.employee.domain.Employee;
 import com.neuron.spring.employee.domain.Team;
@@ -102,35 +102,6 @@ public class MailServiceImpl implements MailService{
 		return result;
 	}
 
-
-	@Override
-	public List<Employee> printAllEmpList(PageInfo pi) {
-		List<Employee> eList = store.selectAllEmpList(pi);
-		return eList;
-	}
-
-
-	@Override
-	public List<Team> printAllTeamList() {
-		List<Team> tList = store.selectAllTeamList();
-		return tList;
-	}
-
-
-	@Override
-	public List<Dept> printAllDeptList() {
-		List<Dept> dList = store.selectAllDeptList();
-		return dList;
-	}
-
-
-	@Override
-	public List<Employee> printSearchEmpAll(PageInfo pi, Search search) {
-		List<Employee> sList = store.selectSearchEmpAll(pi, search);
-		return sList;
-	}
-
-
 	@Override
 	public int getListCount() {
 		int totalCount = store.selectListCount();
@@ -159,6 +130,31 @@ public class MailServiceImpl implements MailService{
 	}
 
 
-	
+//	@Override
+//	public List<Employee> printAllEmpList(PageInfo pi) {
+//		List<Employee> eList = store.selectAllEmpList(pi);
+//		return eList;
+//	}
+//
+//
+//	@Override
+//	public List<Team> printAllTeamList() {
+//		List<Team> tList = store.selectAllTeamList();
+//		return tList;
+//	}
+//
+//
+//	@Override
+//	public List<Dept> printAllDeptList() {
+//		List<Dept> dList = store.selectAllDeptList();
+//		return dList;
+//	}
+//
+//
+//	@Override
+//	public List<Employee> printSearchEmpAll(PageInfo pi, Search search) {
+//		List<Employee> sList = store.selectSearchEmpAll(pi, search);
+//		return sList;
+//	}
 
 }

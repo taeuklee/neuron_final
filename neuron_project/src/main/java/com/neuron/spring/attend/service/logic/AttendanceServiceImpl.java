@@ -23,24 +23,31 @@ public class AttendanceServiceImpl implements AttendanceService{
 		int totalCount = store.selectListCount(empNo);
 		return totalCount;
 	}
-
+	@Override
+	public int getListCount() {
+		int result = store.selectListCount();
+		return result;
+	}
 	@Override
 	public List<Attendance> printAll(PageInfo pi, int empNo) {
 		List<Attendance> aList = store.selectAll(pi, empNo);
 		return aList;
 	}
-
 	@Override
-	public int insertTime(Attendance attend) {
-		int result  = store.putTime(attend);
-		return result;
+	public List<Attendance> printSearchAll(Search search) {
+		List<Attendance> aList = store.searchList(search);
+		return aList;
 	}
-
-
 	@Override
 	public Attendance printOne(int empNo) {
 		Attendance attend = store.selectOne(empNo);
 		return attend;
+	}
+	
+	@Override
+	public int insertTime(Attendance attend) {
+		int result  = store.putTime(attend);
+		return result;
 	}
 
 	@Override
@@ -54,23 +61,15 @@ public class AttendanceServiceImpl implements AttendanceService{
 		int countAbs = store.selectListCountAbs(empNo);
 		return countAbs;
 	}
-
 	@Override
 	public int getLateCount(int empNo) {
 		int countLate = store.selectListCountLate(empNo);
 		return countLate;
 	}
-
 	@Override
 	public int getCount(int empNo) {
 		int count = store.selectListCountNor(empNo);
 		return count;
-	}
-
-	@Override
-	public List<Attendance> printSearchAll(Search search) {
-		List<Attendance> aList = store.searchList(search);
-		return aList;
 	}
 
 	@Override
@@ -79,17 +78,12 @@ public class AttendanceServiceImpl implements AttendanceService{
 		return result;
 	}
 
-	@Override
-	public int getListCount() {
-		int result = store.selectListCount();
-		return result;
-	}
-
-	@Override
-	public List<Employee> printAllEmpList(PageInfo pi) {
-		List<Employee> eList = store.selectAllEmpList(pi);
-		return eList;
-	}
+	
+//	@Override
+//	public List<Employee> printAllEmpList(PageInfo pi) {
+//		List<Employee> eList = store.selectAllEmpList(pi);
+//		return eList;
+//	}
 
 
 

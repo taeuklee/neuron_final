@@ -62,18 +62,16 @@ public class AttendanceController {
 				mv.addObject("aList", aList);
 				mv.addObject("pi",pi);
 				mv.addObject("attendance", attend);
-				
 				mv.setViewName("attend/attendanceList");
 				
 			}else {
-				mv.addObject("msg", "게시글 전체조회 실패");
-				mv.setViewName("common/errorPage");
+				mv.setViewName("attend/attendanceList");
 			}
 			return mv;
 	}
 	
 	@RequestMapping(value="insertStartTime.do", method=RequestMethod.GET)
-	public String insertTime(
+	public String insertStartTime(
 			Model model
 			,HttpServletRequest request
 			,HttpSession session
@@ -91,15 +89,12 @@ public class AttendanceController {
 		String startTime = hr+ ":" + min + ":" + sec;
 		
 		int check = service.checkDateOne(empNo);
-////		Date attendDate = attend.getAttendDate();
-////		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+ attendDate);
-//		Date date = new Date();
 		
 	
 		if(check != 0) {
-			response.setContentType("UTF-8");
-			PrintWriter out;
 			try {
+				response.setContentType("UTF-8");
+				PrintWriter out;
 				out = response.getWriter();
 				out.println("<script>alert('이미 출근하셨습니다.'); location.href='attendanceList.do';</script>");
 				out.flush();
@@ -120,8 +115,7 @@ public class AttendanceController {
 				model.addAttribute("startTime", startTime);
 				return "redirect:attendanceList.do";
 			}else {
-				model.addAttribute("msg", "시간 등록 실패!");
-				return "common/errorPage";
+				return "redirect:attendanceList.do";
 			}
 		}
 		return "attend/attendanceList";
@@ -160,10 +154,9 @@ public class AttendanceController {
 		
 		String finish = attend.getFinishTime();
 		if(finish != null) {
-//			attend.setFinishTime(finishTime);
-			response.setContentType("UTF-8");
-			PrintWriter out;
 			try {
+				response.setContentType("UTF-8");
+				PrintWriter out;
 				out = response.getWriter();
 				out.println("<script>alert('이미 퇴근하셨습니다.'); location.href='attendanceList.do';</script>");
 				out.flush();
@@ -178,46 +171,45 @@ public class AttendanceController {
 				model.addAttribute("finishTime", finishTime);
 				return "redirect:attendanceList.do";
 			}else {
-				model.addAttribute("msg", "시간 등록 실패!");
-				return "common/errorPage";
+				return "redirect:attendanceList.do";
 			}
 		} 
 		return "attend/attendanceList";
 	}
-	@RequestMapping(value="attendSearch.do", method=RequestMethod.GET)
-	public String AttendSearchList(
-			@ModelAttribute Search search
-			,Model model) {
-		List<Attendance> searchList = service.printSearchAll(search);
-		if(!searchList.isEmpty()) {
-			model.addAttribute("aList", searchList);
-			model.addAttribute("search", search);
-			return "attend/attendanceList";
-		}else {
-			model.addAttribute("msg", "공지사항 검색 실패");
-			return "common/errorPage";
-		}
-	}
+//	@RequestMapping(value="attendSearch.do", method=RequestMethod.GET)
+//	public String AttendSearchList(
+//			@ModelAttribute Search search
+//			,Model model) {
+//		List<Attendance> searchList = service.printSearchAll(search);
+//		if(!searchList.isEmpty()) {
+//			model.addAttribute("aList", searchList);
+//			model.addAttribute("search", search);
+//			return "attend/attendanceList";
+//		}else {
+//			model.addAttribute("msg", "공지사항 검색 실패");
+//			return "common/errorPage";
+//		}
+//	}
 	
-	@RequestMapping(value="attendAdmin.do", method=RequestMethod.GET)
-	public ModelAndView attendAdmin(
-			ModelAndView mv
-			,@RequestParam(value="page", required=false) Integer page
-			,Model model) {
-		
-		int currentPage = (page != null) ? page:1;
-		int totalCount = service.getListCount();
-		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
-		List<Employee> eList = service.printAllEmpList(pi);
-		if(!eList.isEmpty()) {
-			mv.addObject("eList", eList);
-			mv.addObject("pi", pi);
-			mv.addObject("totalCount", totalCount);
-			mv.setViewName("attend/attendAdmin");
-		}else {
-			mv.addObject("msg", "게시글 전체조회 실패");
-			mv.setViewName("common/errorPage");
-		}
-		return mv;
-	}
+//	@RequestMapping(value="attendAdmin.do", method=RequestMethod.GET)
+//	public ModelAndView attendAdmin(
+//			ModelAndView mv
+//			,@RequestParam(value="page", required=false) Integer page
+//			,Model model) {
+//		
+//		int currentPage = (page != null) ? page:1;
+//		int totalCount = service.getListCount();
+//		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
+//		List<Employee> eList = service.printAllEmpList(pi);
+//		if(!eList.isEmpty()) {
+//			mv.addObject("eList", eList);
+//			mv.addObject("pi", pi);
+//			mv.addObject("totalCount", totalCount);
+//			mv.setViewName("attend/attendAdmin");
+//		}else {
+//			mv.addObject("msg", "게시글 전체조회 실패");
+//			mv.setViewName("common/errorPage");
+//		}
+//		return mv;
+//	}
 }

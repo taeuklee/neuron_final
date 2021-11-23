@@ -301,10 +301,6 @@
     background-color: #FFFFFF;
     border-bottom: 1px solid rgb(240, 240, 240);
   }
-  /* .table-detail {
-    border-bottom-color: transparent;
-    color: #EFF0F6;
-  } */
  
   .main-table{
       min-width:100%;
@@ -320,7 +316,7 @@
 			<div class="main-panel">
 		        <div class="content-wrapper">
 		          <div class="top-title">
-		            <h2>나의 휴가 내역</h2>
+		            <h2>나의 휴가내역</h2>
 		          </div>
 		          <div class="top-date" align="center">
 		             <h2>
@@ -377,10 +373,14 @@
 		                      <th>휴가사용기간</th>
 		                      <th>휴가일수</th>
 		                      <th>내용</th>
-		                      <th>휴가신청서</th>
 		                    </tr>
 		                  </thead>
 		                  <tbody>
+		                  <c:if test="${empty dList }">
+		                  	<tr>
+		                  		<td colspan="6" align="center"> 조회된 정보가 없습니다. </td>
+		                  	</tr>
+		                  	</c:if>
 		                  <c:forEach items="${dList }" var="document">
 		                    <tr>
 		                      <td><fmt:formatDate pattern="yyyy년 MM월 dd일" value="${document.dUpdateDate }"/></td>
@@ -389,13 +389,7 @@
 		                      <input type="hidden" id="vSDate" value="${document.vStartDate }">
 		                      <input type="hidden" id="vEDate" value="${document.vEndDate }">
 		                      <td id="dateDiff"></td>
-		                      <td>
-<%-- 		                      <c:url var="dDetail" value="documentDatail.do"> --%>
-<%-- 								<c:param name="docNo" value="${document.documentNo }"></c:param> --%>
-<%-- 							</c:url> --%>
-<%-- 							<a href="${dDetail }">${doc.docKind }</a> --%>
-		                    </td>
-		                      <td>
+		                      <td>${document.docReason }</td>
 		                    </tr>
 		                    </c:forEach>
 		                    <tr align="center" height="20">			

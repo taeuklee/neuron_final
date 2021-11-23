@@ -86,9 +86,9 @@
 }
   </style>
   <script>
-            function openPop(){
-              var popup = window.open('/addressbook.do', '주소록팝업','width=1000px;, height=800px;');
-            }
+//             function openPop(){
+//               var popup = window.open('/addressbook.do', '주소록팝업','width=1000px;, height=800px;');
+//             }
    </script>
 </head>
 <body>
@@ -110,13 +110,15 @@
 		                <th>받는사람</th>
 		                <td>
 		                	<input type="text" name="receiverId" class="mt1">
-		                	<button class="addr_btn" target="_blank" onclick="openPop()">주소록</button>
+<!-- 		                	<button class="addr_btn" target="_blank" onclick="openPop()">주소록</button> -->
 		                </td>
 		                <!-- 엔터 누르면 블락 잡히는거 -->
 		              </tr>
 		              <tr>
 		                <th>참조</th>
-		                <td><input type="text" name="receiverId2" class="mt1"><button class="addr_btn">주소록</button></td>
+		                <td><input type="text" name="receiverId2" class="mt1">
+<!-- 		                <button class="addr_btn">주소록</button> -->
+		                </td>
 		              </tr>
 		              <tr>
 		                <th>제목</th>
@@ -134,7 +136,7 @@
 		            <div class="write-footer">
 		            <br><br>
 			            <input type="submit" class="btn btn-info font-weight-bold" value="보내기">
-			            <input type="reset" class="btn btn-info font-weight-bold" onclick="/inbox.do" value="취소">
+			            <input type="reset" class="btn btn-info font-weight-bold" onclick="location.href='/inbox.do'" value="취소">
 		            </div>
 		            </form>
 		          </div>

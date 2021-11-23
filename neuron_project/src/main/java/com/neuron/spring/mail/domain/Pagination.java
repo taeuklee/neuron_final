@@ -1,4 +1,4 @@
-package com.neuron.spring.attend.domain;
+package com.neuron.spring.mail.domain;
 
 
 public class Pagination {

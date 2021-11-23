@@ -9,10 +9,8 @@ import com.neuron.spring.employee.domain.Employee;
 
 public interface HolidayService {
 
-
 	public int getListCount(int empNo);
 
 	public List<Document> printAll(PageInfo pi, int empNo);
-
 	public List<Employee> printEmpAll(int empNo);
 }

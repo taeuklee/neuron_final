@@ -13,9 +13,7 @@
 	   <result property="sendTime" column="SEND_TIME"/>
 	   <result property="readTime" column="READ_TIME"/>
 	   <result property="mailFileName" column="MAIL_FILENAME"/>
-	   <result property="mailFileRename" column="MAIL_FILERENAME"/>
 	   <result property="mailFileSize" column="MAIL_FILESIZE"/>
-	   <result property="mailFilePath" column="MAIL_FILEPATH"/>
 	   <result property="readYn" column="READ_YN"/>
 	   <result property="sStatus" column="S_STATUS"/>
 	   <result property="rStatus" column="R_STATUS"/>
@@ -40,7 +38,7 @@
 	
 <!-- 	메일쓰기 -->
   	<insert id="postMail" parameterType="Mail">
-  		INSERT INTO MAIL VALUES(SEQ_MAILNUM.NEXTVAL, #{mailTitle } , #{mailContents }, #{senderId }, #{receiverId }, #{receiverId2 }, SYSDATE, NULL,#{mailFileName}, NULL, #{mailFileSize },NULL, DEFAULT, DEFAULT, DEFAULT)
+  		INSERT INTO MAIL VALUES(SEQ_MAILNUM.NEXTVAL, #{mailTitle } , #{mailContents }, #{senderId }, #{receiverId }, #{receiverId2 }, SYSDATE, NULL,#{mailFileName}, #{mailFileSize }, DEFAULT, DEFAULT, DEFAULT)
   	</insert>
   	
 <!--   	메일 상세조회 -->

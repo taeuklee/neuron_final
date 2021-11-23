@@ -103,17 +103,15 @@
 		          <div class="card">
 		            <table class="mail-table">
 		              <tr>
-		                <th id="col_1"><input type="checkbox" name="checkAll" id="checkAll"></th>
-		                <th id="col_3">수신인</th>
+		                <th id="col_3"> &nbsp;수신인</th>
 		                <th id="col_4">제목</th>
-		                <th id="col_6">수신시간</th>
+		                <th id="col_6">읽은시간</th>
 		                <th id="col_6-1">수신확인</th>
 		                <th id="col_7">크기</th>
 		              </tr>  
 		              <c:forEach items="${mList }" var="mail">
 		              <tr>
-		                <td><input type="checkbox" name="" id=""></td>
-		                <td>${mail.senderId }</td>
+		                <td> &nbsp;${mail.senderId }</td>
 		                <td>
 		                	<c:if test="${!empty mail.mailFileName }">${mail.mailTitle }<i class="icon-paper-clip"></c:if>
 							<c:if test="${ empty mail.mailFileName }">${mail.mailTitle }</c:if>
@@ -124,8 +122,8 @@
 		              </tr>
 		              </c:forEach>
 		              <tr align="center" height="20">			
-								<td colspan="6">
-									<c:url var="before" value="holidayList.do">
+								<td colspan="5">
+									<c:url var="before" value="inbox.do">
 										<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
 									</c:url>
 									<c:if test="${pi.currentPage <= 1 }">
@@ -135,7 +133,7 @@
 										<a href="${before }">[이전]</a>
 									</c:if>
 									<c:forEach var="p" begin="${pi.startNavi }" end="${pi.endNavi }">
-										<c:url var="pagination" value="holidayList.do">
+										<c:url var="pagination" value="inbox.do">
 											<c:param name="page" value="${p }"></c:param>
 										</c:url>
 										<c:if test="${p eq pi.currentPage }">
@@ -145,7 +143,7 @@
 											<a href="${pagination }">${p }</a>&nbsp;					
 										</c:if>
 									</c:forEach>
-									<c:url var="after" value="holidayList.do">
+									<c:url var="after" value="inbox.do">
 										<c:param name="page" value="${pi.currentPage + 1 }"></c:param>
 									</c:url>
 									<c:if test="${pi.currentPage >= pi.maxPage }">

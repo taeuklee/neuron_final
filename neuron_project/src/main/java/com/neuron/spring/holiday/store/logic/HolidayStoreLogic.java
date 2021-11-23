@@ -33,7 +33,6 @@ public class HolidayStoreLogic implements HolidayStore{
 		List<Document> dList = sqlSession.selectList("approvalMapper.selectAllHlist", empNo, rowBounds);
 		return dList;
 	}
-
 	@Override
 	public List<Employee> selectEmpAll(int empNo) {
 		List<Employee> eList = sqlSession.selectList("employeeMapper.selectEmpAll", empNo);

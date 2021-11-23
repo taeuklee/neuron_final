@@ -176,15 +176,14 @@
 		    <div class="col-md-6 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">메일</h4>
+                  <h4 class="card-title">읽지 않은 메일</h4>
                   <div class="template-demo">
                     <table class="mail-table">
 		              <tr>
 		                <th id="col_2"></th>
 		                <th id="col_3">발신인</th>
 		                <th id="col_4">제목</th>
-		                <th id="col_6">날짜 및 시간</th>
-		                <th id="col_7">크기</th>
+		                <th id="col_6">날짜 </th>
 		              </tr>  
 		              <c:if test="${empty mList }">
 		                  	<tr>
@@ -204,8 +203,7 @@
 							<c:if test="${!empty mail.mailFileName }"><a href="${mDetail }">${mail.mailTitle }</a><i class="icon-paper-clip"></c:if>
 							<c:if test="${ empty mail.mailFileName }"><a href="${mDetail }">${mail.mailTitle }</a></c:if>
 						</td>
-		                <td><fmt:formatDate pattern="yyyy년 MM월 dd일 HH:mm:ss" value="${mail.sendTime }"/></td>
-		                <td>${mail.mailFileSize } bytes</td>
+		                <td><fmt:formatDate pattern="yyyy-MM-dd" value="${mail.sendTime }"/></td>
 		              </tr>
 		              </c:forEach>
 		              

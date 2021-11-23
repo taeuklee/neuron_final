@@ -12,9 +12,7 @@ public class Mail {
 	private Date sendTime;
 	private Date readTime;
 	private String mailFileName;
-	private String mailFileRename;
 	private long mailFileSize;
-	private String mailFilePath;
 	private String readYn;
 	private String sStatus;
 	private String rStatus;
@@ -22,8 +20,8 @@ public class Mail {
 	public Mail () {}
 
 	public Mail(int mailNo, String mailTitle, String mailContents, String senderId, String receiverId,
-			String receiverId2, Date sendTime, Date readTime, String mailFileName, String mailFileRename,
-			long mailFileSize, String mailFilePath, String readYn, String sStatus, String rStatus) {
+			String receiverId2, Date sendTime, Date readTime, String mailFileName, long mailFileSize, String readYn,
+			String sStatus, String rStatus) {
 		super();
 		this.mailNo = mailNo;
 		this.mailTitle = mailTitle;
@@ -34,9 +32,7 @@ public class Mail {
 		this.sendTime = sendTime;
 		this.readTime = readTime;
 		this.mailFileName = mailFileName;
-		this.mailFileRename = mailFileRename;
 		this.mailFileSize = mailFileSize;
-		this.mailFilePath = mailFilePath;
 		this.readYn = readYn;
 		this.sStatus = sStatus;
 		this.rStatus = rStatus;
@@ -114,28 +110,12 @@ public class Mail {
 		this.mailFileName = mailFileName;
 	}
 
-	public String getMailFileRename() {
-		return mailFileRename;
-	}
-
-	public void setMailFileRename(String mailFileRename) {
-		this.mailFileRename = mailFileRename;
-	}
-
 	public long getMailFileSize() {
 		return mailFileSize;
 	}
 
 	public void setMailFileSize(long mailFileSize) {
 		this.mailFileSize = mailFileSize;
-	}
-
-	public String getMailFilePath() {
-		return mailFilePath;
-	}
-
-	public void setMailFilePath(String mailFilePath) {
-		this.mailFilePath = mailFilePath;
 	}
 
 	public String getReadYn() {
@@ -166,10 +146,10 @@ public class Mail {
 	public String toString() {
 		return "Mail [mailNo=" + mailNo + ", mailTitle=" + mailTitle + ", mailContents=" + mailContents + ", senderId="
 				+ senderId + ", receiverId=" + receiverId + ", receiverId2=" + receiverId2 + ", sendTime=" + sendTime
-				+ ", readTime=" + readTime + ", mailFileName=" + mailFileName + ", mailFileRename=" + mailFileRename
-				+ ", mailFileSize=" + mailFileSize + ", mailFilePath=" + mailFilePath + ", readYn=" + readYn
-				+ ", sStatus=" + sStatus + ", rStatus=" + rStatus + "]";
+				+ ", readTime=" + readTime + ", mailFileName=" + mailFileName + ", mailFileSize=" + mailFileSize
+				+ ", readYn=" + readYn + ", sStatus=" + sStatus + ", rStatus=" + rStatus + "]";
 	}
+
 
 	
 }

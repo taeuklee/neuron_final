@@ -24,7 +24,12 @@ public class AttendanceStoreLogic implements AttendanceStore{
 		int count = sqlSession.selectOne("attendanceMapper.selectListCount", empNo);
 		return count;
 	}
-
+	@Override
+	public int selectListCount() {
+		int result = sqlSession.selectOne("attendanceMapper.selectListCount");
+		return result;
+	}
+	
 	@Override
 	public List<Attendance> selectAll(PageInfo pi, int empNo) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
@@ -32,11 +37,10 @@ public class AttendanceStoreLogic implements AttendanceStore{
 		List<Attendance> aList = sqlSession.selectList("attendanceMapper.selectAllList", empNo, rowBounds);
 		return aList;
 	}
-
 	@Override
-	public int putTime(Attendance attend) {
-		int result = sqlSession.insert("attendanceMapper.putTime", attend);
-		return result;
+	public List<Attendance> searchList(Search search) {
+		List<Attendance> aList = sqlSession.selectList("attendanceMapper.searchList", search);
+		return aList;
 	}
 
 	@Override
@@ -44,7 +48,12 @@ public class AttendanceStoreLogic implements AttendanceStore{
 		Attendance attend = sqlSession.selectOne("attendanceMapper.selectOne", empNo);
 		return attend;
 	}
-
+	
+	@Override
+	public int putTime(Attendance attend) {
+		int result = sqlSession.insert("attendanceMapper.putTime", attend);
+		return result;
+	}
 	@Override
 	public int putFinishTime(Attendance attend) {
 		int result = sqlSession.insert("attendanceMapper.putFinishTime", attend);
@@ -56,23 +65,15 @@ public class AttendanceStoreLogic implements AttendanceStore{
 		int countAbs = sqlSession.selectOne("attendanceMapper.selectListCountAbs", empNo);
 		return countAbs;
 	}
-
 	@Override
 	public int selectListCountLate(int empNo) {
 		int countLate = sqlSession.selectOne("attendanceMapper.selectListCountLate", empNo);
 		return countLate;
 	}
-
 	@Override
 	public int selectListCountNor(int empNo) {
 		int count = sqlSession.selectOne("attendanceMapper.selectListCountNor", empNo);
 		return count;
-	}
-
-	@Override
-	public List<Attendance> searchList(Search search) {
-		List<Attendance> aList = sqlSession.selectList("attendanceMapper.searchList", search);
-		return aList;
 	}
 
 	@Override
@@ -81,20 +82,14 @@ public class AttendanceStoreLogic implements AttendanceStore{
 		return result;
 	}
 
-	@Override
-	public int selectListCount() {
-		int result = sqlSession.selectOne("attendanceMapper.selectListCount");
-		return result;
-	}
-
-	@Override
-	public List<Employee> selectAllEmpList(PageInfo pi) {
-		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
-		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		List<Employee> eList 
-			= sqlSession.selectList("employeeMapper.selectAllEmpList", pi, rowBounds);
-		return eList;
-	}
+//	@Override
+//	public List<Employee> selectAllEmpList(PageInfo pi) {
+//		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+//		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+//		List<Employee> eList 
+//			= sqlSession.selectList("employeeMapper.selectAllEmpList", pi, rowBounds);
+//		return eList;
+//	}
 
 
 

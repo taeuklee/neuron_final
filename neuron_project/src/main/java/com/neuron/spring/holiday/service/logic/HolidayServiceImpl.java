@@ -30,7 +30,6 @@ public class HolidayServiceImpl implements HolidayService {
 		List<Document> dList = store.selectAll(pi, empNo);
 		return dList;
 	}
-
 	@Override
 	public List<Employee> printEmpAll(int empNo) {
 		List<Employee> eList = store.selectEmpAll(empNo);
