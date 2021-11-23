@@ -63,7 +63,7 @@
 		<div class="mb-3">
 			<label for="exampleInputEmail1" class="form-label"> 일정제목 </label> <input
 				type="text" class="form-control" id="eventTitle" name="eventTitle"
-				aria-describedby="emailHelp" value=${eventDetail.projectCalendarEventTitle }>
+				aria-describedby="emailHelp" value="${eventDetail.projectCalendarEventTitle }">
 		</div>
 		<div class="mb-3">
 			<label for="exampleInputPassword1" class="form-label">시작날짜</label> 

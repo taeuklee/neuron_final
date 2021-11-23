@@ -152,6 +152,9 @@ public class ProjectController {
 		map.put("searchText", searchText);
 		int currentPage = (page != null) ? page : 1;
 		int totalCount = service.getSearchListCount(map);
+		Project project = service.selectProject(projectNo);
+		int masterEmpNo = project.getProjectMaster();
+		Employee master = service.selectMaster(masterEmpNo);
 		PageInfo pi = SearchPagination.getPageInfo(currentPage, totalCount);
 		pi.setSearchText(searchText);
 		pi.setProjectNo(projectNo);
@@ -159,6 +162,7 @@ public class ProjectController {
 		PrintWriter out = response.getWriter();
 		mv.addObject("memberList", memberList);
 		mv.addObject("pi", pi);
+		mv.addObject("master", master);
 		mv.setViewName("project/selectSearchProjectMember");
 		return mv;
 	}

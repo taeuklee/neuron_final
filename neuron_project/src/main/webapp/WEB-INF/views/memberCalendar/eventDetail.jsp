@@ -61,9 +61,11 @@
 		<input type="hidden" value="${loginEmployee.empNo}" name="empNo">
 		<input type="hidden" value="${calNo }" name="calNo" id="calNo">
 		<div class="mb-3">
-			<label for="exampleInputEmail1" class="form-label"> 일정제목 </label> <input
-				type="text" class="form-control" id="eventTitle" name="eventTitle"
-				aria-describedby="emailHelp" value=${eventDetail.empCalendarEventTitle }>
+			<label for="exampleInputEmail1" class="form-label"> 
+			일정제목 
+			</label> 
+			<input type="text" class="form-control" id="eventTitle" name="eventTitle"
+				aria-describedby="emailHelp" value="${eventDetail.empCalendarEventTitle }">
 		</div>
 		<div class="mb-3">
 			<label for="exampleInputPassword1" class="form-label">시작날짜</label> 
