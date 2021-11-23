@@ -184,7 +184,7 @@
 	<script>
 		function moveInsertMainWork() {
 			$.ajax({
-						url : "moveInsertMainWorkForm.do?projectNo=${project.projectNo}",
+						url : "checkMainWork.do?projectNo=${project.projectNo}",
 						type : "get",
 						success : function(data) {
 							if (data == "success") {
@@ -201,7 +201,7 @@
 		
 		function moveInsertTask() {
 			$.ajax({
-						url : "checkMainWork.do.do?projectNo=${project.projectNo}",
+						url : "checkMainWork.do?projectNo=${project.projectNo}",
 						type : "get",
 						success : function(data) {
 							if (data == "success") {
@@ -219,7 +219,7 @@
 		
 		function moveSelectMainWork() {
 			$.ajax({
-						url : "checkMainWork.do.do?projectNo=${project.projectNo}",
+						url : "checkMainWork.do?projectNo=${project.projectNo}",
 						type : "get",
 						success : function(data) {
 							if (data == "success") {
@@ -237,7 +237,7 @@
 		
 		function moveUpdateMainWork() {
 			$.ajax({
-				url : "checkMainWork.do.do?projectNo=${project.projectNo}",
+				url : "checkMainWork.do?projectNo=${project.projectNo}",
 				type : "get",
 				success : function(data) {
 					if (data == "success") {
