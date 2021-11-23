@@ -59,7 +59,6 @@
 </head>
 <script>
 	$(document).ready(function() {
-		window.location.href = 'http://www.abc.com/';
 		$("#headerNav").load("/partials/_navbar.html");
 		$("#sidebar").load("/partials/_sidebar.html");
 		

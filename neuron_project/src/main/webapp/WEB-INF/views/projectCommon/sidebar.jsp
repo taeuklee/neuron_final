@@ -81,7 +81,7 @@
 						<li class="nav-item"><a class="nav-link" href="#"
 							onclick="location.href='selectProjectDetail.do?projectNo=${project.projectNo}'">프로젝트메인으로</a></li>
 						<li class="nav-item"><a class="nav-link" href="#"
-							onclick="location.href='/'">프로젝트나가기</a></li>
+							onclick="location.href='/home.do'">프로젝트나가기</a></li>
 					</ul>
 				</div></li>
 	<li class="nav-item"><a class="nav-link"
