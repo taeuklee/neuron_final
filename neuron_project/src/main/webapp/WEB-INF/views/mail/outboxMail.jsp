@@ -96,7 +96,7 @@
 				  <form action="mailSearch.do" method="get">
 					<select name="searchCondition">
 						<option value="all" <c:if test="${search.searchCondition == 'all' }">selected</c:if>>전체</option>
-						<option value="senderId" <c:if test="${search.searchCondition == 'senderId' }">selected</c:if>>발신인</option>
+						<option value="senderId" <c:if test="${search.searchCondition == 'senderId' }">selected</c:if>>수신인</option>
 						<option value="mailTitle" <c:if test="${search.searchCondition == 'mailTitle' }">selected</c:if>>제목</option>
 						<option value="mailContents" <c:if test="${search.searchCondition == 'mailContents' }">selected</c:if>>내용</option>
 					</select>
@@ -112,8 +112,8 @@
 		                <th id="col_1"><input type="checkbox" name="checkAll" id="checkAll"></th>
 		                <th id="col_3">수신인</th>
 		                <th id="col_4">제목</th>
-		                <th id="col_6">날짜 및 시간</th>
-		                <th id="col_7">크기</th>
+		                <th id="col_6">읽은 날짜 및 시간</th>
+		                <th id="col_7">파일 크기</th>
 		              </tr>  
 		              <c:if test="${empty mList }">
 		                  	<tr>
@@ -123,7 +123,7 @@
 		              <c:forEach items="${mList }" var="mail">
 		              <tr>
 		                <td><input type="checkbox" class="choiceOne" value="${mail.mailNo }"></td>
-		                <td>${mail.senderId }</td>
+		                <td>${mail.receiverId }</td>
 		                <td>
 		                	<c:url var="mDetail" value="mailDetail.do">
 								<c:param name="mailNo" value="${mail.mailNo }"></c:param>
@@ -137,7 +137,7 @@
 		              </c:forEach>
 		              <tr align="center" height="20">			
 								<td colspan="6">
-									<c:url var="before" value="holidayList.do">
+									<c:url var="before" value="outbox.do">
 										<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
 									</c:url>
 									<c:if test="${pi.currentPage <= 1 }">
@@ -147,7 +147,7 @@
 										<a href="${before }">[이전]</a>
 									</c:if>
 									<c:forEach var="p" begin="${pi.startNavi }" end="${pi.endNavi }">
-										<c:url var="pagination" value="holidayList.do">
+										<c:url var="pagination" value="outbox.do">
 											<c:param name="page" value="${p }"></c:param>
 										</c:url>
 										<c:if test="${p eq pi.currentPage }">
@@ -157,7 +157,7 @@
 											<a href="${pagination }">${p }</a>&nbsp;					
 										</c:if>
 									</c:forEach>
-									<c:url var="after" value="holidayList.do">
+									<c:url var="after" value="outbox.do">
 										<c:param name="page" value="${pi.currentPage + 1 }"></c:param>
 									</c:url>
 									<c:if test="${pi.currentPage >= pi.maxPage }">

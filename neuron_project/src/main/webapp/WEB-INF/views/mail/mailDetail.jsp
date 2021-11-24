@@ -55,36 +55,10 @@
 		}
 		.detail-header{
 		float:left;}
+		.detail-contents{
+		border : 0;}
   </style>
-  <script>
-//   	function reply(){
-//   		location.href="mailReply.do?maiNo=${mail.mailNo}";
-//   	}
-	$(document).ready(function(){
-		var preUrl = document.referrer;
-		console.log("이전 Url: " + preUrl);
-		if(preUrl == 'http://localhost:9999/outbox.do'){
-			$('.detail-header').hide();
-		}
-	})
-// 	$('#deletea').click(function(){
-// 		if(preUrl == 'http://localhost:9999/inbox.do'){
-// 			location.href="InboxMailDelete.do";
-// 		}else{
-// 			location.href="OutboxMailDelete.do";
-// 		}
-// 	}) 
-	function deleteYo(){
-		var mailNo = "<c:out value='${mail.mailNo}'/>";
-		if(preUrl = 'http://localhost:9999/inbox.do'){
-			location.href="InboxMailDelete.do?mailNo="+mailNo;
-		}else{
-			location.href="OutboxMailDelete.do?mailNo="+mailNo;
-		}
-	}
-	
-	
-  </script>
+  
 </head>
 <body>
 	<div class="container-scroller">
@@ -99,7 +73,7 @@
 					<button type="submit">답장</button> 
 		          </div>
 		          </form> 
-		            <button id="deletea" onclick="deleteYo()">삭제</button>
+		            <button id="deletea" >삭제</button>
 		          <div class="detail-top">
 		            
 		            <div class="detail-title">
@@ -126,13 +100,59 @@
 		             
 		            </div>
 		          </div>
-		          <div class="detail-contents">
+		          <textarea cols="200" rows="80" class="detail-contents">
 		             ${mail.mailContents }
-		          </div>
+		          </textarea>
 		        </div>
      		 </div>
 		
 		</div>
-	</div>	
+	</div>
+	<script>
+	$(document).ready(function(){
+		var preUrl = document.referrer;
+		console.log("이전 Url: " + preUrl);
+		if(preUrl == 'http://localhost:9999/outbox.do'){
+			$('.detail-header').hide();
+		}
+	})
+	$("#deletea").click(function(){
+		var preUrl = document.referrer;
+		var mailNo = "<c:out value='${mail.mailNo}'/>";
+		var confirm_val = confirm("삭제하시겠습니까?");
+		console.log(preUrl);
+		if(confirm_val){
+			
+			if(preUrl == 'http://localhost:9999/inbox.do'){
+				$.ajax({
+					url : "InboxMailDelete.do",
+					type : "post",
+					traditional : true,
+					data : { "choiceOne" : mailNo },
+					success : function(data){
+						location.href = "inbox.do";
+					},
+					error: function(){
+						location.href="home.do";
+					}
+				});
+			}else{
+				$.ajax({
+					url : "OutboxMailDelete.do",
+					type : "post",
+					traditional : true,
+					data : { "choiceOne" : mailNo },
+					success : function(data){
+						location.href = "outbox.do";
+					},
+					error: function(){
+						location.href="home.do";
+				}
+			});
+		}
+		
+		}
+	});
+	</script>	
 </body>
 </html>

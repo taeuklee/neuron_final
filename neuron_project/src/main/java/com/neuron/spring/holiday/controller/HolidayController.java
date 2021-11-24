@@ -45,7 +45,6 @@ public class HolidayController {
 		int currentPage = (page != null) ? page:1;
 		int totalCount = service.getListCount(empNo);
 		
-//		System.out.print("@@@@@@@@@@@@@@@@@@@@"+year);
 		if(year != null) {
 			Document doc = new Document();
 			doc.setPresentYear(year);
@@ -61,8 +60,7 @@ public class HolidayController {
 			mv.addObject("totalCount", totalCount);
 			mv.setViewName("attend/holidayList");
 		}else {
-			mv.addObject("msg", "게시글 전체조회 실패");
-			mv.setViewName("common/errorPage");
+			mv.setViewName("attend/holidayList");
 		}
 		return mv;
 		

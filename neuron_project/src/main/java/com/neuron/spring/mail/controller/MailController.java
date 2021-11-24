@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.neuron.spring.attend.domain.PageInfo;
-import com.neuron.spring.attend.domain.Pagination;
 import com.neuron.spring.employee.domain.Employee;
 import com.neuron.spring.mail.domain.Mail;
+import com.neuron.spring.mail.domain.PageInfo;
+import com.neuron.spring.mail.domain.Pagination;
 import com.neuron.spring.mail.domain.Search;
 import com.neuron.spring.mail.service.MailService;
 
@@ -58,8 +58,7 @@ public class MailController {
 			mv.addObject("pi", pi);
 			mv.setViewName("mail/inboxMail");
 		}else {
-			mv.addObject("msg", "게시글 전체조회 실패");
-			mv.setViewName("common/errorPage");
+			mv.setViewName("mail/inboxMail");
 		}
 		return mv;
 	}
@@ -92,8 +91,7 @@ public class MailController {
 				mv.addObject("pi", pi);
 				mv.setViewName("mail/outboxMail");
 			}else {
-				mv.addObject("msg", "보낸메일함 불러오기 실패");
-				mv.setViewName("common/errorPage");
+				mv.setViewName("mail/outboxMail");
 			}
 				
 		return mv;
@@ -127,8 +125,7 @@ public class MailController {
 			mv.addObject("pi", pi);
 			mv.setViewName("mail/checkOutbox");
 		}else {
-			mv.addObject("msg", "보낸메일함 불러오기 실패");
-			mv.setViewName("common/errorPage");
+			mv.setViewName("mail/checkOutbox");
 		}
 			
 	return mv;
@@ -212,10 +209,10 @@ public class MailController {
 		return mv;
 	} 
 	@ResponseBody
-	@RequestMapping(value="InboxMailDelete.do", method=RequestMethod.POST)
+	@RequestMapping(value="InboxMailDelete.do", method= {RequestMethod.GET, RequestMethod.POST})
 	public String InboxMailDelete(
 			Model model
-			,@RequestParam(value="choiceOne") List<String> choice
+			,@RequestParam(value="choiceOne", required=false) List<String> choice
 			,HttpServletRequest request) {
 		int result = 0;
 		for(int i =0; i<choice.size(); i++) {
@@ -245,26 +242,26 @@ public class MailController {
 		}
 	}
 	
-	@RequestMapping(value="addressbook.do", method=RequestMethod.GET)
-	public ModelAndView findEmpList(
-			ModelAndView mv
-			,@RequestParam(value="page", required=false) Integer page
-			,Model model) {
-		int currentPage = (page != null) ? page:1;
-		int totalCount = service.getListCount();
-		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
-		List<Employee> eList = service.printAllEmpList(pi);
-		if(!eList.isEmpty()) {
-			mv.addObject("eList", eList);
-			mv.addObject("pi", pi);
-			mv.addObject("totalCount", totalCount);
-			mv.setViewName("mail/addressbook");
-		}else {
-			mv.addObject("msg", "게시글 전체조회 실패");
-			mv.setViewName("common/errorPage");
-		}
-		return mv;
-	}
+//	@RequestMapping(value="addressbook.do", method=RequestMethod.GET)
+//	public ModelAndView findEmpList(
+//			ModelAndView mv
+//			,@RequestParam(value="page", required=false) Integer page
+//			,Model model) {
+//		int currentPage = (page != null) ? page:1;
+//		int totalCount = service.getListCount();
+//		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
+//		List<Employee> eList = service.printAllEmpList(pi);
+//		if(!eList.isEmpty()) {
+//			mv.addObject("eList", eList);
+//			mv.addObject("pi", pi);
+//			mv.addObject("totalCount", totalCount);
+//			mv.setViewName("mail/addressbook");
+//		}else {
+//			mv.addObject("msg", "게시글 전체조회 실패");
+//			mv.setViewName("common/errorPage");
+//		}
+//		return mv;
+//	}
 	
 //	@RequestMapping(value="addressSearch.do", method=RequestMethod.GET)
 //	public String addressSearch(
@@ -280,25 +277,25 @@ public class MailController {
 //			return "common/errorPage";
 //		}
 //	}
-	@RequestMapping(value="addressSearch.do", method=RequestMethod.GET)
-	public ModelAndView searchAddressbook(
-			ModelAndView mv
-			,@ModelAttribute Search search
-			,@RequestParam(value="page", required=false) Integer page) {
-			int currentPage = (page != null) ? page : 1; // 첫 페이지 1로 지정
-			int totalCount = service.getListCount();
-			PageInfo pi = Pagination.getPageInfo(currentPage, totalCount); // 페이지 얼마나 출력할지 몇개 출력할지를 페이지네이션에서 정해서 가져옴
-			List<Employee> eList = service.printSearchEmpAll(pi, search);
-			if(!eList.isEmpty()) {
-				mv.addObject("eList", eList);
-				mv.addObject("pi", pi);
-				mv.setViewName("employee/searchAddressbook");
-			}else {
-				mv.addObject("msg", "전체조회 실패");
-				mv.setViewName("common/errorPage");
-			}
-		return mv;
-	}
+//	@RequestMapping(value="addressSearch.do", method=RequestMethod.GET)
+//	public ModelAndView searchAddressbook(
+//			ModelAndView mv
+//			,@ModelAttribute Search search
+//			,@RequestParam(value="page", required=false) Integer page) {
+//			int currentPage = (page != null) ? page : 1; // 첫 페이지 1로 지정
+//			int totalCount = service.getListCount();
+//			PageInfo pi = Pagination.getPageInfo(currentPage, totalCount); // 페이지 얼마나 출력할지 몇개 출력할지를 페이지네이션에서 정해서 가져옴
+//			List<Employee> eList = service.printSearchEmpAll(pi, search);
+//			if(!eList.isEmpty()) {
+//				mv.addObject("eList", eList);
+//				mv.addObject("pi", pi);
+//				mv.setViewName("employee/searchAddressbook");
+//			}else {
+//				mv.addObject("msg", "전체조회 실패");
+//				mv.setViewName("common/errorPage");
+//			}
+//		return mv;
+//	}
 	
 	@RequestMapping(value="mailSearch.do", method=RequestMethod.GET)
 	public String mailSearch(

@@ -81,7 +81,6 @@
 		<jsp:include page="../mailCommon/navbar.jsp"></jsp:include>
 		<div class="container-fluid page-body-wrapper">
 			<jsp:include page="../common/sidebar.jsp"></jsp:include>
-			
 			<div class="main-panel">
 		        <div class="content-wrapper">
 		          <div class="top-title">
@@ -113,8 +112,8 @@
 		                <th id="col_2"></th>
 		                <th id="col_3">발신인</th>
 		                <th id="col_4">제목</th>
-		                <th id="col_6">날짜 및 시간</th>
-		                <th id="col_7">크기</th>
+		                <th id="col_6">보낸 날짜 및 시간</th>
+		                <th id="col_7">파일크기</th>
 		              </tr>  
 		              <c:if test="${empty mList }">
 		                  	<tr>
@@ -144,7 +143,7 @@
 		              </c:forEach>
 		              <tr align="center" height="20">			
 								<td colspan="6">
-									<c:url var="before" value="holidayList.do">
+									<c:url var="before" value="inbox.do">
 										<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
 									</c:url>
 									<c:if test="${pi.currentPage <= 1 }">
@@ -154,7 +153,7 @@
 										<a href="${before }">[이전]</a>
 									</c:if>
 									<c:forEach var="p" begin="${pi.startNavi }" end="${pi.endNavi }">
-										<c:url var="pagination" value="holidayList.do">
+										<c:url var="pagination" value="inbox.do">
 											<c:param name="page" value="${p }"></c:param>
 										</c:url>
 										<c:if test="${p eq pi.currentPage }">
@@ -164,7 +163,7 @@
 											<a href="${pagination }">${p }</a>&nbsp;					
 										</c:if>
 									</c:forEach>
-									<c:url var="after" value="holidayList.do">
+									<c:url var="after" value="inbox.do">
 										<c:param name="page" value="${pi.currentPage + 1 }"></c:param>
 									</c:url>
 									<c:if test="${pi.currentPage >= pi.maxPage }">

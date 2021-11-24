@@ -7,7 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.neuron.spring.attend.domain.PageInfo;
+import com.neuron.spring.mail.domain.PageInfo;
 import com.neuron.spring.employee.domain.Dept;
 import com.neuron.spring.employee.domain.Employee;
 import com.neuron.spring.employee.domain.Team;
@@ -98,33 +98,33 @@ public class MailStoreLogic implements MailStore{
 		return result;
 	}
 
-	@Override
-	public List<Employee> selectAllEmpList(PageInfo pi) {
-		int offset = (pi.getCurrentPage() - 1 ) * pi.getBoardLimit();
-		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		List<Employee> eList = sqlSession.selectList("employeeMapper.selectAllEmpList", pi, rowBounds);
-		return eList;
-	}
-
-	@Override
-	public List<Team> selectAllTeamList() {
-		List<Team> tList = sqlSession.selectList("deptMapper.selectAllTeam");
-		return tList;
-	}
-
-	@Override
-	public List<Dept> selectAllDeptList() {
-		List<Dept> dList = sqlSession.selectList("deptMapper.selectAllDept");
-		return dList;
-	}
-
-	@Override
-	public List<Employee> selectSearchEmpAll(PageInfo pi,Search search) {
-		int offset = (pi.getCurrentPage() - 1 ) * pi.getBoardLimit();
-		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		List<Employee> eList = sqlSession.selectList("employeeMapper.selectSearchEmpAll", search, rowBounds);
-		return eList;
-	}
+//	@Override
+//	public List<Employee> selectAllEmpList(PageInfo pi) {
+//		int offset = (pi.getCurrentPage() - 1 ) * pi.getBoardLimit();
+//		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+//		List<Employee> eList = sqlSession.selectList("employeeMapper.selectAllEmpList", pi, rowBounds);
+//		return eList;
+//	}
+//
+//	@Override
+//	public List<Team> selectAllTeamList() {
+//		List<Team> tList = sqlSession.selectList("deptMapper.selectAllTeam");
+//		return tList;
+//	}
+//
+//	@Override
+//	public List<Dept> selectAllDeptList() {
+//		List<Dept> dList = sqlSession.selectList("deptMapper.selectAllDept");
+//		return dList;
+//	}
+//
+//	@Override
+//	public List<Employee> selectSearchEmpAll(PageInfo pi,Search search) {
+//		int offset = (pi.getCurrentPage() - 1 ) * pi.getBoardLimit();
+//		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+//		List<Employee> eList = sqlSession.selectList("employeeMapper.selectSearchEmpAll", search, rowBounds);
+//		return eList;
+//	}
 
 	@Override
 	public List<Employee> selectAll(PageInfo pi) {

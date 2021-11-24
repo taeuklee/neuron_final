@@ -426,8 +426,8 @@
 		                      <th>일자</th>
 		                      <th>업무시작시간</th>
 		                      <th>업무종료시간</th>
-		                      <th>구분</th>
 		                      <th>근무시간</th>
+		                      <th>구분</th>
 		                      <th>비고</th>
 		                    </tr>
 		                  </thead>
@@ -450,15 +450,9 @@
 		                   </c:forEach>
 		                   
 		                   <tr align="center" height="20">
-					         <td colspan="7">
-					         <c:url var="before" value="/attend/attendanceList.do">
+					         <td colspan="6">
+					         <c:url var="before" value="attendanceList.do">
 					            <c:param name="page" value="${pi.currentPage - 1 }"></c:param>
-					         </c:url>
-					         <c:url var="after" value="/attend/attendanceList.do">
-					            <c:param name="page" value="${pi.currentPage + 1 }"></c:param>         
-					         </c:url>
-					         <c:url var="pagination" value="/attend/attendanceList.do">
-					            <c:param name="page" value="${p }"></c:param>
 					         </c:url>
 					            <c:if test="${pi.currentPage <= 1 }">
 					               [이전]
@@ -467,13 +461,19 @@
 					               <a href="${before }">[이전]</a>
 					            </c:if>
 					            <c:forEach var="p" begin="${pi.startNavi }" end="${pi.endNavi }">
+						         <c:url var="pagination" value="attendanceList.do">
+						            <c:param name="page" value="${p }"></c:param>
+						         </c:url>
 					               <c:if test="${p eq pi.currentPage }">
 					                  <font color="red" size="4">[${p }]</font>
 					               </c:if>
 					               <c:if test="${p ne pi.currentPage }">
-					                  <a href="${pagination }${p}">[${p }]</a>&nbsp;
+					                  <a href="${pagination }">[${p }]</a>&nbsp;
 					               </c:if>
 					            </c:forEach>
+					         <c:url var="after" value="attendanceList.do">
+					            <c:param name="page" value="${pi.currentPage + 1 }"></c:param>         
+					         </c:url>
 					            
 					            <c:if test="${pi.currentPage >= pi.maxPage }">
 					               [다음]
@@ -501,9 +501,7 @@
 		            	  confirm("출근하시겠습니까?");
 		            	  if(true){
 								location.href="/insertStartTime.do";
-							
 		            	  }
-		            	  $("#now1").text(now1);
 		              })
 		              
 		              $("#finishWork").click(function(){
@@ -516,7 +514,6 @@
 		            		if(true){
 								location.href="/insertFinishTime.do";
 			            	 }
-		            	  $("#now2").text(now1);
 		              })
 		              
 		              $(document).ready(function(){

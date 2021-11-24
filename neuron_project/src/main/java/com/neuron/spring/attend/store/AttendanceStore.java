@@ -10,28 +10,24 @@ import com.neuron.spring.employee.domain.Employee;
 public interface AttendanceStore {
 
 	public int selectListCount(int empNo);
-
+	public int selectListCount();
+	
 	public List<Attendance> selectAll(PageInfo pi,int empNo);
-
-	public int putTime(Attendance attend);
-
+	public List<Attendance> searchList(Search search);
+	
 	public Attendance selectOne(int empNo);
-
+	
+	public int putTime(Attendance attend);
 	public int putFinishTime(Attendance attend);
 
 	public int selectListCountAbs(int empNo);
-
 	public int selectListCountLate(int empNo);
-
 	public int selectListCountNor(int empNo);
-
-	public List<Attendance> searchList(Search search);
 
 	public int checkDate(int empNo);
 
-	public int selectListCount();
 
-	public List<Employee> selectAllEmpList(PageInfo pi);
+//	public List<Employee> selectAllEmpList(PageInfo pi);
 
 
 }

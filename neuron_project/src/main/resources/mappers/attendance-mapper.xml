@@ -30,7 +30,7 @@
 	</select>
 
   <select id="selectAllList" resultMap="attendResultMap">
-		SELECT * FROM ATTENDANCE WHERE EMP_NO = #{empNo}  AND EXTRACT(MONTH FROM ATTEND_DATE) = EXTRACT(MONTH FROM SYSDATE) ORDER BY ATTEND_DATE DESC
+		SELECT * FROM ATTENDANCE WHERE EMP_NO = #{empNo}  AND EXTRACT(MONTH FROM ATTEND_DATE) = EXTRACT(MONTH FROM SYSDATE) ORDER BY ATTEND_DATE DESC	
 	</select>
 	
 	<select id="checkDate" resultType="_int">
@@ -48,15 +48,7 @@
   <select id="selectOne" resultMap="attendResultMap">
   		SELECT * FROM ATTENDANCE WHERE EMP_NO = #{empNo } AND TO_DATE(ATTEND_DATE,'YY/MM/DD') = (SELECT TO_CHAR(SYSDATE, 'YY/MM/DD') FROM DUAL)
   </select>
-<!--   	검색 -->
-	<select id="searchList" resultMap="attendResultMap">
-		SELECT * FROM ATTENDANCE
-<!-- 		<if test="searchCondition.toString() == "division"> -->
+
 		
-<!-- 		</if> -->
-<!-- 		<if test="searchCondition.toString() == ""> -->
-		
-<!-- 		</if> -->
-		
-	</select>
+
   </mapper>
