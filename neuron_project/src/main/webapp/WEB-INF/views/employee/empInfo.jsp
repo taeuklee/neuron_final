@@ -93,6 +93,7 @@
 								<h4 class="card-title">내 정보 보기</h4>
 								<br> <br> <br>
 								 <form action="empInfoModify.do" method="post">
+								 <input type="hidden" name="empFileReName" value="${loginEmployee.empFileReName }">
 									<div class="row">
 										  <div class="col-md-6">
 											<div class="form-group row">
